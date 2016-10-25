@@ -2799,7 +2799,7 @@ function syncReference(){
 	    requestAzureData("ZGW_MAM30_RFV_T3_SRV", "");                 // Variances RFV
 	    requestAzureData("ZGW_MAM30_DG5_PIA_CODES_T3Dg5Code", "");
 	    requestAzureData("ZGW_MAM30_DG5_PIA_CODES_T3Dg5Rel", "");
-	    getAssets()
+	    //getAssets()
 	    //requestAzureData("ZGW_GET_JOB_DETAILS","PSMITH11")
 	//End of Azure
 	     requestAzureData("ZACAT001AssetCaptureCategory", "");
@@ -4608,7 +4608,7 @@ function loadDemoData() {
 						requestDEMOData('MyJobsVehiclesDefault.json');
 						requestDEMOData('MyJobsDG5Codes.json');
 						//requestDEMOData('AssetSitesDetails.json');
-						getAssets();
+						//getAssets();
 						requestDEMOData('MyJobsParams.json');
 						
 						//requestDEMOData('GASSurvey.json');

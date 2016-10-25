@@ -422,14 +422,6 @@ var MyIFrame = document.getElementById("formIframe");
 
 					 
 				}
-// New Code of Image Tag
-				//Process Images				
-				var elems = xx.getElementsByTagName("img");
-				for(var i = 0; i < elems.length; i++) {
-					src=elems[i],src;
-					elems[i].src=localStorage.getItem("DOCSERVER")+"MyJobs/Global/Forms/"+src
-										 
-				}
 				var elems = xx.getElementsByTagName("textarea");
 
 				for(var i = 0; i < elems.length; i++) {
@@ -525,6 +517,17 @@ function disableFields(formDoc){
 
 
 		}
+		// New Code of Image Tag
+		//Process Images				
+		var elems = formDoc.parentNode.parentNode.getElementsByTagName("img");
+		for(var i = 0; i < elems.length; i++) {
+			src=elems[i],src;
+			elems[i].src=localStorage.getItem("DOCSERVER")+"MyJobs/Global/Forms/"+src
+								 
+		}
+	
+		
+		
 		}
 }
 function updateMergeField(fld){

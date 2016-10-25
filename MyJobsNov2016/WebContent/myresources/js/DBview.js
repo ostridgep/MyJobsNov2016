@@ -111,43 +111,68 @@ function getTotalRecords()
 }
 function BuildHeaders(){
 var tablewidth=0;
-
+	alert("hello")
 	
 	var opTable = sap.ui.getCore().getElementById('DBTable');
 	TotalColumns=0;
-		html5sql.process('SELECT name, sql FROM sqlite_master WHERE type="table" AND name = "'+selectedTableName+'";',
+	
+		html5sql.process('PRAGMA table_info('+selectedTableName+');',
 		 function(transaction, results, rowsArray){
-
-				item = rowsArray[0];
-
-				var columnParts = item.sql.replace(/^[^\(]+\(([^\)]+)\)/g, '$1').split(','); ///// RegEx
-			
-				var columnName = "";
-				var cols="";
-				opTable.removeAllColumns();
-				for(i in columnParts) {
-					
-					if (typeof columnParts[i] === 'string') columnName=columnParts[i].split(' ')[1]
-					if (columnName==""){columnName=columnParts[i]}					  
-					opTable.addColumn( new sap.m.Column({
-						header: new sap.m.Text({text:columnName}),
-						width: "200px"
-					}));
-					tablewidth+=200;
-					
-					}	
-				//sap.ui.getCore().getElementById('sc1').setWidth(tablewidth);
-				getTotalRecords();
+			alert('pragma table_info('+selectedTableName+');'+":"+rowsArray.length)
+			for (var n = 0; n < rowsArray.length; n++) {
+				opTable.addColumn( new sap.m.Column({
+					header: new sap.m.Text({text:rowsArray[n]}),
+					width: "200px"
+				}));
+				tablewidth+=200;
+			}
+			getTotalRecords();
 				
 		 },
 		 function(error, statement){
-			
+			alert(error.message+":"+statement)
 		 }        
 		);
 
 	}
 
+function BuildHeaders1(){
+	var tablewidth=0;
 
+		
+		var opTable = sap.ui.getCore().getElementById('DBTable');
+		TotalColumns=0;
+			html5sql.process('SELECT name, sql FROM sqlite_master WHERE type="table" AND name = "'+selectedTableName+'";',
+			 function(transaction, results, rowsArray){
+
+					item = rowsArray[0];
+
+					var columnParts = item.sql.replace(/^[^\(]+\(([^\)]+)\)/g, '$1').split(','); ///// RegEx
+				
+					var columnName = "";
+					var cols="";
+					opTable.removeAllColumns();
+					for(i in columnParts) {
+						
+						if (typeof columnParts[i] === 'string') columnName=columnParts[i].split(' ')[1]
+						if (columnName==""){columnName=columnParts[i]}					  
+						opTable.addColumn( new sap.m.Column({
+							header: new sap.m.Text({text:columnName}),
+							width: "200px"
+						}));
+						tablewidth+=200;
+						
+						}	
+					//sap.ui.getCore().getElementById('sc1').setWidth(tablewidth);
+					getTotalRecords();
+					
+			 },
+			 function(error, statement){
+				
+			 }        
+			);
+
+		}
 
 function BuildDBTableNames(){
 	var HTMLToOutput="";

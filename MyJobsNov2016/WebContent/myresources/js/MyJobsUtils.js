@@ -3,6 +3,15 @@ var MB2Type=""
 var MBform=""
 	var MB2fname=""
 jQuery.sap.require("sap.m.MessageBox");
+function diffInMins(sd,ed){
+    sDate = new Date(sd)
+    eDate = new Date(ed)
+	var diffMs = (eDate - sDate); // milliseconds between sd and ed
+	
+	var minutes = Math.floor((diffMs/1000)/60);
+	console.log("diff"+minutes)
+	return Number(minutes);
+}
 function checkConnection() {
     var networkState = navigator.connection.type;
     /*var states = {};

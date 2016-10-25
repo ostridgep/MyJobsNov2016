@@ -267,15 +267,25 @@ var formEndOfDay = new sap.m.Dialog("dlgEndOfDay",{
                                     text: "Save",
                                     type: 	sap.m.ButtonType.Accept,
                                     tap: [ function(oEvt) { 
+                                    	console.log(diffInMins(sap.ui.getCore().getElementById('EndOfDayWorkTime').getValue(),sap.ui.getCore().getElementById('EndOfDayHomeTime').getValue()))
+                                    	if(diffInMins(sap.ui.getCore().getElementById('EndOfDayWorkTime').getValue(),sap.ui.getCore().getElementById('EndOfDayHomeTime').getValue())<0){
+                                           
+                                    		DisplayErrorMessage("Day End Travel Error", "Home Arrival cannot be less than Work Completion")
+                                    	}else if(diffInMins(sap.ui.getCore().getElementById('EndOfDayWorkTime').getValue(),sap.ui.getCore().getElementById('EndOfDayHomeTime').getValue())>360){
+                                           
+                                    		DisplayErrorMessage("Day End Travel Error", "Home Arrival cannot be > 6hrs after Work Completion")
+                                    	}else{
+                                    		createAWSEODNotif(sap.ui.getCore().getElementById('EndOfDayWorkTime').getValue(),
+                                        			sap.ui.getCore().getElementById('EndOfDayHomeTime').getValue(),
+                                        			localStorage.getItem("EmployeeID"))
+    										
+                                           	
+                                           	
+                                           	
+                                        	formEndOfDay.close()
+                                    	}
+                                    
                                     	
-                                    	createAWSEODNotif(sap.ui.getCore().getElementById('EndOfDayWorkTime').getValue(),
-                                    			sap.ui.getCore().getElementById('EndOfDayHomeTime').getValue(),
-                                    			localStorage.getItem("EmployeeID"))
-										
-                                       	
-                                       	
-                                       	
-                                    	formEndOfDay.close()
                                               
                                                 } ]
                                    

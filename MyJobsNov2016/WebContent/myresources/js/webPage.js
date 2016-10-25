@@ -521,7 +521,7 @@ function disableFields(formDoc){
 		//Process Images				
 		var elems = formDoc.parentNode.parentNode.getElementsByTagName("img");
 		for(var i = 0; i < elems.length; i++) {
-			src=elems[i],src;
+			src=elems[i].src;
 			elems[i].src=localStorage.getItem("DOCSERVER")+"MyJobs/Global/Forms/"+src
 								 
 		}

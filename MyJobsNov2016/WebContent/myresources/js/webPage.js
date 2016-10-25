@@ -439,21 +439,14 @@ var MyIFrame = document.getElementById("formIframe");
 							
 		formHTML=HTMLFormStart+xx.outerHTML+HTMLFormEnd
 		disableFields(xx)	
-		formHTMLreadonly=HTMLFormStart+xx.outerHTML+HTMLFormEnd
-		if(currentPage.indexOf("Home")<1) {
-			//Job Related
-			
-			createFormsResponse(fname,selectedJobArray["orderworkcentre"],selectedJobArray["orderplant"],currentNotifNo,CurrentOrderNo,CurrentOpNo,localStorage.getItem("MobileUser"),formJSON,formHTML,formHTMLreadonly,formMode,type)
-		}else{
-			//Non Job Form
-			
-			createFormsResponse(fname,"","","","", "",localStorage.getItem("MobileUser"),formJSON,formHTML,formHTMLreadonly,formMode,type)
-		}
+		formHTMLreadonly=HTMLFormStart+xx.outerHTML+HTMLFormEnd			
+		createFormsResponse(fname,selectedJobArray["orderworkcentre"],selectedJobArray["orderplant"],currentNotifNo,CurrentOrderNo,CurrentOpNo,localStorage.getItem("MobileUser"),formJSON,formHTML,formHTMLreadonly,formMode,type)
+		
 		
 		
 	}
 	catch(err) {
-		alert(err)
+		
 		formForms.close()
 	}
 	
@@ -521,8 +514,9 @@ function disableFields(formDoc){
 		//Process Images				
 		var elems = formDoc.parentNode.parentNode.getElementsByTagName("img");
 		for(var i = 0; i < elems.length; i++) {
-			src=elems[i].src;
-			elems[i].src=localStorage.getItem("DOCSERVER")+"MyJobs/Global/Forms/"+src
+			src=elems[i].src.split("MyJobs/Global/Forms/");
+			
+			elems[i].src=localStorage.getItem("DOCSERVER")+"MyJobs/Global/Forms/"+src[1]
 								 
 		}
 	

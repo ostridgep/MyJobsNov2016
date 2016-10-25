@@ -1,0 +1,54 @@
+{  
+   "params":[  
+      
+      {  
+         "name":"ASSIGNTOME",
+         "key1":"SCENARIO",
+         "key2":"Y008",
+         "value":"YES"
+      },
+      {  
+         "name":"ASSIGNTOUSER",
+         "key1":"SCENARIO",
+         "key2":"Y005",
+         "value":"YES"
+      },
+      {  
+         "name":"CFEED",
+         "key1":"SCENARIO",
+         "key2":"Y008",
+         "value":"YES"
+      },
+      {  
+         "name":"DG5",
+         "key1":"SCENARIO",
+         "key2":"Y004",
+         "value":"YES"
+      },
+       
+      {  
+         "name":"DG5",
+         "key1":"SCENARIO",
+         "key2":"Y008",
+         "value":"YES"
+      },
+      {  
+         "name":"PIA",
+         "key1":"SCENARIO",
+         "key2":"Y008",
+         "value":"YES"
+      },
+       {  
+         "name":"FOLLOWONWD",
+         "key1":"SCENARIO",
+         "key2":"Y008",
+         "value":"YES"
+      },
+      {  
+         "name":"BTP",
+         "key1":"SCENARIO",
+         "key2":"Y005",
+         "value":"YES"
+      }
+   ]
+}

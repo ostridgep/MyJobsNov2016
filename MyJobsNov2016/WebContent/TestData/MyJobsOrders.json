@@ -1,0 +1,4699 @@
+{"order":[
+    {
+            "orderno":"000052150487",
+            "type": "ZSA1",
+            "priority": "",
+            "startdate": "20160414 084805",
+            "contact": "",
+    "telno": "",
+       "shorttext": "Mechanical%20Repair%203",
+      "longtext": "",
+    "address": "West Marsh Road, SPALDING, PE11 2BB",
+    "postcode": "PE11 2BB",
+              "funcloc": "SPALST-2D-PSM-TS01-PRT001",
+              "equipment": "000000000000063203",
+             "notifno": "",
+              "changed_by": "",
+              "changed_date": "2016-05-25",
+              "changed_time": "13:10:50",
+              "operation":
+                  [{"opno": "0010", "type": "SMEPIS" , "priority": "0010" , "shorttext": "Mechanical Repair"
+,"startdate": "20160414 084805"
+,"enddate": "20160414 000000"
+, "duration": "14.0 ","status": "ONSITE" },{"opno": "0020", "type": "SMEPIS" , "priority": "0020" , "shorttext": "Mechanical Repair"
+,"startdate": "20160525 130000"
+,"enddate": "20160331 000001"
+, "duration": "14.0 ","status": "ONSITE" }
+  ],
+ 
+"operationsplit":
+                  [{"opno": "0010", "duration": "14.0 ","assignedto": "00113808" },{"opno": "0020", "duration": "14.0 ","assignedto": "00113808" }
+                ],
+ 
+"operationinfo":
+                  [{ "orderno":"000052150487","opno": "0010", "type": "" ,
+                "value1": "00000000" , "value2":"000000"}
+ 
+,{ "orderno":"000052150487","opno": "0020", "type": "" ,
+                "value1": "00000000" , "value2":"000000"}
+ 
+ 
+                ],
+"jobdets":
+                  [{ "orderno":"000052150487",
+"opno": "0020",
+"plant":"NSAM" ,
+"eworkcentre":"MT032" ,
+"orderplant":"LSAM" ,
+"orderworkcentre":"MT023" ,
+"oworkcentre":"MT023" ,
+"priority_code":"6" ,
+"priority_desc":"A6 - Within 2 weeks" ,
+"pmactivity_code":"T59" ,
+"pmactivity_desc":"Scheduled Defect" ,
+"oppmactivity_code":"SMEPIS" ,
+"oppmactivity_desc":"WW Maint in shift" ,
+"start_date":"2016-05-25" ,
+"start_time":"13:00:00" ,
+"cust_feed":"X" ,
+"duration":"120 " ,
+"equipment_code":"000000000000063203" ,
+"equipment_desc":"Radial Flow Tank" ,
+"equipment_gis":"52621000-32517000" ,
+"funcloc_code":"SPALST-2D-PSM-TS01-PRT001" ,
+"funcloc_desc":"Primary Tank 1" ,
+"funcloc_gis":"52621000-32517000",
+"acpt_date":"",
+"acpt_time":"",
+"onsite_date":"",
+"onsite_time":"",
+"park_date":"",
+"park_time":"",
+"status":"DEPL",
+"status_s":"DEPL",
+"status_l":"Deployed",
+"notif_cat_prof":"0000000Z5",
+"notifno":"000012699518",
+"site":"SPALST"}
+ 
+ 
+ 
+ 
+                ],
+  "jobdraw":
+                  [
+                ],
+   "jobloch":[],
+  "jobmeaspoints":
+                  [{
+"meas_point":"000000078122",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"PST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078126",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"IST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105003",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"LIME PH READING" ,
+"pttxt":"Lime pH reading" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105004",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"LIMED AMOUNT" ,
+"pttxt":"Limed amount in tonnes" ,
+"format":"_,___,___,___,___.__" ,
+"no_char": "15 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"TNH" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078133",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 1" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078118",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"TURBIDITY" ,
+"pttxt":"FE sample point" ,
+"format":"__" ,
+"no_char": "2 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"NTU" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078120",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"TEMPERATURE" ,
+"pttxt":"FE sample point" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"°C" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103329",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 6" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103325",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 2" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103326",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 3" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103328",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 5" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103327",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 4" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078133",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 1" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105003",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"LIME PH READING" ,
+"pttxt":"Lime pH reading" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078118",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"TURBIDITY" ,
+"pttxt":"FE sample point" ,
+"format":"__" ,
+"no_char": "2 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"NTU" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078120",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"TEMPERATURE" ,
+"pttxt":"FE sample point" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"°C" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103329",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 6" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103325",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 2" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078132",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"FST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078128",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"IST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078130",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"FST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078124",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"PST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078118",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"TURBIDITY" ,
+"pttxt":"FE sample point" ,
+"format":"__" ,
+"no_char": "2 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"NTU" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078120",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"TEMPERATURE" ,
+"pttxt":"FE sample point" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"°C" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103329",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 6" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103325",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 2" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103326",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 3" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103326",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 3" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078118",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"TURBIDITY" ,
+"pttxt":"FE sample point" ,
+"format":"__" ,
+"no_char": "2 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"NTU" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078120",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"TEMPERATURE" ,
+"pttxt":"FE sample point" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"°C" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103329",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 6" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103325",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 2" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078120",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"TEMPERATURE" ,
+"pttxt":"FE sample point" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"°C" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000106674",
+"object_id": "000000000000063203",
+"object_desc":"Radial Flow Tank" ,
+"psort":"TEMPERATURE" ,
+"pttxt":"Top Temperature" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"°C" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078132",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"FST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078124",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"PST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078119",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"AMMONIA" ,
+"pttxt":"FE sample point" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105002",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COD" ,
+"pttxt":"FE Sample Point" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078128",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"IST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078130",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"FST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078124",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"PST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078132",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"FST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078122",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"PST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078126",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"IST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105003",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"LIME PH READING" ,
+"pttxt":"Lime pH reading" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105004",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"LIMED AMOUNT" ,
+"pttxt":"Limed amount in tonnes" ,
+"format":"_,___,___,___,___.__" ,
+"no_char": "15 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"TNH" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078133",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 1" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103327",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 4" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103328",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 5" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103326",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 3" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078122",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"PST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078126",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"IST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105003",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"LIME PH READING" ,
+"pttxt":"Lime pH reading" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105004",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"LIMED AMOUNT" ,
+"pttxt":"Limed amount in tonnes" ,
+"format":"_,___,___,___,___.__" ,
+"no_char": "15 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"TNH" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078133",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 1" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103327",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 4" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103328",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 5" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103328",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 5" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103325",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 2" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103329",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 6" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078120",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"TEMPERATURE" ,
+"pttxt":"FE sample point" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"°C" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078118",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"TURBIDITY" ,
+"pttxt":"FE sample point" ,
+"format":"__" ,
+"no_char": "2 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"NTU" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000106703",
+"object_id": "000000000001759289",
+"object_desc":"Open Rectangular Tank (Level Floor)" ,
+"psort":"TEMPERATURE 1" ,
+"pttxt":"Top Temperature" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"°C" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000106704",
+"object_id": "000000000001759289",
+"object_desc":"Open Rectangular Tank (Level Floor)" ,
+"psort":"TEMPERATURE 2" ,
+"pttxt":"Bottom Temperature" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"°C" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078118",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"TURBIDITY" ,
+"pttxt":"FE sample point" ,
+"format":"__" ,
+"no_char": "2 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"NTU" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078130",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"FST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078128",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"IST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078119",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"AMMONIA" ,
+"pttxt":"FE sample point" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105002",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COD" ,
+"pttxt":"FE Sample Point" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078119",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"AMMONIA" ,
+"pttxt":"FE sample point" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078128",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"IST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078130",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"FST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078124",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"PST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105002",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COD" ,
+"pttxt":"FE Sample Point" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078119",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"AMMONIA" ,
+"pttxt":"FE sample point" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078132",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"FST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078122",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"PST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078126",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"IST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105004",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"LIMED AMOUNT" ,
+"pttxt":"Limed amount in tonnes" ,
+"format":"_,___,___,___,___.__" ,
+"no_char": "15 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"TNH" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103327",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 4" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103328",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 5" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103326",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 3" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103325",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 2" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103326",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 3" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103327",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 4" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078133",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 1" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105004",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"LIMED AMOUNT" ,
+"pttxt":"Limed amount in tonnes" ,
+"format":"_,___,___,___,___.__" ,
+"no_char": "15 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"TNH" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105002",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COD" ,
+"pttxt":"FE Sample Point" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078119",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"AMMONIA" ,
+"pttxt":"FE sample point" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105002",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COD" ,
+"pttxt":"FE Sample Point" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078128",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"IST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078130",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"FST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000106674",
+"object_id": "000000000000063203",
+"object_desc":"Radial Flow Tank" ,
+"psort":"TEMPERATURE" ,
+"pttxt":"Top Temperature" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"°C" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078124",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"PST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078132",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"FST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078122",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"PST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078126",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"IST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078118",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"TURBIDITY" ,
+"pttxt":"FE sample point" ,
+"format":"__" ,
+"no_char": "2 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"NTU" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103329",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 6" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105003",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"LIME PH READING" ,
+"pttxt":"Lime pH reading" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078119",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"AMMONIA" ,
+"pttxt":"FE sample point" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105002",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COD" ,
+"pttxt":"FE Sample Point" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078128",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"IST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078130",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"FST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078124",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"PST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078132",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"FST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078122",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"PST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078126",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"IST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105003",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"LIME PH READING" ,
+"pttxt":"Lime pH reading" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105004",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"LIMED AMOUNT" ,
+"pttxt":"Limed amount in tonnes" ,
+"format":"_,___,___,___,___.__" ,
+"no_char": "15 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"TNH" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078133",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 1" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103327",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 4" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103328",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 5" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078119",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"AMMONIA" ,
+"pttxt":"FE sample point" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078120",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"TEMPERATURE" ,
+"pttxt":"FE sample point" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"°C" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103329",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 6" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103325",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 2" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103326",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 3" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103328",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 5" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103327",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 4" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078133",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"SLUDGE STOCKS" ,
+"pttxt":"Sludge Tank 1" ,
+"format":"___" ,
+"no_char": "3 ",
+"no_deci":"0 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"%" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105004",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"LIMED AMOUNT" ,
+"pttxt":"Limed amount in tonnes" ,
+"format":"_,___,___,___,___.__" ,
+"no_char": "15 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"TNH" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105003",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"LIME PH READING" ,
+"pttxt":"Lime pH reading" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078126",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"IST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078122",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"PST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078132",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"FST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078124",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"PST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078130",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"FST 1" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000078128",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"DEPTH TO SLUDGE" ,
+"pttxt":"IST 2" ,
+"format":"_,___.__" ,
+"no_char": "6 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"M" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000105002",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COD" ,
+"pttxt":"FE Sample Point" ,
+"format":"__,___.__" ,
+"no_char": "7 ",
+"no_deci":"2 " ,
+"code_gp":"" ,
+"code":"" ,
+"unit_meas":"MGL" ,
+"read_from":"1"}
+ 
+,{
+"meas_point":"000000103333",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 4" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000106701",
+"object_id": "000000000001759289",
+"object_desc":"Open Rectangular Tank (Level Floor)" ,
+"psort":"LEVEL 1" ,
+"pttxt":"Slurry Depth With Val code Sufficient" ,
+"format":"_,___,___.__" ,
+"no_char": "9 ",
+"no_deci":"2 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"M" ,
+"read_from":"4"}
+ 
+,{
+"meas_point":"000000103333",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 4" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103332",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 3" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103331",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 2" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103334",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 5" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103330",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 1" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103335",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 6" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103332",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 3" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103331",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 2" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103334",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 5" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103330",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 1" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103333",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 4" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103332",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 3" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103331",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 2" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103334",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 5" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103330",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 1" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103335",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 6" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103333",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 4" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103333",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 4" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103332",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 3" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103331",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 2" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000106673",
+"object_id": "000000000000063203",
+"object_desc":"Radial Flow Tank" ,
+"psort":"CHECKED" ,
+"pttxt":"Has the check been completed" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000106641",
+"object_id": "000000000000063203",
+"object_desc":"Radial Flow Tank" ,
+"psort":"TANK HIGH LEVEL" ,
+"pttxt":"High Level Radial Flow Tank 1" ,
+"format":"_,___,___.__" ,
+"no_char": "9 ",
+"no_deci":"2 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"M" ,
+"read_from":"3"}
+ 
+,{
+"meas_point":"000000106642",
+"object_id": "000000000000063203",
+"object_desc":"Radial Flow Tank" ,
+"psort":"TANK LOW LEVEL" ,
+"pttxt":"Low Level Radial Flow Tank 1" ,
+"format":"_,___,___.__" ,
+"no_char": "9 ",
+"no_deci":"2 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"M" ,
+"read_from":"3"}
+ 
+,{
+"meas_point":"000000103332",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 3" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103330",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 1" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103335",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 6" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103333",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 4" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103332",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 3" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103331",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 2" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103334",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 5" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103330",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 1" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103335",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 6" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000106702",
+"object_id": "000000000001759289",
+"object_desc":"Open Rectangular Tank (Level Floor)" ,
+"psort":"LEVEL 2" ,
+"pttxt":"Slurry Depth 2" ,
+"format":"_,___,___.__" ,
+"no_char": "9 ",
+"no_deci":"2 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"M" ,
+"read_from":"3"}
+ 
+,{
+"meas_point":"000000103335",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 6" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103330",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 1" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103334",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 5" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103331",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 2" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103332",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 3" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103333",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 4" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103334",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 5" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000106706",
+"object_id": "000000000001759289",
+"object_desc":"Open Rectangular Tank (Level Floor)" ,
+"psort":"CHECKED 1" ,
+"pttxt":"Checks complete" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000106705",
+"object_id": "000000000001759289",
+"object_desc":"Open Rectangular Tank (Level Floor)" ,
+"psort":"CHECKED" ,
+"pttxt":"Checks complete" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000106642",
+"object_id": "000000000000063203",
+"object_desc":"Radial Flow Tank" ,
+"psort":"TANK LOW LEVEL" ,
+"pttxt":"Low Level Radial Flow Tank 1" ,
+"format":"_,___,___.__" ,
+"no_char": "9 ",
+"no_deci":"2 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"M" ,
+"read_from":"3"}
+ 
+,{
+"meas_point":"000000106641",
+"object_id": "000000000000063203",
+"object_desc":"Radial Flow Tank" ,
+"psort":"TANK HIGH LEVEL" ,
+"pttxt":"High Level Radial Flow Tank 1" ,
+"format":"_,___,___.__" ,
+"no_char": "9 ",
+"no_deci":"2 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"M" ,
+"read_from":"3"}
+ 
+,{
+"meas_point":"000000106673",
+"object_id": "000000000000063203",
+"object_desc":"Radial Flow Tank" ,
+"psort":"CHECKED" ,
+"pttxt":"Has the check been completed" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103335",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 6" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103335",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 6" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103330",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 1" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103334",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 5" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+,{
+"meas_point":"000000103331",
+"object_id": "SPALST",
+"object_desc":"SPALDING STW" ,
+"psort":"COLLECT FROM SHT Y/N" ,
+"pttxt":"Tank 2" ,
+"format":"" ,
+"no_char": "0 ",
+"no_deci":"0 " ,
+"code_gp":"QUE-DEC" ,
+"code":"X" ,
+"unit_meas":"" ,
+"read_from":"2"}
+ 
+ 
+ 
+                ],
+                  "jobmeascodes":
+                  [{
+"code_gp":"QUE-DEC",
+"code":"NO" ,
+"code_text":"No"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"YES" ,
+"code_text":"Yes"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"NO" ,
+"code_text":"No"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"YES" ,
+"code_text":"Yes"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"NO" ,
+"code_text":"No"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"YES" ,
+"code_text":"Yes"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"NO" ,
+"code_text":"No"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"YES" ,
+"code_text":"Yes"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"NO" ,
+"code_text":"No"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"YES" ,
+"code_text":"Yes"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"NO" ,
+"code_text":"No"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"YES" ,
+"code_text":"Yes"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"NO" ,
+"code_text":"No"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"YES" ,
+"code_text":"Yes"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"NO" ,
+"code_text":"No"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"YES" ,
+"code_text":"Yes"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"NO" ,
+"code_text":"No"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"YES" ,
+"code_text":"Yes"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"NO" ,
+"code_text":"No"}
+ 
+,{
+"code_gp":"QUE-DEC",
+"code":"YES" ,
+"code_text":"Yes"}
+ 
+ 
+                ],
+                 "jobequipment":
+[{
+"equnr":"000000000000063203" ,
+"obj_type":"1609" ,
+"obj_type_desc":"Radial Flow Tank" ,
+"start_date":"0000-00-00" ,
+"manfacture":"" ,
+"manparno":"" ,
+"manserno":"" ,
+"user_status_code":"E0013" ,
+"swerk":"LSVS" ,
+"swerk_desc":"Lincolnshire South Wastewater" ,
+"profile":"ZEQOG001" ,
+"device":"" ,
+"device_info":"" ,
+"install_date":"" ,
+"install_loc_desc":""}
+,{
+"equnr":"000000000001759289" ,
+"obj_type":"1610" ,
+"obj_type_desc":"OpenRectTankLevelFlr" ,
+"start_date":"0000-00-00" ,
+"manfacture":"" ,
+"manparno":"" ,
+"manserno":"" ,
+"user_status_code":"" ,
+"swerk":"NSVW" ,
+"swerk_desc":"Norf/Suff West Wastewater" ,
+"profile":"ZEQOG001" ,
+"device":"" ,
+"device_info":"" ,
+"install_date":"" ,
+"install_loc_desc":""}
+ 
+                ],
+                "jobattributes":
+                  [{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"CAPACITY_M3" ,
+"charact_desc":"Capacity (m3)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"CAPACITY_M3H" ,
+"charact_desc":"Capacity (m3/h)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"WET_WELL_PROTECTION_TYPE" ,
+"charact_desc":"Wet Well Protection Type" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"TANKERING_DETAILS" ,
+"charact_desc":"Tankering Details" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"LENGTH" ,
+"charact_desc":"Length (m)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"WIDTH" ,
+"charact_desc":"Width (m)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"WALL_DEPTH" ,
+"charact_desc":"Wall Depth (m)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"MEASURED_DEPTH" ,
+"charact_desc":"Measured Depth (m)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"DIAMETER" ,
+"charact_desc":"Diameter (m)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"TEST_CERTIFICATE_NUMBER" ,
+"charact_desc":"Written Scheme No" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"DESIGN_PRESSURE" ,
+"charact_desc":"Design Pressure (bar)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"TANK_MATERIAL" ,
+"charact_desc":"Tank Material" ,
+"value":""}
+ 
+,{
+"equnr":"000000000001759289" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"CAPACITY_M3" ,
+"charact_desc":"Capacity (m3)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000001759289" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"CAPACITY_M3H" ,
+"charact_desc":"Capacity (m3/h)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000001759289" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"WET_WELL_PROTECTION_TYPE" ,
+"charact_desc":"Wet Well Protection Type" ,
+"value":""}
+ 
+,{
+"equnr":"000000000001759289" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"TANKERING_DETAILS" ,
+"charact_desc":"Tankering Details" ,
+"value":""}
+ 
+,{
+"equnr":"000000000001759289" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"LENGTH" ,
+"charact_desc":"Length (m)" ,
+"value":"25.50 m"}
+ 
+,{
+"equnr":"000000000001759289" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"WIDTH" ,
+"charact_desc":"Width (m)" ,
+"value":"8.50 m"}
+ 
+,{
+"equnr":"000000000001759289" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"WALL_DEPTH" ,
+"charact_desc":"Wall Depth (m)" ,
+"value":"2.00 m"}
+ 
+,{
+"equnr":"000000000001759289" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"MEASURED_DEPTH" ,
+"charact_desc":"Measured Depth (m)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000001759289" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"DIAMETER" ,
+"charact_desc":"Diameter (m)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000001759289" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"TEST_CERTIFICATE_NUMBER" ,
+"charact_desc":"Written Scheme No" ,
+"value":""}
+ 
+,{
+"equnr":"000000000001759289" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"DESIGN_PRESSURE" ,
+"charact_desc":"Design Pressure (bar)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000001759289" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"TANK_MATERIAL" ,
+"charact_desc":"Tank Material" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"CAPACITY_M3" ,
+"charact_desc":"Capacity (m3)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"CAPACITY_M3H" ,
+"charact_desc":"Capacity (m3/h)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"WET_WELL_PROTECTION_TYPE" ,
+"charact_desc":"Wet Well Protection Type" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"TANKERING_DETAILS" ,
+"charact_desc":"Tankering Details" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"LENGTH" ,
+"charact_desc":"Length (m)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"WIDTH" ,
+"charact_desc":"Width (m)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"WALL_DEPTH" ,
+"charact_desc":"Wall Depth (m)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"MEASURED_DEPTH" ,
+"charact_desc":"Measured Depth (m)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"DIAMETER" ,
+"charact_desc":"Diameter (m)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"TEST_CERTIFICATE_NUMBER" ,
+"charact_desc":"Written Scheme No" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"DESIGN_PRESSURE" ,
+"charact_desc":"Design Pressure (bar)" ,
+"value":""}
+ 
+,{
+"equnr":"000000000000063203" ,
+"classnum":"E16" ,
+"klassentext":"Tank / Reservoir" ,
+"charact":"TANK_MATERIAL" ,
+"charact_desc":"Tank Material" ,
+"value":""}
+ 
+ 
+                ],
+"priorityicons":
+                  [{ "orderno":"000052150487","opno": "0020",  "icon_filename":"PRI_RE0A6.png" ,
+"icon_txt":"Within 2 Weeks" ,
+"tooltip":"X" ,
+"tooltip_desc":"Within 2 Weeks" ,
+"command":"NO_COMMAND"}
+ 
+                ],
+                 "jobicons":
+                  [{ "orderno":"000052150487","opno": "0020",  "icon_type":"JOB_TYPE" ,
+"icon_position":"1 " ,
+"icon_filename":"WT_ZSA1.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Scheduled Order" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150487","opno": "0020",  "icon_type":"LOC_HIST_REF" ,
+"icon_position":"2 " ,
+"icon_filename":"LOC_HISTORY.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Location History" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150487","opno": "0020",  "icon_type":"MEASUREMENTS" ,
+"icon_position":"3 " ,
+"icon_filename":"MEASUREMENTS.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Measurements" ,
+"command":"MPT_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+ 
+                ],
+                 "tconf":
+                  [  ],
+ 
+                 "partner":
+                  [ ],
+                 "userstatus":
+                  [
+    { "type": "OV" , "orderno": "000052150487"  , "opno": "0010", "inact": "", "status": "E0004","statuscode": "CONF",
+  "statusdesc": "Confirmed"  },
+ 
+    { "type": "OV" , "orderno": "000052150487"  , "opno": "0020", "inact": "", "status": "E0003","statuscode": "DEPL",
+  "statusdesc": "Deployed"  },
+ 
+    { "type": "OR" , "orderno": "000052150487"  , "opno": "", "inact": "", "status": "E0001","statuscode": "INIT",
+  "statusdesc": "Initial"  }
+],
+ 
+"component":
+                  [ ],
+ 
+                 "asset":
+                  [
+    { "id": "1 ",  "notifno": "000012699518","funcloc": "SPALST-2D-PSM-TS01-PRT001" , "funclocdesc": "Primary Tank 1", "equipment": "000000000000063203",
+  "equidescr": "Radial Flow Tank"   }
+]
+},
+    {
+            "orderno":"000052150718",
+            "type": "ZSA1",
+            "priority": "",
+            "startdate": "20160512 110219",
+            "contact": "",
+    "telno": "",
+       "shorttext": "Mechanical%20Repair",
+      "longtext": "",
+    "address": "MARCH STW, MARCH, PE15 0BU",
+    "postcode": "PE15 0BU",
+              "funcloc": "MRCHST-2C-STH-TS01-STT001",
+              "equipment": "000000000001759289",
+              "notifno": "000012699900",
+              "changed_by": "",
+              "changed_date": "2016-05-23",
+              "changed_time": "13:24:37",
+              "operation":
+                  [{"opno": "0010", "type": "SMEPIS" , "priority": "0010" , "shorttext": "Mechanical Repair"
+,"startdate": "20160511 153000"
+,"enddate": "20160512 000000"
+, "duration": "14.0 ","status": "ONSITE" }
+  ],
+ 
+"operationsplit":
+                  [{"opno": "0010", "duration": "14.0 ","assignedto": "00113808" }
+                ],
+ 
+"operationinfo":
+                  [{ "orderno":"000052150718","opno": "0010", "type": "" ,
+                "value1": "00000000" , "value2":"000000"}
+ 
+ 
+                ],
+"jobdets":
+                  [{ "orderno":"000052150718",
+"opno": "0010",
+"plant":"NSAM" ,
+"eworkcentre":"MT032" ,
+"orderplant":"NSAM" ,
+"orderworkcentre":"MT032" ,
+"oworkcentre":"MT032" ,
+"priority_code":"6" ,
+"priority_desc":"A6 - Within 2 weeks" ,
+"pmactivity_code":"T59" ,
+"pmactivity_desc":"Scheduled Defect" ,
+"oppmactivity_code":"SMEPIS" ,
+"oppmactivity_desc":"WW Maint in shift" ,
+"start_date":"2016-05-11" ,
+"start_time":"15:30:00" ,
+"duration":"120 " ,
+"cust_feed":"" ,
+"equipment_code":"000000000001759289" ,
+"equipment_desc":"Open Rectangular Tank (Level Floor)" ,
+"equipment_gis":"54394900-29913900" ,
+"funcloc_code":"MRCHST-2C-STH-TS01-STT001" ,
+"funcloc_desc":"Storm Tank 1" ,
+"funcloc_gis":"54394900-29913900",
+"acpt_date":"2016-05-23",
+"acpt_time":"13:23:06",
+"onsite_date":"2016-05-23",
+"onsite_time":"13:23:10",
+"park_date":"2016-05-18",
+"park_time":"16:46:11",
+"status":"SITE",
+"status_s":"SITE",
+"status_l":"On Site",
+"notif_cat_prof":"0000000Z5",
+"notifno":"000012699900",
+"site":"MRCHST"}
+ 
+ 
+ 
+ 
+                ],
+  "jobdraw":
+                  [
+                ],
+                "jobloch": [],
+  "jobmeaspoints":
+                  [
+ 
+                ],
+                  "jobmeascodes":
+                  [
+                ],
+                 "jobequipment":
+[
+                ],
+                "jobattributes":
+                  [
+                ],
+"priorityicons":
+                  [{ "orderno":"000052150718","opno": "0010",  "icon_filename":"PRI_RE0A6.png" ,
+"icon_txt":"Within 2 Weeks" ,
+"tooltip":"X" ,
+"tooltip_desc":"Within 2 Weeks" ,
+"command":"NO_COMMAND"}
+ 
+                ],
+                 "jobicons":
+                  [{ "orderno":"000052150718","opno": "0010",  "icon_type":"JOB_TYPE" ,
+"icon_position":"1 " ,
+"icon_filename":"WT_ZSA1.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Scheduled Order" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150718","opno": "0010",  "icon_type":"LOC_HIST_REF" ,
+"icon_position":"2 " ,
+"icon_filename":"LOC_HISTORY.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Location History" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150718","opno": "0010",  "icon_type":"MEASUREMENTS" ,
+"icon_position":"3 " ,
+"icon_filename":"MEASUREMENTS.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Measurements" ,
+"command":"MPT_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+ 
+                ],
+                 "tconf":
+                  [
+    { "activity": "0010", "confno": "0020247994" , "date": "20160512"  , "time": "110219" , "enddate": "20160512"  , "endtime": "110219"   ,
+                              "duration": "0.0 " , "empid": "00113808", "final": "" , "description": "Accepted"  },
+ 
+    { "activity": "0010", "confno": "0020247994" , "date": "20160512"  , "time": "110221" , "enddate": "20160512"  , "endtime": "110221"   ,
+                              "duration": "0.0 " , "empid": "00113808", "final": "" , "description": "On-Site"  },
+ 
+    { "activity": "0010", "confno": "0020247994" , "date": "20160518"  , "time": "100644" , "enddate": "20160518"  , "endtime": "100644"   ,
+                              "duration": "0.0 " , "empid": "00113808", "final": "" , "description": "Alarm"  },
+ 
+    { "activity": "0010", "confno": "0020247994" , "date": "20160518"  , "time": "143006" , "enddate": "20160518"  , "endtime": "143006"   ,
+                              "duration": "0.0 " , "empid": "00113808", "final": "" , "description": "Accepted"  },
+ 
+    { "activity": "0010", "confno": "0020247994" , "date": "20160518"  , "time": "143046" , "enddate": "20160518"  , "endtime": "143046"   ,
+                              "duration": "0.0 " , "empid": "00113808", "final": "" , "description": "On-Site"  },
+ 
+    { "activity": "0010", "confno": "0020247994" , "date": "20160518"  , "time": "143533" , "enddate": "20160518"  , "endtime": "143533"   ,
+                              "duration": "0.0 " , "empid": "00113808", "final": "" , "description": "66"  },
+ 
+    { "activity": "0010", "confno": "0020247994" , "date": "20160518"  , "time": "161543" , "enddate": "20160518"  , "endtime": "161543"   ,
+                              "duration": "0.0 " , "empid": "00113808", "final": "" , "description": "Accepted"  },
+ 
+    { "activity": "0010", "confno": "0020247994" , "date": "20160518"  , "time": "161549" , "enddate": "20160518"  , "endtime": "161549"   ,
+                              "duration": "0.0 " , "empid": "00113808", "final": "" , "description": "On-Site"  },
+ 
+    { "activity": "0010", "confno": "0020247994" , "date": "20160518"  , "time": "161612" , "enddate": "20160518"  , "endtime": "161612"   ,
+                              "duration": "0.0 " , "empid": "00113808", "final": "" , "description": "On-Site"  },
+ 
+    { "activity": "0010", "confno": "0020247994" , "date": "20160518"  , "time": "163951" , "enddate": "20160518"  , "endtime": "163951"   ,
+                              "duration": "0.0 " , "empid": "00113808", "final": "" , "description": "test"  },
+ 
+    { "activity": "0010", "confno": "0020247994" , "date": "20160523"  , "time": "132306" , "enddate": "20160523"  , "endtime": "132306"   ,
+                              "duration": "0.0 " , "empid": "00113808", "final": "" , "description": "Accepted"  },
+ 
+    { "activity": "0010", "confno": "0020247994" , "date": "20160523"  , "time": "132310" , "enddate": "20160523"  , "endtime": "132310"   ,
+                              "duration": "0.0 " , "empid": "00113808", "final": "" , "description": "On-Site"  }
+  ],
+ 
+                 "partner":
+                  [ ],
+                 "userstatus":
+                  [
+    { "type": "OV" , "orderno": "000052150718"  , "opno": "0010", "inact": "", "status": "E0003","statuscode": "DEPL",
+  "statusdesc": "Deployed"  },
+ 
+    { "type": "OV" , "orderno": "000052150718"  , "opno": "0010", "inact": "", "status": "E0011","statuscode": "SITE",
+  "statusdesc": "On Site"  },
+ 
+    { "type": "OR" , "orderno": "000052150718"  , "opno": "", "inact": "", "status": "E0001","statuscode": "INIT",
+  "statusdesc": "Initial"  }
+],
+ 
+"component":
+                  [ ],
+ 
+                 "asset":
+                  [
+    { "id": "1 ",  "notifno": "000012699900","funcloc": "MRCHST-2C-STH-TS01-STT001" , "funclocdesc": "Storm Tank 1", "equipment": "000000000001759289",
+  "equidescr": "Open Rectangular Tank (Level Floor)"   }
+]
+},
+    {
+            "orderno":"000052150719",
+            "type": "ZSA1",
+            "priority": "",
+            "startdate": "00000000 000000",
+            "contact": "",
+    "telno": "",
+       "shorttext": "Mechanical%20Repair",
+      "longtext": "",
+    "address": "West Marsh Road, SPALDING, PE11 2BB",
+    "postcode": "PE11 2BB",
+              "funcloc": "SPALST",
+              "equipment": "",
+              "notifno": "000012699901",
+              "changed_by": "",
+              "changed_date": "2016-05-11",
+              "changed_time": "13:29:12",
+              "operation":
+                  [{"opno": "0010", "type": "SMEPIS" , "priority": "0010" , "shorttext": "Mechanical Repair"
+,"startdate": "20160511 170000"
+,"enddate": "20160512 000000"
+, "duration": "14.0 ","status": "ONSITE" }
+  ],
+ 
+"operationsplit":
+                  [{"opno": "0010", "duration": "14.0 ","assignedto": "00113808" }
+                ],
+ 
+"operationinfo":
+                  [{ "orderno":"000052150719","opno": "0010", "type": "" ,
+                "value1": "00000000" , "value2":"000000"}
+ 
+ 
+                ],
+"jobdets":
+                  [{ "orderno":"000052150719",
+"opno": "0010",
+"plant":"NSAM" ,
+"eworkcentre":"MT032" ,
+"orderplant":"LSAM" ,
+"orderworkcentre":"MT023" ,
+"oworkcentre":"MT023" ,
+"priority_code":"6" ,
+"priority_desc":"A6 - Within 2 weeks" ,
+"pmactivity_code":"T59" ,
+"pmactivity_desc":"Scheduled Defect" ,
+"oppmactivity_code":"SMEPIS" ,
+"oppmactivity_desc":"WW Maint in shift" ,
+"start_date":"2016-05-11" ,
+"start_time":"17:00:00" ,
+"duration":"120 " ,
+"cust_feed":"X" ,
+"equipment_code":"" ,
+"equipment_desc":"" ,
+"equipment_gis":"" ,
+"funcloc_code":"SPALST" ,
+"funcloc_desc":"SPALDING STW" ,
+"funcloc_gis":"52621000-32517000",
+"acpt_date":"",
+"acpt_time":"",
+"onsite_date":"",
+"onsite_time":"",
+"park_date":"",
+"park_time":"",
+"status":"DEPL",
+"status_s":"DEPL",
+"status_l":"Deployed",
+"notif_cat_prof":"0000000Z5",
+"notifno":"000012699901",
+"site":"SPALST"}
+ 
+ 
+ 
+ 
+                ],
+  "jobdraw":
+                  [
+                ],  "jobloch": [],
+  "jobmeaspoints":
+                  [
+ 
+                ],
+                  "jobmeascodes":
+                  [
+                ],
+                 "jobequipment":
+[
+                ],
+                "jobattributes":
+                  [
+                ],
+"priorityicons":
+                  [{ "orderno":"000052150719","opno": "0010",  "icon_filename":"PRI_RE0A6.png" ,
+"icon_txt":"Within 2 Weeks" ,
+"tooltip":"X" ,
+"tooltip_desc":"Within 2 Weeks" ,
+"command":"NO_COMMAND"}
+ 
+                ],
+                 "jobicons":
+                  [{ "orderno":"000052150719","opno": "0010",  "icon_type":"JOB_TYPE" ,
+"icon_position":"1 " ,
+"icon_filename":"WT_ZSA1.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Scheduled Order" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150719","opno": "0010",  "icon_type":"LOC_HIST_REF" ,
+"icon_position":"2 " ,
+"icon_filename":"LOC_HISTORY.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Location History" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150719","opno": "0010",  "icon_type":"MEASUREMENTS" ,
+"icon_position":"3 " ,
+"icon_filename":"MEASUREMENTS.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Measurements" ,
+"command":"MPT_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+ 
+                ],
+                 "tconf":
+                  [  ],
+ 
+                 "partner":
+                  [ ],
+                 "userstatus":
+                  [
+    { "type": "OV" , "orderno": "000052150719"  , "opno": "0010", "inact": "", "status": "E0003","statuscode": "DEPL",
+  "statusdesc": "Deployed"  },
+ 
+    { "type": "OR" , "orderno": "000052150719"  , "opno": "", "inact": "", "status": "E0001","statuscode": "INIT",
+  "statusdesc": "Initial"  }
+],
+ 
+"component":
+                  [ ],
+ 
+                 "asset":
+                  [
+    { "id": "1 ",  "notifno": "000012699901","funcloc": "SPALST" , "funclocdesc": "SPALDING STW", "equipment": "",
+  "equidescr": ""   }
+]
+},
+    {
+            "orderno":"000052150733",
+            "type": "ZSA1",
+            "priority": "",
+            "startdate": "00000000 000000",
+            "contact": "",
+    "telno": "",
+       "shorttext": "Mechanical%20Repair",
+      "longtext": "",
+    "address": "West Marsh Road, SPALDING, PE11 2BB",
+    "postcode": "PE11 2BB",
+              "funcloc": "SPALST",
+              "equipment": "",
+              "notifno": "000012699897",
+              "changed_by": "",
+              "changed_date": "2016-05-11",
+              "changed_time": "13:29:11",
+              "operation":
+                  [{"opno": "0010", "type": "SMEPIS" , "priority": "0010" , "shorttext": "Mechanical Repair"
+,"startdate": "20160511 183000"
+,"enddate": "20160512 000000"
+, "duration": "14.0 ","status": "ONSITE" }
+  ],
+ 
+"operationsplit":
+                  [{"opno": "0010", "duration": "14.0 ","assignedto": "00113808" }
+                ],
+ 
+"operationinfo":
+                  [{ "orderno":"000052150733","opno": "0010", "type": "" ,
+                "value1": "00000000" , "value2":"000000"}
+ 
+ 
+                ],
+"jobdets":
+                  [{ "orderno":"000052150733",
+"opno": "0010",
+"plant":"NSAM" ,
+"eworkcentre":"MT032" ,
+"orderplant":"LSAM" ,
+"orderworkcentre":"MT023" ,
+"oworkcentre":"MT023" ,
+"priority_code":"6" ,
+"priority_desc":"A6 - Within 2 weeks" ,
+"pmactivity_code":"T59" ,
+"pmactivity_desc":"Scheduled Defect" ,
+"oppmactivity_code":"SMEPIS" ,
+"oppmactivity_desc":"WW Maint in shift" ,
+"start_date":"2016-05-11" ,
+"start_time":"18:30:00" ,
+"duration":"120 " ,
+"cust_feed":"" ,
+"equipment_code":"" ,
+"equipment_desc":"" ,
+"equipment_gis":"" ,
+"funcloc_code":"SPALST" ,
+"funcloc_desc":"SPALDING STW" ,
+"funcloc_gis":"52621000-32517000",
+"acpt_date":"",
+"acpt_time":"",
+"onsite_date":"",
+"onsite_time":"",
+"park_date":"",
+"park_time":"",
+"status":"DEPL",
+"status_s":"DEPL",
+"status_l":"Deployed",
+"notif_cat_prof":"0000000Z5",
+"notifno":"000012699897",
+"site":"SPALST"}
+ 
+ 
+ 
+ 
+                ],
+  "jobdraw":
+                  [
+                ],  "jobloch": [],
+  "jobmeaspoints":
+                  [
+ 
+                ],
+                  "jobmeascodes":
+                  [
+                ],
+                 "jobequipment":
+[
+                ],
+                "jobattributes":
+                  [
+                ],
+"priorityicons":
+                  [{ "orderno":"000052150733","opno": "0010",  "icon_filename":"PRI_RE0A6.png" ,
+"icon_txt":"Within 2 Weeks" ,
+"tooltip":"X" ,
+"tooltip_desc":"Within 2 Weeks" ,
+"command":"NO_COMMAND"}
+ 
+                ],
+                 "jobicons":
+                  [{ "orderno":"000052150733","opno": "0010",  "icon_type":"JOB_TYPE" ,
+"icon_position":"1 " ,
+"icon_filename":"WT_ZSA1.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Scheduled Order" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150733","opno": "0010",  "icon_type":"LOC_HIST_REF" ,
+"icon_position":"2 " ,
+"icon_filename":"LOC_HISTORY.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Location History" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150733","opno": "0010",  "icon_type":"MEASUREMENTS" ,
+"icon_position":"3 " ,
+"icon_filename":"MEASUREMENTS.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Measurements" ,
+"command":"MPT_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+ 
+                ],
+                 "tconf":
+                  [  ],
+ 
+                 "partner":
+                  [ ],
+                 "userstatus":
+                  [
+    { "type": "OV" , "orderno": "000052150733"  , "opno": "0010", "inact": "", "status": "E0003","statuscode": "DEPL",
+  "statusdesc": "Deployed"  },
+ 
+    { "type": "OR" , "orderno": "000052150733"  , "opno": "", "inact": "", "status": "E0001","statuscode": "INIT",
+  "statusdesc": "Initial"  }
+],
+ 
+"component":
+                  [ ],
+ 
+                 "asset":
+                  [
+    { "id": "1 ",  "notifno": "000012699897","funcloc": "SPALST" , "funclocdesc": "SPALDING STW", "equipment": "",
+  "equidescr": ""   }
+]
+},
+    {
+            "orderno":"000052150734",
+            "type": "ZSA1",
+            "priority": "",
+            "startdate": "00000000 000000",
+            "contact": "",
+    "telno": "",
+       "shorttext": "Mechanical%20Repair",
+      "longtext": "",
+    "address": "West Marsh Road, SPALDING, PE11 2BB",
+    "postcode": "PE11 2BB",
+              "funcloc": "SPALST",
+              "equipment": "",
+              "notifno": "000012699898",
+              "changed_by": "",
+              "changed_date": "2016-05-11",
+              "changed_time": "13:29:12",
+              "operation":
+                  [{"opno": "0010", "type": "SMEPIS" , "priority": "0010" , "shorttext": "Mechanical Repair"
+,"startdate": "20160511 200000"
+,"enddate": "20160512 000000"
+, "duration": "14.0 ","status": "ONSITE" }
+  ],
+ 
+"operationsplit":
+                  [{"opno": "0010", "duration": "14.0 ","assignedto": "00113808" }
+                ],
+ 
+"operationinfo":
+                  [{ "orderno":"000052150734","opno": "0010", "type": "" ,
+                "value1": "00000000" , "value2":"000000"}
+ 
+ 
+                ],
+"jobdets":
+                  [{ "orderno":"000052150734",
+"opno": "0010",
+"plant":"NSAM" ,
+"eworkcentre":"MT032" ,
+"orderplant":"LSAM" ,
+"orderworkcentre":"MT023" ,
+"oworkcentre":"MT023" ,
+"priority_code":"6" ,
+"priority_desc":"A6 - Within 2 weeks" ,
+"pmactivity_code":"T59" ,
+"pmactivity_desc":"Scheduled Defect" ,
+"oppmactivity_code":"SMEPIS" ,
+"oppmactivity_desc":"WW Maint in shift" ,
+"start_date":"2016-05-11" ,
+"start_time":"20:00:00" ,
+"duration":"120 " ,
+"cust_feed":"X" ,
+"equipment_code":"" ,
+"equipment_desc":"" ,
+"equipment_gis":"" ,
+"funcloc_code":"SPALST" ,
+"funcloc_desc":"SPALDING STW" ,
+"funcloc_gis":"52621000-32517000",
+"acpt_date":"",
+"acpt_time":"",
+"onsite_date":"",
+"onsite_time":"",
+"park_date":"",
+"park_time":"",
+"status":"DEPL",
+"status_s":"DEPL",
+"status_l":"Deployed",
+"notif_cat_prof":"0000000Z5",
+"notifno":"000012699898",
+"site":"SPALST"}
+ 
+ 
+ 
+ 
+                ],
+  "jobdraw":
+                  [
+                ],  "jobloch": [],
+  "jobmeaspoints":
+                  [
+ 
+                ],
+                  "jobmeascodes":
+                  [
+                ],
+                 "jobequipment":
+[
+                ],
+                "jobattributes":
+                  [
+                ],
+"priorityicons":
+                  [{ "orderno":"000052150734","opno": "0010",  "icon_filename":"PRI_RE0A6.png" ,
+"icon_txt":"Within 2 Weeks" ,
+"tooltip":"X" ,
+"tooltip_desc":"Within 2 Weeks" ,
+"command":"NO_COMMAND"}
+ 
+                ],
+                 "jobicons":
+                  [{ "orderno":"000052150734","opno": "0010",  "icon_type":"JOB_TYPE" ,
+"icon_position":"1 " ,
+"icon_filename":"WT_ZSA1.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Scheduled Order" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150734","opno": "0010",  "icon_type":"LOC_HIST_REF" ,
+"icon_position":"2 " ,
+"icon_filename":"LOC_HISTORY.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Location History" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150734","opno": "0010",  "icon_type":"MEASUREMENTS" ,
+"icon_position":"3 " ,
+"icon_filename":"MEASUREMENTS.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Measurements" ,
+"command":"MPT_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+ 
+                ],
+                 "tconf":
+                  [  ],
+ 
+                 "partner":
+                  [ ],
+                 "userstatus":
+                  [
+    { "type": "OV" , "orderno": "000052150734"  , "opno": "0010", "inact": "", "status": "E0003","statuscode": "DEPL",
+  "statusdesc": "Deployed"  },
+ 
+    { "type": "OR" , "orderno": "000052150734"  , "opno": "", "inact": "", "status": "E0001","statuscode": "INIT",
+  "statusdesc": "Initial"  }
+],
+ 
+"component":
+                  [ ],
+ 
+                 "asset":
+                  [
+    { "id": "1 ",  "notifno": "000012699898","funcloc": "SPALST" , "funclocdesc": "SPALDING STW", "equipment": "",
+  "equidescr": ""   }
+]
+},
+    {
+            "orderno":"000052150743",
+            "type": "ZSA1",
+            "priority": "",
+            "startdate": "00000000 000000",
+            "contact": "",
+    "telno": "",
+       "shorttext": "Mechanical%20Repair",
+      "longtext": "",
+    "address": "West Marsh Road, SPALDING, PE11 2BB",
+    "postcode": "PE11 2BB",
+              "funcloc": "SPALST",
+              "equipment": "",
+              "notifno": "000012699925",
+              "changed_by": "",
+              "changed_date": "2016-05-12",
+              "changed_time": "08:19:45",
+              "operation":
+                  [{"opno": "0010", "type": "SMEPIS" , "priority": "0010" , "shorttext": "Mechanical Repair"
+,"startdate": "20160512 081800"
+,"enddate": "20160513 000000"
+, "duration": "14.0 ","status": "ONSITE" }
+  ],
+ 
+"operationsplit":
+                  [{"opno": "0010", "duration": "14.0 ","assignedto": "00113808" }
+                ],
+ 
+"operationinfo":
+                  [{ "orderno":"000052150743","opno": "0010", "type": "" ,
+                "value1": "00000000" , "value2":"000000"}
+ 
+ 
+                ],
+"jobdets":
+                  [{ "orderno":"000052150743",
+"opno": "0010",
+"plant":"NSAM" ,
+"eworkcentre":"MT032" ,
+"orderplant":"LSAM" ,
+"orderworkcentre":"MT023" ,
+"oworkcentre":"MT023" ,
+"priority_code":"6" ,
+"priority_desc":"A6 - Within 2 weeks" ,
+"pmactivity_code":"T59" ,
+"pmactivity_desc":"Scheduled Defect" ,
+"oppmactivity_code":"SMEPIS" ,
+"oppmactivity_desc":"WW Maint in shift" ,
+"start_date":"2016-05-12" ,
+"start_time":"08:18:00" ,
+"duration":"120 " ,
+"cust_feed":"",
+"equipment_code":"" ,
+"equipment_desc":"" ,
+"equipment_gis":"" ,
+"funcloc_code":"SPALST" ,
+"funcloc_desc":"SPALDING STW" ,
+"funcloc_gis":"52621000-32517000",
+"acpt_date":"",
+"acpt_time":"",
+"onsite_date":"",
+"onsite_time":"",
+"park_date":"",
+"park_time":"",
+"status":"DEPL",
+"status_s":"DEPL",
+"status_l":"Deployed",
+"notif_cat_prof":"0000000Z5",
+"notifno":"000012699925",
+"site":"SPALST"}
+ 
+ 
+ 
+ 
+                ],
+  "jobdraw":
+                  [
+                ],  "jobloch": [],
+  "jobmeaspoints":
+                  [
+ 
+                ],
+                  "jobmeascodes":
+                  [
+                ],
+                 "jobequipment":
+[
+                ],
+                "jobattributes":
+                  [
+                ],
+"priorityicons":
+                  [{ "orderno":"000052150743","opno": "0010",  "icon_filename":"PRI_RE0A6.png" ,
+"icon_txt":"Within 2 Weeks" ,
+"tooltip":"X" ,
+"tooltip_desc":"Within 2 Weeks" ,
+"command":"NO_COMMAND"}
+ 
+                ],
+                 "jobicons":
+                  [{ "orderno":"000052150743","opno": "0010",  "icon_type":"JOB_TYPE" ,
+"icon_position":"1 " ,
+"icon_filename":"WT_ZSA1.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Scheduled Order" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150743","opno": "0010",  "icon_type":"LOC_HIST_REF" ,
+"icon_position":"2 " ,
+"icon_filename":"LOC_HISTORY.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Location History" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150743","opno": "0010",  "icon_type":"MEASUREMENTS" ,
+"icon_position":"3 " ,
+"icon_filename":"MEASUREMENTS.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Measurements" ,
+"command":"MPT_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+ 
+                ],
+                 "tconf":
+                  [  ],
+ 
+                 "partner":
+                  [ ],
+                 "userstatus":
+                  [
+    { "type": "OV" , "orderno": "000052150743"  , "opno": "0010", "inact": "", "status": "E0003","statuscode": "DEPL",
+  "statusdesc": "Deployed"  },
+ 
+    { "type": "OR" , "orderno": "000052150743"  , "opno": "", "inact": "", "status": "E0001","statuscode": "INIT",
+  "statusdesc": "Initial"  }
+],
+ 
+"component":
+                  [ ],
+ 
+                 "asset":
+                  [
+    { "id": "1 ",  "notifno": "000012699925","funcloc": "SPALST" , "funclocdesc": "SPALDING STW", "equipment": "",
+  "equidescr": ""   }
+]
+},
+    {
+            "orderno":"000052150744",
+            "type": "ZSA1",
+            "priority": "",
+            "startdate": "20160519 142018",
+            "contact": "",
+    "telno": "",
+       "shorttext": "Mechanical%20Repair",
+      "longtext": "",
+    "address": "West Marsh Road, SPALDING, PE11 2BB",
+    "postcode": "PE11 2BB",
+              "funcloc": "SPALST",
+              "equipment": "",
+              "notifno": "000012699926",
+              "changed_by": "",
+              "changed_date": "2016-05-25",
+              "changed_time": "13:32:57",
+              "operation":
+                  [{"opno": "0010", "type": "SMEPIS" , "priority": "0010" , "shorttext": "Mechanical Repair"
+,"startdate": "20160519 142018"
+,"enddate": "20160513 000000"
+, "duration": "14.0 ","status": "ONSITE" },{"opno": "0020", "type": "SMEPIS" , "priority": "0020" , "shorttext": "Mechanical Repair"
+,"startdate": "20160519 161303"
+,"enddate": "20160429 000001"
+, "duration": "14.0 ","status": "ONSITE" },{"opno": "0030", "type": "SMEPIS" , "priority": "0030" , "shorttext": "Mechanical Repair"
+,"startdate": "20160519 161407"
+,"enddate": "20160601 240000"
+, "duration": "14.0 ","status": "ONSITE" },{"opno": "0040", "type": "SMEPIS" , "priority": "0040" , "shorttext": "Mechanical Repair"
+,"startdate": "20160430 000001"
+,"enddate": "20160416 000001"
+, "duration": "14.0 ","status": "ONSITE" },{"opno": "0050", "type": "SMEPIS" , "priority": "0050" , "shorttext": "Mechanical Repair"
+,"startdate": "20160525 150000"
+,"enddate": "20160403 000001"
+, "duration": "14.0 ","status": "ONSITE" }
+  ],
+ 
+"operationsplit":
+                  [{"opno": "0010", "duration": "14.0 ","assignedto": "00113808" },{"opno": "0020", "duration": "14.0 ","assignedto": "00113808" },{"opno": "0030", "duration": "14.0 ","assignedto": "00113808" },{"opno": "0040", "duration": "14.0 ","assignedto": "00113808" },{"opno": "0050", "duration": "14.0 ","assignedto": "00113808" }
+                ],
+ 
+"operationinfo":
+                  [{ "orderno":"000052150744","opno": "0010", "type": "" ,
+                "value1": "00000000" , "value2":"000000"}
+ 
+,{ "orderno":"000052150744","opno": "0020", "type": "" ,
+                "value1": "00000000" , "value2":"000000"}
+ 
+,{ "orderno":"000052150744","opno": "0030", "type": "" ,
+                "value1": "00000000" , "value2":"000000"}
+ 
+,{ "orderno":"000052150744","opno": "0040", "type": "" ,
+                "value1": "00000000" , "value2":"000000"}
+ 
+,{ "orderno":"000052150744","opno": "0050", "type": "" ,
+                "value1": "00000000" , "value2":"000000"}
+ 
+ 
+                ],
+"jobdets":
+                  [{ "orderno":"000052150744",
+"opno": "0050",
+"plant":"NSAM" ,
+"eworkcentre":"MT032" ,
+"orderplant":"LSAM" ,
+"orderworkcentre":"MT023" ,
+"oworkcentre":"MT023" ,
+"priority_code":"6" ,
+"priority_desc":"A6 - Within 2 weeks" ,
+"pmactivity_code":"T59" ,
+"pmactivity_desc":"Scheduled Defect" ,
+"oppmactivity_code":"SMEPIS" ,
+"oppmactivity_desc":"WW Maint in shift" ,
+"start_date":"2016-05-25" ,
+"start_time":"15:00:00" ,
+"duration":"120 " ,
+"cust_feed":"" ,
+"equipment_code":"" ,
+"equipment_desc":"" ,
+"equipment_gis":"" ,
+"funcloc_code":"SPALST" ,
+"funcloc_desc":"SPALDING STW" ,
+"funcloc_gis":"52621000-32517000",
+"acpt_date":"",
+"acpt_time":"",
+"onsite_date":"",
+"onsite_time":"",
+"park_date":"",
+"park_time":"",
+"status":"DEPL",
+"status_s":"DEPL",
+"status_l":"Deployed",
+"notif_cat_prof":"0000000Z5",
+"notifno":"000012699926",
+"site":"SPALST"}
+ 
+ 
+ 
+ 
+                ],
+                  "jobloch": [],
+  "jobdraw":
+                  [
+{
+"orderno":"000052150744",
+"zact": "",
+"zite":"0001" ,
+"zmandatoryfield":"" ,
+"zurl":"" ,
+"nodeid":"   15195748" ,
+"fname":"25-05-2016-13-22-22-874-52150744-0040_01_22_21-Administrator~Contractor User Checklist.doc" ,
+"mime":"applicationmsword"}
+ 
+,
+{
+"orderno":"000052150744",
+"zact": "",
+"zite":"0002" ,
+"zmandatoryfield":"" ,
+"zurl":"" ,
+"nodeid":"   15195960" ,
+"fname":"25-05-2016-13-22-22-697-52150744-0040_01_22_21-Administrator~Lonely Desert .jpg" ,
+"mime":"imagejpeg"}
+ 
+ 
+                ],
+  "jobmeaspoints":
+                  [
+ 
+                ],
+                  "jobmeascodes":
+                  [
+                ],
+                 "jobequipment":
+[
+                ],
+                "jobattributes":
+                  [
+                ],
+"priorityicons":
+                  [{ "orderno":"000052150744","opno": "0050",  "icon_filename":"PRI_RE0A6.png" ,
+"icon_txt":"Within 2 Weeks" ,
+"tooltip":"X" ,
+"tooltip_desc":"Within 2 Weeks" ,
+"command":"NO_COMMAND"}
+ 
+                ],
+                 "jobicons":
+                  [{ "orderno":"000052150744","opno": "0050",  "icon_type":"JOB_TYPE" ,
+"icon_position":"1 " ,
+"icon_filename":"WT_ZSA1.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Scheduled Order" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150744","opno": "0050",  "icon_type":"DOCUMENTS" ,
+"icon_position":"2 " ,
+"icon_filename":"DOCUMENTS.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Documents" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150744","opno": "0050",  "icon_type":"LOC_HIST_REF" ,
+"icon_position":"3 " ,
+"icon_filename":"LOC_HISTORY.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Location History" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150744","opno": "0050",  "icon_type":"MEASUREMENTS" ,
+"icon_position":"4 " ,
+"icon_filename":"MEASUREMENTS.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Measurements" ,
+"command":"MPT_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+ 
+                ],
+                 "tconf":
+                  [  ],
+ 
+                 "partner":
+                  [ ],
+                 "userstatus":
+                  [
+    { "type": "OV" , "orderno": "000052150744"  , "opno": "0010", "inact": "", "status": "E0004","statuscode": "CONF",
+  "statusdesc": "Confirmed"  },
+ 
+    { "type": "OV" , "orderno": "000052150744"  , "opno": "0020", "inact": "", "status": "E0004","statuscode": "CONF",
+  "statusdesc": "Confirmed"  },
+ 
+    { "type": "OV" , "orderno": "000052150744"  , "opno": "0030", "inact": "", "status": "E0004","statuscode": "CONF",
+  "statusdesc": "Confirmed"  },
+ 
+    { "type": "OV" , "orderno": "000052150744"  , "opno": "0040", "inact": "", "status": "E0004","statuscode": "CONF",
+  "statusdesc": "Confirmed"  },
+ 
+    { "type": "OV" , "orderno": "000052150744"  , "opno": "0050", "inact": "", "status": "E0003","statuscode": "DEPL",
+  "statusdesc": "Deployed"  },
+ 
+    { "type": "OR" , "orderno": "000052150744"  , "opno": "", "inact": "", "status": "E0001","statuscode": "INIT",
+  "statusdesc": "Initial"  }
+],
+ 
+"component":
+                  [ ],
+ 
+                 "asset":
+                  [
+    { "id": "1 ",  "notifno": "000012699926","funcloc": "SPALST" , "funclocdesc": "SPALDING STW", "equipment": "",
+  "equidescr": ""   }
+]
+},
+    {
+            "orderno":"000052150745",
+            "type": "ZSA1",
+            "priority": "",
+            "startdate": "00000000 000000",
+            "contact": "",
+    "telno": "",
+       "shorttext": "Mechanical%20Repair",
+      "longtext": "",
+    "address": "West Marsh Road, SPALDING, PE11 2BB",
+    "postcode": "PE11 2BB",
+              "funcloc": "SPALST",
+              "equipment": "",
+              "notifno": "000012699927",
+              "changed_by": "",
+              "changed_date": "2016-05-12",
+              "changed_time": "09:40:08",
+              "operation":
+                  [{"opno": "0010", "type": "SMEPIS" , "priority": "0010" , "shorttext": "Mechanical Repair"
+,"startdate": "20160512 110300"
+,"enddate": "20160512 240000"
+, "duration": "14.0 ","status": "ONSITE" },{"opno": "0020", "type": "SMEPIS" , "priority": "0020" , "shorttext": "Mechanical Repair"
+,"startdate": "20160513 000001"
+,"enddate": "20160429 000001"
+, "duration": "14.0 ","status": "ONSITE" }
+  ],
+ 
+"operationsplit":
+                  [{"opno": "0010", "duration": "14.0 ","assignedto": "00113808" },{"opno": "0020", "duration": "14.0 ","assignedto": "00113808" }
+                ],
+ 
+"operationinfo":
+                  [{ "orderno":"000052150745","opno": "0010", "type": "" ,
+                "value1": "00000000" , "value2":"000000"}
+ 
+,{ "orderno":"000052150745","opno": "0020", "type": "" ,
+                "value1": "00000000" , "value2":"000000"}
+ 
+ 
+                ],
+"jobdets":
+                  [{ "orderno":"000052150745",
+"opno": "0010",
+"plant":"NSAM" ,
+"eworkcentre":"MT032" ,
+"orderplant":"LSAM" ,
+"orderworkcentre":"MT023" ,
+"oworkcentre":"MT023" ,
+"priority_code":"6" ,
+"priority_desc":"A6 - Within 2 weeks" ,
+"pmactivity_code":"T59" ,
+"pmactivity_desc":"Scheduled Defect" ,
+"oppmactivity_code":"SMEPIS" ,
+"oppmactivity_desc":"WW Maint in shift" ,
+"start_date":"2016-05-12" ,
+"start_time":"11:03:00" ,
+"duration":"120 " ,
+"cust_feed":"" ,
+"equipment_code":"" ,
+"equipment_desc":"" ,
+"equipment_gis":"" ,
+"funcloc_code":"SPALST" ,
+"funcloc_desc":"SPALDING STW" ,
+"funcloc_gis":"52621000-32517000",
+"acpt_date":"",
+"acpt_time":"",
+"onsite_date":"",
+"onsite_time":"",
+"park_date":"",
+"park_time":"",
+"status":"DEPL",
+"status_s":"DEPL",
+"status_l":"Deployed",
+"notif_cat_prof":"0000000Z5",
+"notifno":"000012699927",
+"site":"SPALST"}
+ 
+ 
+ 
+ 
+                ],
+  "jobdraw":
+                  [
+                ],  "jobloch": [],
+  "jobmeaspoints":
+                  [
+ 
+                ],
+                  "jobmeascodes":
+                  [
+                ],
+                 "jobequipment":
+[
+                ],
+                "jobattributes":
+                  [
+                ],
+"priorityicons":
+                  [{ "orderno":"000052150745","opno": "0010",  "icon_filename":"PRI_RE0A6.png" ,
+"icon_txt":"Within 2 Weeks" ,
+"tooltip":"X" ,
+"tooltip_desc":"Within 2 Weeks" ,
+"command":"NO_COMMAND"}
+ 
+                ],
+                 "jobicons":
+                  [{ "orderno":"000052150745","opno": "0010",  "icon_type":"JOB_TYPE" ,
+"icon_position":"1 " ,
+"icon_filename":"WT_ZSA1.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Scheduled Order" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150745","opno": "0010",  "icon_type":"JOB_PART_REF" ,
+"icon_position":"2 " ,
+"icon_filename":"2MANJOB.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Mr Nicholas Jackson,,DEPL" ,
+"command":"NO_COMMAND",
+"grid":"X",
+"grid_vals":"Name,Mobile No,Status\nMr Nicholas Jackson,,DEPL"}
+ 
+,{ "orderno":"000052150745","opno": "0010",  "icon_type":"LOC_HIST_REF" ,
+"icon_position":"3 " ,
+"icon_filename":"LOC_HISTORY.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Location History" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150745","opno": "0010",  "icon_type":"MEASUREMENTS" ,
+"icon_position":"4 " ,
+"icon_filename":"MEASUREMENTS.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Measurements" ,
+"command":"MPT_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+ 
+                ],
+                 "tconf":
+                  [  ],
+ 
+                 "partner":
+                  [ ],
+                 "userstatus":
+                  [
+    { "type": "OV" , "orderno": "000052150745"  , "opno": "0010", "inact": "", "status": "E0003","statuscode": "DEPL",
+  "statusdesc": "Deployed"  },
+ 
+    { "type": "OV" , "orderno": "000052150745"  , "opno": "0020", "inact": "", "status": "E0003","statuscode": "DEPL",
+  "statusdesc": "Deployed"  },
+ 
+    { "type": "OR" , "orderno": "000052150745"  , "opno": "", "inact": "", "status": "E0001","statuscode": "INIT",
+  "statusdesc": "Initial"  }
+],
+ 
+"component":
+                  [ ],
+ 
+                 "asset":
+                  [
+    { "id": "1 ",  "notifno": "000012699927","funcloc": "SPALST" , "funclocdesc": "SPALDING STW", "equipment": "",
+  "equidescr": ""   }
+]
+},
+    {
+            "orderno":"000052150746",
+            "type": "ZSA1",
+            "priority": "",
+            "startdate": "20160518 111724",
+            "contact": "",
+    "telno": "",
+       "shorttext": "Mechanical%20Repair",
+      "longtext": "",
+    "address": "West Marsh Road, SPALDING, PE11 2BB",
+    "postcode": "PE11 2BB",
+              "funcloc": "SPALST",
+              "equipment": "",
+              "notifno": "000012699928",
+              "changed_by": "",
+              "changed_date": "2016-05-12",
+              "changed_time": "08:19:46",
+              "operation":
+                  [{"opno": "0010", "type": "SMEPIS" , "priority": "0010" , "shorttext": "Mechanical Repair"
+,"startdate": "20160512 124000"
+,"enddate": "20160513 000000"
+, "duration": "14.0 ","status": "ONSITE" },{"opno": "0020", "type": "SMEPIS" , "priority": "0020" , "shorttext": "Mechanical Repair"
+,"startdate": "20160513 000001"
+,"enddate": "20160429 000001"
+, "duration": "14.0 ","status": "ONSITE" }
+  ],
+ 
+"operationsplit":
+                  [{"opno": "0010", "duration": "14.0 ","assignedto": "00113808" },{"opno": "0020", "duration": "14.0 ","assignedto": "00113808" }
+                ],
+ 
+"operationinfo":
+                  [{ "orderno":"000052150746","opno": "0010", "type": "" ,
+                "value1": "00000000" , "value2":"000000"}
+ 
+,{ "orderno":"000052150746","opno": "0020", "type": "" ,
+                "value1": "00000000" , "value2":"000000"}
+ 
+ 
+                ],
+"jobdets":
+                  [{ "orderno":"000052150746",
+"opno": "0010",
+"plant":"NSAM" ,
+"eworkcentre":"MT032" ,
+"orderplant":"LSAM" ,
+"orderworkcentre":"MT023" ,
+"oworkcentre":"MT023" ,
+"priority_code":"6" ,
+"priority_desc":"A6 - Within 2 weeks" ,
+"pmactivity_code":"T59" ,
+"pmactivity_desc":"Scheduled Defect" ,
+"oppmactivity_code":"SMEPIS" ,
+"oppmactivity_desc":"WW Maint in shift" ,
+"start_date":"2016-05-12" ,
+"start_time":"12:40:00" ,
+"duration":"120 " ,
+"cust_feed":"" ,
+"equipment_code":"" ,
+"equipment_desc":"" ,
+"equipment_gis":"" ,
+"funcloc_code":"SPALST" ,
+"funcloc_desc":"SPALDING STW" ,
+"funcloc_gis":"52621000-32517000",
+"acpt_date":"",
+"acpt_time":"",
+"onsite_date":"",
+"onsite_time":"",
+"park_date":"",
+"park_time":"",
+"status":"DEPL",
+"status_s":"DEPL",
+"status_l":"Deployed",
+"notif_cat_prof":"0000000Z5",
+"notifno":"000012699928",
+"site":"SPALST"}
+ 
+ 
+ 
+ 
+                ],
+  "jobdraw":
+                  [
+                ],  "jobloch": [],
+  "jobmeaspoints":
+                  [
+ 
+                ],
+                  "jobmeascodes":
+                  [
+                ],
+                 "jobequipment":
+[
+                ],
+                "jobattributes":
+                  [
+                ],
+"priorityicons":
+                  [{ "orderno":"000052150746","opno": "0010",  "icon_filename":"PRI_RE0A6.png" ,
+"icon_txt":"Within 2 Weeks" ,
+"tooltip":"X" ,
+"tooltip_desc":"Within 2 Weeks" ,
+"command":"NO_COMMAND"}
+ 
+                ],
+                 "jobicons":
+                  [{ "orderno":"000052150746","opno": "0010",  "icon_type":"JOB_TYPE" ,
+"icon_position":"1 " ,
+"icon_filename":"WT_ZSA1.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Scheduled Order" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150746","opno": "0010",  "icon_type":"LOC_HIST_REF" ,
+"icon_position":"2 " ,
+"icon_filename":"LOC_HISTORY.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Location History" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052150746","opno": "0010",  "icon_type":"MEASUREMENTS" ,
+"icon_position":"3 " ,
+"icon_filename":"MEASUREMENTS.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Measurements" ,
+"command":"MPT_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+ 
+                ],
+                 "tconf":
+                  [  ],
+ 
+                 "partner":
+                  [ ],
+                 "userstatus":
+                  [
+    { "type": "OV" , "orderno": "000052150746"  , "opno": "0010", "inact": "", "status": "E0003","statuscode": "DEPL",
+  "statusdesc": "Deployed"  },
+ 
+    { "type": "OV" , "orderno": "000052150746"  , "opno": "0020", "inact": "", "status": "E0003","statuscode": "DEPL",
+  "statusdesc": "Deployed"  },
+ 
+    { "type": "OR" , "orderno": "000052150746"  , "opno": "", "inact": "", "status": "E0001","statuscode": "INIT",
+  "statusdesc": "Initial"  }
+],
+ 
+"component":
+                  [ ],
+ 
+                 "asset":
+                  [
+    { "id": "1 ",  "notifno": "000012699928","funcloc": "SPALST" , "funclocdesc": "SPALDING STW", "equipment": "",
+  "equidescr": ""   }
+]
+},
+    {
+            "orderno":"000052151016",
+            "type": "ZSA1",
+            "priority": "",
+            "startdate": "20160525 132938",
+            "contact": "",
+    "telno": "",
+       "shorttext": "Mechanical%20Repair",
+      "longtext": "",
+    "address": "West Marsh Road, SPALDING, PE11 2BB",
+    "postcode": "PE11 2BB",
+              "funcloc": "SPALST-2D-PSM-TS01-PRT001",
+              "equipment": "000000000000063203",
+              "notifno": "000012700273",
+              "changed_by": "",
+              "changed_date": "2016-05-25",
+              "changed_time": "13:35:50",
+              "operation":
+                  [{"opno": "0010", "type": "SMEPIS" , "priority": "0010" , "shorttext": "Mechanical Repair"
+,"startdate": "20160526 000000"
+,"enddate": "20160526 000000"
+, "duration": "14.0 ","status": "ONSITE" },{"opno": "0020", "type": "SMEPIS" , "priority": "0020" , "shorttext": "Mechanical Repair"
+,"startdate": "20160525 170000"
+,"enddate": "20160512 000001"
+, "duration": "14.0 ","status": "ONSITE" }
+  ],
+ 
+"operationsplit":
+                  [{"opno": "0010", "duration": "14.0 ","assignedto": "00113808" },{"opno": "0020", "duration": "14.0 ","assignedto": "00113808" }
+                ],
+ 
+"operationinfo":
+                  [{ "orderno":"000052151016","opno": "0010", "type": "" ,
+                "value1": "00000000" , "value2":"000000"}
+ 
+,{ "orderno":"000052151016","opno": "0020", "type": "" ,
+                "value1": "00000000" , "value2":"000000"}
+ 
+ 
+                ],
+"jobdets":
+                  [{ "orderno":"000052151016",
+"opno": "0020",
+"plant":"NSAM" ,
+"eworkcentre":"MT032" ,
+"orderplant":"LSAM" ,
+"orderworkcentre":"MT023" ,
+"oworkcentre":"MT023" ,
+"priority_code":"6" ,
+"priority_desc":"A6 - Within 2 weeks" ,
+"pmactivity_code":"T59" ,
+"pmactivity_desc":"Scheduled Defect" ,
+"oppmactivity_code":"SMEPIS" ,
+"oppmactivity_desc":"WW Maint in shift" ,
+"start_date":"2016-05-25" ,
+"start_time":"17:00:00" ,
+"duration":"120 " ,
+"cust_feed":"X" ,
+"equipment_code":"000000000000063203" ,
+"equipment_desc":"Radial Flow Tank" ,
+"equipment_gis":"52621000-32517000" ,
+"funcloc_code":"SPALST-2D-PSM-TS01-PRT001" ,
+"funcloc_desc":"Primary Tank 1" ,
+"funcloc_gis":"52621000-32517000",
+"acpt_date":"",
+"acpt_time":"",
+"onsite_date":"",
+"onsite_time":"",
+"park_date":"",
+"park_time":"",
+"status":"DEPL",
+"status_s":"DEPL",
+"status_l":"Deployed",
+"notif_cat_prof":"0000000Z5",
+"notifno":"000012700273",
+"site":"SPALST"}
+ 
+ 
+ 
+ 
+                ],  "jobloch": [],
+  "jobdraw":
+                  [
+{
+"orderno":"000052151016",
+"zact": "",
+"zite":"0001" ,
+"zmandatoryfield":"" ,
+"zurl":"" ,
+"nodeid":"   15197645" ,
+"fname":"Lighthouse.jpg" ,
+"mime":"image/pjpeg"}
+ 
+ 
+                ],
+  "jobmeaspoints":
+                  [
+ 
+                ],
+                  "jobmeascodes":
+                  [
+                ],
+                 "jobequipment":
+[
+                ],
+                "jobattributes":
+                  [
+                ],
+"priorityicons":
+                  [{ "orderno":"000052151016","opno": "0020",  "icon_filename":"PRI_RE0A6.png" ,
+"icon_txt":"Within 2 Weeks" ,
+"tooltip":"X" ,
+"tooltip_desc":"Within 2 Weeks" ,
+"command":"NO_COMMAND"}
+ 
+                ],
+                 "jobicons":
+                  [{ "orderno":"000052151016","opno": "0020",  "icon_type":"JOB_TYPE" ,
+"icon_position":"1 " ,
+"icon_filename":"WT_ZSA1.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Scheduled Order" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052151016","opno": "0020",  "icon_type":"DOCUMENTS" ,
+"icon_position":"2 " ,
+"icon_filename":"DOCUMENTS.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Documents" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052151016","opno": "0020",  "icon_type":"LOC_HIST_REF" ,
+"icon_position":"3 " ,
+"icon_filename":"LOC_HISTORY.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Location History" ,
+"command":"NO_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+,{ "orderno":"000052151016","opno": "0020",  "icon_type":"MEASUREMENTS" ,
+"icon_position":"4 " ,
+"icon_filename":"MEASUREMENTS.png" ,
+"icon_txt":"" ,
+"tooltip":"X" ,
+"tooltip_desc":"Measurements" ,
+"command":"MPT_COMMAND",
+"grid":"",
+"grid_vals":""}
+ 
+ 
+                ],
+                 "tconf":
+                  [  ],
+ 
+                 "partner":
+                  [ ],
+                 "userstatus":
+                  [
+    { "type": "OV" , "orderno": "000052151016"  , "opno": "0010", "inact": "", "status": "E0004","statuscode": "CONF",
+  "statusdesc": "Confirmed"  },
+ 
+    { "type": "OV" , "orderno": "000052151016"  , "opno": "0020", "inact": "", "status": "E0003","statuscode": "DEPL",
+  "statusdesc": "Deployed"  },
+ 
+    { "type": "OR" , "orderno": "000052151016"  , "opno": "", "inact": "", "status": "E0001","statuscode": "INIT",
+  "statusdesc": "Initial"  }
+],
+ 
+"component":
+                  [ ],
+ 
+                 "asset":
+                  [
+    { "id": "1 ",  "notifno": "000012700273","funcloc": "SPALST-2D-PSM-TS01-PRT001" , "funclocdesc": "Primary Tank 1", "equipment": "000000000000063203",
+  "equidescr": "Radial Flow Tank"   }
+]
+}
+ 
+]
+}

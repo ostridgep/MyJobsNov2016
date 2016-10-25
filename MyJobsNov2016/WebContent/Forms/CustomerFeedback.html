@@ -1,0 +1,302 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <link href="css/site.css" rel="stylesheet" />
+        <script src="js/jq.1.10.2.js"></script>
+        <script src="js/jqui.1.9.2.js"></script>
+        <script src="js/bs.3.1.1.js"></script>
+        <script src="js/functions.js"></script>
+        <link rel="stylesheet" href="css/bs.3.1.1.css" />
+        <link rel="stylesheet" href="css/jqui.1.9.2_smoothness.css" />
+        
+        <title>Customer Feedback</title>
+    </head>
+<body>
+    <div class="container">
+        <div class="well row" style="margin-top: 10px">
+            <div class="col-md-6">
+                <div class="row">
+                   
+                </div>
+                <div class="row">
+                    <h1><b>Customer Feedback Form</b></h1>
+                </div>
+            </div>
+            <form   id="MyJobsForm" action="ProcessForm.html">
+            <input id="FormName" name="FormName" value="CustomerFeedback"  hidden>
+            <div class="col-md-6">
+                <div class="row">
+				<input class="form-control" id="workorder" merge="orderno" readonly placeholder="Enter Work Order"/>
+                    <!--<label class="pull-right" id="workorderlabel"></label>-->
+                </div>
+                <div class="row">
+				<input class="form-control" id="functionallocation" merge="funcloc_desc" readonly placeholder="Enter Functional Location"/>
+                    <!--<label class="pull-right"  value="~FunctionalLocation" id="functionallocationlabel"></label>-->
+                </div>
+            </div>
+
+        </div>
+        
+            <div class="form-group">
+
+
+
+                
+                <div class="well row">
+                    <table class="table table-bordered">
+                       
+                        <tr>
+                            <td width = "50%">Has the Customer been spoken to and updated?</td>
+                          <td>
+                             <input type="TEXT" id="spokentoV" name="spokentoV" HIDDEN value="NO">
+                                <div class="btn-group btn-toggle" id="spokento" style="margin-left: 10px">
+                                
+                               
+                                    <button id="spokentoYES"  type="button" onclick = 'document.getElementById("spokentoV").value="YES";this.active=true;removeNA();document.getElementById("custsatifaction").disabled=false' class="btn btn-lg btn-default">Yes</button>
+                                    <button  id="spokentoNO" type="button" onclick = 'document.getElementById("spokentoV").value="NO";this.active=true;addNA();document.getElementById("custsatifaction").value="CS06";document.getElementById("custsatifaction").disabled=true' class="btn btn-lg btn-primary active">No</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                           
+                            <td width = "50%">Has a contact card been left with the Customer?</td>
+                           
+                            <td align="left">
+                             <input type="TEXT" id="contactcardV" name="contactcardV" HIDDEN value="NO">
+                                <div class="btn-group btn-toggle" id="contactcard" style="margin-left: 10px">
+                                
+                               
+                                    <button id="contactcardYES" type="button" onclick = 'document.getElementById("contactcardV").value="YES";this.active=true' class="btn btn-lg btn-default">Yes</button>
+                                    <button id="contactcardNO" type="button" onclick = 'document.getElementById("contactcardV").value="NO";this.active=true' class="btn btn-lg btn-primary active">No</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width = "50%">Please confirm how satisfied the Customer is with the actions you have taken</td>
+                           
+                           <td align="left">
+                        <select class="feedback-input" id="custsatifaction" name="custsatifaction"  onChange= "loadCompleted()" merge="SELECT CODE as value, CODEDESC as description FROM CFCODES WHERE codegroup = 'CUST030' AND LEVEL='2' ORDER BY CODE">
+                            <option value="" selected></option>
+
+
+                        </select> 
+                            </td>
+                        </tr>
+                       
+                        <tr>
+                            <td width = "50%">If Customer is Dissatisfied / Very Dissatisfied, please state why</td>
+                           
+                           <td align="left">
+                              <textarea id="reason" name="reason"  rows="4" cols="50" maxlength="1500"  disabled=true></textarea>
+                               
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width = "50%">Is the Customer's issue 100% resolved?</td>
+                              
+                           <td align="left">
+                             <input type="TEXT" id="resolvedV" name="resolvedV" HIDDEN value="NO">
+                                <div class="btn-group btn-toggle" id="resolved" style="margin-left: 10px">
+                                
+                               
+                                    <button id="resolvedYES" type="button" onclick = 'document.getElementById("resolvedV").value="YES";this.active=true;document.getElementById("cause").disabled=true' class="btn btn-lg btn-default">Yes</button>
+                                    <button id="resolvedNO" type="button" onclick = 'document.getElementById("resolvedV").value="NO";this.active=true;document.getElementById("cause").disabled=false' class="btn btn-lg btn-primary active">No</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width = "50%">If no, what is the underlying cause of the problem?</td>
+                           
+                            <td align="left">
+                             <textarea id="cause" name="cause"  rows="4" cols="50" maxlength="1500"  disabled=false ></textarea>
+                               
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width = "50%">Is any further work required and has this been fully explained to the Customer?</td>
+                    
+                           <td align="left">
+                             <input type="TEXT" id="furtherworkV" name="furtherworkV" HIDDEN value="NO">
+                                <div class="btn-group btn-toggle" id="furtherwork" style="margin-left: 10px">
+                                
+                               
+                                    <button id="furtherworkYES" type="button" onclick = 'parent.setFollowOnMandatory(true); document.getElementById("furtherworkV").value="YES";document.getElementById("additionalworkNO").disabled=false;document.getElementById("additionalworkYES").disabled=false;this.active=true' class="btn btn-lg btn-default">Yes</button>
+                                    <button id="furtherworkNO" type="button" onclick = 'parent.setFollowOnMandatory(false);document.getElementById("furtherworkV").value="NO";document.getElementById("additionalworkNO").click();document.getElementById("additionalworkNO").disabled=true;document.getElementById("additionalworkYES").disabled=true;this.active=true' class="btn btn-lg btn-primary active">No</button>
+                                </div>
+                            </td>
+                        </tr>                                                
+                        <tr>
+                            <td width = "50%">If yes, have you requested additional work to be raised?</td>
+                           
+                           <td align="left">
+                             <input type="TEXT" id="additionalworkV" name="additionalworkV" HIDDEN value="NO">
+                                <div class="btn-group btn-toggle" id="additionalwork" style="margin-left: 10px">
+                                
+                               
+                                    <button id="additionalworkYES" type="button" onclick = 'document.getElementById("additionalworkV").value="YES";this.active=true' class="btn btn-lg btn-default">Yes</button>
+                                    <button id="additionalworkNO" type="button" onclick = 'document.getElementById("additionalworkV").value="NO";this.active=true' class="btn btn-lg btn-primary active">No</button>
+                                </div>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <td width = "50%">Would this Customer's issue potentially benefit from being on a PPM Programme?</td>
+                           
+                             <td align="left">
+                             <input type="TEXT" id="ppmV" name="ppmV" HIDDEN value="NO">
+                                <div class="btn-group btn-toggle" id="ppm" style="margin-left: 10px">
+                                
+                               
+                                    <button id="ppmYES" type="button" onclick = 'document.getElementById("ppmV").value="YES";this.active=true;document.getElementById("ppmdetails").disabled=false' class="btn btn-lg btn-default">Yes</button>
+                                    <button id="ppmNO" type="button" onclick = 'document.getElementById("ppmV").value="NO";this.active=true;document.getElementById("ppmdetails").disabled=true' class="btn btn-lg btn-primary active">No</button>
+                                </div>
+                            </td>
+                        </tr>  
+						<tr>
+                            <td width = "50%">If yes, please provide details</td>
+                           
+                             <td align="left">
+                             <textarea id="ppmdetails" name="ppmdetails"  rows="4" cols="50" maxlength="1500"  disabled=true ></textarea>
+                               
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                
+                        <input type="submit" name="Save" value="SEND"  id="Save" hidden />
+                      
+
+
+            </div>
+
+        </form>
+    </div>
+    
+	
+<script>
+$(".btn-group > .btn").click(function () {
+    $(this).addClass("active").siblings().removeClass("active");
+    $(this).addClass("btn-primary").siblings().removeClass("btn-primary").addClass("btn-default");
+});
+$(window).resize(function() {
+	
+	console.log("scrolling 1 to "+document.activeElement.id)
+		location.href="#"
+		location.href="#"+document.activeElement.id
+
+	});
+
+function loadCompleted(){
+	 if(document.getElementById('spokentoV').value=="NO"){
+		
+		 $('#spokentoNO').click()	
+		 document.getElementById("custsatifaction").value="CS06";
+		 document.getElementById("custsatifaction").disabled=true
+		 document.getElementById("reason").disabled=true
+	 }else{
+		
+		$('#spokentoYES').click()
+	 }	 
+	 if(document.getElementById('contactcardV').value=="NO"){
+		 $('#contactcardNO').click()	
+		
+	 }else{
+		$('#contactcardYES').click()
+	 }	
+	 if(document.getElementById("resolvedV").value=="NO"){
+		
+			$('#resolvedNO').click()
+		}else{
+			$('#resolvedYES').click()
+		
+		}
+	
+	if((document.getElementById("custsatifaction").value=="CS04")||(document.getElementById("custsatifaction").value=="CS05")){
+		
+		document.getElementById("reason").disabled=false
+	}	else{
+		
+		document.getElementById("reason").disabled=true
+	}
+	if(document.getElementById("furtherworkV").value=="NO"){
+		$('#furtherworkNO').click()
+	}else{
+		$('#furtherworkYES').click()
+	}
+	if(document.getElementById("additionalworkV").value=="NO"){
+		$('#additionalworkNO').click()
+	}else{
+		$('#additionalworkYES').click()
+	}
+	if(document.getElementById("ppmV").value=="NO"){
+		$('#ppmNO').click()
+		
+	}else{
+		$('#ppmYES').click()
+		
+	}
+	
+	
+	                          
+	    
+	
+	   
+	  
+	   
+	
+	
+}
+function isComplete()
+{
+	   
+	    var elem = document.getElementById('MyJobsForm').elements;
+		cnt = 0;
+		fvalid=0
+		
+	    for(var i = 0; i < elem.length; i++)
+	    {
+	    	if ((elem[i].type!='button')&&(elem[i].type!='submit')&&(elem[i].getAttribute("merge")!='mergecol')){
+	    		
+	    		
+	    			if(!elem[i].hasAttribute("Ignore")){
+	    				console.log(elem[i].id+":"+elem[i].value)
+	    				cnt=cnt+1
+	    				if((elem[i].value!="")||(elem[i].disabled==true)){
+	    					fvalid++;
+	    					elem[i].style.borderColor=""
+	    				}else{
+	    					elem[i].style.borderColor = "red"
+	    				}
+	    			
+	    		}
+
+	    	}
+	    } 
+		
+	    console.log("valid Fields = "+fvalid+" of "+cnt)
+	   
+	    if(fvalid!=cnt){
+	    	return "All Fields must be completed must be completed"
+	    	return False
+	    }
+	    return "COMPLETE"
+}	
+function addNA(){
+	 removeNA() 
+    var x = document.getElementById("custsatifaction");
+    var option = document.createElement("option");
+    option.text = "Non-Applicable";
+    option.value = "CS06";
+    x.add(option);
+}
+function removeNA() {
+	var selectobject=document.getElementById("custsatifaction")
+	  for (var i=0; i<selectobject.length; i++){
+	  if (selectobject.options[i].value == 'CS06' )
+	     selectobject.remove(i);
+	  }
+}
+	</script>
+	
+</body>
+</html>

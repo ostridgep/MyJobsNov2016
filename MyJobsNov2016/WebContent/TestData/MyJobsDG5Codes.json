@@ -1,0 +1,1964 @@
+{
+	"dg5": [{
+		"cfcodes": [{
+			"level": "1",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST010",
+			"codegroup": "CUST010",
+			"codegroup_text": "Contact been made with Customer?",
+			"long_text": "Has the Customer been spoken to and updated?",
+			"code": "",
+			"codedesc": ""
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST010",
+			"codegroup": "CUST010",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "N",
+			"codedesc": "No"
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST010",
+			"codegroup": "CUST010",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "Y",
+			"codedesc": "Yes"
+		},
+		{
+			"level": "1",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST020",
+			"codegroup": "CUST020",
+			"codegroup_text": "Has a Contact Card been left?",
+			"long_text": "Has a contact card been left with the Customer?",
+			"code": "",
+			"codedesc": ""
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST020",
+			"codegroup": "CUST020",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "N",
+			"codedesc": "No"
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST020",
+			"codegroup": "CUST020",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "Y",
+			"codedesc": "Yes"
+		},
+		{
+			"level": "1",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST030",
+			"codegroup": "CUST030",
+			"codegroup_text": "How Satisfied is the customer?",
+			"long_text": "Please confirm how satisfied the Customer is with the actions you have taken",
+			"code": "",
+			"codedesc": ""
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST030",
+			"codegroup": "CUST030",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "CS01",
+			"codedesc": "Very Satisfied"
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST030",
+			"codegroup": "CUST030",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "CS02",
+			"codedesc": "Fairly Satisfied"
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST030",
+			"codegroup": "CUST030",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "CS03",
+			"codedesc": "Neither satisfied nor dissatisfied"
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST030",
+			"codegroup": "CUST030",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "CS04",
+			"codedesc": "Fairly Dissatisfied"
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST030",
+			"codegroup": "CUST030",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "CS05",
+			"codedesc": "Very Dissatisfied"
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST030",
+			"codegroup": "CUST030",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "CS06",
+			"codedesc": "Non-Applicable"
+		},
+		{
+			"level": "1",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST040",
+			"codegroup": "CUST040",
+			"codegroup_text": "Reason for Dissatisfaction",
+			"long_text": "If Customer is Dissatisfied / Very Dissatisfied, please state why",
+			"code": "",
+			"codedesc": ""
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST040",
+			"codegroup": "CUST040",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "LT",
+			"codedesc": "See Text"
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST040",
+			"codegroup": "CUST040",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "NA",
+			"codedesc": "Non-Applicable"
+		},
+		{
+			"level": "1",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST050",
+			"codegroup": "CUST050",
+			"codegroup_text": "Is Customer Issue 100% Resolved?",
+			"long_text": "Is the Customer's issue 100% resolved?",
+			"code": "",
+			"codedesc": ""
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST050",
+			"codegroup": "CUST050",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "N",
+			"codedesc": "No"
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST050",
+			"codegroup": "CUST050",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "Y",
+			"codedesc": "Yes"
+		},
+		{
+			"level": "1",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST060",
+			"codegroup": "CUST060",
+			"codegroup_text": "If no, Underlying Cause of Problem",
+			"long_text": "If no, what is the underlying cause of the problem?",
+			"code": "",
+			"codedesc": ""
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST060",
+			"codegroup": "CUST060",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "LT",
+			"codedesc": "See Text"
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST060",
+			"codegroup": "CUST060",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "NA",
+			"codedesc": "Non-Applicable"
+		},
+		{
+			"level": "1",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST070",
+			"codegroup": "CUST070",
+			"codegroup_text": "Further Work Required and Explained?",
+			"long_text": "Is any further work required and has this been fully explained to the Customer?",
+			"code": "",
+			"codedesc": ""
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST070",
+			"codegroup": "CUST070",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "N",
+			"codedesc": "No"
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST070",
+			"codegroup": "CUST070",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "Y",
+			"codedesc": "Yes"
+		},
+		{
+			"level": "1",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST080",
+			"codegroup": "CUST080",
+			"codegroup_text": "Has Additional Work been requested?",
+			"long_text": "If yes, have you requested additional work to be raised?",
+			"code": "",
+			"codedesc": ""
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST080",
+			"codegroup": "CUST080",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "N",
+			"codedesc": "No"
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST080",
+			"codegroup": "CUST080",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "Y",
+			"codedesc": "Yes"
+		},
+		{
+			"level": "1",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST090",
+			"codegroup": "CUST090",
+			"codegroup_text": "Customer Issue on PPM Programme?",
+			"long_text": "Would this Customer's issue potentially benefit from being on a PPM Programme?",
+			"code": "",
+			"codedesc": ""
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST090",
+			"codegroup": "CUST090",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "N",
+			"codedesc": "No"
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST090",
+			"codegroup": "CUST090",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "Y",
+			"codedesc": "Yes"
+		},
+		{
+			"level": "1",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST100",
+			"codegroup": "CUST100",
+			"codegroup_text": "PPM Details",
+			"long_text": "If yes, please provide details",
+			"code": "",
+			"codedesc": ""
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST100",
+			"codegroup": "CUST100",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "LT",
+			"codedesc": "See Text"
+		},
+		{
+			"level": "2",
+			"catalog_type": "Y",
+			"code_cat_group": "YCUST100",
+			"codegroup": "CUST100",
+			"codegroup_text": "",
+			"long_text": "",
+			"code": "NA",
+			"codedesc": "Non-Applicable"
+		}],
+		"rel": [{
+			"catalogue": "P",
+			"codegrp": "CPSE",
+			"code": "P614",
+			"codedesc": "Flooding From Watercourse",
+			"dg5rel": "X",
+			"piarel": "-"
+		},
+		{
+			"catalogue": "P",
+			"codegrp": "CPSE",
+			"code": "P615",
+			"codedesc": "Flooding From Land",
+			"dg5rel": "X",
+			"piarel": ""
+		},
+		{
+			"catalogue": "P",
+			"codegrp": "CPSE",
+			"code": "P616",
+			"codedesc": "Flooding From Highways",
+			"dg5rel": "X",
+			"piarel": "-"
+		},
+		{
+			"catalogue": "S",
+			"codegrp": "CIDG",
+			"code": "I215",
+			"codedesc": "Internal Domestic Flooding",
+			"dg5rel": "X",
+			"piarel": "-"
+		},
+		{
+			"catalogue": "S",
+			"codegrp": "CIDG",
+			"code": "I216",
+			"codedesc": "Internal Non-Domestic Flooding",
+			"dg5rel": "X",
+			"piarel": "-"
+		},
+		{
+			"catalogue": "S",
+			"codegrp": "CIDG",
+			"code": "I217",
+			"codedesc": "External Flooding",
+			"dg5rel": "X",
+			"piarel": "-"
+		},
+		{
+			"catalogue": "S",
+			"codegrp": "CIGE",
+			"code": "I101",
+			"codedesc": "Pollution - Watercourse",
+			"dg5rel": "-",
+			"piarel": "X"
+		},
+		{
+			"catalogue": "S",
+			"codegrp": "CIGE",
+			"code": "I102",
+			"codedesc": "Pollution - Beach",
+			"dg5rel": "-",
+			"piarel": "X"
+		},
+		{
+			"catalogue": "S",
+			"codegrp": "CIGE",
+			"code": "I103",
+			"codedesc": "Pollution - Other (Specify)",
+			"dg5rel": "-",
+			"piarel": "X"
+		},
+		{
+			"catalogue": "S",
+			"codegrp": "CIGE",
+			"code": "I107",
+			"codedesc": "Residual Sewage Debris",
+			"dg5rel": "X",
+			"piarel": ""
+		}],
+		"codes": [{
+			"type": "DF",
+			"level": "1",
+			"coderef": "ATW",
+			"description": "Attendance Weather",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "ATW",
+			"description": "",
+			"code": "DR",
+			"codedesc": "Dry",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "ATW",
+			"description": "",
+			"code": "RA",
+			"codedesc": "Rain",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "ATW",
+			"description": "",
+			"code": "SM",
+			"codedesc": "Snow Melt",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "ATW",
+			"description": "",
+			"code": "ST",
+			"codedesc": "Storm",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "1",
+			"coderef": "CAU",
+			"description": "Cause",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "CAU",
+			"description": "",
+			"code": "Z",
+			"codedesc": "Other Eqpt. failure due to 3rd part",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "CAU",
+			"description": "",
+			"code": "Y",
+			"codedesc": "Blockage due to 3rd party",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "CAU",
+			"description": "",
+			"code": "X",
+			"codedesc": "Collapse due to 3rd party",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "CAU",
+			"description": "",
+			"code": "W",
+			"codedesc": "P.S. Failure due to 3rd party",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "CAU",
+			"description": "",
+			"code": "P",
+			"codedesc": "Pumping Station Failure",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "CAU",
+			"description": "",
+			"code": "O",
+			"codedesc": "Overloaded",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "CAU",
+			"description": "",
+			"code": "E",
+			"codedesc": "Other Equipment Failure",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "CAU",
+			"description": "",
+			"code": "C",
+			"codedesc": "Collapse",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "CAU",
+			"description": "",
+			"code": "B",
+			"codedesc": "Blockage",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "1",
+			"coderef": "FLW",
+			"description": "Weather Condition",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "FLW",
+			"description": "",
+			"code": "04",
+			"codedesc": "Snow Melt",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "FLW",
+			"description": "",
+			"code": "03",
+			"codedesc": "Storm",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "FLW",
+			"description": "",
+			"code": "02",
+			"codedesc": "Rain",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "FLW",
+			"description": "",
+			"code": "01",
+			"codedesc": "Dry",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "1",
+			"coderef": "FSO",
+			"description": "Flooding Source",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "FSO",
+			"description": "",
+			"code": "AP",
+			"codedesc": "AW pumping station",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "FSO",
+			"description": "",
+			"code": "AS",
+			"codedesc": "AW sewer",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "FSO",
+			"description": "",
+			"code": "WM",
+			"codedesc": "Water main",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "FSO",
+			"description": "",
+			"code": "FR",
+			"codedesc": "Field runoff",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "FSO",
+			"description": "",
+			"code": "HD",
+			"codedesc": "Highway drainage",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "FSO",
+			"description": "",
+			"code": "NA",
+			"codedesc": "Non AW Sewer",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "FSO",
+			"description": "",
+			"code": "RS",
+			"codedesc": "River/stream",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "1",
+			"coderef": "IPF",
+			"description": "Indication of Previous Flooding",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "IPF",
+			"description": "",
+			"code": "04",
+			"codedesc": "Regular - Infrequent",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "IPF",
+			"description": "",
+			"code": "03",
+			"codedesc": "Regular - every 2-3 years",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "IPF",
+			"description": "",
+			"code": "01",
+			"codedesc": "None / Not Known",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "IPF",
+			"description": "",
+			"code": "02",
+			"codedesc": "Regular - every year",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "1",
+			"coderef": "RCA",
+			"description": "Root Cause",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "B1",
+			"codedesc": "FOG",
+			"parenttype": "CAU",
+			"parentcode": "B"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "B2",
+			"codedesc": "Non-flushable",
+			"parenttype": "CAU",
+			"parentcode": "B"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "B3",
+			"codedesc": "Rubble",
+			"parenttype": "CAU",
+			"parentcode": "B"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "B4",
+			"codedesc": "Silt",
+			"parenttype": "CAU",
+			"parentcode": "B"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "B5",
+			"codedesc": "Roots",
+			"parenttype": "CAU",
+			"parentcode": "B"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "B6",
+			"codedesc": "Unknown",
+			"parenttype": "CAU",
+			"parentcode": "B"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "B7",
+			"codedesc": "3rd Party(X)",
+			"parenttype": "CAU",
+			"parentcode": "B"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "C1",
+			"codedesc": "Natural Collapse",
+			"parenttype": "CAU",
+			"parentcode": "C"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "C2",
+			"codedesc": "Caused By 3rd Party",
+			"parenttype": "CAU",
+			"parentcode": "C"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "C3",
+			"codedesc": "Burst Rising Main",
+			"parenttype": "CAU",
+			"parentcode": "C"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "E1",
+			"codedesc": "NRV Failure",
+			"parenttype": "CAU",
+			"parentcode": "E"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "E2",
+			"codedesc": "Hydrobrake Failure",
+			"parenttype": "CAU",
+			"parentcode": "E"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "E3",
+			"codedesc": "Leaking Valve",
+			"parenttype": "CAU",
+			"parentcode": "E"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "E4",
+			"codedesc": "Vacuum Pot Failure",
+			"parenttype": "CAU",
+			"parentcode": "E"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "E5",
+			"codedesc": "3rd Party(Z)",
+			"parenttype": "CAU",
+			"parentcode": "E"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "E6",
+			"codedesc": "Other",
+			"parenttype": "CAU",
+			"parentcode": "E"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "O1",
+			"codedesc": "Insufficient Sewer Capacity",
+			"parenttype": "CAU",
+			"parentcode": "O"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "O2",
+			"codedesc": "Insufficient PS Capacity",
+			"parenttype": "CAU",
+			"parentcode": "O"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "P1",
+			"codedesc": "Failure",
+			"parenttype": "CAU",
+			"parentcode": "P"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "P2",
+			"codedesc": "Vandalism",
+			"parenttype": "CAU",
+			"parentcode": "P"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "P3",
+			"codedesc": "3rd Party(W)",
+			"parenttype": "CAU",
+			"parentcode": "P"
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "RCA",
+			"description": "",
+			"code": "P4",
+			"codedesc": "Power Failure",
+			"parenttype": "CAU",
+			"parentcode": "P"
+		},
+		{
+			"type": "DF",
+			"level": "1",
+			"coderef": "SPS",
+			"description": "Spill Size",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "SPS",
+			"description": "Spill Size",
+			"code": "3",
+			"codedesc": "Large",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "SPS",
+			"description": "Spill Size",
+			"code": "2",
+			"codedesc": "Medium",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "SPS",
+			"description": "Spill Size",
+			"code": "1",
+			"codedesc": "Small",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "1",
+			"coderef": "SWS",
+			"description": "Sewer Status",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "SWS",
+			"description": "",
+			"code": "03",
+			"codedesc": "Transferred",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "SWS",
+			"description": "",
+			"code": "02",
+			"codedesc": "Private",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "SWS",
+			"description": "",
+			"code": "01",
+			"codedesc": "Public",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "1",
+			"coderef": "SWT",
+			"description": "Sewer Type",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "SWT",
+			"description": "",
+			"code": "05",
+			"codedesc": "Vacuum Sewer",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "SWT",
+			"description": "",
+			"code": "04",
+			"codedesc": "Rising Main",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "SWT",
+			"description": "",
+			"code": "03",
+			"codedesc": "Surface Sewer",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "SWT",
+			"description": "",
+			"code": "02",
+			"codedesc": "Combined Sewer",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DF",
+			"level": "2",
+			"coderef": "SWT",
+			"description": "",
+			"code": "01",
+			"codedesc": "Foul Sewer",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "1",
+			"coderef": "DRD",
+			"description": "Depth Recording Depth",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "DRD",
+			"description": "",
+			"code": "DA",
+			"codedesc": "Damp Patch",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "DRD",
+			"description": "",
+			"code": "G1",
+			"codedesc": ">100mm",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "DRD",
+			"description": "",
+			"code": "L1",
+			"codedesc": "<100mm",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "DRD",
+			"description": "",
+			"code": "PU",
+			"codedesc": "Puddle",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "1",
+			"coderef": "DRR",
+			"description": "Depth Recording Room",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "DRR",
+			"description": "",
+			"code": "BA",
+			"codedesc": "Bathroom",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "DRR",
+			"description": "",
+			"code": "CO",
+			"codedesc": "Conservatory",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "DRR",
+			"description": "",
+			"code": "GA",
+			"codedesc": "Garage with Adjoining Door",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "DRR",
+			"description": "",
+			"code": "KI",
+			"codedesc": "Kitchen",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "DRR",
+			"description": "",
+			"code": "OT",
+			"codedesc": "Other",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "DRR",
+			"description": "",
+			"code": "PO",
+			"codedesc": "Porch",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "DRR",
+			"description": "",
+			"code": "RE",
+			"codedesc": "Reception",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "DRR",
+			"description": "",
+			"code": "ST",
+			"codedesc": "Study",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "DRR",
+			"description": "",
+			"code": "WO",
+			"codedesc": "Workshop",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "1",
+			"coderef": "FLO",
+			"description": "Flooding Type",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "FLO",
+			"description": "",
+			"code": "3",
+			"codedesc": "External",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "FLO",
+			"description": "",
+			"code": "2",
+			"codedesc": "Internal Non-Domestic",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "FLO",
+			"description": "",
+			"code": "1",
+			"codedesc": "Internal Domestic",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "1",
+			"coderef": "FLS",
+			"description": "Flooding Sub-Type",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "FLS",
+			"description": "",
+			"code": "10",
+			"codedesc": "Other - Highways",
+			"parenttype": "FLO",
+			"parentcode": "3"
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "FLS",
+			"description": "",
+			"code": "09",
+			"codedesc": "Other - Agricultural",
+			"parenttype": "FLO",
+			"parentcode": "3"
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "FLS",
+			"description": "",
+			"code": "08",
+			"codedesc": "Other - Open Areas",
+			"parenttype": "FLO",
+			"parentcode": "3"
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "FLS",
+			"description": "",
+			"code": "07",
+			"codedesc": "Other - Amenity Areas",
+			"parenttype": "FLO",
+			"parentcode": "3"
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "FLS",
+			"description": "",
+			"code": "06",
+			"codedesc": "Other - Commercial / Industrial",
+			"parenttype": "FLO",
+			"parentcode": "3"
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "FLS",
+			"description": "",
+			"code": "05",
+			"codedesc": "Other - Public Buildings",
+			"parenttype": "FLO",
+			"parentcode": "3"
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "FLS",
+			"description": "",
+			"code": "04",
+			"codedesc": "Curtilages",
+			"parenttype": "FLO",
+			"parentcode": "3"
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "FLS",
+			"description": "",
+			"code": "03",
+			"codedesc": "Uninhabited cellar",
+			"parenttype": "FLO",
+			"parentcode": "2"
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "FLS",
+			"description": "",
+			"code": "02",
+			"codedesc": "Underfloor",
+			"parenttype": "FLO",
+			"parentcode": "2"
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "FLS",
+			"description": "",
+			"code": "01",
+			"codedesc": "Inside property",
+			"parenttype": "FLO",
+			"parentcode": "2"
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "FLS",
+			"description": "",
+			"code": "03",
+			"codedesc": "Uninhabited cellar",
+			"parenttype": "FLO",
+			"parentcode": "1"
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "FLS",
+			"description": "",
+			"code": "02",
+			"codedesc": "Underfloor",
+			"parenttype": "FLO",
+			"parentcode": "1"
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "FLS",
+			"description": "",
+			"code": "01",
+			"codedesc": "Inside property",
+			"parenttype": "FLO",
+			"parentcode": "1"
+		},
+		{
+			"type": "DL",
+			"level": "1",
+			"coderef": "SEV",
+			"description": "Severity",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "SEV",
+			"description": "",
+			"code": "1",
+			"codedesc": "No Impact",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "SEV",
+			"description": "",
+			"code": "2",
+			"codedesc": "Minor",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "SEV",
+			"description": "",
+			"code": "3",
+			"codedesc": "Moderate",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "SEV",
+			"description": "",
+			"code": "4",
+			"codedesc": "Severe",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "DL",
+			"level": "2",
+			"coderef": "SEV",
+			"description": "",
+			"code": "5",
+			"codedesc": "Very Severe",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "1",
+			"coderef": "AEI",
+			"description": "Aesthetic Impact",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "AEI",
+			"description": "",
+			"code": "2",
+			"codedesc": "Strong smell",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "AEI",
+			"description": "",
+			"code": "3",
+			"codedesc": "Grey water",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "AEI",
+			"description": "",
+			"code": "4",
+			"codedesc": "Foam/scum/iridescence",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "AEI",
+			"description": "",
+			"code": "5",
+			"codedesc": "Fats/oils/grease",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "AEI",
+			"description": "",
+			"code": "1",
+			"codedesc": "Faint smell/odour",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "AEI",
+			"description": "",
+			"code": "6",
+			"codedesc": "Industrial/chemical",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "AEI",
+			"description": "",
+			"code": "7",
+			"codedesc": "Litter/rags",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "AEI",
+			"description": "",
+			"code": "8",
+			"codedesc": "Sewage fungus",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "AEI",
+			"description": "",
+			"code": "9",
+			"codedesc": "Faeces/gross litter",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "1",
+			"coderef": "AMI",
+			"description": "Amenity Impact",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "AMI",
+			"description": "",
+			"code": "1",
+			"codedesc": "minor access/rear of properties",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "AMI",
+			"description": "",
+			"code": "2",
+			"codedesc": "public access via footpath or highw",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "AMI",
+			"description": "",
+			"code": "3",
+			"codedesc": "recreational area/paark/watersports",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "AMI",
+			"description": "",
+			"code": "4",
+			"codedesc": "potable abstaction point downstream",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "1",
+			"coderef": "DIS",
+			"description": "Discharge Type",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "DIS",
+			"description": "",
+			"code": "1",
+			"codedesc": "STW outfall",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "DIS",
+			"description": "",
+			"code": "2",
+			"codedesc": "CSO",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "DIS",
+			"description": "",
+			"code": "3",
+			"codedesc": "SWO",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "DIS",
+			"description": "",
+			"code": "4",
+			"codedesc": "Overland flow",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "DIS",
+			"description": "",
+			"code": "CS",
+			"codedesc": "Combined Sewer Overflow",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "DIS",
+			"description": "",
+			"code": "FS",
+			"codedesc": "Foul Sewer",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "DIS",
+			"description": "",
+			"code": "OW",
+			"codedesc": "Other Water Industry Premises",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "DIS",
+			"description": "",
+			"code": "PS",
+			"codedesc": "Pumping Station",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "DIS",
+			"description": "",
+			"code": "RM",
+			"codedesc": "Rising Main",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "DIS",
+			"description": "",
+			"code": "WT",
+			"codedesc": "Water Treatement Works",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "DIS",
+			"description": "",
+			"code": "WD",
+			"codedesc": "Water Distribution System",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "DIS",
+			"description": "",
+			"code": "SW",
+			"codedesc": "Surface Water Outfall",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "DIS",
+			"description": "",
+			"code": "ST",
+			"codedesc": "Storm Tank",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "DIS",
+			"description": "",
+			"code": "SE",
+			"codedesc": "Sewage Treatment Works",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "1",
+			"coderef": "PSI",
+			"description": "Pollution Site",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "PSI",
+			"description": "",
+			"code": "AN",
+			"codedesc": "Area Name",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "PSI",
+			"description": "",
+			"code": "AS",
+			"codedesc": "Asset Short Code",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "PSI",
+			"description": "",
+			"code": "HI",
+			"codedesc": "Highway",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "PSI",
+			"description": "",
+			"code": "SN",
+			"codedesc": "Site Name",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "1",
+			"coderef": "WCT",
+			"description": "Water Course Type",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "WCT",
+			"description": "",
+			"code": "1",
+			"codedesc": "Dry ditch",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "WCT",
+			"description": "",
+			"code": "2",
+			"codedesc": "Canal",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "WCT",
+			"description": "",
+			"code": "3",
+			"codedesc": "Lake/pond",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "WCT",
+			"description": "",
+			"code": "4",
+			"codedesc": "Stream",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "WCT",
+			"description": "",
+			"code": "5",
+			"codedesc": "Flowing river",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "1",
+			"coderef": "WCW",
+			"description": "Water Course Width",
+			"code": "",
+			"codedesc": "",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "WCW",
+			"description": "",
+			"code": "1",
+			"codedesc": "< 1m",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "WCW",
+			"description": "",
+			"code": "2",
+			"codedesc": "1 to 5m",
+			"parenttype": "",
+			"parentcode": ""
+		},
+		{
+			"type": "PI",
+			"level": "2",
+			"coderef": "WCW",
+			"description": "",
+			"code": "3",
+			"codedesc": "> 5m",
+			"parenttype": "",
+			"parentcode": ""
+		}]
+	}]
+}

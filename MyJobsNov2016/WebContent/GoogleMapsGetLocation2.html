@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+<script src="resources/sap-ui-core.js" type="text/javascript"
+	id="sap-ui-bootstrap" 
+	
+	data-sap-ui-libs="sap.m,sap.ui.commons"
+	data-sap-ui-theme="sap_bluecrystal">
+	
+</script>
+<script
+src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBvFhNXJAWH4dyHHkDtyZc6bxLeDmLTaKA">
+</script>
+
+<script src="myresources/js/jscoord-1.1.1.js"></script> 
+<script src="myresources/js/html5sql.js"></script>  
+<script src="myresources/js/MyJobsDB.js"></script>
+<script src="myresources/js/MyJobsUtils.js"></script>
+<script src="myresources/js/polys/geoxml3.js"></script>
+<script src="myresources/js/ProjectedOverlay.js"></script>
+ <link href="myresources/css/jq/jquery.mobile-1.4.5.min.css" rel="stylesheet" />
+
+
+
+
+<script>
+
+var larr=[]
+function loadlayer(kml){
+	lno=larr.indexOf(kml)
+	if(lno<0){
+		layers.parse(kml);
+		larr.push(kml)
+	}else{
+		layers.showDocument(layers.docs[lno]);
+	}
+	
+}
+function hidelayer(kml){
+	lno=larr.indexOf(kml)
+	if(lno>=0){
+		layers.hideDocument(layers.docs[lno]);
+	}
+	
+}
+var layers ="";
+var formLayers = new sap.m.Dialog("dlgLayers",{
+    title:"Layers Config",
+    modal: true,
+    contentWidth:"1em",
+    buttons: [
+   
+				new sap.m.Button("dlgConfigCancel", {
+				    text: "Close",
+				    type: 	sap.m.ButtonType.Reject,
+				    tap: [ function(oEvt) {		  
+					 
+				    	formLayers.close()
+						  } ]
+				})
+				],					
+    content:[
+			new sap.m.Table({
+				columns : [
+							new sap.m.Column({
+								styleClass : "key",
+								valign : "Center",
+								width : "35%",
+								hAlign : "Right"
+							}),
+							new sap.m.Column({
+								minScreenWidth : "Medium",
+								demandPopin : true
+							})
+						],
+				items : [
+							new sap.m.ColumnListItem({
+								cells : [
+									new sap.m.Label({
+										text : "Sewers"
+									}),
+									new sap.m.Switch('layer1',{
+		   								state: false,
+										type: sap.m.SwitchType.AcceptReject,
+										change: function(evt){
+										if(!sap.ui.getCore().getElementById('layer1').getState()){
+											
+											hidelayer("TestData/kml/Huntingdon_Sewers.kml");
+											
+										}else{
+											
+											loadlayer("TestData/kml/Huntingdon_Sewers.kml");
+											
+										
+										}
+										
+											
+									    },
+										
+									})
+								]
+							}),
+							new sap.m.ColumnListItem({
+								cells : [
+									new sap.m.Label({
+										text : "Manholes"
+									}),
+										new sap.m.Switch('layer2',{
+			   								state: false,
+											type: sap.m.SwitchType.AcceptReject,
+											change: function(evt){
+											if(!sap.ui.getCore().getElementById('layer2').getState()){
+												hidelayer("TestData/kml/Manholes_Huntingdon.kml");
+												
+											}else{
+												
+												loadlayer("TestData/kml/Manholes_Huntingdon.kml");
+												
+											
+											}
+												
+												
+										    },
+											
+										})
+									]
+							}),
+							new sap.m.ColumnListItem({
+								cells : [
+									new sap.m.Label({
+										text : "Discharge"
+									}),
+										new sap.m.Switch('layer3',{
+			   								state: false,
+											type: sap.m.SwitchType.AcceptReject,
+											change: function(evt){
+											if(!sap.ui.getCore().getElementById('layer3').getState()){
+												hidelayer("TestData/kml/SewDischarge_Huntingdon.kml");
+												
+											}else{
+												
+												loadlayer("TestData/kml/SewDischarge_Huntingdon.kml");
+												
+											
+											}
+												
+												
+										    },
+											
+										})
+									]
+							}),
+							new sap.m.ColumnListItem({
+								cells : [
+									new sap.m.Label({
+										text : "Pump"
+									}),
+										new sap.m.Switch('layer4',{
+			   								state: false,
+											type: sap.m.SwitchType.AcceptReject,
+											change: function(evt){
+											if(!sap.ui.getCore().getElementById('layer4').getState()){
+											
+													hidelayer("TestData/kml/SewPump_Huntingdon.kml");
+													
+												}else{
+													
+													loadlayer("TestData/kml/SewPump_Huntingdon.kml");
+												
+												}
+												
+												
+										    },
+											
+										})
+									]
+							}),
+							new sap.m.ColumnListItem({
+								cells : [
+									new sap.m.Label({
+										text : "Storage"
+									}),
+										new sap.m.Switch('layer5',{
+			   								state: false,
+											type: sap.m.SwitchType.AcceptReject,
+											change: function(evt){
+											if(!sap.ui.getCore().getElementById('layer5').getState()){
+											
+													hidelayer("TestData/kml/SewStorage_Huntingdon.kml");
+													
+												}else{
+													
+													loadlayer("TestData/kml/SewStorage_Huntingdon.kml");
+													
+												
+												}
+												
+												
+										    },
+											
+										})
+									]
+							}),
+							new sap.m.ColumnListItem({
+								cells : [
+									new sap.m.Label({
+										text : "Treatment"
+									}),
+										new sap.m.Switch('layer6',{
+			   								state: false,
+											type: sap.m.SwitchType.AcceptReject,
+											change: function(evt){
+											if(!sap.ui.getCore().getElementById('layer6').getState()){
+											
+													hidelayer("TestData/kml/SewTreatment_Huntingdon.kml");
+													
+												}else{
+													
+													loadlayer("TestData/kml/SewTreatment_Huntingdon.kml");
+													
+												
+												}
+												
+												
+										    },
+											
+										})
+									]
+							}),
+							new sap.m.ColumnListItem({
+								cells : [
+									new sap.m.Label({
+										text : "Supply"
+									}),
+										new sap.m.Switch('layer7',{
+			   								state: false,
+											type: sap.m.SwitchType.AcceptReject,
+											change: function(evt){
+											if(!sap.ui.getCore().getElementById('layer7').getState()){
+											
+													hidelayer("http://pjomyjobs.azurewebsites.net/SAP.kml");
+													
+												}else{
+													
+													loadlayer("http://pjomyjobs.azurewebsites.net/SAP.kml");
+													
+												
+												}
+												
+												
+										    },
+											
+										})
+									]
+							})
+			             ]
+			             
+			          
+			          })
+			        ]
+
+ })
+var houses=[]
+html5sql.openDatabase("com.aws.myjobs","myjobs", 5*1024*1024);		
+var infowindow = false;
+var map;
+var myCenter=""
+
+
+function initialize()
+{
+	if (navigator.geolocation) {
+	    navigator.geolocation.getCurrentPosition(function (position) {
+	    	//myCenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	    	myCenter = new google.maps.LatLng(52.33323376759313	, -0.18170186859980667)
+	        map.setCenter(myCenter);
+	    	layers = new geoXML3.parser({map: map, 
+	    		afterParse: layerLoaded,
+	    	    zoom: false,
+	    		processStyles: true});
+	    });
+	   
+
+	}else{
+		myCenter=new google.maps.LatLng(51.508742,-0.120850);
+	}
+var mapProp = {
+  center:myCenter,
+  zoom:18,
+  mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+
+  map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+ 
+     
+  google.maps.event.addListener(map, 'click', function(event) {
+    //placeMarker(event.latLng);
+  });
+  google.maps.event.addListenerOnce(map,'idle',function(){
+	  google.maps.event.trigger(map, "resize");
+  })
+  google.maps.event.addListener(map, 'bounds_changed', function() {
+	  //loadProps() 
+ })
+ google.maps.event.addListenerOnce(map, 'idle', function(){
+	
+	 
+});
+  //loadProps() 
+}
+function layerLoaded(){
+	//sap.ui.getCore().byId("LayerLoading").setVisible(false)
+}
+function placeMarkers(){
+// Display multiple markers on a map
+
+
+	// Loop through our array of markers & place each one on the map  
+	//for( i = 0; i < markers.length; i++ ) {
+	 //   var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+	  //  placeHouse(position,markers[i][0],markers[i][3]) 
+//	}
+}
+function placeHouse(location,Address,floc) {
+	  var marker = new google.maps.Marker({
+	    position: location,
+	    icon: "images/housesmall.png",
+	    map: map,
+	  });
+	houses.push(marker)
+	marker.addListener('click', function(event) {
+		infowindow.open(map,marker);
+	  });
+	  var infowindow = new google.maps.InfoWindow({
+	    content:"Address: "+Address+"<BR>"+"ID: "+floc
+	  });
+	  //infowindow.open(map,marker);
+	}
+function placeMarker(location) {
+  var marker = new google.maps.Marker({
+    position: location,
+    map: map,
+  });
+marker.addListener('click', function(event) {
+	loadProps()
+	        
+    var lat = marker.getPosition().lat();
+	var lng = marker.getPosition().lng();
+	localStorage.setItem('mapLocation',lat+","+lng)
+	
+	
+	//parent.formGMaps.close()
+
+  });
+  var infowindow = new google.maps.InfoWindow({
+    content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
+  });
+  infowindow.open(map,marker);
+}
+
+
+function loadProps()
+{
+
+
+	  var bounds =  map.getBounds();
+      var ne = bounds.getNorthEast();
+      var sw = bounds.getSouthWest();
+      for (var n = 0; n < houses.length; n++) {
+    	  houses[n].setMap(null);
+      }
+      houses=[]
+	html5sql.process("select * from Properties where (lat < "+ ne.lat()+ " and lat > "+sw.lat()+ ") and ( lon > "+sw.lng()+" and lon < "+ne.lng()+")",
+			 function(transaction, results, rowsArray){
+//alert("select * from Properties where (lat < "+ ne.lat()+ " and lat > "+sw.lat()+ ") and ( lon > "+sw.lng()+" and lon < "+ne.lng()+")")
+//alert(rowsArray.length)
+				if(rowsArray.length>0){
+n = 0;
+					
+					while (n < rowsArray.length) {
+						
+						 var position = new google.maps.LatLng(rowsArray[n].lat, rowsArray[n].lon);
+						 
+						 var address = rowsArray[n].street+", "+rowsArray[n].city+", "+rowsArray[n].postcode
+						 placeHouse(position,address,rowsArray[n].funcloc) 
+
+						
+
+						n++;
+					 }
+			
+			 }
+	},
+			 function(error, statement){
+		alert("Error: " + error.message + " when reading mps processing " + statement);
+			 }        
+			);
+	
+	}
+var vpage  = new sap.m.Page('VehicleCheck',{
+    title:"MyJobs - Map",  
+    content: 
+        [new sap.ui.core.HTML("MAP",{
+        	visible:true,
+        	content: '<div id="googleMap" style="width:1024;height:800px;"></div>'
+
+
+        }),
+        new sap.m.VBox("LOADING", { 
+        	alignItems: sap.m.FlexAlignItems.Center,
+            items:[new sap.m.BusyIndicator("MapLoading",{
+            	  text: "Map Loading",
+              	  visible: false
+              }),
+              new sap.m.BusyIndicator("LayerLoading",{
+            	  text: "Layer Loading",
+              	  visible: false
+              })
+                
+            ]
+          
+            })
+        ],
+    footer:
+        new sap.m.Bar (
+                  {
+
+                  contentRight : [
+                         new sap.m.Button({
+                                      
+                                       icon:"sap-icon://settings",
+                                      text:"Layers",
+                                      type:        sap.m.ButtonType.Accept,
+                                             press: [ function(){
+                                                    formLayers.open()
+                                                    
+                                                           }]
+                                      }),
+                                                                         
+                               ],
+                        
+                  contentMiddle : [ ],
+                              
+                             
+                            	  
+           
+    }),
+
+
+ enableScrolling:true,showNavButton: "{device>/isPhone}" });
+
+var app = new sap.m.App();
+
+app.setInitialPage(vpage.getId()); 
+    
+
+
+vpage.placeAt("body");
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+</head>
+<body id="body" class="sapUiBody">
+
+   
+
+		
+
+</body>
+</html>

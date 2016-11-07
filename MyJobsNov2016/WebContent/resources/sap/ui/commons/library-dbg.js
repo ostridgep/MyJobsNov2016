@@ -20,14 +20,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType',
 	 * @namespace
 	 * @name sap.ui.commons
 	 * @author SAP SE
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 * @public
 	 */
 
 	// delegate further initialization of this library to the Core
 	sap.ui.getCore().initLibrary({
 		name : "sap.ui.commons",
-		version: "1.36.8",
+		version: "1.40.10",
 		dependencies : ["sap.ui.core","sap.ui.layout","sap.ui.unified"],
 		types: [
 			"sap.ui.commons.ButtonStyle",
@@ -57,7 +57,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType',
 			"sap.ui.commons.layout.HAlign",
 			"sap.ui.commons.layout.Padding",
 			"sap.ui.commons.layout.Separation",
-			"sap.ui.commons.layout.VAlign"
+			"sap.ui.commons.layout.VAlign",
+			"sap.ui.commons.ColorPickerMode"
 		],
 		interfaces: [
 			"sap.ui.commons.FormattedTextViewControl",
@@ -102,7 +103,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType',
 			"sap.ui.commons.RangeSlider",
 			"sap.ui.commons.RatingIndicator",
 			"sap.ui.commons.ResponsiveContainer",
-			"sap.ui.commons.ResponsiveContainerRange",
 			"sap.ui.commons.RichTooltip",
 			"sap.ui.commons.RoadMap",
 			"sap.ui.commons.RowRepeater",
@@ -139,6 +139,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType',
 			"sap.ui.commons.MenuItem",
 			"sap.ui.commons.MenuItemBase",
 			"sap.ui.commons.MenuTextFieldItem",
+			"sap.ui.commons.ResponsiveContainerRange",
 			"sap.ui.commons.RoadMapStep",
 			"sap.ui.commons.RowRepeaterFilter",
 			"sap.ui.commons.RowRepeaterSorter",
@@ -191,6 +192,30 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType',
 		 * @public
 		 */
 		Default : "Default"
+
+	};
+
+
+	/**
+	 * different styles for a ColorPicker.
+	 *
+	 * @enum {string}
+	 * @public
+	 * @ui5-metamodel This enumeration also will be described in the UI5 (legacy) designtime metamodel
+	 */
+	sap.ui.commons.ColorPickerMode = {
+
+			/**
+			 * Color picker works with HSV values.
+			 * @public
+			 */
+			HSV : "HSV",
+
+			/**
+			 * Color picker works with HSL values.
+			 * @public
+			 */
+			HSL : "HSL"
 
 	};
 

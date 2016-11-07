@@ -24,7 +24,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 *
 	 * @constructor
 	 * @public
@@ -147,7 +147,6 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	//Constants convenient class selections
 	Carousel._INNER_SELECTOR = ".sapMCrslInner";
 	Carousel._PAGE_INDICATOR_SELECTOR = ".sapMCrslBulleted";
-	Carousel._HUD_SELECTOR = ".sapMCrslHud";
 	Carousel._ITEM_SELECTOR = ".sapMCrslItem";
 	Carousel._LEFTMOST_CLASS = "sapMCrslLeftmost";
 	Carousel._RIGHTMOST_CLASS = "sapMCrslRightmost";
@@ -205,9 +204,6 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 		this._cleanUpScrollContainer();
 		this._fnAdjustAfterResize = null;
 		this._aScrollContainers = null;
-		if (!Carousel._bIE9 && this._$InnerDiv) {
-			jQuery(window).off("resize", this._fnAdjustAfterResize);
-		}
 		this._$InnerDiv = null;
 	};
 
@@ -279,9 +275,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 			sap.ui.core.ResizeHandler.deregister(this._sResizeListenerId);
 			this._sResizeListenerId = null;
 		}
-		if (!Carousel._bIE9 && this._$InnerDiv) {
-			jQuery(window).off("resize", this._fnAdjustAfterResize);
-		}
+
 		return this;
 	};
 
@@ -319,10 +313,15 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 					this._adjustHUDVisibility(1);
 				}
 			} else {
-				this._oMobifyCarousel.changeAnimation('sapMCrslNoTransition');
-				//mobify carousel is 1-based
-				this._oMobifyCarousel.move(iIndex + 1);
-				this._changePage(iIndex + 1);
+
+				var oCore = sap.ui.getCore();
+
+				if (oCore.isThemeApplied()) {
+					// mobify carousel is 1-based
+					this._moveToPage(iIndex + 1);
+				} else {
+					oCore.attachThemeChanged(this._handleThemeLoad, this);
+				}
 
 				// BCP: 1580078315
 				if (sap.zen && sap.zen.commons && this.getParent() instanceof sap.zen.commons.layout.PositionContainer) {
@@ -349,12 +348,10 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 				this._changePage(iNextSlide);
 			}
 		}, this));
+
 		this._$InnerDiv = this.$().find(Carousel._INNER_SELECTOR)[0];
-		if (Carousel._bIE9) {
-			this._sResizeListenerId = sap.ui.core.ResizeHandler.register(this._$InnerDiv, this._fnAdjustAfterResize);
-		} else {
-			jQuery(window).on("resize", this._fnAdjustAfterResize);
-		}
+
+		this._sResizeListenerId = sap.ui.core.ResizeHandler.register(this._$InnerDiv, this._fnAdjustAfterResize);
 
 		// Fixes wrong focusing in IE
 		// BCP: 1670008915
@@ -366,6 +363,62 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 
 			return false;
 		});
+
+
+		// Fixes displaying correct page after carousel become visible in an IconTabBar
+		// BCP: 1680019792
+		var sClassName = 'sap.m.IconTabBar';
+		var oParent = this.getParent();
+		while (oParent) {
+			if (oParent.getMetadata().getName() == sClassName) {
+				var that = this;
+
+				/*eslint-disable no-loop-func */
+				oParent.attachExpand(function (oEvt) {
+					var bExpand = oEvt.getParameter('expand');
+					if (bExpand && iIndex > 0) {
+						// mobify carousel is 1-based
+						that._moveToPage(iIndex + 1);
+					}
+				});
+				break;
+			}
+
+			oParent = oParent.getParent();
+		}
+	};
+
+	/**
+	 * Fired when the theme is loaded
+	 *
+	 * @private
+	 */
+	Carousel.prototype._handleThemeLoad = function() {
+
+		var oCore,
+			sActivePage = this.getActivePage();
+
+		if (sActivePage) {
+			var iIndex = this._getPageNumber(sActivePage);
+			if (iIndex > 0) {
+				// mobify carousel is 1-based
+				this._moveToPage(iIndex + 1);
+			}
+		}
+
+		oCore = sap.ui.getCore();
+		oCore.detachThemeChanged(this._handleThemeLoad, this);
+	};
+
+	/**
+	 * Moves carousel and mobify carousel to specific page
+	 *
+	 * @private
+	 */
+	Carousel.prototype._moveToPage = function(iIndex) {
+		this._oMobifyCarousel.changeAnimation('sapMCrslNoTransition');
+		this._oMobifyCarousel.move(iIndex);
+		this._changePage(iIndex);
 	};
 
 	/**
@@ -399,7 +452,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 		if (sap.ui.Device.system.desktop && !this.getLoop() && this.getPages().length > 1) {
 			//update HUD arrow visibility for left- and
 			//rightmost pages
-			var $HUDContainer = this.$().find(Carousel._HUD_SELECTOR);
+			var $HUDContainer = this.$('hud');
 			//clear marker classes first
 			$HUDContainer.removeClass(Carousel._LATERAL_CLASSES);
 
@@ -998,10 +1051,6 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 		if (nIndex !== 0) {
 			nNewIndex = this._getPageNumber(this.getActivePage()) + 1 + nIndex;
 		}
-
-		// Set the index in the interval between 1 and the total page count in the Carousel
-		nNewIndex = Math.max(nNewIndex, 1);
-		nNewIndex = Math.min(nNewIndex, this.getPages().length);
 
 		this._oMobifyCarousel.move(nNewIndex);
 	};

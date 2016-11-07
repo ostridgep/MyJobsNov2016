@@ -5,8 +5,8 @@
  */
 
 // Provides control sap.m.UploadCollectionItem.
-sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Element', 'sap/m/ObjectAttribute', 'sap/m/ObjectStatus', 'sap/ui/core/util/File'],
-	function(jQuery, library, Element, ObjectAttribute, ObjectStatus, FileUtil) {
+sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Element', 'sap/m/ObjectAttribute', 'sap/m/ObjectStatus', 'sap/m/ObjectMarker', 'sap/ui/core/util/File'],
+	function(jQuery, library, Element, ObjectAttribute, ObjectStatus, ObjectMarker, FileUtil) {
 	"use strict";
 
 	/**
@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Element', 'sap/m/O
 	 * @extends sap.ui.core.Element
 	 *
 	 * @author SAP SE
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 *
 	 * @constructor
 	 * @public
@@ -104,6 +104,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Element', 'sap/m/O
 
 				/**
 				 * Specifies the URL where the file is located.
+				 * If the application doesn't provide a value for this property, the icon and the file name of the UploadCollectionItem are not clickable.
 				 */
 				url : {
 					type : "string",
@@ -188,7 +189,8 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Element', 'sap/m/O
 				 */
 				attributes : {
 					type : "sap.m.ObjectAttribute",
-					multiple : true
+					multiple : true,
+					bindable : "bindable"
 				},
 				/**
 				 * Hidden aggregation for the attributes created from the deprecated properties uploadedDate, contributor and fileSize
@@ -206,7 +208,19 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Element', 'sap/m/O
 				 */
 				statuses : {
 					type : "sap.m.ObjectStatus",
-					multiple : true
+					multiple : true,
+					bindable : "bindable"
+				},
+				/**
+				 * Markers of an uploaded item
+				 * Markers will be displayed after an item has been uploaded
+				 * But not in Edit mode
+				 * @since 1.40
+				 */
+				markers : {
+					type : "sap.m.ObjectMarker",
+					multiple : true,
+					bindable : "bindable"
 				}
 			},
 
@@ -266,12 +280,14 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Element', 'sap/m/O
 	 * @param {boolean} selected value to set on Selected property
 	 * @since 1.34
 	 * @public
+	 * @returns {sap.m.UploadCollectionItem} The current UploadCollectionItem
 	 */
 	UploadCollectionItem.prototype.setSelected = function(selected) {
 		if (selected !== this.getSelected()) {
 			this.setProperty("selected", selected, true);
 			this.fireEvent("selected");
 		}
+		return this;
 	};
 
 	/**

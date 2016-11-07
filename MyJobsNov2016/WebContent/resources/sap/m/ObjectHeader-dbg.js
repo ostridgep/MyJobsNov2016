@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	 * @class
 	 * ObjectHeader is a display control that enables the user to easily identify a specific object. The object header title is the key identifier of the object and additional text and icons can be used to further distinguish it from other objects.
 	 * @extends sap.ui.core.Control
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 *
 	 * @constructor
 	 * @public
@@ -119,8 +119,8 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 			numberState : {type : "sap.ui.core.ValueState", group : "Misc", defaultValue : sap.ui.core.ValueState.None},
 
 			/**
-			 * NOTE: Only applied if you set "responsive=false".
-			 * Displays the condensed object header with title, one attribute, number and number unit.
+			 * <code>ObjectHeader</code> with title, one attribute, number, and number unit.<br>
+			 * <b>Note:</b> Only applied if the <code>responsive</code> property is set to <code>false</code>.
 			 */
 			condensed : {type : "boolean", group : "Appearance", defaultValue : false},
 
@@ -141,9 +141,27 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 			responsive : {type : "boolean", group : "Behavior", defaultValue : false},
 
 			/**
-			 * NOTE: Only applied if you set "responsive=true".
-			 * If this property is set to true, the control occupies the available screen area so that the contents are arranged in a different way to fit in that area.
-			 * If it is set to false, the control is optimized for the master detail view.
+			 * Optimizes the display of the elements of the <code>ObjectHeader</code>.<br>
+			 * Set this property to <code>true</code> if your application uses a full-screen layout (as opposed to a master-detail or other split-screen layout).<br>
+			 * <b>Note</b>: Only applied if the <code>responsive</code> property is also set to <code>true</code>.
+			 *
+			 * If set to <code>true</code>, the following situations apply:
+			 * <ul>
+			 *                 <li>On desktop, 1-3 attributes/statuses - positioned as a third block on the right side of the Title/Number group</li>
+			 *                 <li>On desktop, 4+ attributes/statuses - 4 columns below the Title/Number</li>
+			 *                 <li>On tablet (portrait mode), always in 2 columns below the Title/Number</li>
+			 *                 <li>On tablet (landscape mode), 1-2 attributes/statuses - 2 columns below the Title/Number</li>
+			 *                 <li>On tablet (landscape mode), 3+ attributes/statuses - 3 columns below the Title/Number</li>
+			 *</ul>
+			 * On phone, the attributes and statuses are always positioned in 1 column below the Title/Number of the <code>ObjectHeader</code>.<br>
+			 *
+			 * If set to <code>false</code>, the attributes and statuses are being positioned below the Title/Number of the <code>ObjectHeader</code> in 2 or 3 columns depending on their number:
+			 * <ul>
+			 *                <li>On desktop, 1-4 attributes/statuses - 2 columns</li>
+			 *                <li>On desktop, 5+ attributes/statuses - 3 columns</li>
+			 *                <li>On tablet, always in 2 columns</li>
+			 * </ul>
+			 *
 			 * @since 1.28
 			 */
 			fullScreenOptimized : {type : "boolean", group : "Appearance", defaultValue : false},
@@ -240,11 +258,30 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 			_objectNumber : {type : "sap.m.ObjectNumber", multiple : false, visibility : "hidden"},
 
 			/**
+			 * NOTE: Only applied if you set "responsive=false".
+			 * Additional object numbers and units are managed in this aggregation.
+			 * The numbers are hidden on tablet and phone size screens.
+			 * When only one number is provided, it is rendered with additional separator from the main ObjectHeader number.
+			 * @since 1.38.0
+			 */
+			additionalNumbers : {type : "sap.m.ObjectNumber", multiple : true, singularName : "additionalNumber"},
+
+			/**
 			 * This aggregation takes only effect when you set "responsive" to true.
 			 * It can either be filled with an sap.m.IconTabBar or a sap.suite.ui.commons.HeaderContainer control. Overflow handling must be taken care of by the inner control. If used with an IconTabBar control, only the header will be displayed inside the object header, the content will be displayed below the ObjectHeader.
 			 * @since 1.21.1
 			 */
-			headerContainer : {type : "sap.m.ObjectHeaderContainer", multiple : false}
+			headerContainer : {type : "sap.m.ObjectHeaderContainer", multiple : false},
+
+			/**
+			 * Manages the Favorite marker.
+			 */
+			_markerFavorite : {type : "sap.m.ObjectMarker", multiple : false, visibility : "hidden"},
+
+			/**
+			 * Manages the Flagged marker.
+			 */
+			_markerFlagged : {type : "sap.m.ObjectMarker", multiple : false, visibility : "hidden"}
 		},
 		associations : {
 
@@ -318,28 +355,6 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	ObjectHeader.prototype.init = function() {
 		var oLibraryResourceBundle = sap.ui.getCore().getLibraryResourceBundle("sap.m"); // get resource translation bundle;
 
-		//TODO Remove placeholder when Safari iconFont issue is addressed.
-		this._oPlaceholderIcon = IconPool.createControlByURI({
-			id : this.getId() + "-placeholder",
-			useIconTooltip : false,
-			src : IconPool.getIconURI("fridge")
-		});
-		this._oPlaceholderIcon.addStyleClass("sapMObjStatusMarkerInvisible");
-
-		this._oFlagIcon = IconPool.createControlByURI({
-			id : this.getId() + "-flag",
-			tooltip: oLibraryResourceBundle.getText("TOOLTIP_OH_FLAG_MARK_VALUE"),
-			src : IconPool.getIconURI("flag"),
-			visible : false
-		});
-
-		this._oFavIcon = IconPool.createControlByURI({
-			id : this.getId() + "-favorite",
-			tooltip: oLibraryResourceBundle.getText("TOOLTIP_OH_FAVORITE_MARK_VALUE"),
-			src : IconPool.getIconURI("favorite"),
-			visible : false
-		});
-
 		this._oTitleArrowIcon = IconPool.createControlByURI({
 			id : this.getId() + "-titleArrow",
 			src: IconPool.getIconURI("arrow-down"),
@@ -348,7 +363,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 			tooltip: oLibraryResourceBundle.getText("OH_SELECT_ARROW_TOOLTIP"),
 			size: "1.375rem",
 			press : function(oEvent) {
-				// empty function here becuase icon needs an event handler in order to show pointer cursor
+				// empty function here because icon needs an event handler in order to show pointer cursor
 			}
 		});
 
@@ -516,9 +531,45 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	};
 
 	/**
-	 * lazy initializes the object number aggregation
+	 * Sets the visibility value of the Favorite marker.
+	 * @override
+	 * @public
+	 * @param {boolean} bMarked the new value
+	 * @returns {sap.m.ObjectHeader} this pointer for chaining
+	 */
+	ObjectHeader.prototype.setMarkFavorite = function (bMarked) {
+		this.setProperty("markFavorite", bMarked, false);
+
+		if (bMarked) {
+			this._getMarkerFavorite();
+		} else {
+			this.destroyAggregation("_markerFavorite");
+		}
+		return this;
+	};
+
+	/**
+	 * Sets the visibility value of the Flagged marker.
+	 * @override
+	 * @public
+	 * @param {boolean} bMarked the new value
+	 * @returns {sap.m.ObjectHeader} this pointer for chaining
+	 */
+	ObjectHeader.prototype.setMarkFlagged = function (bMarked) {
+		this.setProperty("markFlagged", bMarked, false);
+
+		if (bMarked) {
+			this._getMarkerFlagged();
+		} else {
+			this.destroyAggregation("_markerFlagged");
+		}
+		return this;
+	};
+
+	/**
+	 * Lazily initializes the <code>ObjectNumber</code> aggregation.
 	 * @private
-	 * @returns {Object} the newly created control
+	 * @returns {sap.m.ObjectNumber} The newly created control
 	 */
 	ObjectHeader.prototype._getObjectNumber = function () {
 		var oControl = this.getAggregation("_objectNumber");
@@ -529,6 +580,42 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 			});
 
 			this.setAggregation("_objectNumber", oControl, true);
+		}
+		return oControl;
+	};
+
+	/**
+	 * Lazily initializes the <code>ObjectMarker</code> favorite aggregation.
+	 * @private
+	 * @returns {sap.m.ObjectMarker} The newly created control
+	 */
+	ObjectHeader.prototype._getMarkerFavorite = function () {
+		var oControl = this.getAggregation("_markerFavorite");
+
+		if (!oControl) {
+			oControl = new sap.m.ObjectMarker(this.getId() + "-favorite", {
+				type: sap.m.ObjectMarkerType.Favorite
+			});
+
+			this.setAggregation("_markerFavorite", oControl, true);
+		}
+		return oControl;
+	};
+
+	/**
+	 * Lazily initializes the <code>ObjectMarker</code> favorite aggregation.
+	 * @private
+	 * @returns {sap.m.ObjectMarker} The newly created control
+	 */
+	ObjectHeader.prototype._getMarkerFlagged = function () {
+		var oControl = this.getAggregation("_markerFlagged");
+
+		if (!oControl) {
+			oControl = new sap.m.ObjectMarker(this.getId() + "-flag", {
+				type: sap.m.ObjectMarkerType.Flagged
+			});
+
+			this.setAggregation("_markerFlagged", oControl, true);
 		}
 		return oControl;
 	};
@@ -593,6 +680,9 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	 */
 	ObjectHeader.prototype._handleSpaceOrEnter = function(oEvent) {
 		var sSourceId = oEvent.target.id;
+
+		// mark the event that it is handled by the control
+		oEvent.setMarked();
 
 		if (!this.getResponsive() && this.getTitleActive() && ( sSourceId === this.getId() + "-title" ||
 				jQuery(oEvent.target).parent().attr('id') === this.getId() + "-title" || // check if the parent of the "h" tag is the "title"
@@ -776,21 +866,6 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 			this._oImageControl = undefined;
 		}
 
-		if (this._oPlaceholderIcon) {
-			this._oPlaceholderIcon.destroy();
-			this._oPlaceholderIcon = undefined;
-		}
-
-		if (this._oFavIcon) {
-			this._oFavIcon.destroy();
-			this._oFavIcon = undefined;
-		}
-
-		if (this._oFlagIcon) {
-			this._oFlagIcon.destroy();
-			this._oFlagIcon = undefined;
-		}
-
 		if (this._oTitleArrowIcon) {
 			this._oTitleArrowIcon.destroy();
 			this._oTitleArrowIcon = undefined;
@@ -875,8 +950,12 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 				sap.ui.Device.media.attachHandler(this._rerenderOHR, this, sap.ui.Device.media.RANGESETS.SAP_STANDARD);
 			}
 		} else {
+			var sTextAlign = bPageRTL ? sap.ui.core.TextAlign.Left : sap.ui.core.TextAlign.Right;
 			if (oObjectNumber && oObjectNumber.getNumber()) { // adjust alignment according the design specification
-				oObjectNumber.setTextAlign(bPageRTL ? sap.ui.core.TextAlign.Left : sap.ui.core.TextAlign.Right);
+				oObjectNumber.setTextAlign(sTextAlign);
+			}
+			if (this.getAdditionalNumbers()) { // do the same for the additional numbers
+				this._setTextAlignANum(sTextAlign);
 			}
 		}
 	};
@@ -1041,6 +1120,18 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 			return this.getBackgroundDesign();
 		}
 
+	};
+
+	/**
+	 * Sets the text alignment for all additional numbers inside the AdditionalNumbers aggregation
+	 *
+	 * @private
+	 */
+	ObjectHeader.prototype._setTextAlignANum = function(sTextAlign) {
+		var numbers = this.getAdditionalNumbers();
+		for (var i = 0; i < numbers.length; i++) {
+			numbers[i].setTextAlign(sTextAlign);
+		}
 	};
 
 	return ObjectHeader;

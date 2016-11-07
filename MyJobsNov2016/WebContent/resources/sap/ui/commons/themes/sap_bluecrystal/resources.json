@@ -271,6 +271,14 @@
       "theme": "sap_bluecrystal"
     },
     {
+      "name": "img-RTL/ColorPicker/Alphaslider_BG.png",
+      "theme": "sap_bluecrystal"
+    },
+    {
+      "name": "img-RTL/ColorPicker/Swatch_BG.png",
+      "theme": "sap_bluecrystal"
+    },
+    {
       "name": "img-RTL/TriStateCheckBox.png",
       "theme": "sap_bluecrystal"
     },
@@ -547,10 +555,6 @@
       "theme": "sap_bluecrystal"
     },
     {
-      "name": "img-RTL/toolbar/overflow.png",
-      "theme": "sap_bluecrystal"
-    },
-    {
       "name": "img-RTL/tree/CollapseAll.png",
       "theme": "sap_bluecrystal"
     },
@@ -615,7 +619,11 @@
       "theme": "sap_bluecrystal"
     },
     {
-      "name": "img/TriStateCheckBox.png",
+      "name": "img/ColorPicker/Alphaslider_BG.png",
+      "theme": "sap_bluecrystal"
+    },
+    {
+      "name": "img/ColorPicker/Swatch_BG.png",
       "theme": "sap_bluecrystal"
     },
     {
@@ -888,10 +896,6 @@
     },
     {
       "name": "img/tab-close.png",
-      "theme": "sap_bluecrystal"
-    },
-    {
-      "name": "img/toolbar/overflow.png",
       "theme": "sap_bluecrystal"
     },
     {

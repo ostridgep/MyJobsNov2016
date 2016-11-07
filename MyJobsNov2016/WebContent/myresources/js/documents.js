@@ -846,6 +846,7 @@ var formGetPhoto = new sap.m.Dialog("dlgGetPhoto",{
             ],
             
             beforeOpen:function(){
+            	selectedPhotoState="Local";
             	try{
             		
             		DeviceStorageDirectory=cordova.file.externalApplicationStorageDirectory
@@ -1511,7 +1512,7 @@ else{
 }
 	}
 
-	var jqxhr = $.post( localStorage.getItem("DOCSERVER")+'PhotoUpload.php',
+	var jqxhr = $.post( localStorage.getItem("DOCSERVER")+'MYJOBSXMLUpload.php',
 			{
 			fname: xmlname,
 			content:content
@@ -1691,6 +1692,37 @@ function downloadForms () {
 		        n++;
 	          		
 				}
+		   getIconsDL();
+	}
+function downloadIcons () { 
+	
+	var n=0;
+	//  create a loop function
+
+		   while(n<+filesToDownload.FILES.length){
+		       fileName = filesToDownload.FILES[n].name;
+		      
+		       
+		        window.resolveLocalFileSystemURL(DeviceStorageDirectory+filesToDownload.FILES[n].url+"/"  + filesToDownload.FILES[n].name, appStart, downloadAllAsset(filesToDownload.FILES[n].name, filesToDownload.FILES[n].url+"/"));
+		        if(filesToDownload.FILES[n].type!="DIRECTORY"){
+			    	   if(filesToDownload.FILES[n].name.toUpperCase().indexOf(".png")>0){
+				   		x=filesToDownload.FILES[n].name.split(".")
+				   		
+				   			if(x[1].toUpperCase()=="HTML"){ //Its the Form file
+				   				
+				   				y=x[0].split("~")
+				   				
+				   				if(y.length==3)
+				   					{
+				   					InsertFormDetails(DeviceStorageDirectory+filesToDownload.FILES[n].url+"/"  + filesToDownload.FILES[n].name,y[0],y[1],y[2])
+				   					}
+				   			}
+				   		
+			    	   }
+			       }
+		        n++;
+	          		
+				}
   
 	}
 function checkFileDownload () { 
@@ -1842,7 +1874,7 @@ function transferRequestedFile(fileName,dir,id) {
 		);  
 		},
 		function (error) {
-	    	html5sql.process("UPDATE MyJobDetsDraw SET zurl = 'Download Failed' where id='"+id+"'",
+	    	html5sql.process("UPDATE MyJobDetsDraw SET zurl = 'RequestLiveLink' where id='"+id+"'",
 					 function(){
 	    		buildJobDocsTable();
 					 },

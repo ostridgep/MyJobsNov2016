@@ -49,6 +49,11 @@ sap.ui.define(['jquery.sap.global'],
 			}
 
 			rm.write(">");
+
+			if (oControl.getResizable()) {
+				rm.write('<div class="sapMPopoverResizeHandle"></div>');
+			}
+
 			this.renderContent(rm, oControl);
 			rm.write("</div>");	// container
 		};
@@ -247,8 +252,8 @@ sap.ui.define(['jquery.sap.global'],
 
 			aClassNames.push("sapMPopup-CTX");
 
-			// test popover with sap-ui-xx-formfactor=compact
-			if (sap.m._bSizeCompact) {
+			// Adds styles for compact mode
+			if (oControl._bSizeCompact) {
 				aClassNames.push("sapUiSizeCompact");
 			}
 

@@ -34,8 +34,6 @@ sap.ui.define(['jquery.sap.global', './Button', './Dialog', './Text', './TextAre
 			 */
 			var MessageBox = {};
 
-			MessageBox._rb = sap.ui.getCore().getLibraryResourceBundle("sap.m");
-
 			/**
 			 * Enumeration of supported actions in a MessageBox.
 			 *
@@ -154,7 +152,8 @@ sap.ui.define(['jquery.sap.global', './Button', './Dialog', './Text', './TextAre
 							"WARNING": "sapMMessageBoxWarning",
 							"ERROR": "sapMMessageBoxError",
 							"SUCCESS": "sapMMessageBoxSuccess",
-							"QUESTION": "sapMMessageBoxQuestion"
+							"QUESTION": "sapMMessageBoxQuestion",
+							"STANDARD":  "sapMMessageBoxStandard"
 						},
 						mIcons = {
 							"INFORMATION": IconPool.getIconURI("message-information"),
@@ -163,6 +162,12 @@ sap.ui.define(['jquery.sap.global', './Button', './Dialog', './Text', './TextAre
 							"SUCCESS": IconPool.getIconURI("message-success"),
 							"QUESTION": IconPool.getIconURI("question-mark")
 						};
+
+				var _verifyBundle = function () {
+					if (sap.m.MessageBox._rb !== sap.ui.getCore().getLibraryResourceBundle("sap.m")) {
+						sap.m.MessageBox._rb = sap.ui.getCore().getLibraryResourceBundle("sap.m");
+					}
+				};
 
 				/**
 				 * Creates and displays a sap.m.Dialog with type sap.m.DialogType.Message with the given text and buttons, and optionally other parts.
@@ -227,6 +232,8 @@ sap.ui.define(['jquery.sap.global', './Button', './Dialog', './Text', './TextAre
 								horizontalScrolling: true,
 								details: ""
 							};
+
+					_verifyBundle();
 
 					if (typeof mOptions === "string" || arguments.length > 2) {
 						// Old API compatibility
@@ -374,19 +381,7 @@ sap.ui.define(['jquery.sap.global', './Button', './Dialog', './Text', './TextAre
 
 					function onOpen () {
 						if (sap.ui.getCore().getConfiguration().getAccessibility()) {
-							var $Dialog = oDialog.$(),
-								sMessageTextId;
-
-							$Dialog.attr("role", "alertdialog");
-
-							if (oMessageText) {
-								sMessageTextId = oMessageText.getId();
-
-								// Appends a value to the aria-labelledby attribute
-								$Dialog.attr("aria-labelledby", function (ix, val) {
-									return val ? val + " " + sMessageTextId : sMessageTextId;
-								});
-							}
+							oDialog.$().attr("role", "alertdialog");
 						}
 					}
 
@@ -401,11 +396,14 @@ sap.ui.define(['jquery.sap.global', './Button', './Dialog', './Text', './TextAre
 						horizontalScrolling: mOptions.horizontalScrolling,
 						afterOpen: onOpen,
 						afterClose: onclose,
-						buttons: aButtons
+						buttons: aButtons,
+						ariaLabelledBy: oMessageText ? oMessageText.getId() : undefined
 					});
 
 					if (mClasses[mOptions.icon]) {
 						oDialog.addStyleClass(mClasses[mOptions.icon]);
+					} else {
+						oDialog.addStyleClass(mClasses.STANDARD);
 					}
 
 					if (mOptions.styleClass) {
@@ -457,6 +455,8 @@ sap.ui.define(['jquery.sap.global', './Button', './Dialog', './Text', './TextAre
 				 * @static
 				 */
 				MessageBox.alert = function (vMessage, mOptions) {
+					_verifyBundle();
+
 					var mDefaults = {
 						icon: Icon.NONE,
 						title: this._rb.getText("MSGBOX_TITLE_ALERT"),
@@ -530,6 +530,8 @@ sap.ui.define(['jquery.sap.global', './Button', './Dialog', './Text', './TextAre
 				 * @static
 				 */
 				MessageBox.confirm = function (vMessage, mOptions) {
+					_verifyBundle();
+
 					var mDefaults = {
 						icon: Icon.QUESTION,
 						title: this._rb.getText("MSGBOX_TITLE_CONFIRM"),
@@ -600,6 +602,8 @@ sap.ui.define(['jquery.sap.global', './Button', './Dialog', './Text', './TextAre
 				 * @static
 				 */
 				MessageBox.error = function (vMessage, mOptions) {
+					_verifyBundle();
+
 					var mDefaults = {
 						icon: Icon.ERROR,
 						title: this._rb.getText("MSGBOX_TITLE_ERROR"),
@@ -654,6 +658,8 @@ sap.ui.define(['jquery.sap.global', './Button', './Dialog', './Text', './TextAre
 				 * @static
 				 */
 				MessageBox.information = function (vMessage, mOptions) {
+					_verifyBundle();
+
 					var mDefaults = {
 						icon: Icon.INFORMATION,
 						title: this._rb.getText("MSGBOX_TITLE_INFO"),
@@ -708,6 +714,8 @@ sap.ui.define(['jquery.sap.global', './Button', './Dialog', './Text', './TextAre
 				 * @static
 				 */
 				MessageBox.warning = function (vMessage, mOptions) {
+					_verifyBundle();
+
 					var mDefaults = {
 						icon: Icon.WARNING ,
 						title: this._rb.getText("MSGBOX_TITLE_WARNING"),
@@ -762,6 +770,8 @@ sap.ui.define(['jquery.sap.global', './Button', './Dialog', './Text', './TextAre
 				 * @static
 				 */
 				MessageBox.success = function (vMessage, mOptions) {
+					_verifyBundle();
+
 					var mDefaults = {
 						icon: Icon.SUCCESS ,
 						title: this._rb.getText("MSGBOX_TITLE_SUCCESS"),

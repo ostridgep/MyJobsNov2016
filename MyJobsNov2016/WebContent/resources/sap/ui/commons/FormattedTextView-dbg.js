@@ -19,11 +19,12 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 		 * @class
 		 * The FormattedTextView control allows the usage of a limited set of HTML tags for display.
 		 * @extends sap.ui.core.Control
-		 * @version 1.36.8
+		 * @version 1.40.10
 		 *
 		 * @constructor
 		 * @public
 		 * @since 1.9.0
+		 * @deprecated Since version 1.38. Instead, use the <code>sap.ui.core.HTML</code> control.
 		 * @alias sap.ui.commons.FormattedTextView
 		 * @ui5-metamodel This control/element also will be described in the UI5 (legacy) designtime metamodel
 		 */

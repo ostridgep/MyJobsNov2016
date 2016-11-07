@@ -11,11 +11,6 @@
       "theme": "sap_hcb"
     },
     {
-      "name": "BusyIndicator.less",
-      "designtime": true,
-      "theme": "sap_hcb"
-    },
-    {
       "name": "Icon.less",
       "designtime": true,
       "theme": "sap_hcb"

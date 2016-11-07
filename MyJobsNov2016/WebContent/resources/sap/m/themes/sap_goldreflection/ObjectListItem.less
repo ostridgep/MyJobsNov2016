@@ -196,3 +196,15 @@ html[data-sap-ui-browser="ie9"] li.sapMLIB.sapMLIBNoFlex.sapMObjLItem>.sapMLIBCo
 	padding-top: 0px;
 	padding-bottom: 0px;
 }
+
+.sapMObjLIconDiv > .sapMImg {
+	max-height: 3rem;
+	max-width: 3rem;
+}
+
+//outline-offset alternative for ObjectAttribute inside ObjectListItem. Otherwise the offset may be cut.
+html[data-sap-ui-browser ^= "ie"], html[data-sap-ui-browser^="ed"] {
+	.sapMObjLAttrDiv > .sapMObjectAttributeActive.sapMObjectAttributeDiv {
+		padding: 0.125rem;
+	}
+}

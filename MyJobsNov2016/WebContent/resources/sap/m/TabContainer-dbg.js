@@ -10,18 +10,21 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 		"use strict";
 
 		/**
-		 * Constructor for a new TabContainer.
+		 * Constructor for a new <code>TabContainer</code>.
 		 *
 		 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
 		 * @param {object} [mSettings] Initial settings for the new control
 		 *
 		 * @class
-		 * The TabContainer control represents a collection of tabs with associated content.
+		 * The <code>TabContainer</code> control represents a collection of tabs with associated content.
+		 *
+		 * The <code>TabContainer</code> is a full-page container that takes 100% of the parent width and height.
+		 * As the control is expected to occupy the the whole parent, it should be the only child of its parent.
 		 *
 		 * @extends sap.ui.core.Control
 		 *
 		 * @author SAP SE
-		 * @version 1.36.8
+		 * @version 1.40.10
 		 *
 		 * @constructor
 		 * @public
@@ -149,6 +152,13 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 			}
 		});
 
+		/* Contains mapping between TabContainerItem properties and TabStripItem properties,
+		that may be set via setter method */
+		var mTCItemToTSItemProperties = {
+			"name": "text",
+			"modified": "modified"
+		};
+
 		/**
 		 * Called before the control is rendered.
 		 */
@@ -179,7 +189,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 						this.getParent().getParent().fireAddNewButtonPress();
 					}
 				});
-
+				oControl.addStyleClass("sapMTSAddNewTabBtn");
 				this.setAggregation("_addNewButton", oControl, true);
 			}
 
@@ -251,7 +261,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 
 		/**
 		 * Gets the <code>TabContainerItem</code> content if present.
-		 * @returns { null | array <sap.ui.core.Control> }
+		 * @returns { null | Array<sap.ui.core.Control> }
 		 * @private
 		 */
 		TabContainer.prototype._getSelectedItemContent = function() {
@@ -332,14 +342,12 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 
 			if (sAggregationName === 'items') {
 				oObject.attachItemPropertyChanged(function (oEvent) {
-					oTabStripItem = this._toTabStripItem(oEvent.getSource());
 					sPropertyKey = oEvent['mParameters'].propertyKey;
-					if (sPropertyKey === 'name') {
-						sPropertyKey = 'text';
-					}
 
-					if (oTabStripItem) {
-						oTabStripItem.setProperty(sPropertyKey, oEvent['mParameters'].propertyValue, false);
+					if (mTCItemToTSItemProperties[sPropertyKey]) {//forward only if such property exists in TabStripItem
+						sPropertyKey = mTCItemToTSItemProperties[sPropertyKey];
+						oTabStripItem = this._toTabStripItem(oEvent.getSource());
+						oTabStripItem && oTabStripItem.setProperty(sPropertyKey, oEvent['mParameters'].propertyValue, false);
 					}
 				}.bind(this));
 			}
@@ -439,13 +447,17 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 		 * Override <code>showAddNewButton</code> property setter to proxy to the <code>TabStrip</code>.
 		 *
 		 * @param bShowButton {boolean} Whether to show the <code>addNewButton</code>
+		 * @returns {sap.m.TabContainer} <code>this</code> pointer for chaining
 		 * @override
 		 */
 		TabContainer.prototype.setShowAddNewButton = function (bShowButton) {
+			this.setProperty("showAddNewButton", bShowButton, true);
+
 			var oTabStrip = this._getTabStrip();
 			if (oTabStrip) {
 				oTabStrip.setAddButton(bShowButton ? this._getAddNewTabButton() : null);
 			}
+			return this;
 		};
 
 		/**

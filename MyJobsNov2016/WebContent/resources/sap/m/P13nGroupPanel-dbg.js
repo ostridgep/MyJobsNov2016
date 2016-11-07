@@ -17,7 +17,7 @@ sap.ui.define([
 	 * @param {object} [mSettings] initial settings for the new control
 	 * @class The P13nGroupPanel control is used to define group-specific settings for table personalization.
 	 * @extends sap.m.P13nPanel
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 * @constructor
 	 * @public
 	 * @alias sap.m.P13nGroupPanel
@@ -255,6 +255,7 @@ sap.ui.define([
 			validationExecutor: jQuery.proxy(this._callValidationExecutor, this)
 		});
 		this._oGroupPanel.setOperations(this._aOperations);
+		this._oGroupPanel._sAddRemoveIconTooltipKey = "GROUP";
 
 		this.addAggregation("content", this._oGroupPanel);
 	};
@@ -298,6 +299,10 @@ sap.ui.define([
 					text: fGetValueOfProperty("text", oContext, oItem_),
 					tooltip: fGetValueOfProperty("tooltip", oContext, oItem_)
 				});
+			});
+			aKeyFields.splice(0, 0, {
+				key: null,
+				text: sap.ui.getCore().getLibraryResourceBundle("sap.m").getText("P13NDIALOG_SELECTION_NONE")
 			});
 			this._oGroupPanel.setKeyFields(aKeyFields);
 
@@ -351,7 +356,7 @@ sap.ui.define([
 	};
 
 	P13nGroupPanel.prototype.addGroupItem = function(oGroupItem) {
-		this.addAggregation("groupItems", oGroupItem);
+		this.addAggregation("groupItems", oGroupItem, true);
 
 		if (!this._bIgnoreBindCalls) {
 			this._bUpdateRequired = true;
@@ -359,7 +364,7 @@ sap.ui.define([
 	};
 
 	P13nGroupPanel.prototype.insertGroupItem = function(oGroupItem, iIndex) {
-		this.insertAggregation("groupItems", oGroupItem, iIndex);
+		this.insertAggregation("groupItems", oGroupItem, iIndex, true);
 
 		if (!this._bIgnoreBindCalls) {
 			this._bUpdateRequired = true;
@@ -377,7 +382,7 @@ sap.ui.define([
 	};
 
 	P13nGroupPanel.prototype.removeGroupItem = function(oGroupItem) {
-		oGroupItem = this.removeAggregation("groupItems", oGroupItem);
+		oGroupItem = this.removeAggregation("groupItems", oGroupItem, true);
 
 		if (!this._bIgnoreBindCalls) {
 			this._bUpdateRequired = true;
@@ -387,7 +392,7 @@ sap.ui.define([
 	};
 
 	P13nGroupPanel.prototype.removeAllGroupItems = function() {
-		var aGroupItems = this.removeAllAggregation("groupItems");
+		var aGroupItems = this.removeAllAggregation("groupItems", true);
 
 		if (!this._bIgnoreBindCalls) {
 			this._bUpdateRequired = true;
@@ -428,6 +433,7 @@ sap.ui.define([
 					index: iIndex,
 					groupItemData: oGroupItem
 				});
+				that._notifyChange();
 			}
 			if (sOperation === "add") {
 				oGroupItem = new sap.m.P13nGroupItem({
@@ -443,6 +449,7 @@ sap.ui.define([
 					groupItemData: oGroupItem
 				});
 				that._bIgnoreBindCalls = false;
+				that._notifyChange();
 			}
 			if (sOperation === "remove") {
 				that._bIgnoreBindCalls = true;
@@ -451,6 +458,7 @@ sap.ui.define([
 					index: iIndex
 				});
 				that._bIgnoreBindCalls = false;
+				that._notifyChange();
 			}
 		};
 	};
@@ -500,6 +508,13 @@ sap.ui.define([
 		this.setProperty("validationListener", fListener);
 		if (fListener) {
 			fListener(this, jQuery.proxy(this._updateValidationResult, this));
+		}
+	};
+
+	P13nGroupPanel.prototype._notifyChange = function() {
+		var fListener = this.getChangeNotifier();
+		if (fListener) {
+			fListener(this);
 		}
 	};
 

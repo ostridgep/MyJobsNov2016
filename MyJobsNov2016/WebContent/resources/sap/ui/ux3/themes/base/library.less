@@ -13,7 +13,8 @@
 /* This CSS shares it rules with all other CSS of this library */
 
 /* default image for thumbnails in feeder and feedChunk*/
-@sapUiFeedPersonPlaceholder: ~"/img/feed/person_placeholder_48.png";
+@sapUiFeedPersonPlaceholder: url("img/feed/person_placeholder_48.png");
+
 /* END "shared.less" */
 
 
@@ -1063,7 +1064,6 @@ html[dir=rtl] .sapUiUx3ExactLstCollapsed > .sapUiUx3ExactLstHead > .sapUiUx3Exac
 	position: absolute;
 	right: 2px;
 	bottom: 2px;
-	background-image: url("img/exact/tophead_regular.png");
     background-repeat: no-repeat;
     height: 5px;
     width: 5px;
@@ -1086,10 +1086,6 @@ html[dir=rtl] .sapUiUx3ExactLstCollapsed > .sapUiUx3ExactLstHead > .sapUiUx3Exac
 	color: @sapUiTextInverted;
 }
 
-.sapUiUx3ExactLstTopActive.sapUiUx3ExactLstTop > .sapUiUx3ExactLstHead:hover > .sapUiUx3ExactLstHeadTopTxt > .sapUiUx3ExactLstHeadTopIco {
-	background-image: url("img/exact/tophead_hover.png");
-}
-
 /* Hidden Top-List*/
 .sapUiUx3ExactLstTop.sapUiUx3ExactLstTopHidden > .sapUiUx3ExactLstLst,
 .sapUiUx3ExactLstTop.sapUiUx3ExactLstTopHidden > .sapUiUx3ExactLstHead,
@@ -1100,6 +1096,7 @@ html[dir=rtl] .sapUiUx3ExactLstCollapsed > .sapUiUx3ExactLstHead > .sapUiUx3Exac
 .sapUiUx3ExactLstTop.sapUiUx3ExactLstTopHidden > .sapUiUx3ExactLstCntnt {
 	left: 0;
 }
+
 /* END "ExactList.less" */
 
 /* START "FacetFilter.less" */
@@ -2591,7 +2588,6 @@ html[data-sap-ui-browser^="ff"] .sapUiUx3ShellToolFontIcon {
 .sapUiUx3ShellPaneEntrySelected:hover {
 	font-size: 18px;
 	color: @sapUiHighlight;
-	background-image: url(img/shell/paneBar_arrow_selected.png);
 	background-position: center top;
 	background-repeat: no-repeat;
 	-moz-transition-property: font-size, color;
@@ -3513,22 +3509,9 @@ html[data-sap-ui-browser^="ff"] .sapUiUx3ShellToolFontIcon {
 	height: @sapUiUx3ToolPopupArrowHeight;
 	left: -@sapUiUx3ToolPopupArrowWidth;
 }
-.sapUiUx3TPArrowLeft {
-	background-image: url(img/toolpopup/arrow_left.png);
-}
-
-.sapUiUx3TPArrow.sapUiTPInverted,
-.sapUiUx3TPArrowLeft.sapUiTPInverted {
-	background-image: url(img/toolpopup/arrow_left_inverted.png);
-}
 
 .sapUiUx3TPArrowRight {
 	right: -@sapUiUx3ToolPopupArrowWidth;
-	background-image: url(img/toolpopup/arrow_right.png);
-}
-
-.sapUiUx3TPArrowRight.sapUiTPInverted {
-	background-image: url(img/toolpopup/arrow_right_inverted.png);
 }
 
 .sapUiUx3TPArrowUp {
@@ -3536,11 +3519,6 @@ html[data-sap-ui-browser^="ff"] .sapUiUx3ShellToolFontIcon {
 	top: -@sapUiUx3ToolPopupArrowWidth;
 	width: @sapUiUx3ToolPopupArrowHeight;
 	height: @sapUiUx3ToolPopupArrowWidth;
-	background-image: url(img/toolpopup/arrow_up.png);
-}
-
-.sapUiUx3TPArrowUp.sapUiTPInverted {
-	background-image: url(img/toolpopup/arrow_up_inverted.png);
 }
 
 .sapUiUx3TPArrowDown {
@@ -3548,11 +3526,6 @@ html[data-sap-ui-browser^="ff"] .sapUiUx3ShellToolFontIcon {
 	bottom: -@sapUiUx3ToolPopupArrowWidth;
 	width: @sapUiUx3ToolPopupArrowHeight;
 	height: @sapUiUx3ToolPopupArrowWidth;
-	background-image: url(img/toolpopup/arrow_down.png);
-}
-
-.sapUiUx3TPArrowDown.sapUiTPInverted {
-	background-image: url(img/toolpopup/arrow_down_inverted.png);
 }
 
 .sapUiUx3TPBtnRow {

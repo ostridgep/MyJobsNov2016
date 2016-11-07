@@ -34,10 +34,11 @@ sap.ui.define([
 	 * The OverflowToolbar control is a container based on sap.m.Toolbar, that provides overflow when its content does not fit in the visible area.
 	 *
 	 * Note: It is recommended that you use OverflowToolbar over {@link sap.m.Toolbar}, unless you want to avoid overflow in favor of shrinking.
-	 * @extends sap.ui.core.Toolbar
+	 * @extends sap.m.Toolbar
+	 * @implements sap.ui.core.Toolbar,sap.m.IBar
 	 *
 	 * @author SAP SE
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 *
 	 * @constructor
 	 * @public
@@ -311,7 +312,7 @@ sap.ui.define([
 
 					if (iControlGroup) {
 						sControlPriority = OverflowToolbar._getControlPriority(oControl);
-						iControlIndex = OverflowToolbar._getControlIndex(oControl);
+						iControlIndex = this._getControlIndex(oControl);
 
 						oGroups[iControlGroup] = oGroups[iControlGroup] || [];
 						aGroup = oGroups[iControlGroup];
@@ -328,7 +329,7 @@ sap.ui.define([
 					} else {
 						aAggregatedControls.push(oControl);
 					}
-				});
+				}, this);
 
 				// combine not grouped elements with group arrays
 				Object.keys(oGroups).forEach(function (key) {
@@ -359,7 +360,7 @@ sap.ui.define([
 				if (iPriorityCompare !== 0) {
 					return iPriorityCompare;
 				} else {
-					return OverflowToolbar._getControlIndex(vControlB) - OverflowToolbar._getControlIndex(vControlA);
+					return this._getControlIndex(vControlB) - this._getControlIndex(vControlA);
 				}
 			},
 			fnAddToActionSheetArrAndUpdateContentSize = function (oControl) {
@@ -405,10 +406,10 @@ sap.ui.define([
 
 			// There is at least one button that will go to the action sheet - add the overflow button, but only if it wasn't added already
 			iContentSize = fnAddOverflowButton.call(this, iContentSize);
-			aAggregatedMovableControls = fnAggregateMovableControls(this._aMovableControls);
+			aAggregatedMovableControls = fnAggregateMovableControls.call(this, this._aMovableControls);
 
 			// Define the overflow order, depending on items` priority and index.
-			aAggregatedMovableControls.sort(fnSortByPriorityAndIndex);
+			aAggregatedMovableControls.sort(fnSortByPriorityAndIndex.bind(this));
 
 			// Hide controls or groups while iContentSize <= iToolbarSize/
 			aAggregatedMovableControls.some(fnExtractControlsToMoveToOverflow, this);
@@ -680,6 +681,9 @@ sap.ui.define([
 
 	OverflowToolbar.prototype.removeContent = function (oControl) {
 		var vContent = this._callToolbarMethod("removeContent", arguments);
+		if (vContent) {
+			this._getPopover().removeAssociatedContent(vContent.getId());
+		}
 		this._resetAndInvalidateToolbar(false);
 
 		this._postProcessControl(vContent);
@@ -746,8 +750,8 @@ sap.ui.define([
 			return;
 		}
 
-		var sSourceControlClass = oEvent.getSource().getMetadata().getName();
-		var oControlConfig = OverflowToolbarAssociativePopoverControls.getControlConfig(sSourceControlClass);
+		var oSourceControl = oEvent.getSource();
+		var oControlConfig = OverflowToolbarAssociativePopoverControls.getControlConfig(oSourceControl);
 		var sParameterName = oEvent.getParameter("name");
 
 		// Do nothing if the changed property is in the blacklist above
@@ -839,6 +843,15 @@ sap.ui.define([
 		}
 	};
 
+	/**
+	 * Returns the control index in the OverflowToolbar content aggregation or the index of a group, which is defined by the rightmost item in the group.
+	 * @param vControl array of controls or single control
+	 * @private
+	 */
+	OverflowToolbar.prototype._getControlIndex = function (vControl) {
+		return vControl.length ? vControl._index : this.indexOfContent(vControl);
+	};
+
 	/************************************************** STATIC ***************************************************/
 
 
@@ -897,16 +910,6 @@ sap.ui.define([
 	};
 
 	/**
-	 * Returns the control index in the OverflowToolbar content aggregation or the index of a group, which is defined by the rightmost item in the group.
-	 * @static
-	 * @param vControl array of controls or single control
-	 * @private
-	 */
-	OverflowToolbar._getControlIndex = function (vControl) {
-		return vControl.length ? vControl._index : vControl.getParent().indexOfContent(vControl);
-	};
-
-	/**
 	 * Returns the control group based on the layout data
 	 * @static
 	 * @param oControl
@@ -937,6 +940,21 @@ sap.ui.define([
 
 	OverflowToolbar.prototype._detireminePopoverVerticalOffset = function () {
 		return this.$().parents().hasClass('sapUiSizeCompact') ? 2 : 3;
+	};
+
+	OverflowToolbar.prototype.onThemeChanged = function() {
+		this._resetAndInvalidateToolbar();
+	};
+
+	/**
+	 * Closes the overflow area.
+	 * Useful to manually close the overflow after having suppressed automatic closing with "closeOverflowOnInteraction=false".
+	 *
+	 * @public
+	 * @since 1.40
+	 */
+	OverflowToolbar.prototype.closeOverflow = function () {
+		this._getPopover().close();
 	};
 
 	return OverflowToolbar;

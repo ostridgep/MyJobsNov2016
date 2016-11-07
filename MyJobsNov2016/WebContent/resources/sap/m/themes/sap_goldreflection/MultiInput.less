@@ -14,7 +14,7 @@
 }
 
 // on the desktop we hide the overflow
-.sap-desktop .sapMMultiInputBorder{
+html.sap-desktop .sapMMultiInputBorder{
 	overflow: hidden;
 }
 
@@ -60,4 +60,13 @@
 
 .sapMMultiInputMultiModeInputContainer {
 	position: static;
+}
+
+// focus styles
+html.sap-desktop .sapMMultiInput.sapMFocus .sapMInputBaseInner:focus {
+	outline: none;
+}
+
+.sapMMultiInput .sapMInputBaseInner:not(.sapMInputBaseReadonlyInner):not(.sapMInputBaseStateInner):not(.sapMInputBaseDisabledInner):hover {
+	background: transparent;
 }

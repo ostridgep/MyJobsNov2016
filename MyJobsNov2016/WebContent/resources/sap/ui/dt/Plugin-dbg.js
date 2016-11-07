@@ -23,7 +23,7 @@ function(ManagedObject) {
 	 * @extends sap.ui.core.ManagedObject
 	 *
 	 * @author SAP SE
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 *
 	 * @constructor
 	 * @private
@@ -46,11 +46,21 @@ function(ManagedObject) {
 				designTime : { // its defined as a property because spa.ui.dt.designTime is a managed object and UI5 only allows associations for elements
 					type : "sap.ui.dt.DesignTime",
 					multiple : false
+				},
+
+				commandFactory : {
+					type : "sap.ui.dt.command.CommandFactory",
+					multiple : false
 				}
 			},
 			associations : {
 			},
 			events : {
+				elementModified : {
+					command : {
+						type : "sap.ui.dt.command.BaseCommand"
+					}
+				}
 			}
 		}
 	});
@@ -122,13 +132,13 @@ function(ManagedObject) {
 			oOldDesignTime.detachEvent("elementOverlayCreated", this._onElementOverlayCreated, this);
 		}
 
+		this.setProperty("designTime", oDesignTime);
+
 		if (oDesignTime) {
 			this._registerOverlays(oDesignTime);
 
 			oDesignTime.attachEvent("elementOverlayCreated", this._onElementOverlayCreated, this);
 		}
-
-		this.setProperty("designTime", oDesignTime);
 
 		return this;
 	};

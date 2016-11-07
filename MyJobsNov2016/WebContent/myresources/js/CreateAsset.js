@@ -162,7 +162,7 @@ function populateSiteFilterCreateAsset() {
     }, function (error, statement) {
     })
 }
-var labelSite = new sap.m.Label({
+var labelSite = new sap.m.Label("labelSite",{
     text: "Site"
 })
 
@@ -347,13 +347,13 @@ createAssetEquipmentTypeCell.addContent(horizontalLayout);
 
 var textSelectEquipmentType = new sap.m.TextArea("text_SelectEquipmentType", {
     enabled: false,
-    rows: 15,
+    rows: 12,
     width: "270px"
 })
 
 var textSelectFunctionType = new sap.m.TextArea("text_SelectFunctionType", {
     enabled: false,
-    rows: 15,
+    rows: 12,
     width: "270px"
 })
 var SelectFunctionType = new sap.m.Select('createAssetFilter_FunctionType', {
@@ -420,7 +420,7 @@ var inputCreateAssetFuncLocPart2 = new sap.m.Input(
             id: "inputCreateAsset_FuncLocPart2",
             textAlign: sap.ui.core.TextAlign.Center,
             width: "50px",
-            type: sap.m.InputType.Input,
+            type: sap.m.InputType.Number,
             enabled: true,
             liveChange: [function (event) {
 
@@ -519,9 +519,9 @@ var formCreateAsset = new sap.m.Dialog("form_CreateAsset", {
 			    tap: [function (oEvt) {
 
 			        var msgCancel = "You have chosen to cancel part way through the creation process. ";
-			        msgCancel += "Clicking OK will confirm you wish to cancel and return to the asset list. ";
-			        msgCancel += "Clicking Abort will take you to the previous screen.";
-			        CreateAssetConfirmCancel("Close Forms", msgCancel,
+			        msgCancel += "Clicking YES will confirm you wish to cancel and return to the Home screen";
+			        msgCancel += "Clicking NO will take you to the previous screen.";
+			        CreateAssetConfirmCancel("",msgCancel,
                             formCreateAsset)
 
 
@@ -547,6 +547,7 @@ var formCreateAsset = new sap.m.Dialog("form_CreateAsset", {
         populateInputMakeCreateAsset();
         populateoModelHelpMakeAssetList();
         createAssetPopulateSite();
+        sap.ui.getCore().getElementById("Input_CreateAssetSite").setValue("");
     },
 
     afterOpen: function () {
@@ -575,8 +576,8 @@ function setDefaultValues() {
             break;
         case recordAction.EDIT:
             otitle = "Edit Existing Asset Information - Step 2 of 4";
-            textSelectEquipmentType.setRows(15);
-            textSelectFunctionType.setRows(15);
+            textSelectEquipmentType.setRows(12);
+            textSelectFunctionType.setRows(12);
             oCreateAssetFlBlockMatrix.setVisible(true);
             inputCreateAssetPrevFuncLocPart1.setValue(currentAssetRecord.plantGroupDescriptionZPLGDESC);
             inputCreateAssetFuncLocPart1.setValue(currentAssetRecord.functionTypeZNCDESC);
@@ -970,7 +971,8 @@ function validatePageCreateAsset() {
             document.getElementById("inputCreateAsset_FuncLocPart2").style.backgroundColor = "";
         }
     }
-    if (pageisValid) {
+    if (pageisValid && ValidateFuncLocCreateAsset()) {
+    	
         currentAssetRecord.zinsLocDesc1 = inputCreateAssetFuncLocPart1.getValue();
         currentAssetRecord.zinsLocDesc2 = inputCreateAssetFuncLocPart2.getValue();
         currentAssetRecord.zinsLocDesc3 = inputCreateAssetFuncLocPart3.getValue();
@@ -1270,4 +1272,23 @@ function calculateRemainingCharacterCountCreateAsset() {
     else {
         document.getElementById("inputCreateAsset_FuncLocPart2").style.backgroundColor = "";
     }
+}
+function ValidateFuncLocCreateAsset(){
+	var a=inputCreateAssetFuncLocPart2.getValue().length;
+	if(a>2){
+		sap.m.MessageBox.show("Please Enter only two numeric charcaters", {
+	        icon: sap.m.MessageBox.Icon.WARNING,
+	        //title: title,
+	        actions: [sap.m.MessageBox.Action.CLOSE],
+	        onClose: function (oAction) {
+	        	//formCreateAssetStep3.close();
+	          
+	        }
+	    })	
+	    return false;
+	}
+	else{
+		return true;
+	}
+
 }

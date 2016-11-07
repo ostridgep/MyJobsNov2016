@@ -19,14 +19,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType',
 	 * @namespace
 	 * @name sap.ui.layout
 	 * @author SAP SE
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 * @public
 	 */
 
 	// delegate further initialization of this library to the Core
 	sap.ui.getCore().initLibrary({
 		name : "sap.ui.layout",
-		version: "1.36.8",
+		version: "1.40.10",
 		dependencies : ["sap.ui.core"],
 		types: [
 			"sap.ui.layout.BackgroundDesign",
@@ -44,6 +44,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType',
 			"sap.ui.layout.Grid",
 			"sap.ui.layout.HorizontalLayout",
 			"sap.ui.layout.ResponsiveFlowLayout",
+			"sap.ui.layout.ResponsiveSplitter",
+			"sap.ui.layout.ResponsiveSplitterPage",
 			"sap.ui.layout.Splitter",
 			"sap.ui.layout.VerticalLayout",
 			"sap.ui.layout.BlockLayoutCell",
@@ -63,8 +65,24 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType',
 			"sap.ui.layout.form.FormContainer",
 			"sap.ui.layout.form.FormElement",
 			"sap.ui.layout.form.GridContainerData",
+			"sap.ui.layout.PaneContainer",
+			"sap.ui.layout.SplitPane",
 			"sap.ui.layout.form.GridElementData"
-		]
+		],
+		extensions: {
+			flChangeHandlers: {
+				"sap.ui.layout.form.SimpleForm": {
+					"renameLabel": "sap/ui/layout/changeHandler/RenameSimpleForm",
+					"renameTitle": "sap/ui/layout/changeHandler/RenameSimpleForm",
+					"moveSimpleFormField": "sap/ui/layout/changeHandler/MoveSimpleForm",
+					"moveSimpleFormGroup": "sap/ui/layout/changeHandler/MoveSimpleForm",
+					"hideSimpleFormField": "sap/ui/layout/changeHandler/HideSimpleForm",
+					"unhideSimpleFormField": "sap/ui/layout/changeHandler/UnhideSimpleForm",
+					"removeSimpleFormGroup": "sap/ui/layout/changeHandler/HideSimpleForm",
+					"addSimpleFormGroup": "sap/ui/layout/changeHandler/AddSimpleFormGroup"
+				}
+			}
+		}
 	});
 
 	/**

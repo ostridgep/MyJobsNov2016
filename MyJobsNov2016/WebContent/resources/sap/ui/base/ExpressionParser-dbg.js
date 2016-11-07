@@ -37,21 +37,19 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', 'jquery.sap.strings
 				"compare": function () {
 					var ODataUtils;
 
-					jQuery.sap.require("sap.ui.model.odata.ODataUtils");
-					ODataUtils = sap.ui.require("sap/ui/model/odata/ODataUtils");
+					ODataUtils = sap.ui.requireSync("sap/ui/model/odata/ODataUtils");
 					return ODataUtils.compare.apply(ODataUtils, arguments);
 				},
 				"fillUriTemplate": function () {
 					if (!URI.expand) {
-						jQuery.sap.require("sap.ui.thirdparty.URITemplate");
+						/* URI = */ sap.ui.requireSync("sap/ui/thirdparty/URITemplate");
 					}
 					return URI.expand.apply(URI, arguments).toString();
 				},
 				"uriEncode": function () {
 					var ODataUtils;
 
-					jQuery.sap.require("sap.ui.model.odata.ODataUtils");
-					ODataUtils = sap.ui.require("sap/ui/model/odata/ODataUtils");
+					ODataUtils = sap.ui.requireSync("sap/ui/model/odata/ODataUtils");
 					return ODataUtils.formatValue.apply(ODataUtils, arguments);
 				}
 			},
@@ -63,8 +61,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', 'jquery.sap.strings
 		},
 		rDigit = /\d/,
 		sExpressionParser = "sap.ui.base.ExpressionParser",
-		rIdentifier = /[a-z]\w*/i,
-		rLetter = /[a-z]/i,
+		rIdentifier = /[a-z_$][a-z0-9_$]*/i,
+		rIdentifierStart = /[a-z_$]/i,
 		aPerformanceCategories = [sExpressionParser],
 		sPerformanceParse = sExpressionParser + "#parse",
 		mSymbols = { //symbol table
@@ -529,7 +527,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', 'jquery.sap.strings
 			ch = oTokenizer.getCh();
 			iIndex = oTokenizer.getIndex();
 
-			if (rLetter.test(ch)) {
+			if (ch === "$" && sInput[iIndex + 1] === "{") { //binding
+				oBinding = fnResolveBinding(sInput, iIndex + 1);
+				oToken = {
+					id: "BINDING",
+					value: saveBindingAsPart(oBinding.result, iIndex + 1)
+				};
+				oTokenizer.setIndex(oBinding.at); //go to first character after binding string
+			} else if (rIdentifierStart.test(ch)) {
 				aMatches = rIdentifier.exec(sInput.slice(iIndex));
 				switch (aMatches[0]) {
 				case "false":
@@ -547,19 +552,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', 'jquery.sap.strings
 					oTokenizer.setIndex(iIndex + aMatches[0].length);
 				}
 			} else if (rDigit.test(ch)
-					|| ch === "." && rDigit.test(sInput.charAt(oTokenizer.getIndex() + 1))) {
+					|| ch === "." && rDigit.test(sInput[iIndex + 1])) {
 				oToken = {id: "CONSTANT", value: oTokenizer.number()};
 			} else if (ch === "'" || ch === '"') {
 				oToken = {id: "CONSTANT", value: oTokenizer.string()};
-			} else if (ch === "$") {
-				oTokenizer.next("$");
-				oTokenizer.next("{"); //binding
-				oBinding = fnResolveBinding(sInput, oTokenizer.getIndex() - 1);
-				oToken = {
-					id: "BINDING",
-					value: saveBindingAsPart(oBinding.result, iIndex + 1)
-				};
-				oTokenizer.setIndex(oBinding.at); //go to first character after binding string
 			} else {
 				rTokens.lastIndex = iIndex;
 				aMatches = rTokens.exec(sInput);

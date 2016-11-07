@@ -21,7 +21,7 @@ sap.ui.define(['jquery.sap.global', './InputBase', './MaskInputRule', 'sap/ui/co
 	 *
 	 * @author SAP SE
 	 * @extends sap.m.InputBase
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 *
 	 * @constructor
 	 * @public
@@ -46,6 +46,8 @@ sap.ui.define(['jquery.sap.global', './InputBase', './MaskInputRule', 'sap/ui/co
 				 * Characters which don't, are considered immutable characters (for example, the mask '2099', where '9' corresponds to a rule
 				 * for digits, has the characters '2' and '0' as immutable).
 				 * 2. Adding a rule corresponding to the <code>placeholderSymbol</code> is not recommended and would lead to an unpredictable behavior.
+				 * 3. You can use the special escape character '^' called "Caret" prepending a rule character to make it immutable.
+				 * Use the double escape '^^' if you want to make use of the escape character as a immutable one.
 				 */
 				mask: {type: "string", group: "Misc", defaultValue: null}
 			},
@@ -59,11 +61,14 @@ sap.ui.define(['jquery.sap.global', './InputBase', './MaskInputRule', 'sap/ui/co
 		}
 	});
 
+	var ESCAPE_CHARACTER = '^';
 
 	/**
 	 * Initializes the control.
 	 */
 	MaskInput.prototype.init = function () {
+		// After decoupling of ValueState from the InputBase, the InputBase creates the ValueStateMessage on init (see change #1755336)
+		InputBase.prototype.init.call(this);
 		// Stores the caret timeout id for further manipulation (e.g Canceling the timeout)
 		this._iCaretTimeoutId = null;
 		// Stores the first placeholder replaceable position where the user can enter a value (immutable characters are ignored)
@@ -224,6 +229,7 @@ sap.ui.define(['jquery.sap.global', './InputBase', './MaskInputRule', 'sap/ui/co
 	MaskInput.prototype.setValue = function (sValue) {
 		sValue = this.validateProperty('value', sValue);
 		InputBase.prototype.setValue.call(this, sValue);
+		this._sOldInputValue = sValue;
 		// We need this check in case when MaskInput is initialized with specific value
 		if (!this._oTempValue) {
 			this._setupMaskVariables();
@@ -333,7 +339,7 @@ sap.ui.define(['jquery.sap.global', './InputBase', './MaskInputRule', 'sap/ui/co
 	/**
 	 * Verifies whether a character at a given position is allowed according to its mask rule.
 	 * @param {String} sChar The character
-	 * @param {integer} iIndex The position of the character
+	 * @param {int} iIndex The position of the character
 	 * @protected
 	 */
 	MaskInput.prototype._isCharAllowed = function (sChar, iIndex) {
@@ -346,7 +352,7 @@ sap.ui.define(['jquery.sap.global', './InputBase', './MaskInputRule', 'sap/ui/co
 	 * character with other for time input purposes. As an example, if the user enters "2" (in 12-hour format), the consumer may use
 	 * this method to replace the input from "2" to "02".
 	 * @param {String} sChar The current character from the input
-	 * @param {integer} iPlacePosition The position the character should occupy
+	 * @param {int} iPlacePosition The position the character should occupy
 	 * @param {string} sCurrentInputValue The value currently inside the input field (may differ from the property value)
 	 * @returns {String} A string that replaces the character
 	 * @protected
@@ -478,7 +484,7 @@ sap.ui.define(['jquery.sap.global', './InputBase', './MaskInputRule', 'sap/ui/co
 	/**
 	 * Applies a rule to a character.
 	 * @param {String} sChar The character to which the rule will be applied
-	 * @param {Integer} iIndex The index of the rule
+	 * @param {int} iIndex The index of the rule
 	 * @returns {boolean} True if the character passes the validation rule, false otherwise.
 	 * @private
 	 */
@@ -628,19 +634,63 @@ sap.ui.define(['jquery.sap.global', './InputBase', './MaskInputRule', 'sap/ui/co
 	MaskInput.prototype._setupMaskVariables = function () {
 		var aRules = this.getRules(),
 			sMask = this.getMask(),
-			aMask = sMask.split(""),
-			aValue,
-			aTests,
-			sPlaceholderSymbol = this.getPlaceholderSymbol();
+			aSkipIndexes = this._getSkipIndexes(sMask), // Used to collect indexes which should be skipped when building validation rules
+			aMask = this._getMaskArray(sMask, aSkipIndexes),
+			sPlaceholderSymbol = this.getPlaceholderSymbol(),
+			aInitial = this._buildMaskValueArray(aMask, sPlaceholderSymbol, aRules, aSkipIndexes),
+			aTestRules = this._buildRules(aMask, aRules, aSkipIndexes);
 
-		aValue = this._buildInitialArray(aMask, sPlaceholderSymbol, aRules);
-		this._oTempValue = new CharArray(aValue);
-
-		aTests = this._buildRules(aMask, aRules);
-		this._iMaskLength = aTests.length;
-
-		this._oRules = new TestRules(aTests);
+		this._oTempValue = new CharArray(aInitial);
+		this._iMaskLength = aTestRules.length;
+		this._oRules = new TestRules(aTestRules);
 		this._iUserInputStartPosition = this._oRules.nextTo();
+	};
+
+	/**
+	 * Converts mask value string to array and skips the escape characters.
+	 * @since 1.38
+	 * @private
+	 * @param {string} sMask Mask value
+	 * @param {Array} aSkipIndexes List of character indexes to skip
+	 * @returns {Array}
+	 */
+	MaskInput.prototype._getMaskArray = function (sMask, aSkipIndexes) {
+		var iLength = Array.isArray(aSkipIndexes) ? aSkipIndexes.length : 0,
+			aMaskArray = (sMask) ? sMask.split("") : [],
+			i;
+
+		for (i = 0; i < iLength; i++) {
+			aMaskArray.splice(aSkipIndexes[i], 1);
+		}
+		return aMaskArray;
+	};
+
+	/**
+	 * Creates an array of indexes for all the characters that are escaped.
+	 * @since 1.38
+	 * @private
+	 * @param {string} sMask Mask value
+	 * @returns {Array}
+	 */
+	MaskInput.prototype._getSkipIndexes = function (sMask) {
+		var iLength = (sMask) ? sMask.length : 0,
+			i,
+			aSkipIndexes = [],
+			iPosCorrection = 0,
+			bLastCharEscape = false; // Keeps if the last character iterated was an escape character
+
+		for (i = 0; i < iLength; i++) {
+			if (sMask[i] === ESCAPE_CHARACTER && !bLastCharEscape) {
+				aSkipIndexes.push(i - iPosCorrection);
+				// Escape the escape character
+				bLastCharEscape = true;
+				// Correction for multiple escape characters
+				iPosCorrection++;
+			} else {
+				bLastCharEscape = false;
+			}
+		}
+		return aSkipIndexes;
 	};
 
 	/**
@@ -784,6 +834,7 @@ sap.ui.define(['jquery.sap.global', './InputBase', './MaskInputRule', 'sap/ui/co
 	 */
 	MaskInput.prototype.oncut = function(oEvent) {
 		var oSelection = this._getTextSelection(),
+			iMinBrowserDelay = this._getMinBrowserDelay(),
 			iBegin = oSelection.iFrom,
 			iEnd = oSelection.iTo;
 
@@ -802,7 +853,7 @@ sap.ui.define(['jquery.sap.global', './InputBase', './MaskInputRule', 'sap/ui/co
 
 		// give a chance the normal browser cut and oninput handler to finish its work with the current selection,
 		// before messing up the dom value (updateDomValue) or the selection (by setting a new cursor position)
-		jQuery.sap.delayedCall(0, this,
+		jQuery.sap.delayedCall(iMinBrowserDelay, this,
 			function updateDomAndCursor(sValue, iPos, aOldTempValueContent) {
 				//update the temp value back
 				//because oninput breaks it
@@ -812,7 +863,7 @@ sap.ui.define(['jquery.sap.global', './InputBase', './MaskInputRule', 'sap/ui/co
 				//we want that shortly after updateDomValue
 				//but _positionCaret sets the cursor, also with a delayedCall
 				//so we must put our update in the queue
-				jQuery.sap.delayedCall(0, this, this._setCursorPosition, [iPos]);
+				jQuery.sap.delayedCall(iMinBrowserDelay, this, this._setCursorPosition, [iPos]);
 			},
 			[
 				this._oTempValue.toString(),
@@ -958,27 +1009,35 @@ sap.ui.define(['jquery.sap.global', './InputBase', './MaskInputRule', 'sap/ui/co
 	};
 
 	/**
+	 * @param {Array} aSkipIndexes @since 1.38 List of indexes to skip
 	 * @private
 	 */
-	MaskInput.prototype._buildInitialArray = function (aMask, sPlaceholderSymbol, aRules) {
+	MaskInput.prototype._buildMaskValueArray = function (aMask, sPlaceholderSymbol, aRules, aSkipIndexes) {
 		return aMask.map(function (sChar, iIndex) {
-			return this._findRuleBySymbol(sChar, aRules) ? sPlaceholderSymbol : sChar;
+			var bNotSkip = aSkipIndexes.indexOf(iIndex) === -1,
+				bRuleFound = this._findRuleBySymbol(sChar, aRules);
+			return (bNotSkip && bRuleFound) ? sPlaceholderSymbol : sChar;
 		}, this);
 	};
 
 	/**
 	 * Builds the test rules according to the mask input rule's regex string.
+	 * @param {Array} aSkipIndexes @since 1.38 List of indexes to skip
 	 * @private
 	 */
-	MaskInput.prototype._buildRules = function (aMask, aRules) {
+	MaskInput.prototype._buildRules = function (aMask, aRules, aSkipIndexes) {
 		var aTestRules = [],
 			oSearchResult,
 			iLength = aMask.length,
 			i = 0;
 
 		for (; i < iLength; i++) {
-			oSearchResult = this._findRuleBySymbol(aMask[i], aRules);
-			aTestRules.push(oSearchResult ? new RegExp(oSearchResult.oRule.getRegex()) : null);
+			if (aSkipIndexes.indexOf(i) === -1) {
+				oSearchResult = this._findRuleBySymbol(aMask[i], aRules);
+				aTestRules.push(oSearchResult ? new RegExp(oSearchResult.oRule.getRegex()) : null);
+			} else {
+				aTestRules.push(null);
+			}
 		}
 		return aTestRules;
 	};
@@ -1029,6 +1088,7 @@ sap.ui.define(['jquery.sap.global', './InputBase', './MaskInputRule', 'sap/ui/co
 	 */
 	MaskInput.prototype._positionCaret = function (bSelectAllIfInputIsCompleted) {
 		var sMask = this.getMask(),
+			iMinBrowserDelay = this._getMinBrowserDelay(),
 			iEndSelectionIndex;
 
 		clearTimeout(this._iCaretTimeoutId);
@@ -1037,7 +1097,7 @@ sap.ui.define(['jquery.sap.global', './InputBase', './MaskInputRule', 'sap/ui/co
 			iEndSelectionIndex = sMask.length;
 		}
 
-		this._iCaretTimeoutId = jQuery.sap.delayedCall(0, this, function () {
+		this._iCaretTimeoutId = jQuery.sap.delayedCall(iMinBrowserDelay, this, function () {
 			if (this.getFocusDomRef() !== document.activeElement) {
 				return;
 			}
@@ -1049,7 +1109,16 @@ sap.ui.define(['jquery.sap.global', './InputBase', './MaskInputRule', 'sap/ui/co
 		});
 	};
 
-
+	/**
+	 * Determines the browser specific minimal delay time for setTimeout.
+	 *
+	 * Todo: This logic is a good candidate to be implemented generally in jQuery.sap.delayedCall method.
+	 *
+	 * @private
+	 */
+	MaskInput.prototype._getMinBrowserDelay = function () {
+		return !sap.ui.Device.browser.msie ? 4 : 50;
+	};
 
 	/**
 	 * Determines if a given string contains characters that will not comply to the mask input rules.
@@ -1193,7 +1262,7 @@ sap.ui.define(['jquery.sap.global', './InputBase', './MaskInputRule', 'sap/ui/co
 	 * Determine the right caret position based on the current selection state
 	 * @private
 	 * @param sDirection
-	 * @returns {integer} iNewCaretPos
+	 * @returns {int} iNewCaretPos
 	 */
 	MaskInput.prototype._determineRtlCaretPositionFromSelection = function (sDirection, bWithChromeFix) {
 		var iNewCaretPos,

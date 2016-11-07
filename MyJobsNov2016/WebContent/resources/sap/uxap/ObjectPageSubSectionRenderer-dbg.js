@@ -29,6 +29,7 @@ sap.ui.define(function () {
 		oRm.writeAttribute("role", "region");
 		oRm.writeControlData(oControl);
 		oRm.addClass("sapUxAPObjectPageSubSection");
+		oRm.addClass("ui-helper-clearfix");
 		oRm.writeClasses(oControl);
 		oRm.writeClasses();
 		oRm.write(">");
@@ -48,6 +49,7 @@ sap.ui.define(function () {
 			oRm.write("<div");
 			if (bHasTitle) {
 				oRm.writeAttribute("role", "heading");
+				oRm.writeAttribute("aria-level", "4");
 			}
 			oRm.addClass('sapUxAPObjectPageSubSectionHeaderTitle');
 			if (oControl.getTitleUppercase()) {

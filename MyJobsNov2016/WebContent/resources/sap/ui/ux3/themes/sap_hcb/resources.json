@@ -146,6 +146,14 @@
       "theme": "sap_hcb"
     },
     {
+      "name": "img-RTL/navigationbar/facetNext.png",
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "img-RTL/navigationbar/facetPrev.png",
+      "theme": "sap_hcb"
+    },
+    {
       "name": "img-RTL/notification_bar/alert_white_24.png",
       "theme": "sap_hcb"
     },
@@ -239,6 +247,14 @@
     },
     {
       "name": "img/menu_unlisten.png",
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "img/navigationbar/facetNext.png",
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "img/navigationbar/facetPrev.png",
       "theme": "sap_hcb"
     },
     {

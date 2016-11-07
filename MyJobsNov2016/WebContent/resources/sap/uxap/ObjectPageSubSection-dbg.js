@@ -15,9 +15,11 @@ sap.ui.define([
 	"sap/ui/layout/GridData",
 	"sap/m/Button",
 	"sap/ui/Device",
+	"./ObjectPageLazyLoader",
+	"sap/ui/core/StashedControlSupport",
 	"./library"
 ], function (CustomData, Grid, ObjectPageSectionBase, ObjectPageSubSectionLayout,
-			 ObjectPageSubSectionMode, BlockBase, GridData, Button, Device, library) {
+			 ObjectPageSubSectionMode, BlockBase, GridData, Button, Device, ObjectPageLazyLoader, StashedControlSupport, library) {
 	"use strict";
 
 	/**
@@ -129,10 +131,18 @@ sap.ui.define([
 		return this.getAggregation("_grid");
 	};
 
+	ObjectPageSubSection.prototype._unStashControls = function () {
+		StashedControlSupport.getStashedControls(this.getId()).forEach(function (oControl) {
+			oControl.setStashed(false);
+		});
+	};
+
 	ObjectPageSubSection.prototype.connectToModels = function () {
 		var aBlocks = this.getBlocks() || [],
 			aMoreBlocks = this.getMoreBlocks() || [],
 			sCurrentMode = this.getMode();
+
+		this._unStashControls();
 
 		aBlocks.forEach(function (oBlock) {
 			if (oBlock instanceof BlockBase) {
@@ -155,6 +165,44 @@ sap.ui.define([
 		}
 	};
 
+	ObjectPageSubSection.prototype._allowPropagationToLoadedViews = function (bAllow) {
+		var aBlocks = this.getBlocks() || [],
+			aMoreBlocks = this.getMoreBlocks() || [];
+
+		aBlocks.forEach(function (oBlock) {
+			if (oBlock instanceof BlockBase) {
+				oBlock._allowPropagationToLoadedViews(bAllow);
+			}
+		});
+
+		aMoreBlocks.forEach(function (oMoreBlock) {
+			if (oMoreBlock instanceof BlockBase) {
+				oMoreBlock._allowPropagationToLoadedViews(bAllow);
+			}
+		});
+	};
+
+	sap.uxap.ObjectPageSubSection.prototype.clone = function () {
+		Object.keys(this._aAggregationProxy).forEach(function (sAggregationName){
+			var oAggregation = this.mAggregations[sAggregationName];
+
+			if (!oAggregation || oAggregation.length === 0){
+				this.mAggregations[sAggregationName] = this._aAggregationProxy[sAggregationName];
+			}
+
+		}, this);
+		return sap.ui.core.Control.prototype.clone.apply(this, arguments);
+	};
+
+	ObjectPageSubSection.prototype._cleanProxiedAggregations = function () {
+		var oProxiedAggregations = this._aAggregationProxy;
+		Object.keys(oProxiedAggregations).forEach(function (sKey) {
+			oProxiedAggregations[sKey].forEach(function (oObject) {
+				oObject.destroy();
+			});
+		});
+	};
+
 	ObjectPageSubSection.prototype.exit = function () {
 		if (this._oSeeMoreButton) {
 			this._oSeeMoreButton.destroy();
@@ -164,6 +212,8 @@ sap.ui.define([
 		Device.media.detachHandler(this._updateImportance, this, ObjectPageSubSection.MEDIA_RANGE);
 
 		Device.media.detachHandler(this._titleOnLeftSynchronizeLayouts, this, ObjectPageSubSection.MEDIA_RANGE);
+
+		this._cleanProxiedAggregations();
 
 		if (ObjectPageSectionBase.prototype.exit) {
 			ObjectPageSectionBase.prototype.exit.call(this);
@@ -395,7 +445,7 @@ sap.ui.define([
 			}, this);
 
 			//set block layout based on resolution and break to a new line if necessary
-			oBlock.setLayoutData(new GridData({
+			oBlock.setLayoutData(new GridData(oBlock.getId() + "-layoutData", {
 				spanS: iGridSize,
 				spanM: M.iCalculatedSize * (iGridSize / M.iColumnConfig),
 				spanL: L.iCalculatedSize * (iGridSize / L.iColumnConfig),
@@ -479,7 +529,7 @@ sap.ui.define([
 
 		//empty real aggregations and feed internal ones at first rendering only
 		jQuery.each(this._aAggregationProxy, jQuery.proxy(function (sAggregationName, aValue) {
-			this._setAggregation(sAggregationName, this.removeAllAggregation(sAggregationName));
+			this._setAggregation(sAggregationName, this.removeAllAggregation(sAggregationName, true), true);
 		}, this));
 
 		this._bRenderedFirstTime = true;
@@ -493,22 +543,35 @@ sap.ui.define([
 		return this._aAggregationProxy[sAggregationName];
 	};
 
-	ObjectPageSubSection.prototype._setAggregation = function (sAggregationName, aValue) {
+	ObjectPageSubSection.prototype._setAggregation = function (sAggregationName, aValue, bSuppressInvalidate) {
 		this._aAggregationProxy[sAggregationName] = aValue;
-		this._notifyObjectPageLayout();
-		this.invalidate();
+		if (bSuppressInvalidate !== true){
+			this._notifyObjectPageLayout();
+			this.invalidate();
+		}
 		return this._aAggregationProxy[sAggregationName];
 	};
 
-	ObjectPageSubSection.prototype.addAggregation = function (sAggregationName, oObject) {
+	ObjectPageSubSection.prototype.addAggregation = function (sAggregationName, oObject, bSuppressInvalidate) {
 		var aAggregation;
+
+		if (oObject instanceof ObjectPageLazyLoader) {
+			oObject.getContent().forEach(function (oControl) {
+				this.addAggregation(sAggregationName, oControl, true);
+			}, this);
+
+			oObject.removeAllContent();
+			oObject.destroy();
+			this.invalidate();
+			return this;
+		}
 
 		if (this.hasProxy(sAggregationName)) {
 			aAggregation = this._getAggregation(sAggregationName);
 			aAggregation.push(oObject);
-			this._setAggregation(aAggregation);
+			this._setAggregation(sAggregationName, aAggregation, bSuppressInvalidate);
 
-			if (oObject instanceof BlockBase) {
+			if (oObject instanceof BlockBase || oObject instanceof ObjectPageLazyLoader) {
 				oObject.setParent(this); //let the block know of its parent subsection
 			}
 
@@ -518,6 +581,10 @@ sap.ui.define([
 		return ObjectPageSectionBase.prototype.addAggregation.apply(this, arguments);
 	};
 
+	/**
+	 * InsertAggregation is not supported by design.
+	 * If used, it works as addAggregation, e.g. the method adds a single block to the end of blocks or moreBlocks aggregations.
+	 */
 	ObjectPageSubSection.prototype.insertAggregation = function (sAggregationName, oObject, iIndex) {
 		if (this.hasProxy(sAggregationName)) {
 			jQuery.sap.log.warning("ObjectPageSubSection :: used of insertAggregation for " + sAggregationName + " is not supported, will use addAggregation instead");
@@ -528,13 +595,12 @@ sap.ui.define([
 	};
 
 	ObjectPageSubSection.prototype.removeAllAggregation = function (sAggregationName) {
-		var aInternalAggregation, aItems;
+		var aInternalAggregation;
 
 		if (this.hasProxy(sAggregationName)) {
 			aInternalAggregation = this._getAggregation(sAggregationName);
-			aItems = aInternalAggregation.slice(0, aInternalAggregation.length - 1);
 			this._setAggregation(sAggregationName, []);
-			return aItems;
+			return aInternalAggregation.slice();
 		}
 
 		return ObjectPageSectionBase.prototype.removeAllAggregation.apply(this, arguments);
@@ -712,16 +778,14 @@ sap.ui.define([
 	 */
 	ObjectPageSubSection.prototype._resetLayoutData = function (aBlocks) {
 		aBlocks.forEach(function (oBlock) {
-			if (!this._bRenderedFirstTime && oBlock.getLayoutData()) {
+			if (oBlock.getLayoutData()) {
 				oBlock.destroyLayoutData();
-				jQuery.sap.log.warning("ObjectPageSubSection :: forbidden use of layoutData for block " +
-					oBlock.getMetadata().getName(), "layout will be set by subSection");
 			}
 		}, this);
 	};
 
 	ObjectPageSubSection.prototype.getVisibleBlocksCount = function () {
-		var iVisibleBlocks = 0;
+		var iVisibleBlocks = StashedControlSupport.getStashedControls(this.getId()).length;
 
 		(this.getBlocks() || []).forEach(function (oBlock) {
 			if (oBlock.getVisible && !oBlock.getVisible()) {

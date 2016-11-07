@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 	 * @extends sap.m.InputBase
 	 *
 	 * @author SAP SE
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 *
 	 * @constructor
 	 * @public
@@ -57,7 +57,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 			 * The data is displayed and the user input is parsed according to this format.
 			 * NOTE: The value property is always of the form RFC 3339 (YYYY-MM-dd).
 			 * @deprecated Since version 1.9.1.
-			 * sap.m.DateTimeInput should be used for date/time inputs and formating.
+			 * <code>sap.m.DatePicker</code>, <code>sap.m.TimePicher</code> or <code>sap.m.DateTimePicker</code> should be used for date/time inputs and formating.
 			 */
 			dateFormat : {type : "string", group : "Misc", defaultValue : 'YYYY-MM-dd', deprecated: true},
 
@@ -763,14 +763,24 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 	};
 
 	Input.prototype.onsapescape = function(oEvent) {
+		var lastValue;
+
 		if (this._oSuggestionPopup && this._oSuggestionPopup.isOpen()) {
 			// mark the event as already handled
 			oEvent.originalEvent._sapui_handledByControl = true;
 			this._iPopupListSelectedIndex = -1;
 			this._closeSuggestionPopup();
 
-			// if popup is open, simply returns from here to prevent from setting the input to the last known value.
-			return;
+			// restore the initial value that was there before suggestion dialog
+			if (this._sBeforeSuggest !== undefined) {
+				if (this._sBeforeSuggest !== this.getValue()) {
+					lastValue = this._lastValue;
+					this.setValue(this._sBeforeSuggest);
+					this._lastValue = lastValue; // override InputBase.onsapescape()
+				}
+				this._sBeforeSuggest = undefined;
+			}
+			return; // override InputBase.onsapescape()
 		}
 
 		if (InputBase.prototype.onsapescape) {
@@ -849,6 +859,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 
 	Input.prototype.updateSuggestionItems = function() {
 		this.updateAggregation("suggestionItems");
+		this._bShouldRefreshListItems = true;
 		this._refreshItemsDelayed();
 		return this;
 	};
@@ -863,6 +874,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 	Input.prototype._triggerSuggest = function(sValue) {
 
 		this.cancelPendingSuggest();
+		this._bShouldRefreshListItems = true;
 
 		if (!sValue) {
 			sValue = "";
@@ -991,13 +1003,6 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 
 			var value = this._$input.val();
 
-			// add maxlength support for all types except for the type Number
-			// TODO: type number add min and max properties
-			if (this.getMaxLength() > 0 && this.getType() !== sap.m.InputType.Number && value.length > this.getMaxLength()) {
-				value = value.substring(0, this.getMaxLength());
-				this._$input.val(value);
-			}
-
 			if (this.getValueLiveUpdate()) {
 				this.setProperty("value",value, true);
 			}
@@ -1016,7 +1021,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 		};
 
 		Input.prototype.getValue = function(){
-			return this.getDomRef("inner") ? this._$input.val() : this.getProperty("value");
+			return this.getDomRef("inner") && this._$input ? this._$input.val() : this.getProperty("value");
 		};
 
 		Input.prototype._refreshItemsDelayed = function() {
@@ -1026,6 +1031,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 
 		Input.prototype.addSuggestionItem = function(oItem) {
 			this.addAggregation("suggestionItems", oItem, true);
+			this._bShouldRefreshListItems = true;
 			this._refreshItemsDelayed();
 			createSuggestionPopupContent(this);
 			return this;
@@ -1033,6 +1039,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 
 		Input.prototype.insertSuggestionItem = function(oItem, iIndex) {
 			this.insertAggregation("suggestionItems", iIndex, oItem, true);
+			this._bShouldRefreshListItems = true;
 			this._refreshItemsDelayed();
 			createSuggestionPopupContent(this);
 			return this;
@@ -1040,18 +1047,21 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 
 		Input.prototype.removeSuggestionItem = function(oItem) {
 			var res = this.removeAggregation("suggestionItems", oItem, true);
+			this._bShouldRefreshListItems = true;
 			this._refreshItemsDelayed();
 			return res;
 		};
 
 		Input.prototype.removeAllSuggestionItems = function() {
 			var res = this.removeAllAggregation("suggestionItems", true);
+			this._bShouldRefreshListItems = true;
 			this._refreshItemsDelayed();
 			return res;
 		};
 
 		Input.prototype.destroySuggestionItems = function() {
 			this.destroyAggregation("suggestionItems", true);
+			this._bShouldRefreshListItems = true;
 			this._refreshItemsDelayed();
 			return this;
 		};
@@ -1059,6 +1069,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 		Input.prototype.addSuggestionRow = function(oItem) {
 			oItem.setType(sap.m.ListType.Active);
 			this.addAggregation("suggestionRows", oItem);
+			this._bShouldRefreshListItems = true;
 			this._refreshItemsDelayed();
 			createSuggestionPopupContent(this);
 			return this;
@@ -1067,6 +1078,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 		Input.prototype.insertSuggestionRow = function(oItem, iIndex) {
 			oItem.setType(sap.m.ListType.Active);
 			this.insertAggregation("suggestionRows", iIndex, oItem);
+			this._bShouldRefreshListItems = true;
 			this._refreshItemsDelayed();
 			createSuggestionPopupContent(this);
 			return this;
@@ -1074,18 +1086,21 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 
 		Input.prototype.removeSuggestionRow = function(oItem) {
 			var res = this.removeAggregation("suggestionRows", oItem);
+			this._bShouldRefreshListItems = true;
 			this._refreshItemsDelayed();
 			return res;
 		};
 
 		Input.prototype.removeAllSuggestionRows = function() {
 			var res = this.removeAllAggregation("suggestionRows");
+			this._bShouldRefreshListItems = true;
 			this._refreshItemsDelayed();
 			return res;
 		};
 
 		Input.prototype.destroySuggestionRows = function() {
 			this.destroyAggregation("suggestionRows");
+			this._bShouldRefreshListItems = true;
 			this._refreshItemsDelayed();
 			return this;
 		};
@@ -1120,6 +1135,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 		Input.prototype._closeSuggestionPopup = function() {
 
 			if (this._oSuggestionPopup) {
+				this._bShouldRefreshListItems = false;
 				this.cancelPendingSuggest();
 				this._oSuggestionPopup.close();
 				this.$("SuggDescr").text(""); // initialize suggestion ARIA text
@@ -1180,6 +1196,8 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 					} else {
 						oInput._oList.destroyItems();
 					}
+				}).attachBeforeOpen(function() {
+					oInput._sBeforeSuggest = oInput.getValue();
 				}))
 			:
 				(new Dialog(oInput.getId() + "-popup", {
@@ -1393,10 +1411,10 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 			var bShowSuggestion = oInput.getShowSuggestion();
 			oInput._iPopupListSelectedIndex = -1;
 
-			if (!(bShowSuggestion
-					&& oInput.getDomRef()
-					&& (oInput._bUseDialog || oInput.$().hasClass("sapMInputFocused")))
-			) {
+			if (!bShowSuggestion ||
+				!oInput._bShouldRefreshListItems ||
+				!oInput.getDomRef() ||
+				(!oInput._bUseDialog && !oInput.$().hasClass("sapMInputFocused"))) {
 				return false;
 			}
 
@@ -1754,7 +1772,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 		// add suggestion columns
 		bindingInfo = this.getBindingInfo("suggestionColumns");
 		if (bindingInfo) {
-			oInputClone.bindAggregation("suggestionColumns", bindingInfo);
+			oInputClone.bindAggregation("suggestionColumns", jQuery.extend({}, bindingInfo));
 		} else {
 			this.getSuggestionColumns().forEach(function(oColumn){
 				oInputClone.addSuggestionColumn(oColumn.clone(), true);
@@ -1764,7 +1782,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 		// add suggestion rows
 		bindingInfo = this.getBindingInfo("suggestionRows");
 		if (bindingInfo) {
-			oInputClone.bindAggregation("suggestionRows", bindingInfo);
+			oInputClone.bindAggregation("suggestionRows", jQuery.extend({}, bindingInfo));
 		} else {
 			this.getSuggestionRows().forEach(function(oRow){
 				oInputClone.addSuggestionRow(oRow.clone(), true);
@@ -1791,6 +1809,16 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 		this._iSetCount++;
 		InputBase.prototype.setValue.call(this, sValue);
 		return this;
+	};
+
+	/**
+	 * @see {sap.ui.core.Control#getAccessibilityInfo}
+	 * @protected
+	 */
+	Input.prototype.getAccessibilityInfo = function() {
+		var oInfo = InputBase.prototype.getAccessibilityInfo.apply(this, arguments);
+		oInfo.description = ((oInfo.description || "") + " " + this.getDescription()).trim();
+		return oInfo;
 	};
 
 	/**

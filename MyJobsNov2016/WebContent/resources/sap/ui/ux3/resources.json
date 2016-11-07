@@ -600,17 +600,11 @@
     {
       "name": "FeedRenderer-dbg.js",
       "module": "sap/ui/ux3/FeedRenderer.js",
-      "isDebug": true,
-      "required": [
-        "jquery.sap.global.js"
-      ]
+      "isDebug": true
     },
     {
       "name": "FeedRenderer.js",
-      "module": "sap/ui/ux3/FeedRenderer.js",
-      "required": [
-        "jquery.sap.global.js"
-      ]
+      "module": "sap/ui/ux3/FeedRenderer.js"
     },
     {
       "name": "Feeder-dbg.js",
@@ -1297,6 +1291,13 @@
       ]
     },
     {
+      "name": "library-preload.js",
+      "merged": true
+    },
+    {
+      "name": "library-preload.js.map"
+    },
+    {
       "name": "library-preload.json",
       "merged": true
     },
@@ -1470,6 +1471,12 @@
       "name": "messagebundle_lv.properties",
       "module": "sap/ui/ux3/messagebundle_lv.properties",
       "locale": "lv",
+      "raw": "messagebundle.properties"
+    },
+    {
+      "name": "messagebundle_ms.properties",
+      "module": "sap/ui/ux3/messagebundle_ms.properties",
+      "locale": "ms",
       "raw": "messagebundle.properties"
     },
     {
@@ -2194,6 +2201,14 @@
       "theme": "sap_hcb"
     },
     {
+      "name": "themes/sap_hcb/img-RTL/navigationbar/facetNext.png",
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/img-RTL/navigationbar/facetPrev.png",
+      "theme": "sap_hcb"
+    },
+    {
       "name": "themes/sap_hcb/img-RTL/notification_bar/alert_white_24.png",
       "theme": "sap_hcb"
     },
@@ -2287,6 +2302,14 @@
     },
     {
       "name": "themes/sap_hcb/img/menu_unlisten.png",
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/img/navigationbar/facetNext.png",
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/img/navigationbar/facetPrev.png",
       "theme": "sap_hcb"
     },
     {

@@ -362,6 +362,7 @@ var oTableAssetListEditUpdate = new sap.ui.table.Table({
     selectionMode: sap.ui.table.SelectionMode.Single,
     selectionBehavior: sap.ui.table.SelectionBehavior.RowOnly,
     rowSelectionChange: function (e) {
+    	 //selectedAssetSearch=e.getParameter("listItem").getId();
         var idx = e.getParameter('rowIndex');
         if (idx > -1) {
             var cxt = oTableAssetListEditUpdate.getContextByIndex(idx);
@@ -388,7 +389,7 @@ var oTableAssetListEditUpdate = new sap.ui.table.Table({
             //currentAssetRecord.zcomments2 = obj.ZCOMMENTS2;
             //currentAssetRecord.z_gpsNmea = obj.Z_GPSNMEA;
             currentAssetRecord.zsysDescSystemCodeDescription = obj.sysdesc;
-            currentAssetRecord.equipmentTypeDescriptionZOTDESC = obj.otdesc;
+           currentAssetRecord.equipmentTypeDescriptionZOTDESC = obj.otdesc;
 
 
             //build FunctionalLocationString
@@ -402,6 +403,7 @@ var oTableAssetListEditUpdate = new sap.ui.table.Table({
             currentAssetRecord.SystemCodeNumber = obj.tplnr.substring(16, 18);
             // currentAssetRecord.funcLocSub19_22zzfl_nc = obj.ZINSTLOCN.substring(19, 22)//Zzfl_nc is 6 chars wide, but we only use the last 3 in the func loc string
             currentAssetRecord.zzfl_nc = obj.zfl_nc;
+            //currentAssetRecord.zzfl_nc = obj.tplnr.substring(19, 22);
             currentAssetRecord.funcLocSub22_3FunctionTypeItemNumber = obj.tplnr.substring(22, 25);
             currentAssetRecord.plantGroupDescriptionZPLGDESC = obj.plgrp;
             currentAssetRecord.funcLocStringZINSTLOCN = obj.tplnr;
@@ -410,7 +412,7 @@ var oTableAssetListEditUpdate = new sap.ui.table.Table({
             currentAssetRecord.ZASSTYPE = obj.asstype;
             currentAssetRecord.equipmentTypeCodeZZEQPT_EGI = obj.eqart;
             currentAssetRecord.EquipmentDescriptionEQKTU = obj.eqktx;
-            currentAssetRecord.EQUNR = obj.equnr;
+           currentAssetRecord.EQUNR = obj.equnr;
             currentAssetRecord.ZIWERK = obj.iwerk;
             currentAssetRecord.STATUS = obj.status;
             currentAssetRecord.maintenancePlantZSWERK = obj.swerk;

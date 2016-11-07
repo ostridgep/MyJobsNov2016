@@ -48,7 +48,23 @@ sap.ui.define(["jquery.sap.global", "sap/ui/core/Core", "sap/ui/core/library", "
 			"sap.uxap.ModelMapping",
 			"sap.uxap.ObjectPageHeaderLayoutData"
 		],
-		version: "1.36.8"
+		version: "1.40.10",
+		extensions: {
+			flChangeHandlers: {
+				"sap.uxap.ObjectPageLayout": {
+					"moveElements": "default"
+				},
+				"sap.uxap.ObjectPageSection": {
+					"hideControl": "default",
+					"unhideControl": "default",
+					"stashControl": "default",
+					"unstashControl": "default"
+				},
+	             "sap.ui.core._StashedControl" : {
+                     "unstashControl": "default"
+	            }
+			}
+		}
 	});
 
 	/**

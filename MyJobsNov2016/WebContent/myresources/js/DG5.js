@@ -57,7 +57,7 @@ var oLayout1a = new sap.ui.layout.form.GridLayout();
          var functional_location=new sap.m.Input("Close_FunctionalLocation",{type: sap.m.InputType.Input, enabled: true});
          oLabel_functional_location.setLabelFor(functional_location); 
          oCell.addContent(functional_location);
-         var oLabel_problem_grp=new sap.ui.commons.Label({
+         var oLabel_problem_grp=new sap.ui.commons.Label("Close_ProblemGroup_label",{
           	text : "Problem Group" ,TextDirection:"LTR"});
          var problem_grp=new sap.m.Select('Close_ProblemGroup',{
         	 width:"250px",
@@ -82,7 +82,7 @@ var oLayout1a = new sap.ui.layout.form.GridLayout();
          var equipment_id = new sap.m.Input("Close_Equipment",{type: sap.m.InputType.Input, enabled: true});
          oLabel_equipment_id.setLabelFor(equipment_id);
          oCell1.addContent(equipment_id);
-         var oLabel_prob_code=new sap.ui.commons.Label({
+         var oLabel_prob_code=new sap.ui.commons.Label("Close_ProblemCode_label",{
            	text : "Problem Code" ,TextDirection:"LTR"});
          var prob_code=new sap.m.Select('Close_ProblemCode',{
         	 width:"250px",
@@ -109,14 +109,14 @@ var oLayout1a = new sap.ui.layout.form.GridLayout();
              tap: [ function(oEvt) {  
              	SearchMode="CLOSE"
              		
-             	formSearchAsset.open() 
+             		formSearchAssetEditUpdate.open() 
              
              	
                          } ]
          });
          oLabel_select_asset.setLabelFor(select_asset); 
          oCell2.addContent(select_asset);
-        var oLabel_Action_grp = new sap.ui.commons.Label({
+        var oLabel_Action_grp = new sap.ui.commons.Label("Close_ActionGroup_label",{
          	text : "Action Group" ,TextDirection:"LTR"});
         var Action_grp=new sap.m.Select('Close_ActionGroup',{
         	 width:"250px",
@@ -157,7 +157,7 @@ var oLayout1a = new sap.ui.layout.form.GridLayout();
              }
       });
          //in_shiftcode.setMaxWidth("250px");
-         var oLabel_action_code=new sap.ui.commons.Label({
+         var oLabel_action_code=new sap.ui.commons.Label("Close_ActionCode_label",{
           	text : "Action Code" ,TextDirection:""});
          var action_code=new sap.m.Select('Close_ActionCode',{
         	 width:"250px",
@@ -195,7 +195,7 @@ var oLayout1a = new sap.ui.layout.form.GridLayout();
              	 //BuildCloseImpactCodes(oControlEvent.getParameter("selectedItem").getKey());
               }
        });
-          var oLabel_impact_grp=new sap.ui.commons.Label({
+          var oLabel_impact_grp=new sap.ui.commons.Label("Close_ImpactGroup_label",{
            	text : "Impact Group",TextDirection:"LTR" });
           var Impact_grp=new sap.m.Select('Close_ImpactGroup',{
         	  width:"250px",
@@ -218,7 +218,7 @@ var oLayout1a = new sap.ui.layout.form.GridLayout();
         	 visible:false,
          	text : "Has there been an escape of \n sewerage to a 3rd Party \n Property?",TextDirection:"LTR" });
          oCellflooding.addContent(oLabel_flodding);
-         var oLabel_Impact_code = new sap.ui.commons.Label({
+         var oLabel_Impact_code = new sap.ui.commons.Label("Close_ImpactCode_label",{
           	text : "Impact Code",TextDirection:"LTR"});
          var impact_code=new sap.m.Select('Close_ImpactCode',{
         	 width:"250px",
@@ -788,7 +788,7 @@ var start_date=new sap.m.DateTimeInput('Close_WD_StartDate',{
 	//width : "99%",
 	enabled:false,
 	displayFormat : "yyyy/MM/dd",
-	valueFormat : "yyyy-MM-dd",
+	valueFormat : "dd.MM.yyyy",
 	type : "Date",
 	dateValue : new Date()
 });
@@ -825,7 +825,7 @@ oLabel_variance.setLabelFor(variance);
 Matrix_Followon.createRow(oLabel_variance,"", variance);
 var oLabel_reason = new sap.ui.commons.Label("FEClose_Reason",{
 	text : "Reason",TextDirection:"LTR"});
-var reason=new sap.m.Input("Close_Reason",{type: sap.m.InputType.Input, enabled:false});
+var reason=new sap.m.Input("Close_Reason",{type: sap.m.InputType.Input, enabled:false,maxLength:40});
 oLabel_reason.setLabelFor(reason);
 Matrix_Followon.createRow(oLabel_reason,"", reason);
 var oLabel_operable = new sap.ui.commons.Label("FEClose_WD_Operable",{

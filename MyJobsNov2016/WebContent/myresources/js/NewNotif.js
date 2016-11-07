@@ -130,7 +130,7 @@ var formNewNotif = new sap.m.Dialog("dlgNewNotif",{
 				
 				search: [function(event){
 						SearchMode="NOTIF"
-						formSearchAsset.open()
+							formSearchAssetEditUpdate.open()
 						//selectedFloc="LGF"
 				 		//buildFlocList("LGF");
 				 		//formSelectFloc.open()
@@ -486,7 +486,7 @@ function BuildPriorities(selectedId){
 				})
 			]
 		});
-		var formSearchAsset = new sap.m.Dialog("dlgSearchAsset",{
+		/*var formSearchAsset = new sap.m.Dialog("dlgSearchAsset",{
 		    title:"Search Assets",
 		    modal: true,
 		    contentWidth:"1em",
@@ -576,7 +576,7 @@ new sap.m.Button( "BookToAsset",{
 		             },
 		        contentWidth:"85%",
 		        contentHeight: "85%",
-		       }).addStyleClass("sapUiSizeCompact");
+		       }).addStyleClass("sapUiSizeCompact");*/
 
 
 		function showMessage(msg){

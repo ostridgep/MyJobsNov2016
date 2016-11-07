@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', './ListItemBase', './library', 'sap/ui/core/
 		 * @class
 		 * ObjectListItem is a display control that provides summary information about an object as a list item. The ObjectListItem title is the key identifier of the object. Additional text and icons can be used to further distinguish it from other objects. Attributes and statuses can be used to provide additional meaning about the object to the user.
 		 * @extends sap.m.ListItemBase
-		 * @version 1.36.8
+		 * @version 1.40.10
 		 *
 		 * @constructor
 		 * @public
@@ -138,7 +138,8 @@ sap.ui.define(['jquery.sap.global', './ListItemBase', './library', 'sap/ui/core/
 				 * Second status text field displayed on the right side of the attributes.
 				 */
 				secondStatus : {type : "sap.m.ObjectStatus", multiple : false}
-			}
+			},
+			designTime: true
 		}});
 
 		// get resource translation bundle;
@@ -242,14 +243,24 @@ sap.ui.define(['jquery.sap.global', './ListItemBase', './library', 'sap/ui/core/
 
 			var sImgId = this.getId() + '-img';
 			var sSize = "2.5rem";
-			var mProperties = {
-				src : this.getIcon(),
-				height : sSize,
-				width : sSize,
-				size: sSize,
-				useIconTooltip : false,
-				densityAware : this.getIconDensityAware()
-			};
+			var mProperties;
+			if (IconPool.isIconURI(this.getIcon())) {
+				mProperties = {
+					src : this.getIcon(),
+					height : sSize,
+					width : sSize,
+					size: sSize,
+					useIconTooltip : false,
+					densityAware : this.getIconDensityAware()
+				};
+			} else {
+				mProperties = {
+					src : this.getIcon(),
+					useIconTooltip : false,
+					densityAware : this.getIconDensityAware()
+				};
+			}
+
 			var aCssClasses = ['sapMObjLIcon'];
 
 			this._oImageControl = sap.m.ImageHelper.getImageControl(sImgId, this._oImageControl, this, mProperties, aCssClasses);
@@ -328,7 +339,7 @@ sap.ui.define(['jquery.sap.global', './ListItemBase', './library', 'sap/ui/core/
 		ObjectListItem.prototype._getLockIcon = function() {
 
 			if (!this._oLockIcon) {
-				var oLockIconUri = IconPool.getIconURI("locked");
+				var oLockIconUri = IconPool.getIconURI("private");
 				this._oLockIcon = IconPool.createControlByURI({
 					id: this.getId() + "-lock",
 					tooltip: oLibraryResourceBundle.getText("TOOLTIP_OLI_LOCK_MARK_VALUE"),

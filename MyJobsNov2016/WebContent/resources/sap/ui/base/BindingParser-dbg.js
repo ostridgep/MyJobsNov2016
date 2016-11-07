@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', './ExpressionParser', 'sap/ui/model/BindingM
 	/**
 	 * Regular expression to check for a (new) object literal
 	 */
-	var rObject = /^\{\s*[a-zA-Z_][a-zA-Z0-9_]*\s*:/;
+	var rObject = /^\{\s*[a-zA-Z$_][a-zA-Z0-9$_]*\s*:/;
 
 	/**
 	 * Regular expression to split the binding string into hard coded string fragments and embedded bindings.
@@ -231,9 +231,11 @@ sap.ui.define(['jquery.sap.global', './ExpressionParser', 'sap/ui/model/BindingM
 			} else {
 				if (sProp === "filters" || sParentProp === "filters") {
 					FNType = jQuery.sap.getObject("sap.ui.model.Filter");
+					resolveRef(o[sProp], "test");
 				} else if (sProp === "sorter" || sParentProp === "sorter") {
 					FNType = jQuery.sap.getObject("sap.ui.model.Sorter");
 					resolveRef(o[sProp], "group");
+					resolveRef(o[sProp], "comparator");
 				}
 				if (FNType) {
 					o[sProp] = new FNType(o[sProp]);

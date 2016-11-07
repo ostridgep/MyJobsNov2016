@@ -8,9 +8,8 @@
 sap.ui.define([
 	'jquery.sap.global',
 	'./library',
-	'sap/ui/core/Control',
-	'sap/ui/core/PopupSupport'
-], function (jQuery, library, Control, PopupSupport) {
+	'sap/ui/core/Control'
+], function (jQuery, library, Control) {
 	"use strict";
 
 
@@ -27,7 +26,7 @@ sap.ui.define([
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 *
 	 * @constructor
 	 * @public
@@ -229,6 +228,7 @@ sap.ui.define([
 		this._iTransitionsCompleted = 0; // to track proper callback at the end of transitions
 		this._bNeverRendered = true;
 		this._bNavigating = false;
+		this._bRenderingInProgress = false;
 	};
 
 
@@ -486,7 +486,7 @@ sap.ui.define([
 		if (bNavigatingBackToPreviousLocation) {
 			// set focus to the remembered focus object if available
 			// if no focus was set set focus to first focusable object in "to page"
-			domRefRememberedFocusSubject = this._mFocusObject[sPageId];
+			domRefRememberedFocusSubject = this._mFocusObject != null ? this._mFocusObject[sPageId] : null;
 			if (domRefRememberedFocusSubject) {
 				jQuery.sap.focus(domRefRememberedFocusSubject);
 			} else if (bAutoFocus) {
@@ -522,12 +522,16 @@ sap.ui.define([
 			oNavInfo.to.removeStyleClass("sapMNavItemHidden");
 		}
 
-		if (this._aQueue.length > 0) {
-			var fnNavigate = this._aQueue.shift();
+		this._dequeueNavigation();
+	};
+
+	NavContainer.prototype._dequeueNavigation = function () {
+		var fnNavigate = this._aQueue.shift();
+
+		if (typeof fnNavigate === "function") {
 			fnNavigate();
 		}
 	};
-
 
 	/**
 	 * Navigates to the next page (with drill-down semantic) with the given (or default) animation. This creates a new history item inside the NavContainer and allows going back.
@@ -562,7 +566,7 @@ sap.ui.define([
 	 * @public
 	 * @ui5-metamodel This method also will be described in the UI5 (legacy) designtime metamodel
 	 */
-	NavContainer.prototype.to = function (pageId, transitionName, data, oTransitionParameters) {
+	NavContainer.prototype.to = function (pageId, transitionName, data, oTransitionParameters, bFromQueue) {
 		if (pageId instanceof Control) {
 			pageId = pageId.getId();
 		}
@@ -585,7 +589,7 @@ sap.ui.define([
 			jQuery.sap.log.info(this.toString() + ": Cannot navigate to page " + pageId + " because another navigation is already in progress. - navigation will be executed after the previous one");
 
 			this._aQueue.push(jQuery.proxy(function () {
-				this.to(pageId, transitionName, data, oTransitionParameters);
+				this.to(pageId, transitionName, data, oTransitionParameters, true);
 			}, this));
 
 			return this;
@@ -599,6 +603,9 @@ sap.ui.define([
 		var oFromPage = this.getCurrentPage();
 		if (oFromPage && (oFromPage.getId() === pageId)) { // cannot navigate to the page that is already current
 			jQuery.sap.log.warning(this.toString() + ": Cannot navigate to page " + pageId + " because this is the current page.");
+			if (bFromQueue) {
+				this._dequeueNavigation();
+			}
 			return this;
 		}
 
@@ -657,6 +664,12 @@ sap.ui.define([
 
 				if (!this.getDomRef()) { // the wanted animation has been recorded, but when the NavContainer is not rendered, we cannot animate, so just return
 					jQuery.sap.log.info("'Hidden' 'to' navigation in not-rendered NavContainer " + this.toString());
+
+					// BCP: 1680140633 - Firefox issue
+					if (this._bRenderingInProgress) {
+						jQuery.sap.delayedCall(0, this, this.invalidate);
+					}
+
 					return this;
 				}
 
@@ -1614,27 +1627,46 @@ sap.ui.define([
 		if (iPreviousPageCount === 0 && /* get the NEW pages count */ this.getPages().length === 1 && this.getDomRef()) { // the added page is the first and only page and has been newly added
 			this._ensurePageStackInitialized();
 			this.rerender();
+			this._fireAdaptableContentChange(oPage);
 		}
 
 		return this;
 	};
 
 	NavContainer.prototype.insertPage = function (oPage, iIndex) {
+		var iPreviousPageCount = this.getPages().length;
+
 		this.insertAggregation("pages", oPage, iIndex, true);
 
 		// sapMNavItem must be added after addAggregation is called because addAggregation can lead
 		// to a removePage-call where the class is removed again.
 		oPage.addStyleClass("sapMNavItem");
-		var iPreviousPageCount = this.getPages().length;
 
 		if (iPreviousPageCount === 0 && this.getPages().length === 1 && this.getDomRef()) { // the added page is the first and only page and has been newly added
 			this._ensurePageStackInitialized();
 			this.rerender();
+			this._fireAdaptableContentChange(oPage);
 		}
 
 		return this;
 	};
 
+
+	/**
+	 * Fiori 2.0 Adaptation
+	 */
+	NavContainer.prototype._getAdaptableContent = function() {
+		return this.getCurrentPage();
+	};
+
+	NavContainer.prototype._fireAdaptableContentChange = function(oPage) {
+		if (oPage && this.mEventRegistry["_adaptableContentChange"] ) { //workaround for accessing the first page displayed in the navContainer, since "navigate" event is not thrown for it
+			this.fireEvent("_adaptableContentChange", {
+				"parent": this,
+				"adaptableContent": oPage
+			});
+		}
+	};
 
 	// documentation of the pseudo events (beforeShow, afterShow, beforeHide etc.)
 

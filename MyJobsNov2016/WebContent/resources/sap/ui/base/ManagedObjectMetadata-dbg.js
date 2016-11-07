@@ -49,7 +49,7 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 * </ul>
 	 *
 	 * @author Frank Weigel
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 * @since 0.8.6
 	 * @alias sap.ui.base.ManagedObjectMetadata
 	 */
@@ -117,7 +117,7 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	// ---- SpecialSetting --------------------------------------------------------------------
 
 	/**
-	/* SpecialSetting info object
+	 * SpecialSetting info object
 	 * @private
 	 * @since 1.27.1
 	 */
@@ -125,6 +125,7 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 		info = typeof info !== 'object' ? { type: info } : info;
 		this.name = name;
 		this.type = info.type || 'any';
+		this.visibility = info.visibility || 'public';
 		this._oParent = oClass;
 		this._sUID = "special:" + name;
 		this._iKind = Kind.SPECIAL_SETTING;
@@ -133,7 +134,7 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	// ---- Property --------------------------------------------------------------------------
 
 	/**
-	/* Property info object
+	 * Property info object
 	 * @private
 	 * @since 1.27.1
 	 */
@@ -182,12 +183,12 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 		return this._oType || (this._oType = DataType.getType(this.type));
 	};
 
-	Property.prototype.get = function(that) {
-		return that[this._sGetter]();
+	Property.prototype.get = function(instance) {
+		return instance[this._sGetter]();
 	};
 
-	Property.prototype.set = function(that, oValue) {
-		return that[this._sMutator](oValue);
+	Property.prototype.set = function(instance, oValue) {
+		return instance[this._sMutator](oValue);
 	};
 
 	// ---- Aggregation -----------------------------------------------------------------------
@@ -267,32 +268,32 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 		return this._oType || (this._oType = DataType.getType(this.type));
 	};
 
-	Aggregation.prototype.get = function(that) {
-		return that[this._sGetter]();
+	Aggregation.prototype.get = function(instance) {
+		return instance[this._sGetter]();
 	};
 
-	Aggregation.prototype.set = function(that, oValue) {
-		return that[this._sMutator](oValue);
+	Aggregation.prototype.set = function(instance, oValue) {
+		return instance[this._sMutator](oValue);
 	};
 
-	Aggregation.prototype.add = function(that, oValue) {
-		return that[this._sMutator](oValue);
+	Aggregation.prototype.add = function(instance, oValue) {
+		return instance[this._sMutator](oValue);
 	};
 
-	Aggregation.prototype.insert = function(that, oValue, iPos) {
-		return that[this._sInsertMutator](oValue, iPos);
+	Aggregation.prototype.insert = function(instance, oValue, iPos) {
+		return instance[this._sInsertMutator](oValue, iPos);
 	};
 
-	Aggregation.prototype.remove = function(that, vValue) {
-		return that[this._sRemoveMutator](vValue);
+	Aggregation.prototype.remove = function(instance, vValue) {
+		return instance[this._sRemoveMutator](vValue);
 	};
 
-	Aggregation.prototype.removeAll = function(that) {
-		return that[this._sRemoveAllMutator]();
+	Aggregation.prototype.removeAll = function(instance) {
+		return instance[this._sRemoveAllMutator]();
 	};
 
-	Aggregation.prototype.indexOf = function(that, oValue) {
-		return that[this._sIndexGetter](oValue);
+	Aggregation.prototype.indexOf = function(instance, oValue) {
+		return instance[this._sIndexGetter](oValue);
 	};
 
 	// ---- Association -----------------------------------------------------------------------
@@ -350,20 +351,20 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 		return this._oType || (this._oType = DataType.getType(this.type));
 	};
 
-	Association.prototype.get = function(that) {
-		return that[this._sGetter]();
+	Association.prototype.get = function(instance) {
+		return instance[this._sGetter]();
 	};
 
-	Association.prototype.set = function(that, oValue) {
-		return that[this._sMutator](oValue);
+	Association.prototype.set = function(instance, oValue) {
+		return instance[this._sMutator](oValue);
 	};
 
-	Association.prototype.remove = function(that, vValue) {
-		return that[this._sRemoveMutator](vValue);
+	Association.prototype.remove = function(instance, vValue) {
+		return instance[this._sRemoveMutator](vValue);
 	};
 
-	Association.prototype.removeAll = function(that) {
-		return that[this._sRemoveAllMutator]();
+	Association.prototype.removeAll = function(instance) {
+		return instance[this._sRemoveAllMutator]();
 	};
 
 	// ---- Event -----------------------------------------------------------------------------
@@ -404,16 +405,16 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 		add(that._sTrigger, function(p) { return this.fireEvent(n,p, allowPreventDefault, enableEventBubbling); });
 	};
 
-	Event.prototype.attach = function(that,data,fn,listener) {
-		return that[this._sMutator](data,fn,listener);
+	Event.prototype.attach = function(instance,data,fn,listener) {
+		return instance[this._sMutator](data,fn,listener);
 	};
 
-	Event.prototype.detach = function(that,fn,listener) {
-		return that[this._sDetachMutator](fn,listener);
+	Event.prototype.detach = function(instance,fn,listener) {
+		return instance[this._sDetachMutator](fn,listener);
 	};
 
-	Event.prototype.fire = function(that,params, allowPreventDefault, enableEventBubbling) {
-		return that[this._sTrigger](params, allowPreventDefault, enableEventBubbling);
+	Event.prototype.fire = function(instance,params, allowPreventDefault, enableEventBubbling) {
+		return instance[this._sTrigger](params, allowPreventDefault, enableEventBubbling);
 	};
 
 	// ----------------------------------------------------------------------------------------
@@ -474,6 +475,7 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 		this._mAggregations = filter(mAllAggregations, true);
 		this._mPrivateAggregations = filter(mAllAggregations, false);
 		this._sDefaultAggregation = oStaticInfo.defaultAggregation || null;
+		this._sDefaultProperty = oStaticInfo.defaultProperty || null;
 		this._mAssociations = normalize(oStaticInfo.associations, this.metaFactoryAssociation);
 		this._mEvents = normalize(oStaticInfo.events, this.metaFactoryEvent);
 
@@ -500,6 +502,7 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 			this._mAllAggregations = jQuery.extend({}, oParent._mAllAggregations, this._mAggregations);
 			this._mAllAssociations = jQuery.extend({}, oParent._mAllAssociations, this._mAssociations);
 			this._sDefaultAggregation = this._sDefaultAggregation || oParent._sDefaultAggregation;
+			this._sDefaultProperty = this._sDefaultProperty || oParent._sDefaultProperty;
 			this._mAllSpecialSettings = jQuery.extend({}, oParent._mAllSpecialSettings, this._mSpecialSettings);
 		} else {
 			this._mAllEvents = this._mEvents;
@@ -746,6 +749,31 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	};
 
 	/**
+	 * Returns the name of the default property of the described class.
+	 *
+	 * If the class itself does not define a default property, then the default property
+	 * of the parent is returned. If no class in the hierarchy defines a default property,
+	 * <code>undefined</code> is returned.
+	 *
+	 * @return {string} Name of the default property
+	 */
+	ManagedObjectMetadata.prototype.getDefaultPropertyName = function() {
+		return this._sDefaultProperty;
+	};
+
+	/**
+	 * Returns an info object for the default property of the described class.
+	 *
+	 * If the class itself does not define a default property, then the
+	 * info object for the default property of the parent class is returned.
+	 *
+	 * @return {Object} An info object for the default property
+	 */
+	ManagedObjectMetadata.prototype.getDefaultProperty = function() {
+		return this.getProperty(this.getDefaultPropertyName());
+	};
+
+	/**
 	 * Returns an info object for a public setting with the given name that either is
 	 * a managed property or a managed aggregation of cardinality 0..1 and with at least
 	 * one simple alternative type. The setting can be defined by the class itself or
@@ -918,11 +946,12 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 * call but that are neither properties, aggregations, associations nor events.
 	 *
 	 * @param {string} sName name of the setting
+	 * @param {object} oInfo metadata for the setting
 	 * @private
 	 * @experimental since 1.35.0
 	 */
 	ManagedObjectMetadata.prototype.addSpecialSetting = function (sName, oInfo) {
-		var oSS = this._mProperties[sName] = new SpecialSetting(this, sName, oInfo);
+		var oSS = new SpecialSetting(this, sName, oInfo);
 		this._mSpecialSettings[sName] = oSS;
 		if (!this._mAllSpecialSettings[sName]) {
 			this._mAllSpecialSettings[sName] = oSS;

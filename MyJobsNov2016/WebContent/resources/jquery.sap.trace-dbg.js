@@ -15,22 +15,22 @@
  * All measurement activities get recorded by jquery.sap.measure, which is located in jquery.sap.global. As the initial
  * interaction is the app startup, we need the measuring capability already before this module is loaded.
  */
-sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', 'sap/ui/Global'],
-	function(jQuery, URI /*,jQuery*/) {
+sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', 'sap/ui/Device', 'sap/ui/Global'],
+	function(jQuery, URI, Device /*,jQuery*/) {
 		"use strict";
 
-		(function() {
-
-			var bFesrActive = /sap-ui-xx-fesr=(true|x|X)/.test(location.search), // experimental parameter
+			// activation by meta tag or url parameter as fallback
+			var bFesrActive = getInitialFESRState(),
 				bTraceActive,
 				bInteractionActive,
 				bMethodsOverridden, // indicates if the method overrides for fesr have already taken place
 				ROOT_ID = createGUID(), // static per session
 				CLIENT_ID = createGUID().substr(-8, 8) + ROOT_ID, // static per session
-				HOST = new URI(window.location).host(), // static per session
-				CLIENT_OS = sap.ui.Device.os.name + "_" + sap.ui.Device.os.version,
-				CLIENT_MODEL = sap.ui.Device.browser.name + "_" + sap.ui.Device.browser.version,
-				UI5_VERSION = "",
+				HOST = window.location.host, // static per session
+				CLIENT_OS = Device.os.name + "_" + Device.os.version,
+				CLIENT_MODEL = Device.browser.name + "_" + Device.browser.version,
+				sAppVersion = "", // shortened app version with fesr delimiter e.g. "@1.7.1"
+				sAppVersionFull = "", // full app version e.g. 1.7.1-SNAPSHOT
 				iE2eTraceLevel,
 				sTransactionId, // transaction id for the current request
 				sFESRTransactionId, // first transaction id of an interaction step, serves as identifier for the fesr-header
@@ -42,14 +42,24 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', 'sap/ui/Global'],
 				sFESRopt, // current header string
 				iScrollEventDelayId = 0;
 
+			function getInitialFESRState() {
+				var bActive = !!document.querySelector("meta[name=sap-ui-fesr][content=true]"),
+					aParamMatches = window.location.search.match(/[\?|&]sap-ui-(?:xx-)?fesr=(true|x|X|false)&?/);
+				if (aParamMatches) {
+					bActive = aParamMatches[1] && aParamMatches[1] != "false";
+				}
+				return bActive;
+			}
+
 			function activateDetectionMethods() {
+				// in case we do not have this API measurement is superfluous due to insufficient performance data
+				if (!(window.performance && window.performance.getEntries)) {
+					jQuery.sap.log.warning("Interaction tracking is not supported on browsers with insufficient performance API");
+				}
+
 				// only start this once to avoid multiple overrides of the xhr methods
 				if (!bMethodsOverridden) {
 					bMethodsOverridden = true;
-					// in case we do not have this API measurement is superfluous due to insufficient performance data
-					if (!(window.performance && window.performance.getEntries)) {
-						jQuery.sap.log.warning("Interaction tracking is not supported on browsers with insufficient performance API");
-					}
 
 					var fnXHRopen = window.XMLHttpRequest.prototype.open,
 						fnXHRsend = window.XMLHttpRequest.prototype.send,
@@ -71,8 +81,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', 'sap/ui/Global'],
 									// assign the current interaction to the xhr for later response header retrieval.
 									this.pendingInteraction = oPendingInteraction;
 
-									iStepCounter++;
-
 									if (bFesrActive) {
 										// set FESR
 										if (sFESR) {
@@ -80,11 +88,17 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', 'sap/ui/Global'],
 											this.setRequestHeader("SAP-Perf-FESRec-opt", sFESRopt);
 											sFESR = null;
 											sFESRopt = null;
-											iStepCounter = 0;
 											sFESRTransactionId = sTransactionId;
+											iStepCounter++;
 										} else if (!sFESRTransactionId) {
 											// initial request should set the FESR Transaction Id
 											sFESRTransactionId = sTransactionId;
+										}
+
+										// check for updated version and update formatted versions
+										if (sAppVersionFull != oPendingInteraction.appVersion) {
+											sAppVersionFull = oPendingInteraction.appVersion;
+											sAppVersion = sAppVersionFull ? formatVersion(sAppVersionFull) : "";
 										}
 
 										// set passport with Root Context ID, Transaction ID, Component Info, Action
@@ -92,9 +106,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', 'sap/ui/Global'],
 											iE2eTraceLevel,
 											ROOT_ID,
 											sTransactionId,
-											oPendingInteraction.component +
-												(oPendingInteraction.appVersion ? "@" +  oPendingInteraction.appVersion : "") +
-												(UI5_VERSION ? "@" + UI5_VERSION : ""),
+											oPendingInteraction.component + sAppVersion,
 											oPendingInteraction.trigger + "_" + oPendingInteraction.event + "_" + iStepCounter)
 										);
 									}
@@ -153,11 +165,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', 'sap/ui/Global'],
 					this.pendingInteraction.networkTime += sFesrec ? Math.round(parseFloat(sFesrec, 10) / 1000) : 0;
 					var sSapStatistics = this.getResponseHeader("sap-statistics");
 					if (sSapStatistics) {
+						var aTimings = jQuery.sap.measure.getRequestTimings();
 						this.pendingInteraction.sapStatistics.push({
 							// add response url for mapping purposes
 							url: this.responseURL,
 							statistics: sSapStatistics,
-							timing: jQuery.sap.measure.getRequestTimings().pop()
+							timing: aTimings ? aTimings[aTimings.length - 1] : undefined
 						});
 					}
 					delete this.requestHeaderLength;
@@ -213,6 +226,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', 'sap/ui/Global'],
 					vField = bCutFromFront ? vField.substr(-iLength, iLength) : vField.substr(0, iLength);
 				}
 				return vField;
+			}
+
+			function formatVersion(sVersion) {
+				var oVersion = new jQuery.sap.Version(sVersion);
+				return "@" + oVersion.getMajor() + "." + oVersion.getMinor() + "." + oVersion.getPatch();
 			}
 
 
@@ -368,6 +386,18 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', 'sap/ui/Global'],
 				}
 			};
 
+			/**
+			 * This method sets the component name for an interaction.
+			 *
+			 * @private
+			 * @since 1.38.5
+			 */
+			jQuery.sap.interaction.setStepComponent = function(sComponentName) {
+				if ((bInteractionActive || bFesrActive) && sComponentName) {
+					oPendingInteraction.component = sComponentName;
+				}
+			};
+
 
 			/**
 			 * @namespace FESR API, consumed by E2eTraceLib instead of former EppLib.js <br>
@@ -410,7 +440,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', 'sap/ui/Global'],
 			/**
 			 * @return {boolean} state of the FESR header creation
 			 * @private
-			 * @since 1.36.4
+			 * @since 1.36.2
 			 */
 			jQuery.sap.fesr.getActive = function() {
 				return bFesrActive;
@@ -437,7 +467,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', 'sap/ui/Global'],
 			/**
 			 * @param {float} iDuration increase busy duration of pending interaction by this value
 			 * @private
-			 * @since 1.36.4
+			 * @since 1.36.2
 			 */
 			jQuery.sap.fesr.addBusyDuration = function(iDuration) {
 				if (!oPendingInteraction.busyDuration) {
@@ -621,21 +651,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', 'sap/ui/Global'],
 
 			// activate FESR header generation and determine version
 			if (bFesrActive) {
-				sap.ui.getVersionInfo({async: true}).then(function(oInfo) {
-					// only add dist layer version if it was created properly
-					UI5_VERSION = oInfo && oInfo.version ? oInfo.version : "";
-				}).catch(function(e) {
-					jQuery.sap.log.debug("UI5 version could not be determined", e, "jQuery.sap.fesr");
-				});
 				activateDetectionMethods();
 			}
 
 			// *********** Include E2E-Trace Scripts *************
 			if (/sap-ui-xx-e2e-trace=(true|x|X)/.test(location.search)) {
-				jQuery.sap.require("sap.ui.core.support.trace.E2eTraceLib");
+				sap.ui.requireSync("sap/ui/core/support/trace/E2eTraceLib");
 			}
-
-		}());
 
 		return jQuery;
 

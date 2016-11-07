@@ -3,15 +3,6 @@ var MB2Type=""
 var MBform=""
 	var MB2fname=""
 jQuery.sap.require("sap.m.MessageBox");
-function diffInMins(sd,ed){
-    sDate = new Date(sd)
-    eDate = new Date(ed)
-	var diffMs = (eDate - sDate); // milliseconds between sd and ed
-	
-	var minutes = Math.floor((diffMs/1000)/60);
-	console.log("diff"+minutes)
-	return Number(minutes);
-}
 function checkConnection() {
     var networkState = navigator.connection.type;
     /*var states = {};
@@ -23,7 +14,7 @@ function checkConnection() {
     states[Connection.CELL_4G]  = 'Cell 4G connection';
     states[Connection.CELL]     = 'Cell generic connection';
     states[Connection.NONE]     = 'No network connection';*/
-    if(networkState == '4g' || networkState== '3g' || networkState== 'cellular'){
+    if(networkState == '4g' || networkState== '3g' || networkState== 'cellular'|| networkState=="wifi"){
     	return true;
     }
     else{
@@ -51,7 +42,7 @@ function isFastConnection() {
     }else{
     	return false;
     }*/
-    if(networkState == '4g' || networkState== '3g' || networkState== 'cellular'){
+    if(networkState == '4g' || networkState== '3g' || networkState== 'cellular'|| networkState=="wifi"){
     	return true;
     }
     else{
@@ -77,7 +68,7 @@ function isCellConnection() {
     }else{
     	return false;
     }*/
-    if(networkState == '4g' || networkState== '3g' || networkState== 'cellular'){
+    if(networkState == '4g' || networkState== '3g' || networkState== 'cellular' || networkState=="wifi"){
     	return true;
     }
     else{
@@ -1093,5 +1084,14 @@ function formatTime2(theTime) {
     formattedtime = "PT" + theTime.substring(0, 2) + "H" + theTime.substring(2, 4) + "M" + theTime.substring(6, 4) + "S";
 
     return formattedtime
+}
+function diffInMins(sd,ed){
+    sDate = new Date(sd)
+    eDate = new Date(ed)
+	var diffMs = (eDate - sDate); // milliseconds between sd and ed
+	
+	var minutes = Math.floor((diffMs/1000)/60);
+	console.log("diff"+minutes)
+	return Number(minutes);
 }
 

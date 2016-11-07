@@ -478,6 +478,16 @@ Mobify.UI.Carousel = (function($, Utils) {
 
 
         $element.on('click', '[data-slide]', function(e){
+
+	        // SAP MODIFICATION BEGIN
+	        // The event might bubble up from another carousel inside of this one.
+	        // In this case we ignore the event.
+	        var oCarousel = jQuery(e.target).closest('.sapMCrsl');
+	        if (oCarousel[0] != $element[0]) {
+		        return;
+	        }
+	        // SAP MODIFICATION END
+
             e.preventDefault();
             var action = $(this).attr('data-slide')
               , index = parseInt(action, 10);
@@ -492,11 +502,22 @@ Mobify.UI.Carousel = (function($, Utils) {
         });
 
         $element.on('afterSlide', function(e, previousSlide, nextSlide) {
+
+            // SAP MODIFICATION BEGIN
+            // The event might bubble up from another carousel inside of this one.
+            // In this case we ignore the event.
+            if (e.target != this) {
+                return;
+            }
+            // SAP MODIFICATION END
+
             self.$items.eq(previousSlide - 1).removeClass(self._getClass('active'));
             self.$items.eq(nextSlide - 1).addClass(self._getClass('active'));
 
-            self.$element.find('[data-slide=\'' + previousSlide + '\']').removeClass(self._getClass('active'));
-            self.$element.find('[data-slide=\'' + nextSlide + '\']').addClass(self._getClass('active'));
+            var sPageIndicatorId = self.$element[0].id + '-pageIndicator';
+
+            self.$element.find('#' + sPageIndicatorId + ' > [data-slide=\'' + previousSlide + '\']').removeClass(self._getClass('active'));
+            self.$element.find('#' + sPageIndicatorId + ' > [data-slide=\'' + nextSlide + '\']').addClass(self._getClass('active'));
 
             // SAP MODIFICATION BEGIN
             if (self.$items[nextSlide - 1]) {

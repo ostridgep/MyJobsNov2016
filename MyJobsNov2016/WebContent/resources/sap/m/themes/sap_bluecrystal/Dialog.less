@@ -13,7 +13,7 @@
 	color: @sapUiElement;
 }
 
-.sap-desktop .sapMDialog > footer.sapMDialogActions {
+html.sap-desktop .sapMDialog > footer.sapMDialogActions {
 	background-color: @sapUiPageFooterBackground;
 }
 
@@ -47,12 +47,6 @@
 	}
 }
 
-.sapMDialogResizeHandler {
-	&:before {
-		border-color: transparent transparent darken(@sapUiContentForegroundBorderColor, 15) transparent;
-	}
-
-	&:hover:before {
-		border-color: transparent transparent @sapUiContentForegroundBorderColor transparent;
-	}
+.sapMDialogResizeHandler::before {
+	color: darken(@sapUiContentForegroundBorderColor, 15);
 }

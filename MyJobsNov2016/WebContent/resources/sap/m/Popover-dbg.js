@@ -5,8 +5,9 @@
  */
 
 // Provides control sap.m.Popover.
-sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', './library', 'sap/ui/core/Control', 'sap/ui/core/Popup', 'sap/ui/core/delegate/ScrollEnablement', 'sap/ui/core/theming/Parameters'],
-	function (jQuery, Bar, Button, InstanceManager, library, Control, Popup, ScrollEnablement, Parameters) {
+sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', './library', 'sap/ui/core/Control',
+		'sap/ui/core/Popup', 'sap/ui/core/delegate/ScrollEnablement', 'sap/ui/core/theming/Parameters', 'sap/ui/Device'],
+	function (jQuery, Bar, Button, InstanceManager, library, Control, Popup, ScrollEnablement, Parameters, Device) {
 		"use strict";
 
 
@@ -22,7 +23,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 		 * @implements sap.ui.core.PopupInterface
 		 *
 		 * @author SAP SE
-		 * @version 1.36.8
+		 * @version 1.40.10
 		 *
 		 * @constructor
 		 * @public
@@ -121,7 +122,15 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 					 * Whether bouncing is enabled.
 					 * @since 1.16.5
 					 */
-					bounce: {type: "boolean", group: "Behavior", defaultValue: null}
+					bounce: {type: "boolean", group: "Behavior", defaultValue: null},
+
+					/**
+					 * Whether resize option is enabled.
+					 * @experimental since 1.36.4 Do not use directly on Popover while in experimental mode!
+					 * @since 1.36.4
+					 * @private
+					 */
+					resizable: {type: "boolean", group: "Dimension", defaultValue: false}
 				},
 				defaultAggregation: "content",
 				aggregations: {
@@ -254,8 +263,8 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 		/* =========================================================== */
 		/*                   begin: lifecycle methods                  */
 		/* =========================================================== */
-		Popover._bIE9 = (sap.ui.Device.browser.internet_explorer && sap.ui.Device.browser.version < 10);
-		Popover._bIOS7 = sap.ui.Device.os.ios && sap.ui.Device.os.version >= 7 && sap.ui.Device.os.version < 8 && sap.ui.Device.browser.name === "sf";
+		Popover._bIE9 = (Device.browser.internet_explorer && Device.browser.version < 10);
+		Popover._bIOS7 = Device.os.ios && Device.os.version >= 7 && Device.os.version < 8 && Device.browser.name === "sf";
 
 		/**
 		 * Initializes the popover control.
@@ -286,15 +295,20 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 			this.oPopup.setAnimations(jQuery.proxy(this._openAnimation, this), jQuery.proxy(this._closeAnimation, this));
 
 			// This is data used to position the popover depending on the placement property
-			this._placements = [sap.m.PlacementType.Top, sap.m.PlacementType.Right, sap.m.PlacementType.Bottom, sap.m.PlacementType.Left, sap.m.PlacementType.Vertical, sap.m.PlacementType.Horizontal, sap.m.PlacementType.Auto, sap.m.PlacementType.VerticalPreferedTop, sap.m.PlacementType.VerticalPreferedBottom, sap.m.PlacementType.HorizontalPreferedLeft, sap.m.PlacementType.HorizontalPreferedRight, sap.m.PlacementType.VerticalPreferredTop, sap.m.PlacementType.VerticalPreferredBottom, sap.m.PlacementType.HorizontalPreferredLeft, sap.m.PlacementType.HorizontalPreferredRight];
+			this._placements = [sap.m.PlacementType.Top, sap.m.PlacementType.Right, sap.m.PlacementType.Bottom, sap.m.PlacementType.Left,
+				sap.m.PlacementType.Vertical, sap.m.PlacementType.Horizontal, sap.m.PlacementType.Auto,
+				sap.m.PlacementType.VerticalPreferedTop, sap.m.PlacementType.VerticalPreferedBottom,
+				sap.m.PlacementType.HorizontalPreferedLeft, sap.m.PlacementType.HorizontalPreferedRight,
+				sap.m.PlacementType.VerticalPreferredTop, sap.m.PlacementType.VerticalPreferredBottom,
+				sap.m.PlacementType.HorizontalPreferredLeft, sap.m.PlacementType.HorizontalPreferredRight,
+				sap.m.PlacementType.PreferredRightOrFlip, sap.m.PlacementType.PreferredLeftOrFlip,
+				sap.m.PlacementType.PreferredTopOrFlip, sap.m.PlacementType.PreferredBottomOrFlip];
+
 			this._myPositions = ["center bottom", "begin center", "center top", "end center"];
 			this._atPositions = ["center top", "end center", "center bottom", "begin center"];
 			this._offsets = ["0 -18", "18 0", "0 18", "-18 0"];
 
 			this._arrowOffset = 18;
-			if (sap.m._bSizeCompact || !!document.querySelector('.sapUiSizeCompact')) {
-				this._arrowOffset = 9;
-			}
 
 			this._followOfTolerance = 32;
 
@@ -314,7 +328,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 
 				// When runs on mobile device, Popover always follows the open by control.
 				// When runs on the other platforms, Popover is repositioned if the position change of openBy is smaller than the tolerance, otherwise popover is closed.
-				if (!sap.ui.Device.system.desktop
+				if (!Device.system.desktop
 					|| (Math.abs(oLastRect.top - oRect.top) <= this._followOfTolerance && Math.abs(oLastRect.left - oRect.left) <= this._followOfTolerance)
 					|| (Math.abs(oLastRect.top + oLastRect.height - oRect.top - oRect.height) <= this._followOfTolerance && Math.abs(oLastRect.left + oLastRect.width - oRect.left - oRect.width) <= this._followOfTolerance)) {
 					this.oPopup._applyPosition(this.oPopup._oLastPosition, true);
@@ -402,7 +416,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 
 				// some mobile browser changes the scrollLeft of window after firing resize event
 				// which caused the popover to be positioned at the wrong place.
-				if (!sap.ui.Device.system.desktop) {
+				if (!Device.system.desktop) {
 					jQuery(window).scrollLeft(0);
 				}
 
@@ -434,7 +448,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 				Popup.prototype.close.apply(this, bBooleanParam ? [] : arguments);
 				that.removeDelegate(that._oRestoreFocusDelegate);
 
-				if (document.activeElement && !this.restoreFocus && !this._bModal) {
+				if (document.activeElement && !this.restoreFocus && !this._bModal && !Device.system.tablet) {
 					 document.activeElement.blur();
 				}
 			};
@@ -467,7 +481,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 						bounce: this.getBounce() === "" ? undefined : this.getBounce(),
 						// In android stock browser, iScroll has to be used
 						// The scrolling layer using native scrolling is transparent for the browser to dispatch events
-						iscroll: sap.ui.Device.browser.name === "an" ? "force" : undefined
+						iscroll: Device.browser.name === "an" ? "force" : undefined
 					});
 				}
 			}
@@ -476,7 +490,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 				this._bContentChanged = false;
 				oNavContent = this._getSingleNavContent();
 				oPageContent = this._getSinglePageContent();
-				if (oNavContent && !this.getModal() && !sap.ui.Device.support.touch && !jQuery.sap.simulateMobileOnDesktop) {
+				if (oNavContent && !this.getModal() && !Device.support.touch && !jQuery.sap.simulateMobileOnDesktop) {
 					//gain the focus back to popover in order to prevent the autoclose of the popover
 					oNavContent.attachEvent("afterNavigate", function (oEvent) {
 						jQuery.sap.focus(this.getDomRef());
@@ -537,7 +551,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 		Popover.prototype.exit = function () {
 			this._deregisterContentResizeHandler();
 
-			sap.ui.Device.resize.detachHandler(this._fnOrientationChange);
+			Device.resize.detachHandler(this._fnOrientationChange);
 
 			InstanceManager.removePopoverInstance(this);
 
@@ -590,7 +604,18 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 			// initialFocus, beginButton, endButton, and popover itself.
 			// focus has to be inside/on popover otherwise autoclose() will not work
 				sFocusId = this._getInitialFocusId(),
-				oParentDomRef, iPlacePos;
+				oParentDomRef, iPlacePos, bForceCompactArrowOffset, aCompactParents;
+
+			oParentDomRef = (oControl.getDomRef && oControl.getDomRef()) || oControl;
+			aCompactParents = jQuery(oParentDomRef).closest(".sapUiSizeCompact");
+
+			// A theme can force the usage of compact arrow offset in all content density modes, by setting sapMPopoverForceCompactArrowOffset variable.
+			// This is needed when a theme defines only a compact arrow for all modes.
+			bForceCompactArrowOffset = Parameters.get("sapMPopoverForceCompactArrowOffset") === "true";
+
+			// Determines if the Popover will be rendered in a compact mode
+			this._bSizeCompact = sap.m._bSizeCompact || !!aCompactParents.length || this.hasStyleClass("sapUiSizeCompact");
+			this._bUseCompactArrow = this._bSizeCompact || bForceCompactArrowOffset;
 
 			this._adaptPositionParams();
 
@@ -618,8 +643,8 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 			//CSN 2012 4216945
 			//binding should be registered here (very early) because when keyboard in android closes at the same time, resize event needs to be reacted in order to
 			//reposition the popover after the keyboard fully closes.
-			if (sap.ui.Device.support.touch) {
-				sap.ui.Device.resize.attachHandler(this._fnOrientationChange);
+			if (Device.support.touch) {
+				Device.resize.attachHandler(this._fnOrientationChange);
 			}
 
 			if (!this._oOpenBy || oControl !== this._oOpenBy) {
@@ -639,9 +664,6 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 					jQuery.sap.log.error("sap.m.Popover id = " + this.getId() + ": is opened by a control which isn't rendered yet.");
 					return this;
 				}
-
-				// Set compact style class if the referenced DOM element is compact too
-				this.toggleStyleClass("sapUiSizeCompact", sap.m._bSizeCompact || !!document.querySelector('.sapUiSizeCompact'));
 
 				oPopup.setAutoCloseAreas([oParentDomRef]);
 				oPopup.setContent(this);
@@ -805,7 +827,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 			oScrollAreaStyle.display = "";
 
 			// clear arrow styles
-			$arrow.removeClass("sapMPopoverArrRight sapMPopoverArrLeft sapMPopoverArrDown sapMPopoverArrUp sapMPopoverCrossArr sapMPopoverFooterAlignArr sapMPopoverHeaderAlignArr");
+			$arrow.removeClass("sapMPopoverArrRight sapMPopoverArrLeft sapMPopoverArrDown sapMPopoverArrUp sapMPopoverCrossArr sapMPopoverFooterAlignArr sapMPopoverHeaderAlignArr sapContrast sapContrastPlus");
 			$arrow.css({
 				left: "",
 				top: ""
@@ -831,9 +853,9 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 			this.oPopup.detachOpened(this._handleOpened, this);
 
 			//	recalculate the arrow position when the size of the popover changes.
-			if (!sap.ui.Device.support.touch) {
+			if (!Device.support.touch) {
 				setTimeout(function () {
-					sap.ui.Device.resize.attachHandler(that._fnOrientationChange);
+					Device.resize.attachHandler(that._fnOrientationChange);
 				}, 0);
 			}
 
@@ -848,7 +870,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 		Popover.prototype._handleClosed = function () {
 			this.oPopup.detachClosed(this._handleClosed, this);
 
-			sap.ui.Device.resize.detachHandler(this._fnOrientationChange);
+			Device.resize.detachHandler(this._fnOrientationChange);
 
 			InstanceManager.removePopoverInstance(this);
 			this.fireAfterClose({openBy: this._oOpenBy});
@@ -900,6 +922,59 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 				oEvent.stopPropagation();
 				oEvent.preventDefault();
 			}
+		};
+
+		/**
+		 * Takes care of resizing the popover
+		 */
+		Popover.prototype.onmousedown = function (oEvent) {
+
+			var minSize = {
+				width: 400,
+				height: 128
+			};
+
+			var bRTL = sap.ui.getCore().getConfiguration().getRTL();
+
+			if (oEvent.target.className !== "sapMPopoverResizeHandle") {
+				return;
+			}
+
+			var $d = jQuery(document);
+			var $popover = this.$();
+			var that = this;
+			$popover.addClass('sapMPopoverResizing');
+
+			oEvent.preventDefault();
+			oEvent.stopPropagation();
+
+			var initial = {
+				x: oEvent.pageX,
+				y: oEvent.pageY,
+
+				width: $popover.width(),
+				height: $popover.height()
+			};
+
+			$d.on("mousemove.sapMPopover", function (e) {
+				var width, height;
+
+				if (bRTL) {
+					width = initial.width + initial.x - e.pageX;
+					height = initial.height + (initial.y - e.pageY);
+				} else {
+					width = initial.width + e.pageX - initial.x;
+					height = initial.height + (initial.y - e.pageY);
+				}
+
+				that.setContentWidth(Math.max(width, minSize.width) + 'px');
+				that.setContentHeight(Math.max(height, minSize.height) + 'px');
+			});
+
+			$d.on("mouseup.sapMPopover", function () {
+				$popover.removeClass("sapMPopoverResizing");
+				$d.off("mouseup.sapMPopover, mousemove.sapMPopover");
+			});
 		};
 
 		/* =========================================================== */
@@ -1001,8 +1076,18 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 		 * @private
 		 */
 		Popover.prototype._getOffsetX = function () {
+			var oFlipPlacement = this.getPlacement(),
+				iFlipOffset = 0;
+
+			if (this._bHorizontalFlip) {
+				var oParent = this._getOpenByDomRef();
+				var bHasParent = oParent !== undefined;
+				var iParentWidth = bHasParent ? oParent.getBoundingClientRect().width : 0;
+				iFlipOffset = oFlipPlacement === "PreferredRightOrFlip" ? Math.abs(iParentWidth) : -Math.abs(iParentWidth);
+			}
+
 			var bRtl = sap.ui.getCore().getConfiguration().getRTL();
-			return this.getOffsetX() * (bRtl ? -1 : 1);
+			return iFlipOffset * (bRtl ? -1 : 1) + this.getOffsetX() * (bRtl ? -1 : 1);
 		};
 
 		/**
@@ -1012,7 +1097,16 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 		 * @private
 		 */
 		Popover.prototype._getOffsetY = function () {
-			return this.getOffsetY();
+			var oFlipPlacement = this.getPlacement(),
+				iFlipOffset = 0;
+
+			if (this._bVerticalFlip) {
+				var oParent = this._getOpenByDomRef();
+				var bHasParent = oParent !== undefined;
+				var iParentHeight = bHasParent ? oParent.getBoundingClientRect().height : 0;
+				iFlipOffset = oFlipPlacement === "PreferredTopOrFlip" ? -Math.abs(iParentHeight) : Math.abs(iParentHeight);
+			}
+			return iFlipOffset + this.getOffsetY();
 		};
 
 		Popover.prototype._calcOffset = function (sOffset) {
@@ -1037,6 +1131,8 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 				case sap.m.PlacementType.VerticalPreferredTop:
 				case sap.m.PlacementType.VerticalPreferedBottom:
 				case sap.m.PlacementType.VerticalPreferredBottom:
+				case sap.m.PlacementType.PreferredTopOrFlip:
+				case sap.m.PlacementType.PreferredBottomOrFlip:
 					this._calcVertical();
 					break;
 				case sap.m.PlacementType.Horizontal:
@@ -1044,6 +1140,8 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 				case sap.m.PlacementType.HorizontalPreferredLeft:
 				case sap.m.PlacementType.HorizontalPreferedRight:
 				case sap.m.PlacementType.HorizontalPreferredRight:
+				case sap.m.PlacementType.PreferredRightOrFlip:
+				case sap.m.PlacementType.PreferredLeftOrFlip:
 					this._calcHorizontal();
 					break;
 			}
@@ -1060,6 +1158,8 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 			var bHasParent = $parent[0] !== undefined;
 			var bPreferredPlacementTop = this.getPlacement() === sap.m.PlacementType.VerticalPreferedTop || this.getPlacement() === sap.m.PlacementType.VerticalPreferredTop;
 			var bPreferredPlacementBottom = this.getPlacement() === sap.m.PlacementType.VerticalPreferedBottom || this.getPlacement() === sap.m.PlacementType.VerticalPreferredBottom;
+			var bPreferredTopOrFlip = this.getPlacement() === sap.m.PlacementType.PreferredTopOrFlip;
+			var bPreferredBottomOrFlip = this.getPlacement() === sap.m.PlacementType.PreferredBottomOrFlip;
 			var iParentTop = bHasParent ? $parent[0].getBoundingClientRect().top : 0;
 			var iParentHeight = bHasParent ? $parent[0].getBoundingClientRect().height : 0;
 			var iOffsetY = this._getOffsetY();
@@ -1069,9 +1169,27 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 			var iPopoverHeight = this.$().outerHeight();
 
 			if (bPreferredPlacementTop && iTopSpace > iPopoverHeight + this._arrowOffset) {
-				this._oCalcedPos = sap.m.PlacementType.Top;
+					this._bVerticalFlip = false;
+					this._oCalcedPos = sap.m.PlacementType.Top;
+			} else if (bPreferredTopOrFlip) {
+				if (iTopSpace > iPopoverHeight + this._arrowOffset) {
+					this._bVerticalFlip = false;
+					this._oCalcedPos = sap.m.PlacementType.Top;
+				} else {
+					this._bVerticalFlip = true;
+					this._oCalcedPos = sap.m.PlacementType.Bottom;
+				}
 			} else if (bPreferredPlacementBottom && iBottomSpace > iPopoverHeight + this._arrowOffset) {
 				this._oCalcedPos = sap.m.PlacementType.Bottom;
+				this._bVerticalFlip = false;
+			} else if (bPreferredBottomOrFlip) {
+				if (iBottomSpace > iPopoverHeight + this._arrowOffset) {
+					this._bVerticalFlip = false;
+					this._oCalcedPos = sap.m.PlacementType.Bottom;
+				} else {
+					this._bVerticalFlip = true;
+					this._oCalcedPos = sap.m.PlacementType.Top;
+				}
 			} else if (iTopSpace > iBottomSpace) {
 				this._oCalcedPos = sap.m.PlacementType.Top;
 			} else {
@@ -1091,13 +1209,32 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 			var iParentRight = iParentLeft + iParentWidth;
 			var iRightSpace = this._$window.width() - iParentRight - this._marginRight - iOffsetX;
 			var iPopoverWidth = this.$().outerWidth();
-
+			var bPreferredLeftOrFlip = this.getPlacement() === sap.m.PlacementType.PreferredLeftOrFlip;
+			var bPreferredRightOrFlip = this.getPlacement() === sap.m.PlacementType.PreferredRightOrFlip;
 			var bRtl = sap.ui.getCore().getConfiguration().getRTL();
 
 			if (bPreferredPlacementLeft && iLeftSpace > iPopoverWidth + this._arrowOffset) {
-				this._oCalcedPos = bRtl ? sap.m.PlacementType.Right : sap.m.PlacementType.Left;
+					this._bHorizontalFlip = false;
+					this._oCalcedPos = bRtl ? sap.m.PlacementType.Right : sap.m.PlacementType.Left;
+			} else if (bPreferredLeftOrFlip) {
+				if (iLeftSpace > iPopoverWidth + this._arrowOffset) {
+					this._bHorizontalFlip = false;
+					this._oCalcedPos = bRtl ? sap.m.PlacementType.Right : sap.m.PlacementType.Left;
+				} else {
+					this._bHorizontalFlip = true;
+					this._oCalcedPos = bRtl ? sap.m.PlacementType.Left : sap.m.PlacementType.Right;
+				}
 			} else if (bPreferredPlacementRight && iRightSpace > iPopoverWidth + this._arrowOffset) {
-				this._oCalcedPos = bRtl ? sap.m.PlacementType.Left : sap.m.PlacementType.Right;
+					this._bHorizontalFlip = false;
+					this._oCalcedPos = bRtl ? sap.m.PlacementType.Left : sap.m.PlacementType.Right;
+			} else if (bPreferredRightOrFlip) {
+				if (iRightSpace > iPopoverWidth + this._arrowOffset) {
+					this._bHorizontalFlip = false;
+					this._oCalcedPos = bRtl ? sap.m.PlacementType.Left : sap.m.PlacementType.Right;
+				} else {
+					this._bHorizontalFlip = true;
+					this._oCalcedPos = bRtl ? sap.m.PlacementType.Right : sap.m.PlacementType.Left;
+				}
 			} else if (iLeftSpace > iRightSpace) {
 				this._oCalcedPos = bRtl ? sap.m.PlacementType.Right : sap.m.PlacementType.Left;
 			} else {
@@ -1247,7 +1384,8 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 
 		/**
 		 * Calculate outerWidth of the element; used as hook for SVG elements
-		 *
+		 * @param {HTMLElement} oElement An Element for which outerWidth will be calculated.
+		 * @param {boolean} bIncludeMargin Determines if the margins should be included in the calculated outerWidth. Default value is false.
 		 * @protected
 		 */
 		Popover.outerWidth = function (oElement, bIncludeMargin) {
@@ -1255,12 +1393,13 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 				return oElement.getBoundingClientRect().width;
 			}
 
-			return jQuery(oElement).outerWidth(bIncludeMargin);
+			return jQuery(oElement).outerWidth(!!bIncludeMargin);
 		};
 
 		/**
 		 * Calculate outerHeight of the element; used as hook for SVG elements
-		 *
+		 * @param {HTMLElement} oElement An Element for which outerHeight will be calculated.
+		 * @param {boolean} bIncludeMargin Determines if the margins should be included in the calculated outerHeight. Default value is false.
 		 * @protected
 		 */
 		Popover.outerHeight = function (oElement, bIncludeMargin) {
@@ -1268,7 +1407,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 				return oElement.getBoundingClientRect().height;
 			}
 
-			return jQuery(oElement).outerHeight(bIncludeMargin);
+			return jQuery(oElement).outerHeight(!!bIncludeMargin);
 		};
 
 		Popover.prototype._getPositionParams = function ($popover, $arrow, $content, $scrollArea) {
@@ -1289,7 +1428,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 
 			oPosParams._fWindowTop = this._$window.scrollTop();
 			oPosParams._fWindowRight = this._$window.width();
-			oPosParams._fWindowBottom = (Popover._bIOS7 && sap.ui.Device.orientation.landscape && window.innerHeight) ? window.innerHeight : this._$window.height();
+			oPosParams._fWindowBottom = (Popover._bIOS7 && Device.orientation.landscape && window.innerHeight) ? window.innerHeight : this._$window.height();
 			oPosParams._fWindowLeft = this._$window.scrollLeft();
 
 			oPosParams._fDocumentWidth = oPosParams._fWindowLeft + oPosParams._fWindowRight;
@@ -1336,7 +1475,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 			switch (sCalculatedPlacement) {
 				case sap.m.PlacementType.Left:
 					if (bRtl) {
-						oPosParams._fMarginLeft = oPosParams._$parent.offset().left + Popover.outerWidth(oPosParams._$parent[0], false) + this._arrowOffset + oPosParams._fOffsetX;
+						oPosParams._fMarginLeft = oPosParams._$parent.offset().left + Popover.outerWidth(oPosParams._$parent[0], false) + this._arrowOffset - oPosParams._fOffsetX;
 					} else {
 						oPosParams._fMarginRight = oPosParams._fDocumentWidth - oPosParams._$parent.offset().left + this._arrowOffset - oPosParams._fOffsetX;
 					}
@@ -1417,7 +1556,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 
 			return {
 				top: iTop,
-				bottom: Math.max(iBottom - oPosParams._fWindowTop, iBottom),
+				bottom: iBottom - oPosParams._fWindowTop,
 				left: iLeft,
 				right: typeof iRight === "number" ? iRight - oPosParams._fWindowLeft : iRight
 			};
@@ -1632,7 +1771,8 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 			if (this.getShowArrow()) {
 				// Set the arrow next to the opener
 				var iArrowOffset = this._getArrowOffsetCss(sCalculatedPlacement, oPosParams),
-					sArrowPositionClass = this._getArrowPositionCssClass(sCalculatedPlacement);
+					sArrowPositionClass = this._getArrowPositionCssClass(sCalculatedPlacement),
+					sArrowStyleClass, bUseContrastContainer;
 
 				// Remove old position of the arrow and add the new one
 				$arrow.removeAttr("style");
@@ -1641,13 +1781,28 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 				// Add position class to the arrow
 				$arrow.addClass(sArrowPositionClass);
 
+				// Use contrast container if the arrow is placed down and the footer exists.
+				if (sCalculatedPlacement === sap.m.PlacementType.Top && oPosParams._$footer && oPosParams._$footer.size()) {
+					bUseContrastContainer = true;
+				}
+
 				// Style the arrow according to the header/footer/content if it is to the left or right
 				if (sCalculatedPlacement === sap.m.PlacementType.Left || sCalculatedPlacement === sap.m.PlacementType.Right) {
-					var sArrowStyleClass = this._getArrowStyleCssClass(oPosParams);
+					sArrowStyleClass = this._getArrowStyleCssClass(oPosParams);
 
 					if (sArrowStyleClass) {
 						$arrow.addClass(sArrowStyleClass);
+
+						// Use contrast container if there is a footer and the arrow is around it.
+						if (sArrowStyleClass === "sapMPopoverFooterAlignArr") {
+							bUseContrastContainer = true;
+						}
 					}
+				}
+
+				// Add the contrast container classes when a contrast container should be used.
+				if (bUseContrastContainer) {
+					$arrow.addClass("sapContrast sapContrastPlus");
 				}
 
 				// Prevent the popover from hiding the arrow
@@ -1671,7 +1826,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 				this._arrowOffset = 18;
 				this._offsets = ["0 -18", "18 0", "0 18", "-18 0"];
 
-				if (sap.m._bSizeCompact || !!document.querySelector('.sapUiSizeCompact')) {
+				if (this._bUseCompactArrow) {
 					this._arrowOffset = 9;
 					this._offsets = ["0 -9", "9 0", "0 9", "-9 0"];
 				}
@@ -1769,7 +1924,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 						setTimeout(function () {
 							fnTransitionEnd();
 						}, 300);
-					}, sap.ui.Device.browser.firefox ? 50 : 0);
+					}, Device.browser.firefox ? 50 : 0);
 				}, 0);
 			}
 		};
@@ -1947,6 +2102,8 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 		 */
 		Popover.prototype.setPlacement = function (sPlacement) {
 			this.setProperty("placement", sPlacement, true);
+			this._bVerticalFlip = false;
+			this._bHorizontalFlip = false;
 			var iPlacePos = jQuery.inArray(sPlacement, this._placements);
 			if (iPlacePos <= 3) {
 				// this variable is internal used for the placement of the popover
@@ -2166,6 +2323,14 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 			return this;
 		};
 
+		Popover.prototype.setResizable = function (bValue) {
+			if (!Device.system.desktop) {
+				bValue = false;
+			}
+
+			return this.setProperty("resizable", bValue, true);
+		};
+
 
 		/**
 		 * Returns the sap.ui.core.ScrollEnablement delegate which is used with this control.
@@ -2202,16 +2367,18 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 		};
 
 		Popover.prototype.destroyAggregation = function (sAggregationName, bSuppressInvalidate) {
+			var oActiveControl = jQuery(document.activeElement).control(0);
 			if (sAggregationName === "beginButton" || sAggregationName === "endButton") {
 				var sButton = this["_" + sAggregationName];
 				if (sButton) {
 					sButton.destroy();
 					this["_" + sAggregationName] = null;
 				}
-				return this;
 			} else {
-				return Control.prototype.destroyAggregation.apply(this, arguments);
+				Control.prototype.destroyAggregation.apply(this, arguments);
 			}
+			oActiveControl && oActiveControl.getDomRef() ? oActiveControl.focus() : this.focus();
+			return this;
 		};
 
 		Popover.prototype.invalidate = function (oOrigin) {

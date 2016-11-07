@@ -43,13 +43,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Renderer', './ListBaseRenderer'
 						!oColumn.getHeader().getVisible() ||
 						!oColumn.getVisible() ||
 						oColumn.isPopin() ||
-						oColumn.isNeverVisible() ||
 						oColumn.isHidden();
 			}),
 			hasOneHeader = (type == "Head") && aColumns.filter(function(oColumn) {
 				return	oColumn.getVisible() &&
 						!oColumn.isPopin() &&
-						!oColumn.isNeverVisible() &&
 						!oColumn.isHidden();
 			}).length == 1,
 			createBlankCell = function(cls, id, bAriaHidden) {
@@ -75,7 +73,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Renderer', './ListBaseRenderer'
 		if (isHeaderHidden) {
 			rm.addClass("sapMListTblHeaderNone");
 		} else {
-			rm.addClass("sapMListTblRow sapMListTbl" + type + "er");
+			rm.addClass("sapMListTblRow sapMLIBFocusable sapMListTbl" + type + "er");
+			ColumnListItemRenderer.addLegacyOutlineClass.call(ColumnListItemRenderer, rm);
 		}
 
 		rm.writeClasses();
@@ -104,9 +103,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Renderer', './ListBaseRenderer'
 			}
 			if (oColumn.isPopin()) {
 				hasPopin = true;
-				return;
-			}
-			if (oColumn.isNeverVisible()) {
 				return;
 			}
 			if (oColumn.isHidden()) {
@@ -235,7 +231,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Renderer', './ListBaseRenderer'
 	TableRenderer.renderNoData = function(rm, oControl) {
 		rm.write("<tr");
 		rm.writeAttribute("role", "row");
-		rm.writeAttribute("tabindex", "-1");
+		rm.writeAttribute("tabindex", oControl.getKeyboardMode() == sap.m.ListKeyboardMode.Navigation ? -1 : 0);
 		rm.writeAttribute("id", oControl.getId("nodata"));
 		rm.addClass("sapMLIB sapMListTblRow sapMLIBTypeInactive");
 		ColumnListItemRenderer.addFocusableClasses.call(ColumnListItemRenderer, rm);

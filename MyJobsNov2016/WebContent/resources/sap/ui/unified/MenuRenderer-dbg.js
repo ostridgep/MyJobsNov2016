@@ -15,7 +15,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * Menu renderer.
 	 * @author SAP - TD Core UI&AM UI Infra
 	 *
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 * @namespace
 	 */
 	var MenuRenderer = {
@@ -48,7 +48,6 @@ sap.ui.define(['jquery.sap.global'],
 			rm.writeAccessibilityState(oMenu, {
 				role: "menu",
 				disabled: null,
-				level: oMenu.getMenuLevel(),
 				labelledby: {value: oMenu.getId() + "-label", append: true}
 			});
 			if (oMenu.oHoveredItem) {

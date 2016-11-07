@@ -11,7 +11,7 @@
     {
       "name" : "sap/ui/suite/TaskCircle.js",
       "description" : "Provides control sap.ui.suite.TaskCircle.",
-      "size" : 3357,
+      "size" : 3358,
       "compressedSize" : 1097,
       "required" : ["jquery.sap.global.js", "sap/ui/core/Control.js", "sap/ui/core/EnabledPropagator.js", "sap/ui/suite/library.js"],
       "includes" : []
@@ -27,7 +27,7 @@
     {
       "name" : "sap/ui/suite/VerticalProgressIndicator.js",
       "description" : "Provides control sap.ui.suite.VerticalProgressIndicator.",
-      "size" : 4402,
+      "size" : 4403,
       "compressedSize" : 1305,
       "required" : ["jquery.sap.global.js", "sap/ui/core/Control.js", "sap/ui/core/EnabledPropagator.js", "sap/ui/suite/library.js"],
       "includes" : []
@@ -43,14 +43,14 @@
     {
       "name" : "sap/ui/suite/library.js",
       "description" : "Initialization Code and shared classes of library sap.ui.suite.",
-      "size" : 1502,
-      "compressedSize" : 635,
+      "size" : 1505,
+      "compressedSize" : 636,
       "required" : ["jquery.sap.global.js", "sap/ui/core/Core.js", "sap/ui/core/library.js"],
       "includes" : []
     },
     {
       "name" : "sap/ui/suite/manifest.json",
-      "size" : 734,
+      "size" : 736,
       "required" : [],
       "includes" : []
     }

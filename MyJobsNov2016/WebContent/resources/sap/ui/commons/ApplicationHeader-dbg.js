@@ -20,10 +20,11 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', './Image
 	 * @class
 	 * The application header control stands on the top of any application page. It consists of 4 areas: Logo area, Function area provided by application, Search area, Logout area.
 	 * @extends sap.ui.core.Control
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 *
 	 * @constructor
 	 * @public
+	 * @deprecated Since version 1.38. Instead, use the <code>sap.tnt.ToolHeader</code> control.
 	 * @alias sap.ui.commons.ApplicationHeader
 	 * @ui5-metamodel This control/element also will be described in the UI5 design-time metamodel
 	 */

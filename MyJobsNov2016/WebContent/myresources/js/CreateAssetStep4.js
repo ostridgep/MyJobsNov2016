@@ -217,9 +217,9 @@ new sap.m.Button("formCreateAssetStep4_Back" ,{
 					    tap: [ function(oEvt) {	
 					        if (sap.ui.getCore().getElementById('formCreateAssetStep4_Submit').getVisible()) {
 					            var msgCancel = "You have chosen to cancel part way through the creation process. ";
-					            msgCancel += "Clicking OK will confirm you wish to cancel and return to the asset list. ";
-					            msgCancel += "Clicking Abort will take you to the previous screen.";
-					    	    CreateAssetStep4ConfirmCancel("Close Forms", msgCancel)
+					            msgCancel += "Clicking YES will confirm you wish to cancel and return to the Home screen. ";
+					            msgCancel += "Clicking NO will take you to the previous screen.";
+					    	    CreateAssetStep4ConfirmCancel("", msgCancel)
 					    	} 
 					    	
 					    	} ]   

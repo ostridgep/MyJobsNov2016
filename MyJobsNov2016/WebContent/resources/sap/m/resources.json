@@ -256,6 +256,16 @@
       "designtime": true
     },
     {
+      "name": "Bar.designtime-dbg.js",
+      "module": "sap/m/Bar.designtime.js",
+      "isDebug": true
+    },
+    {
+      "name": "Bar.designtime.js",
+      "module": "sap/m/Bar.designtime.js",
+      "designtime": true
+    },
+    {
       "name": "Bar.js",
       "module": "sap/m/Bar.js",
       "required": [
@@ -313,8 +323,7 @@
         "sap/ui/core/Control.js",
         "sap/m/Text.js",
         "sap/m/Link.js",
-        "sap/m/ActionSelect.js",
-        "sap/m/Button.js",
+        "sap/m/Select.js",
         "sap/ui/core/Item.js",
         "sap/ui/core/delegate/ItemNavigation.js",
         "sap/ui/core/ResizeHandler.js",
@@ -333,8 +342,7 @@
         "sap/ui/core/Control.js",
         "sap/m/Text.js",
         "sap/m/Link.js",
-        "sap/m/ActionSelect.js",
-        "sap/m/Button.js",
+        "sap/m/Select.js",
         "sap/ui/core/Item.js",
         "sap/ui/core/delegate/ItemNavigation.js",
         "sap/ui/core/ResizeHandler.js",
@@ -366,7 +374,11 @@
       "required": [
         "jquery.sap.global.js",
         "sap/m/library.js",
-        "sap/ui/core/Control.js"
+        "sap/ui/core/Control.js",
+        "sap/m/Dialog.js",
+        "sap/m/BusyIndicator.js",
+        "sap/m/Label.js",
+        "sap/m/Button.js"
       ]
     },
     {
@@ -379,7 +391,11 @@
       "required": [
         "jquery.sap.global.js",
         "sap/m/library.js",
-        "sap/ui/core/Control.js"
+        "sap/ui/core/Control.js",
+        "sap/m/Dialog.js",
+        "sap/m/BusyIndicator.js",
+        "sap/m/Label.js",
+        "sap/m/Button.js"
       ]
     },
     {
@@ -431,8 +447,7 @@
         "sap/m/library.js",
         "sap/ui/core/Control.js",
         "sap/ui/core/EnabledPropagator.js",
-        "sap/ui/core/IconPool.js",
-        "sap/ui/core/theming/Parameters.js"
+        "sap/ui/core/IconPool.js"
       ]
     },
     {
@@ -447,8 +462,7 @@
         "sap/m/library.js",
         "sap/ui/core/Control.js",
         "sap/ui/core/EnabledPropagator.js",
-        "sap/ui/core/IconPool.js",
-        "sap/ui/core/theming/Parameters.js"
+        "sap/ui/core/IconPool.js"
       ]
     },
     {
@@ -524,11 +538,10 @@
         "jquery.sap.global.js",
         "sap/m/Label.js",
         "sap/m/library.js",
+        "sap/ui/Device.js",
         "sap/ui/core/Control.js",
+        "sap/ui/core/IconPool.js",
         "sap/ui/core/EnabledPropagator.js"
-      ],
-      "condRequired": [
-        "sap/ui/core/IconPool.js"
       ]
     },
     {
@@ -542,11 +555,10 @@
         "jquery.sap.global.js",
         "sap/m/Label.js",
         "sap/m/library.js",
+        "sap/ui/Device.js",
         "sap/ui/core/Control.js",
+        "sap/ui/core/IconPool.js",
         "sap/ui/core/EnabledPropagator.js"
-      ],
-      "condRequired": [
-        "sap/ui/core/IconPool.js"
       ]
     },
     {
@@ -555,6 +567,7 @@
       "isDebug": true,
       "required": [
         "jquery.sap.global.js",
+        "sap/ui/core/ValueState.js",
         "sap/ui/core/ValueStateSupport.js"
       ]
     },
@@ -563,6 +576,7 @@
       "module": "sap/m/CheckBoxRenderer.js",
       "required": [
         "jquery.sap.global.js",
+        "sap/ui/core/ValueState.js",
         "sap/ui/core/ValueStateSupport.js"
       ]
     },
@@ -643,11 +657,16 @@
       "isDebug": true,
       "required": [
         "jquery.sap.global.js",
+        "sap/m/ComboBoxTextField.js",
         "sap/m/ComboBoxBase.js",
         "sap/m/ComboBoxRenderer.js",
         "sap/m/Popover.js",
         "sap/m/SelectList.js",
-        "sap/m/library.js"
+        "sap/m/Dialog.js",
+        "sap/m/Toolbar.js",
+        "sap/m/Button.js",
+        "sap/m/library.js",
+        "sap/ui/Device.js"
       ]
     },
     {
@@ -659,11 +678,16 @@
       "module": "sap/m/ComboBox.js",
       "required": [
         "jquery.sap.global.js",
+        "sap/m/ComboBoxTextField.js",
         "sap/m/ComboBoxBase.js",
         "sap/m/ComboBoxRenderer.js",
         "sap/m/Popover.js",
         "sap/m/SelectList.js",
-        "sap/m/library.js"
+        "sap/m/Dialog.js",
+        "sap/m/Toolbar.js",
+        "sap/m/Button.js",
+        "sap/m/library.js",
+        "sap/ui/Device.js"
       ]
     },
     {
@@ -790,6 +814,16 @@
       "designtime": true
     },
     {
+      "name": "CustomListItem.designtime-dbg.js",
+      "module": "sap/m/CustomListItem.designtime.js",
+      "isDebug": true
+    },
+    {
+      "name": "CustomListItem.designtime.js",
+      "module": "sap/m/CustomListItem.designtime.js",
+      "designtime": true
+    },
+    {
       "name": "CustomListItem.js",
       "module": "sap/m/CustomListItem.js",
       "required": [
@@ -832,6 +866,16 @@
       "designtime": true
     },
     {
+      "name": "CustomTile.designtime-dbg.js",
+      "module": "sap/m/CustomTile.designtime.js",
+      "isDebug": true
+    },
+    {
+      "name": "CustomTile.designtime.js",
+      "module": "sap/m/CustomTile.designtime.js",
+      "designtime": true
+    },
+    {
       "name": "CustomTile.js",
       "module": "sap/m/CustomTile.js",
       "required": [
@@ -869,8 +913,8 @@
         "sap/m/library.js"
       ],
       "condRequired": [
-        "sap/ui/core/Popup.js",
-        "sap/ui/unified/library.js"
+        "sap/ui/unified/library.js",
+        "sap/ui/core/Popup.js"
       ]
     },
     {
@@ -888,8 +932,8 @@
         "sap/m/library.js"
       ],
       "condRequired": [
-        "sap/ui/core/Popup.js",
-        "sap/ui/unified/library.js"
+        "sap/ui/unified/library.js",
+        "sap/ui/core/Popup.js"
       ]
     },
     {
@@ -959,15 +1003,14 @@
       "isDebug": true,
       "required": [
         "jquery.sap.global.js",
-        "sap/m/InputBase.js",
-        "sap/m/InstanceManager.js",
+        "sap/ui/core/Control.js",
         "sap/m/library.js",
-        "sap/ui/core/IconPool.js",
-        "sap/ui/core/theming/Parameters.js",
-        "sap/ui/model/type/Date.js",
-        "sap/ui/thirdparty/mobiscroll/js/mobiscroll-core.js",
-        "sap/ui/thirdparty/mobiscroll/js/mobiscroll-datetime.js",
-        "sap/ui/thirdparty/mobiscroll/js/mobiscroll-scroller.js"
+        "sap/ui/model/type/Date.js"
+      ],
+      "condRequired": [
+        "sap/m/DatePicker.js",
+        "sap/m/DateTimePicker.js",
+        "sap/m/TimePicker.js"
       ]
     },
     {
@@ -979,15 +1022,14 @@
       "module": "sap/m/DateTimeInput.js",
       "required": [
         "jquery.sap.global.js",
-        "sap/m/InputBase.js",
-        "sap/m/InstanceManager.js",
+        "sap/ui/core/Control.js",
         "sap/m/library.js",
-        "sap/ui/core/IconPool.js",
-        "sap/ui/core/theming/Parameters.js",
-        "sap/ui/model/type/Date.js",
-        "sap/ui/thirdparty/mobiscroll/js/mobiscroll-core.js",
-        "sap/ui/thirdparty/mobiscroll/js/mobiscroll-datetime.js",
-        "sap/ui/thirdparty/mobiscroll/js/mobiscroll-scroller.js"
+        "sap/ui/model/type/Date.js"
+      ],
+      "condRequired": [
+        "sap/m/DatePicker.js",
+        "sap/m/DateTimePicker.js",
+        "sap/m/TimePicker.js"
       ]
     },
     {
@@ -996,8 +1038,7 @@
       "isDebug": true,
       "required": [
         "jquery.sap.global.js",
-        "sap/ui/core/Renderer.js",
-        "sap/m/InputBaseRenderer.js"
+        "sap/ui/core/Renderer.js"
       ]
     },
     {
@@ -1005,13 +1046,64 @@
       "module": "sap/m/DateTimeInputRenderer.js",
       "required": [
         "jquery.sap.global.js",
-        "sap/ui/core/Renderer.js",
-        "sap/m/InputBaseRenderer.js"
+        "sap/ui/core/Renderer.js"
       ]
     },
     {
       "name": "DateTimeInputType.type",
       "designtime": true
+    },
+    {
+      "name": "DateTimePicker-dbg.js",
+      "module": "sap/m/DateTimePicker.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/DatePicker.js",
+        "sap/ui/model/type/Date.js",
+        "sap/m/library.js"
+      ],
+      "condRequired": [
+        "sap/m/TimePickerSliders.js"
+      ]
+    },
+    {
+      "name": "DateTimePicker.control",
+      "designtime": true
+    },
+    {
+      "name": "DateTimePicker.js",
+      "module": "sap/m/DateTimePicker.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/DatePicker.js",
+        "sap/ui/model/type/Date.js",
+        "sap/m/library.js"
+      ],
+      "condRequired": [
+        "sap/m/TimePickerSliders.js"
+      ]
+    },
+    {
+      "name": "DateTimePickerRenderer-dbg.js",
+      "module": "sap/m/DateTimePickerRenderer.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/core/Renderer.js",
+        "sap/m/DatePickerRenderer.js",
+        "sap/m/InputBaseRenderer.js"
+      ]
+    },
+    {
+      "name": "DateTimePickerRenderer.js",
+      "module": "sap/m/DateTimePickerRenderer.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/core/Renderer.js",
+        "sap/m/DatePickerRenderer.js",
+        "sap/m/InputBaseRenderer.js"
+      ]
     },
     {
       "name": "DeviationIndicator.type",
@@ -1033,7 +1125,8 @@
         "sap/ui/core/Popup.js",
         "sap/ui/core/delegate/ScrollEnablement.js",
         "sap/ui/core/theming/Parameters.js",
-        "sap/ui/core/RenderManager.js"
+        "sap/ui/core/RenderManager.js",
+        "sap/ui/core/InvisibleText.js"
       ]
     },
     {
@@ -1055,7 +1148,8 @@
         "sap/ui/core/Popup.js",
         "sap/ui/core/delegate/ScrollEnablement.js",
         "sap/ui/core/theming/Parameters.js",
-        "sap/ui/core/RenderManager.js"
+        "sap/ui/core/RenderManager.js",
+        "sap/ui/core/InvisibleText.js"
       ]
     },
     {
@@ -1160,6 +1254,110 @@
     {
       "name": "DraftIndicatorState.type",
       "designtime": true
+    },
+    {
+      "name": "DynamicPage-dbg.js",
+      "module": "sap/m/DynamicPage.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js",
+        "sap/ui/core/ScrollBar.js",
+        "sap/ui/core/ResizeHandler.js",
+        "sap/ui/Device.js"
+      ]
+    },
+    {
+      "name": "DynamicPage.js",
+      "module": "sap/m/DynamicPage.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js",
+        "sap/ui/core/ScrollBar.js",
+        "sap/ui/core/ResizeHandler.js",
+        "sap/ui/Device.js"
+      ]
+    },
+    {
+      "name": "DynamicPageHeader-dbg.js",
+      "module": "sap/m/DynamicPageHeader.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js",
+        "sap/ui/core/InvisibleText.js",
+        "sap/m/ButtonType.js",
+        "sap/m/ToggleButton.js"
+      ]
+    },
+    {
+      "name": "DynamicPageHeader.js",
+      "module": "sap/m/DynamicPageHeader.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js",
+        "sap/ui/core/InvisibleText.js",
+        "sap/m/ButtonType.js",
+        "sap/m/ToggleButton.js"
+      ]
+    },
+    {
+      "name": "DynamicPageHeaderRenderer-dbg.js",
+      "module": "sap/m/DynamicPageHeaderRenderer.js",
+      "isDebug": true
+    },
+    {
+      "name": "DynamicPageHeaderRenderer.js",
+      "module": "sap/m/DynamicPageHeaderRenderer.js"
+    },
+    {
+      "name": "DynamicPageRenderer-dbg.js",
+      "module": "sap/m/DynamicPageRenderer.js",
+      "isDebug": true,
+      "required": [
+        "sap/ui/Device.js"
+      ]
+    },
+    {
+      "name": "DynamicPageRenderer.js",
+      "module": "sap/m/DynamicPageRenderer.js",
+      "required": [
+        "sap/ui/Device.js"
+      ]
+    },
+    {
+      "name": "DynamicPageTitle-dbg.js",
+      "module": "sap/m/DynamicPageTitle.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js",
+        "sap/m/OverflowToolbar.js"
+      ]
+    },
+    {
+      "name": "DynamicPageTitle.js",
+      "module": "sap/m/DynamicPageTitle.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js",
+        "sap/m/OverflowToolbar.js"
+      ]
+    },
+    {
+      "name": "DynamicPageTitleRenderer-dbg.js",
+      "module": "sap/m/DynamicPageTitleRenderer.js",
+      "isDebug": true
+    },
+    {
+      "name": "DynamicPageTitleRenderer.js",
+      "module": "sap/m/DynamicPageTitleRenderer.js"
     },
     {
       "name": "FacetFilter-dbg.js",
@@ -1422,6 +1620,25 @@
       ]
     },
     {
+      "name": "Fiori20Adapter-dbg.js",
+      "module": "sap/m/Fiori20Adapter.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/base/Object.js",
+        "sap/ui/base/EventProvider.js"
+      ]
+    },
+    {
+      "name": "Fiori20Adapter.js",
+      "module": "sap/m/Fiori20Adapter.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/base/Object.js",
+        "sap/ui/base/EventProvider.js"
+      ]
+    },
+    {
       "name": "FlexAlignContent.type",
       "designtime": true
     },
@@ -1555,6 +1772,76 @@
       "name": "FlexWrap.type.off"
     },
     {
+      "name": "FlexibleColumnLayout-dbg.js",
+      "module": "sap/m/FlexibleColumnLayout.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/ResizeHandler.js",
+        "sap/ui/core/Control.js",
+        "sap/m/Button.js"
+      ]
+    },
+    {
+      "name": "FlexibleColumnLayout.js",
+      "module": "sap/m/FlexibleColumnLayout.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/ResizeHandler.js",
+        "sap/ui/core/Control.js",
+        "sap/m/Button.js"
+      ]
+    },
+    {
+      "name": "FlexibleColumnLayoutRenderer-dbg.js",
+      "module": "sap/m/FlexibleColumnLayoutRenderer.js",
+      "isDebug": true
+    },
+    {
+      "name": "FlexibleColumnLayoutRenderer.js",
+      "module": "sap/m/FlexibleColumnLayoutRenderer.js"
+    },
+    {
+      "name": "FormattedText-dbg.js",
+      "module": "sap/m/FormattedText.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js"
+      ]
+    },
+    {
+      "name": "FormattedText.control",
+      "designtime": true
+    },
+    {
+      "name": "FormattedText.js",
+      "module": "sap/m/FormattedText.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js"
+      ]
+    },
+    {
+      "name": "FormattedTextRenderer-dbg.js",
+      "module": "sap/m/FormattedTextRenderer.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js"
+      ]
+    },
+    {
+      "name": "FormattedTextRenderer.js",
+      "module": "sap/m/FormattedTextRenderer.js",
+      "required": [
+        "jquery.sap.global.js"
+      ]
+    },
+    {
       "name": "FrameType.type",
       "designtime": true
     },
@@ -1588,6 +1875,10 @@
         "sap/ui/core/Icon.js",
         "sap/ui/core/IconPool.js"
       ]
+    },
+    {
+      "name": "GenericTileMode.type",
+      "designtime": true
     },
     {
       "name": "GenericTileRenderer-dbg.js",
@@ -1754,6 +2045,10 @@
       "designtime": true
     },
     {
+      "name": "ISnappable.interface",
+      "designtime": true
+    },
+    {
       "name": "IconTab.interface",
       "designtime": true
     },
@@ -1834,9 +2129,7 @@
         "sap/ui/core/Control.js",
         "sap/ui/core/EnabledPropagator.js",
         "sap/ui/core/delegate/ItemNavigation.js",
-        "sap/ui/core/IconPool.js"
-      ],
-      "condRequired": [
+        "sap/ui/core/IconPool.js",
         "sap/ui/core/delegate/ScrollEnablement.js"
       ]
     },
@@ -1853,11 +2146,13 @@
         "sap/ui/core/Control.js",
         "sap/ui/core/EnabledPropagator.js",
         "sap/ui/core/delegate/ItemNavigation.js",
-        "sap/ui/core/IconPool.js"
-      ],
-      "condRequired": [
+        "sap/ui/core/IconPool.js",
         "sap/ui/core/delegate/ScrollEnablement.js"
       ]
+    },
+    {
+      "name": "IconTabHeaderMode.type",
+      "designtime": true
     },
     {
       "name": "IconTabHeaderRenderer-dbg.js",
@@ -1921,6 +2216,42 @@
         "sap/m/library.js",
         "sap/ui/core/Control.js"
       ]
+    },
+    {
+      "name": "ImageContent-dbg.js",
+      "module": "sap/m/ImageContent.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js",
+        "sap/m/Image.js",
+        "sap/ui/core/IconPool.js"
+      ]
+    },
+    {
+      "name": "ImageContent.control",
+      "designtime": true
+    },
+    {
+      "name": "ImageContent.js",
+      "module": "sap/m/ImageContent.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js",
+        "sap/m/Image.js",
+        "sap/ui/core/IconPool.js"
+      ]
+    },
+    {
+      "name": "ImageContentRenderer-dbg.js",
+      "module": "sap/m/ImageContentRenderer.js",
+      "isDebug": true
+    },
+    {
+      "name": "ImageContentRenderer.js",
+      "module": "sap/m/ImageContentRenderer.js"
     },
     {
       "name": "ImageMode.type",
@@ -1994,7 +2325,8 @@
         "sap/ui/core/Control.js",
         "sap/ui/core/EnabledPropagator.js",
         "sap/ui/core/IconPool.js",
-        "sap/ui/core/Popup.js"
+        "sap/ui/core/Popup.js",
+        "sap/m/delegate/ValueStateMessage.js"
       ]
     },
     {
@@ -2010,7 +2342,8 @@
         "sap/ui/core/Control.js",
         "sap/ui/core/EnabledPropagator.js",
         "sap/ui/core/IconPool.js",
-        "sap/ui/core/Popup.js"
+        "sap/ui/core/Popup.js",
+        "sap/m/delegate/ValueStateMessage.js"
       ]
     },
     {
@@ -2044,6 +2377,16 @@
     },
     {
       "name": "InputListItem.control",
+      "designtime": true
+    },
+    {
+      "name": "InputListItem.designtime-dbg.js",
+      "module": "sap/m/InputListItem.designtime.js",
+      "isDebug": true
+    },
+    {
+      "name": "InputListItem.designtime.js",
+      "module": "sap/m/InputListItem.designtime.js",
       "designtime": true
     },
     {
@@ -2288,6 +2631,10 @@
       ]
     },
     {
+      "name": "ListGrowingDirection.type",
+      "designtime": true
+    },
+    {
       "name": "ListHeaderDesign.type",
       "designtime": true
     },
@@ -2336,6 +2683,10 @@
         "sap/ui/core/IconPool.js",
         "sap/ui/core/theming/Parameters.js"
       ]
+    },
+    {
+      "name": "ListKeyboardMode.type",
+      "designtime": true
     },
     {
       "name": "ListMode.type",
@@ -2442,6 +2793,164 @@
       ]
     },
     {
+      "name": "Menu-dbg.js",
+      "module": "sap/m/Menu.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js",
+        "sap/m/Button.js",
+        "sap/m/Dialog.js",
+        "sap/m/NavContainer.js",
+        "sap/m/List.js",
+        "sap/m/Page.js",
+        "sap/m/MenuListItem.js",
+        "sap/ui/unified/Menu.js",
+        "sap/ui/Device.js",
+        "sap/ui/core/EnabledPropagator.js"
+      ]
+    },
+    {
+      "name": "Menu.control",
+      "designtime": true
+    },
+    {
+      "name": "Menu.js",
+      "module": "sap/m/Menu.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js",
+        "sap/m/Button.js",
+        "sap/m/Dialog.js",
+        "sap/m/NavContainer.js",
+        "sap/m/List.js",
+        "sap/m/Page.js",
+        "sap/m/MenuListItem.js",
+        "sap/ui/unified/Menu.js",
+        "sap/ui/Device.js",
+        "sap/ui/core/EnabledPropagator.js"
+      ]
+    },
+    {
+      "name": "MenuButton-dbg.js",
+      "module": "sap/m/MenuButton.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js",
+        "sap/m/Button.js",
+        "sap/m/SplitButton.js",
+        "sap/m/Dialog.js",
+        "sap/ui/Device.js",
+        "sap/ui/core/EnabledPropagator.js"
+      ]
+    },
+    {
+      "name": "MenuButton.control",
+      "designtime": true
+    },
+    {
+      "name": "MenuButton.js",
+      "module": "sap/m/MenuButton.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js",
+        "sap/m/Button.js",
+        "sap/m/SplitButton.js",
+        "sap/m/Dialog.js",
+        "sap/ui/Device.js",
+        "sap/ui/core/EnabledPropagator.js"
+      ]
+    },
+    {
+      "name": "MenuButtonMode.type",
+      "designtime": true
+    },
+    {
+      "name": "MenuButtonRenderer-dbg.js",
+      "module": "sap/m/MenuButtonRenderer.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js"
+      ]
+    },
+    {
+      "name": "MenuButtonRenderer.js",
+      "module": "sap/m/MenuButtonRenderer.js",
+      "required": [
+        "jquery.sap.global.js"
+      ]
+    },
+    {
+      "name": "MenuItem-dbg.js",
+      "module": "sap/m/MenuItem.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Item.js"
+      ]
+    },
+    {
+      "name": "MenuItem.control",
+      "designtime": true
+    },
+    {
+      "name": "MenuItem.js",
+      "module": "sap/m/MenuItem.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Item.js"
+      ]
+    },
+    {
+      "name": "MenuListItem-dbg.js",
+      "module": "sap/m/MenuListItem.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/ListItemBase.js",
+        "sap/m/library.js",
+        "sap/ui/core/EnabledPropagator.js",
+        "sap/ui/core/IconPool.js"
+      ]
+    },
+    {
+      "name": "MenuListItem.js",
+      "module": "sap/m/MenuListItem.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/ListItemBase.js",
+        "sap/m/library.js",
+        "sap/ui/core/EnabledPropagator.js",
+        "sap/ui/core/IconPool.js"
+      ]
+    },
+    {
+      "name": "MenuListItemRenderer-dbg.js",
+      "module": "sap/m/MenuListItemRenderer.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/ListItemBaseRenderer.js",
+        "sap/ui/core/Renderer.js"
+      ]
+    },
+    {
+      "name": "MenuListItemRenderer.js",
+      "module": "sap/m/MenuListItemRenderer.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/ListItemBaseRenderer.js",
+        "sap/ui/core/Renderer.js"
+      ]
+    },
+    {
       "name": "MessageBox-dbg.js",
       "module": "sap/m/MessageBox.js",
       "isDebug": true,
@@ -2523,6 +3032,7 @@
         "sap/m/Bar.js",
         "sap/m/List.js",
         "sap/m/StandardListItem.js",
+        "sap/m/ListType.js",
         "sap/m/library.js",
         "sap/ui/core/Control.js",
         "sap/m/PlacementType.js",
@@ -2534,6 +3044,7 @@
         "sap/m/Page.js",
         "sap/m/NavContainer.js",
         "sap/m/semantic/SemanticPage.js",
+        "sap/m/Link.js",
         "sap/m/Popover.js",
         "sap/m/MessagePopoverItem.js",
         "jquery.sap.dom.js"
@@ -2559,6 +3070,7 @@
         "sap/m/Bar.js",
         "sap/m/List.js",
         "sap/m/StandardListItem.js",
+        "sap/m/ListType.js",
         "sap/m/library.js",
         "sap/ui/core/Control.js",
         "sap/m/PlacementType.js",
@@ -2570,6 +3082,7 @@
         "sap/m/Page.js",
         "sap/m/NavContainer.js",
         "sap/m/semantic/SemanticPage.js",
+        "sap/m/Link.js",
         "sap/m/Popover.js",
         "sap/m/MessagePopoverItem.js",
         "jquery.sap.dom.js"
@@ -2804,8 +3317,7 @@
       "required": [
         "jquery.sap.global.js",
         "sap/m/library.js",
-        "sap/ui/core/Control.js",
-        "sap/ui/core/PopupSupport.js"
+        "sap/ui/core/Control.js"
       ]
     },
     {
@@ -2818,8 +3330,7 @@
       "required": [
         "jquery.sap.global.js",
         "sap/m/library.js",
-        "sap/ui/core/Control.js",
-        "sap/ui/core/PopupSupport.js"
+        "sap/ui/core/Control.js"
       ]
     },
     {
@@ -2872,6 +3383,39 @@
       "module": "sap/m/NewsContentRenderer.js"
     },
     {
+      "name": "NotificationListBase-dbg.js",
+      "module": "sap/m/NotificationListBase.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js",
+        "sap/m/ListItemBase.js",
+        "sap/m/Text.js",
+        "sap/m/Image.js",
+        "sap/m/OverflowToolbar.js",
+        "sap/ui/core/Icon.js"
+      ]
+    },
+    {
+      "name": "NotificationListBase.control",
+      "designtime": true
+    },
+    {
+      "name": "NotificationListBase.js",
+      "module": "sap/m/NotificationListBase.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js",
+        "sap/m/ListItemBase.js",
+        "sap/m/Text.js",
+        "sap/m/Image.js",
+        "sap/m/OverflowToolbar.js",
+        "sap/ui/core/Icon.js"
+      ]
+    },
+    {
       "name": "NotificationListGroup-dbg.js",
       "module": "sap/m/NotificationListGroup.js",
       "isDebug": true,
@@ -2879,15 +3423,7 @@
         "jquery.sap.global.js",
         "sap/m/library.js",
         "sap/ui/core/Control.js",
-        "sap/m/ListItemBase.js",
-        "sap/m/Title.js",
-        "sap/m/Text.js",
-        "sap/m/Button.js",
-        "sap/ui/core/InvisibleText.js",
-        "sap/m/Link.js",
-        "sap/ui/core/Icon.js",
-        "sap/m/Image.js",
-        "sap/m/OverflowToolbar.js"
+        "sap/m/NotificationListBase.js"
       ]
     },
     {
@@ -2901,15 +3437,7 @@
         "jquery.sap.global.js",
         "sap/m/library.js",
         "sap/ui/core/Control.js",
-        "sap/m/ListItemBase.js",
-        "sap/m/Title.js",
-        "sap/m/Text.js",
-        "sap/m/Button.js",
-        "sap/ui/core/InvisibleText.js",
-        "sap/m/Link.js",
-        "sap/ui/core/Icon.js",
-        "sap/m/Image.js",
-        "sap/m/OverflowToolbar.js"
+        "sap/m/NotificationListBase.js"
       ]
     },
     {
@@ -2929,14 +3457,8 @@
         "jquery.sap.global.js",
         "sap/m/library.js",
         "sap/ui/core/Control.js",
-        "sap/m/ListItemBase.js",
-        "sap/m/Text.js",
-        "sap/m/Button.js",
-        "sap/ui/core/InvisibleText.js",
-        "sap/m/Image.js",
-        "sap/m/OverflowToolbar.js",
-        "sap/m/ToolbarSpacer.js",
-        "sap/ui/core/Icon.js"
+        "sap/m/NotificationListBase.js",
+        "sap/ui/core/InvisibleText.js"
       ]
     },
     {
@@ -2950,14 +3472,8 @@
         "jquery.sap.global.js",
         "sap/m/library.js",
         "sap/ui/core/Control.js",
-        "sap/m/ListItemBase.js",
-        "sap/m/Text.js",
-        "sap/m/Button.js",
-        "sap/ui/core/InvisibleText.js",
-        "sap/m/Image.js",
-        "sap/m/OverflowToolbar.js",
-        "sap/m/ToolbarSpacer.js",
-        "sap/ui/core/Icon.js"
+        "sap/m/NotificationListBase.js",
+        "sap/ui/core/InvisibleText.js"
       ]
     },
     {
@@ -3149,6 +3665,16 @@
       "designtime": true
     },
     {
+      "name": "ObjectListItem.designtime-dbg.js",
+      "module": "sap/m/ObjectListItem.designtime.js",
+      "isDebug": true
+    },
+    {
+      "name": "ObjectListItem.designtime.js",
+      "module": "sap/m/ObjectListItem.designtime.js",
+      "designtime": true
+    },
+    {
       "name": "ObjectListItem.js",
       "module": "sap/m/ObjectListItem.js",
       "required": [
@@ -3176,6 +3702,54 @@
         "sap/m/ListItemBaseRenderer.js",
         "sap/ui/core/Renderer.js"
       ]
+    },
+    {
+      "name": "ObjectMarker-dbg.js",
+      "module": "sap/m/ObjectMarker.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/core/Control.js",
+        "sap/ui/core/Renderer.js"
+      ]
+    },
+    {
+      "name": "ObjectMarker.control",
+      "designtime": true
+    },
+    {
+      "name": "ObjectMarker.js",
+      "module": "sap/m/ObjectMarker.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/core/Control.js",
+        "sap/ui/core/Renderer.js"
+      ]
+    },
+    {
+      "name": "ObjectMarkerRenderer-dbg.js",
+      "module": "sap/m/ObjectMarkerRenderer.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/core/Renderer.js"
+      ]
+    },
+    {
+      "name": "ObjectMarkerRenderer.js",
+      "module": "sap/m/ObjectMarkerRenderer.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/core/Renderer.js"
+      ]
+    },
+    {
+      "name": "ObjectMarkerType.type",
+      "designtime": true
+    },
+    {
+      "name": "ObjectMarkerVisibility.type",
+      "designtime": true
     },
     {
       "name": "ObjectNumber-dbg.js",
@@ -3227,7 +3801,8 @@
         "jquery.sap.global.js",
         "sap/m/library.js",
         "sap/ui/core/Control.js",
-        "sap/ui/core/IconPool.js"
+        "sap/ui/core/IconPool.js",
+        "sap/ui/core/ValueStateSupport.js"
       ]
     },
     {
@@ -3241,7 +3816,8 @@
         "jquery.sap.global.js",
         "sap/m/library.js",
         "sap/ui/core/Control.js",
-        "sap/ui/core/IconPool.js"
+        "sap/ui/core/IconPool.js",
+        "sap/ui/core/ValueStateSupport.js"
       ]
     },
     {
@@ -3329,7 +3905,10 @@
       "isDebug": true,
       "required": [
         "jquery.sap.global.js",
-        "sap/ui/base/Metadata.js"
+        "sap/ui/base/Metadata.js",
+        "sap/m/OverflowToolbarButton.js",
+        "sap/m/ToggleButton.js",
+        "sap/m/Button.js"
       ]
     },
     {
@@ -3337,7 +3916,10 @@
       "module": "sap/m/OverflowToolbarAssociativePopoverControls.js",
       "required": [
         "jquery.sap.global.js",
-        "sap/ui/base/Metadata.js"
+        "sap/ui/base/Metadata.js",
+        "sap/m/OverflowToolbarButton.js",
+        "sap/m/ToggleButton.js",
+        "sap/m/Button.js"
       ]
     },
     {
@@ -3502,7 +4084,8 @@
         "sap/m/library.js",
         "sap/ui/core/EnabledPropagator.js",
         "sap/m/ButtonType.js",
-        "sap/m/DialogRenderer.js"
+        "sap/m/DialogRenderer.js",
+        "sap/ui/core/MessageType.js"
       ],
       "condRequired": [
         "sap/m/MessageBox.js"
@@ -3523,7 +4106,8 @@
         "sap/m/library.js",
         "sap/ui/core/EnabledPropagator.js",
         "sap/m/ButtonType.js",
-        "sap/m/DialogRenderer.js"
+        "sap/m/DialogRenderer.js",
+        "sap/ui/core/MessageType.js"
       ],
       "condRequired": [
         "sap/m/MessageBox.js"
@@ -3942,6 +4526,16 @@
       "designtime": true
     },
     {
+      "name": "Panel.designtime-dbg.js",
+      "module": "sap/m/Panel.designtime.js",
+      "isDebug": true
+    },
+    {
+      "name": "Panel.designtime.js",
+      "module": "sap/m/Panel.designtime.js",
+      "designtime": true
+    },
+    {
       "name": "Panel.js",
       "module": "sap/m/Panel.js",
       "required": [
@@ -3980,7 +4574,8 @@
         "sap/ui/core/LocaleData.js",
         "sap/m/PlanningCalendarRow.js",
         "sap/m/library.js",
-        "sap/ui/unified/library.js"
+        "sap/ui/unified/library.js",
+        "sap/ui/unified/calendar/CalendarUtils.js"
       ]
     },
     {
@@ -3996,7 +4591,8 @@
         "sap/ui/core/LocaleData.js",
         "sap/m/PlanningCalendarRow.js",
         "sap/m/library.js",
-        "sap/ui/unified/library.js"
+        "sap/ui/unified/library.js",
+        "sap/ui/unified/calendar/CalendarUtils.js"
       ]
     },
     {
@@ -4004,16 +4600,14 @@
       "module": "sap/m/PlanningCalendarRenderer.js",
       "isDebug": true,
       "required": [
-        "jquery.sap.global.js",
-        "sap/ui/core/Renderer.js"
+        "jquery.sap.global.js"
       ]
     },
     {
       "name": "PlanningCalendarRenderer.js",
       "module": "sap/m/PlanningCalendarRenderer.js",
       "required": [
-        "jquery.sap.global.js",
-        "sap/ui/core/Renderer.js"
+        "jquery.sap.global.js"
       ]
     },
     {
@@ -4095,7 +4689,8 @@
         "sap/ui/core/Control.js",
         "sap/ui/core/Popup.js",
         "sap/ui/core/delegate/ScrollEnablement.js",
-        "sap/ui/core/theming/Parameters.js"
+        "sap/ui/core/theming/Parameters.js",
+        "sap/ui/Device.js"
       ]
     },
     {
@@ -4114,7 +4709,8 @@
         "sap/ui/core/Control.js",
         "sap/ui/core/Popup.js",
         "sap/ui/core/delegate/ScrollEnablement.js",
-        "sap/ui/core/theming/Parameters.js"
+        "sap/ui/core/theming/Parameters.js",
+        "sap/ui/Device.js"
       ]
     },
     {
@@ -4558,6 +5154,46 @@
       ]
     },
     {
+      "name": "RangeSlider-dbg.js",
+      "module": "sap/m/RangeSlider.js",
+      "isDebug": true,
+      "required": [
+        "sap/m/Slider.js",
+        "sap/m/Input.js",
+        "sap/ui/core/InvisibleText.js"
+      ]
+    },
+    {
+      "name": "RangeSlider.control",
+      "designtime": true
+    },
+    {
+      "name": "RangeSlider.js",
+      "module": "sap/m/RangeSlider.js",
+      "required": [
+        "sap/m/Slider.js",
+        "sap/m/Input.js",
+        "sap/ui/core/InvisibleText.js"
+      ]
+    },
+    {
+      "name": "RangeSliderRenderer-dbg.js",
+      "module": "sap/m/RangeSliderRenderer.js",
+      "isDebug": true,
+      "required": [
+        "sap/ui/core/Renderer.js",
+        "sap/m/SliderRenderer.js"
+      ]
+    },
+    {
+      "name": "RangeSliderRenderer.js",
+      "module": "sap/m/RangeSliderRenderer.js",
+      "required": [
+        "sap/ui/core/Renderer.js",
+        "sap/m/SliderRenderer.js"
+      ]
+    },
+    {
       "name": "RatingIndicator-dbg.js",
       "module": "sap/m/RatingIndicator.js",
       "isDebug": true,
@@ -4590,7 +5226,7 @@
       "isDebug": true,
       "required": [
         "jquery.sap.global.js",
-        "sap/ui/core/theming/Parameters.js"
+        "sap/ui/core/IconPool.js"
       ]
     },
     {
@@ -4598,7 +5234,7 @@
       "module": "sap/m/RatingIndicatorRenderer.js",
       "required": [
         "jquery.sap.global.js",
-        "sap/ui/core/theming/Parameters.js"
+        "sap/ui/core/IconPool.js"
       ]
     },
     {
@@ -4704,7 +5340,6 @@
         "sap/ui/core/EnabledPropagator.js",
         "sap/ui/core/IconPool.js",
         "sap/ui/core/InvisibleText.js",
-        "sap/ui/core/theming/Parameters.js",
         "sap/m/Suggest.js"
       ]
     },
@@ -4722,7 +5357,6 @@
         "sap/ui/core/EnabledPropagator.js",
         "sap/ui/core/IconPool.js",
         "sap/ui/core/InvisibleText.js",
-        "sap/ui/core/theming/Parameters.js",
         "sap/m/Suggest.js"
       ]
     },
@@ -4750,7 +5384,8 @@
         "sap/m/library.js",
         "sap/ui/core/Control.js",
         "sap/ui/core/EnabledPropagator.js",
-        "sap/ui/core/delegate/ItemNavigation.js"
+        "sap/ui/core/delegate/ItemNavigation.js",
+        "sap/ui/core/ResizeHandler.js"
       ]
     },
     {
@@ -4765,7 +5400,8 @@
         "sap/m/library.js",
         "sap/ui/core/Control.js",
         "sap/ui/core/EnabledPropagator.js",
-        "sap/ui/core/delegate/ItemNavigation.js"
+        "sap/ui/core/delegate/ItemNavigation.js",
+        "sap/ui/core/ResizeHandler.js"
       ]
     },
     {
@@ -4820,11 +5456,22 @@
         "sap/m/library.js",
         "sap/ui/core/Control.js",
         "sap/ui/core/EnabledPropagator.js",
-        "sap/ui/core/IconPool.js"
+        "sap/ui/core/IconPool.js",
+        "sap/m/delegate/ValueStateMessage.js"
       ]
     },
     {
       "name": "Select.control",
+      "designtime": true
+    },
+    {
+      "name": "Select.designtime-dbg.js",
+      "module": "sap/m/Select.designtime.js",
+      "isDebug": true
+    },
+    {
+      "name": "Select.designtime.js",
+      "module": "sap/m/Select.designtime.js",
       "designtime": true
     },
     {
@@ -4840,7 +5487,8 @@
         "sap/m/library.js",
         "sap/ui/core/Control.js",
         "sap/ui/core/EnabledPropagator.js",
-        "sap/ui/core/IconPool.js"
+        "sap/ui/core/IconPool.js",
+        "sap/m/delegate/ValueStateMessage.js"
       ]
     },
     {
@@ -4913,6 +5561,10 @@
         "sap/ui/core/Control.js",
         "sap/ui/core/delegate/ItemNavigation.js"
       ]
+    },
+    {
+      "name": "SelectListKeyboardNavigationMode.type",
+      "designtime": true
     },
     {
       "name": "SelectListRenderer-dbg.js",
@@ -5123,6 +5775,46 @@
       ]
     },
     {
+      "name": "SplitButton-dbg.js",
+      "module": "sap/m/SplitButton.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js",
+        "sap/m/Button.js",
+        "sap/ui/core/EnabledPropagator.js",
+        "sap/ui/core/IconPool.js"
+      ]
+    },
+    {
+      "name": "SplitButton.js",
+      "module": "sap/m/SplitButton.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js",
+        "sap/m/Button.js",
+        "sap/ui/core/EnabledPropagator.js",
+        "sap/ui/core/IconPool.js"
+      ]
+    },
+    {
+      "name": "SplitButtonRenderer-dbg.js",
+      "module": "sap/m/SplitButtonRenderer.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js"
+      ]
+    },
+    {
+      "name": "SplitButtonRenderer.js",
+      "module": "sap/m/SplitButtonRenderer.js",
+      "required": [
+        "jquery.sap.global.js"
+      ]
+    },
+    {
       "name": "SplitContainer-dbg.js",
       "module": "sap/m/SplitContainer.js",
       "isDebug": true,
@@ -5271,6 +5963,42 @@
       "designtime": true
     },
     {
+      "name": "StepInput-dbg.js",
+      "module": "sap/m/StepInput.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/Button.js",
+        "sap/m/Input.js",
+        "sap/ui/core/Control.js",
+        "sap/ui/core/IconPool.js"
+      ]
+    },
+    {
+      "name": "StepInput.control",
+      "designtime": true
+    },
+    {
+      "name": "StepInput.js",
+      "module": "sap/m/StepInput.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/Button.js",
+        "sap/m/Input.js",
+        "sap/ui/core/Control.js",
+        "sap/ui/core/IconPool.js"
+      ]
+    },
+    {
+      "name": "StepInputRenderer-dbg.js",
+      "module": "sap/m/StepInputRenderer.js",
+      "isDebug": true
+    },
+    {
+      "name": "StepInputRenderer.js",
+      "module": "sap/m/StepInputRenderer.js"
+    },
+    {
       "name": "Suggest-dbg.js",
       "module": "sap/m/Suggest.js",
       "isDebug": true,
@@ -5408,17 +6136,11 @@
     {
       "name": "SwitchRenderer-dbg.js",
       "module": "sap/m/SwitchRenderer.js",
-      "isDebug": true,
-      "required": [
-        "jquery.sap.global.js"
-      ]
+      "isDebug": true
     },
     {
       "name": "SwitchRenderer.js",
-      "module": "sap/m/SwitchRenderer.js",
-      "required": [
-        "jquery.sap.global.js"
-      ]
+      "module": "sap/m/SwitchRenderer.js"
     },
     {
       "name": "SwitchType.type",
@@ -5906,12 +6628,17 @@
       ]
     },
     {
+      "name": "ThreeColumnLayoutType.type",
+      "designtime": true
+    },
+    {
       "name": "Tile-dbg.js",
       "module": "sap/m/Tile.js",
       "isDebug": true,
       "required": [
         "jquery.sap.global.js",
         "sap/m/library.js",
+        "sap/ui/core/InvisibleText.js",
         "sap/ui/core/Control.js"
       ]
     },
@@ -5925,6 +6652,7 @@
       "required": [
         "jquery.sap.global.js",
         "sap/m/library.js",
+        "sap/ui/core/InvisibleText.js",
         "sap/ui/core/Control.js"
       ]
     },
@@ -6121,7 +6849,8 @@
         "jquery.sap.global.js",
         "sap/ui/core/Control.js",
         "sap/m/TimePickerSlidersRenderer.js",
-        "sap/m/TimePickerSlider.js"
+        "sap/m/TimePickerSlider.js",
+        "sap/m/VisibleItem.js"
       ]
     },
     {
@@ -6131,7 +6860,8 @@
         "jquery.sap.global.js",
         "sap/ui/core/Control.js",
         "sap/m/TimePickerSlidersRenderer.js",
-        "sap/m/TimePickerSlider.js"
+        "sap/m/TimePickerSlider.js",
+        "sap/m/VisibleItem.js"
       ]
     },
     {
@@ -6335,6 +7065,16 @@
       "designtime": true
     },
     {
+      "name": "Toolbar.designtime-dbg.js",
+      "module": "sap/m/Toolbar.designtime.js",
+      "isDebug": true
+    },
+    {
+      "name": "Toolbar.designtime.js",
+      "module": "sap/m/Toolbar.designtime.js",
+      "designtime": true
+    },
+    {
       "name": "Toolbar.js",
       "module": "sap/m/Toolbar.js",
       "required": [
@@ -6493,11 +7233,14 @@
         "sap/ui/core/HTML.js",
         "sap/m/BusyIndicator.js",
         "sap/m/CustomListItem.js",
+        "sap/ui/core/ResizeHandler.js",
+        "sap/ui/Device.js",
         "sap/m/CustomListItemRenderer.js",
         "sap/ui/core/HTMLRenderer.js",
         "sap/m/LinkRenderer.js",
         "sap/m/ObjectAttributeRenderer.js",
         "sap/m/ObjectStatusRenderer.js",
+        "sap/m/ObjectMarkerRenderer.js",
         "sap/m/TextRenderer.js",
         "sap/m/DialogRenderer.js"
       ]
@@ -6526,11 +7269,14 @@
         "sap/ui/core/HTML.js",
         "sap/m/BusyIndicator.js",
         "sap/m/CustomListItem.js",
+        "sap/ui/core/ResizeHandler.js",
+        "sap/ui/Device.js",
         "sap/m/CustomListItemRenderer.js",
         "sap/ui/core/HTMLRenderer.js",
         "sap/m/LinkRenderer.js",
         "sap/m/ObjectAttributeRenderer.js",
         "sap/m/ObjectStatusRenderer.js",
+        "sap/m/ObjectMarkerRenderer.js",
         "sap/m/TextRenderer.js",
         "sap/m/DialogRenderer.js"
       ]
@@ -6545,6 +7291,7 @@
         "sap/ui/core/Element.js",
         "sap/m/ObjectAttribute.js",
         "sap/m/ObjectStatus.js",
+        "sap/m/ObjectMarker.js",
         "sap/ui/core/util/File.js"
       ]
     },
@@ -6561,6 +7308,7 @@
         "sap/ui/core/Element.js",
         "sap/m/ObjectAttribute.js",
         "sap/m/ObjectStatus.js",
+        "sap/m/ObjectMarker.js",
         "sap/ui/core/util/File.js"
       ]
     },
@@ -6820,6 +7568,91 @@
       ]
     },
     {
+      "name": "ViewSettingsPopover-dbg.js",
+      "module": "sap/m/ViewSettingsPopover.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/ResponsivePopover.js",
+        "sap/m/Button.js",
+        "sap/m/Toolbar.js",
+        "sap/m/ToolbarSpacer.js",
+        "sap/m/Bar.js",
+        "sap/m/List.js",
+        "sap/m/StandardListItem.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js",
+        "sap/ui/core/IconPool.js",
+        "sap/m/Text.js",
+        "sap/ui/core/Icon.js",
+        "sap/m/SegmentedButton.js",
+        "sap/m/Page.js",
+        "sap/m/NavContainer.js",
+        "sap/m/Popover.js",
+        "sap/m/ViewSettingsItem.js",
+        "sap/ui/base/ManagedObject.js"
+      ]
+    },
+    {
+      "name": "ViewSettingsPopover.js",
+      "module": "sap/m/ViewSettingsPopover.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/ResponsivePopover.js",
+        "sap/m/Button.js",
+        "sap/m/Toolbar.js",
+        "sap/m/ToolbarSpacer.js",
+        "sap/m/Bar.js",
+        "sap/m/List.js",
+        "sap/m/StandardListItem.js",
+        "sap/m/library.js",
+        "sap/ui/core/Control.js",
+        "sap/ui/core/IconPool.js",
+        "sap/m/Text.js",
+        "sap/ui/core/Icon.js",
+        "sap/m/SegmentedButton.js",
+        "sap/m/Page.js",
+        "sap/m/NavContainer.js",
+        "sap/m/Popover.js",
+        "sap/m/ViewSettingsItem.js",
+        "sap/ui/base/ManagedObject.js"
+      ]
+    },
+    {
+      "name": "ViewSettingsPopoverRenderer-dbg.js",
+      "module": "sap/m/ViewSettingsPopoverRenderer.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js"
+      ]
+    },
+    {
+      "name": "ViewSettingsPopoverRenderer.js",
+      "module": "sap/m/ViewSettingsPopoverRenderer.js",
+      "required": [
+        "jquery.sap.global.js"
+      ]
+    },
+    {
+      "name": "VisibleItem-dbg.js",
+      "module": "sap/m/VisibleItem.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Item.js"
+      ]
+    },
+    {
+      "name": "VisibleItem.js",
+      "module": "sap/m/VisibleItem.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/m/library.js",
+        "sap/ui/core/Item.js"
+      ]
+    },
+    {
       "name": "Wizard-dbg.js",
       "module": "sap/m/Wizard.js",
       "isDebug": true,
@@ -6859,6 +7692,7 @@
         "sap/ui/core/Control.js",
         "sap/ui/core/ResizeHandler.js",
         "sap/ui/core/delegate/ItemNavigation.js",
+        "sap/ui/Device.js",
         "jquery.sap.global.js"
       ]
     },
@@ -6870,6 +7704,7 @@
         "sap/ui/core/Control.js",
         "sap/ui/core/ResizeHandler.js",
         "sap/ui/core/delegate/ItemNavigation.js",
+        "sap/ui/Device.js",
         "jquery.sap.global.js"
       ]
     },
@@ -6928,6 +7763,29 @@
       "module": "sap/m/WizardStepRenderer.js"
     },
     {
+      "name": "delegate/ValueStateMessage-dbg.js",
+      "module": "sap/m/delegate/ValueStateMessage.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/Device.js",
+        "sap/ui/base/Object.js",
+        "sap/ui/core/ValueStateSupport.js",
+        "sap/ui/core/Popup.js"
+      ]
+    },
+    {
+      "name": "delegate/ValueStateMessage.js",
+      "module": "sap/m/delegate/ValueStateMessage.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/Device.js",
+        "sap/ui/base/Object.js",
+        "sap/ui/core/ValueStateSupport.js",
+        "sap/ui/core/Popup.js"
+      ]
+    },
+    {
       "name": "ios7-dbg.js",
       "module": "sap/m/ios7.js",
       "isDebug": true,
@@ -6968,6 +7826,13 @@
         "sap/ui/model/type/Date.js",
         "sap/m/Image.js"
       ]
+    },
+    {
+      "name": "library-preload.js",
+      "merged": true
+    },
+    {
+      "name": "library-preload.js.map"
     },
     {
       "name": "library-preload.json",
@@ -7151,6 +8016,12 @@
       "name": "messagebundle_lv.properties",
       "module": "sap/m/messagebundle_lv.properties",
       "locale": "lv",
+      "raw": "messagebundle.properties"
+    },
+    {
+      "name": "messagebundle_ms.properties",
+      "module": "sap/m/messagebundle_ms.properties",
+      "locale": "ms",
       "raw": "messagebundle.properties"
     },
     {
@@ -7471,6 +8342,16 @@
     },
     {
       "name": "semantic/DetailPage.control",
+      "designtime": true
+    },
+    {
+      "name": "semantic/DetailPage.designtime-dbg.js",
+      "module": "sap/m/semantic/DetailPage.designtime.js",
+      "isDebug": true
+    },
+    {
+      "name": "semantic/DetailPage.designtime.js",
+      "module": "sap/m/semantic/DetailPage.designtime.js",
       "designtime": true
     },
     {
@@ -7913,7 +8794,7 @@
       "required": [
         "sap/m/semantic/SemanticControl.js",
         "sap/m/Button.js",
-        "sap/m/OverflowToolbarButton.js"
+        "sap/m/semantic/SemanticOverflowToolbarButton.js"
       ]
     },
     {
@@ -7926,7 +8807,7 @@
       "required": [
         "sap/m/semantic/SemanticControl.js",
         "sap/m/Button.js",
-        "sap/m/OverflowToolbarButton.js"
+        "sap/m/semantic/SemanticOverflowToolbarButton.js"
       ]
     },
     {
@@ -7957,6 +8838,7 @@
       "module": "sap/m/semantic/SemanticControl.js",
       "isDebug": true,
       "required": [
+        "jquery.sap.global.js",
         "sap/m/semantic/SemanticConfiguration.js",
         "sap/ui/base/ManagedObject.js",
         "sap/ui/core/Element.js"
@@ -7970,9 +8852,27 @@
       "name": "semantic/SemanticControl.js",
       "module": "sap/m/semantic/SemanticControl.js",
       "required": [
+        "jquery.sap.global.js",
         "sap/m/semantic/SemanticConfiguration.js",
         "sap/ui/base/ManagedObject.js",
         "sap/ui/core/Element.js"
+      ]
+    },
+    {
+      "name": "semantic/SemanticOverflowToolbarButton-dbg.js",
+      "module": "sap/m/semantic/SemanticOverflowToolbarButton.js",
+      "isDebug": true,
+      "required": [
+        "sap/m/OverflowToolbarButton.js",
+        "sap/m/ButtonRenderer.js"
+      ]
+    },
+    {
+      "name": "semantic/SemanticOverflowToolbarButton.js",
+      "module": "sap/m/semantic/SemanticOverflowToolbarButton.js",
+      "required": [
+        "sap/m/OverflowToolbarButton.js",
+        "sap/m/ButtonRenderer.js"
       ]
     },
     {
@@ -8000,6 +8900,16 @@
     },
     {
       "name": "semantic/SemanticPage.control",
+      "designtime": true
+    },
+    {
+      "name": "semantic/SemanticPage.designtime-dbg.js",
+      "module": "sap/m/semantic/SemanticPage.designtime.js",
+      "isDebug": true
+    },
+    {
+      "name": "semantic/SemanticPage.designtime.js",
+      "module": "sap/m/semantic/SemanticPage.designtime.js",
       "designtime": true
     },
     {
@@ -8181,6 +9091,16 @@
       "designtime": true
     },
     {
+      "name": "semantic/ShareMenuPage.designtime-dbg.js",
+      "module": "sap/m/semantic/ShareMenuPage.designtime.js",
+      "isDebug": true
+    },
+    {
+      "name": "semantic/ShareMenuPage.designtime.js",
+      "module": "sap/m/semantic/ShareMenuPage.designtime.js",
+      "designtime": true
+    },
+    {
       "name": "semantic/ShareMenuPage.js",
       "module": "sap/m/semantic/ShareMenuPage.js",
       "required": [
@@ -8337,6 +9257,11 @@
       "theme": "base"
     },
     {
+      "name": "themes/base/DateTimePicker.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
       "name": "themes/base/Dialog.less",
       "designtime": true,
       "theme": "base"
@@ -8348,6 +9273,21 @@
     },
     {
       "name": "themes/base/DraftIndicator.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
+      "name": "themes/base/DynamicPage.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
+      "name": "themes/base/DynamicPageHeader.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
+      "name": "themes/base/DynamicPageTitle.less",
       "designtime": true,
       "theme": "base"
     },
@@ -8392,6 +9332,16 @@
       "theme": "base"
     },
     {
+      "name": "themes/base/FlexibleColumnLayout.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
+      "name": "themes/base/FormattedText.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
       "name": "themes/base/GenericTile.less",
       "designtime": true,
       "theme": "base"
@@ -8413,6 +9363,11 @@
     },
     {
       "name": "themes/base/Image.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
+      "name": "themes/base/ImageContent.less",
       "designtime": true,
       "theme": "base"
     },
@@ -8462,6 +9417,21 @@
       "theme": "base"
     },
     {
+      "name": "themes/base/Menu.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
+      "name": "themes/base/MenuButton.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
+      "name": "themes/base/MenuListItem.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
       "name": "themes/base/MessageBox.less",
       "designtime": true,
       "theme": "base"
@@ -8507,6 +9477,11 @@
       "theme": "base"
     },
     {
+      "name": "themes/base/NotificationListBase.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
       "name": "themes/base/NotificationListGroup.less",
       "designtime": true,
       "theme": "base"
@@ -8538,6 +9513,11 @@
     },
     {
       "name": "themes/base/ObjectListItem.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
+      "name": "themes/base/ObjectMarker.less",
       "designtime": true,
       "theme": "base"
     },
@@ -8642,6 +9622,11 @@
       "theme": "base"
     },
     {
+      "name": "themes/base/RangeSlider.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
       "name": "themes/base/RatingIndicator.less",
       "designtime": true,
       "theme": "base"
@@ -8702,6 +9687,11 @@
       "theme": "base"
     },
     {
+      "name": "themes/base/SplitButton.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
       "name": "themes/base/SplitContainer.less",
       "designtime": true,
       "theme": "base"
@@ -8713,6 +9703,11 @@
     },
     {
       "name": "themes/base/StandardTile.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
+      "name": "themes/base/StepInput.less",
       "designtime": true,
       "theme": "base"
     },
@@ -8837,7 +9832,17 @@
       "theme": "base"
     },
     {
+      "name": "themes/base/ValueStateMessage.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
       "name": "themes/base/ViewSettingsDialog.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
+      "name": "themes/base/ViewSettingsPopover.less",
       "designtime": true,
       "theme": "base"
     },
@@ -8885,6 +9890,11 @@
     },
     {
       "name": "themes/base/library.source.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
+      "name": "themes/base/shared.less",
       "designtime": true,
       "theme": "base"
     },
@@ -8983,12 +9993,32 @@
       "theme": "sap_hcb"
     },
     {
+      "name": "themes/sap_hcb/DateTimePicker.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
       "name": "themes/sap_hcb/Dialog.less",
       "designtime": true,
       "theme": "sap_hcb"
     },
     {
       "name": "themes/sap_hcb/DisplayListItem.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/DynamicPage.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/DynamicPageHeader.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/DynamicPageTitle.less",
       "designtime": true,
       "theme": "sap_hcb"
     },
@@ -9028,6 +10058,16 @@
       "theme": "sap_hcb"
     },
     {
+      "name": "themes/sap_hcb/FlexibleColumnLayout.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/FormattedText.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
       "name": "themes/sap_hcb/GenericTile.less",
       "designtime": true,
       "theme": "sap_hcb"
@@ -9044,6 +10084,11 @@
     },
     {
       "name": "themes/sap_hcb/IconTabBar.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/ImageContent.less",
       "designtime": true,
       "theme": "sap_hcb"
     },
@@ -9089,6 +10134,16 @@
     },
     {
       "name": "themes/sap_hcb/MaskInput.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/MenuButton.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/MenuListItem.less",
       "designtime": true,
       "theme": "sap_hcb"
     },
@@ -9163,6 +10218,11 @@
       "theme": "sap_hcb"
     },
     {
+      "name": "themes/sap_hcb/ObjectMarker.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
       "name": "themes/sap_hcb/ObjectNumber.less",
       "designtime": true,
       "theme": "sap_hcb"
@@ -9213,6 +10273,11 @@
       "theme": "sap_hcb"
     },
     {
+      "name": "themes/sap_hcb/RangeSlider.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
       "name": "themes/sap_hcb/RatingIndicator.less",
       "designtime": true,
       "theme": "sap_hcb"
@@ -9254,6 +10319,11 @@
     },
     {
       "name": "themes/sap_hcb/Slider.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/SplitButton.less",
       "designtime": true,
       "theme": "sap_hcb"
     },
@@ -9348,6 +10418,11 @@
       "theme": "sap_hcb"
     },
     {
+      "name": "themes/sap_hcb/Tokenizer.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
       "name": "themes/sap_hcb/Toolbar.less",
       "designtime": true,
       "theme": "sap_hcb"
@@ -9363,7 +10438,17 @@
       "theme": "sap_hcb"
     },
     {
+      "name": "themes/sap_hcb/ValueStateMessage.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
       "name": "themes/sap_hcb/ViewSettingsDialog.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/ViewSettingsPopover.less",
       "designtime": true,
       "theme": "sap_hcb"
     },
@@ -9392,6 +10477,24 @@
       "theme": "sap_hcb"
     },
     {
+      "name": "themes/sap_hcb/library-RTL_ie9-dbg.css",
+      "isDebug": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/library-RTL_ie9.css",
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/library-RTL_ie9_1-dbg.css",
+      "isDebug": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/library-RTL_ie9_1.css",
+      "theme": "sap_hcb"
+    },
+    {
       "name": "themes/sap_hcb/library-dbg.css",
       "isDebug": true,
       "theme": "sap_hcb"
@@ -9412,6 +10515,24 @@
     {
       "name": "themes/sap_hcb/library.source.less",
       "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/library_ie9-dbg.css",
+      "isDebug": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/library_ie9.css",
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/library_ie9_1-dbg.css",
+      "isDebug": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/library_ie9_1.css",
       "theme": "sap_hcb"
     },
     {

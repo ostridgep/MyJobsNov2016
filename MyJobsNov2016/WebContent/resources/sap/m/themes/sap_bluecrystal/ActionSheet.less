@@ -62,11 +62,11 @@ html[dir=rtl][data-sap-ui-browser^=ed] .sapMActionSheetButton > .sapMBtnInner {
 	border-bottom: none;
 }
 
-.sapMActionSheetDialog .sapMActionSheetCancelButton > .sapMBtnInner {
+.sapMActionSheetDialog .sapMActionSheetButton.sapMActionSheetCancelButton > .sapMBtnInner {
 	text-align: center;
 }
 
-.sapMActionSheetDialog .sapMActionSheetCancelButton > .sapMBtnInner {
+.sapMActionSheetDialog .sapMActionSheetButton.sapMActionSheetCancelButton > .sapMBtnInner {
 	box-shadow: none;
 	font-weight: normal;
 	border-radius: 0;
@@ -142,11 +142,11 @@ html[dir=rtl][data-sap-ui-browser^=ed] .sapMActionSheetDialog > .sapMBar.sapMHea
 	vertical-align: top;
 }
 
-.sap-desktop .sapMActionSheetPopover .sapMActionSheet button.sapMActionSheetButton:hover .sapMBtnInner:not(.sapMBtnActive) {
+html.sap-desktop .sapMActionSheetPopover .sapMActionSheet button.sapMActionSheetButton:hover .sapMBtnInner:not(.sapMBtnActive) {
 	background: @sapUiButtonFooterHoverBackground;
 }
 
-.sap-phone .sapMActionSheetDialog  .sapMDialogScroll {
+html.sap-phone .sapMActionSheetDialog  .sapMDialogScroll {
 	background-color: transparent;
 }
 

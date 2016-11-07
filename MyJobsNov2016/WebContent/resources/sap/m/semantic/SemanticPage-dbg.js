@@ -35,7 +35,7 @@ function (jQuery, SegmentedContainer, SemanticConfiguration, Button, Title, Acti
 	 * @abstract
 	 *
 	 * @author SAP SE
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 *
 	 * @constructor
 	 * @public
@@ -102,6 +102,17 @@ function (jQuery, SegmentedContainer, SemanticConfiguration, Button, Title, Acti
 					type: "boolean",
 					group: "Appearance",
 					defaultValue: true
+				},
+
+				/**
+				 * Determines whether the floating footer behavior is enabled.
+				 * If set to <code>true</code>, the content is visible when it's underneath the footer.
+				 * @since 1.40.1
+				 */
+				floatingFooter: {
+					type: "boolean",
+					group:"Appearance",
+					defaultValue: false
 				}
 			},
 			defaultAggregation: "content",
@@ -164,7 +175,8 @@ function (jQuery, SegmentedContainer, SemanticConfiguration, Button, Title, Acti
 				 * See {@link sap.m.Page#navButtonPress}
 				 */
 				navButtonPress: {}
-			}
+			},
+			designTime : true
 		}
 	});
 
@@ -191,6 +203,16 @@ function (jQuery, SegmentedContainer, SemanticConfiguration, Button, Title, Acti
 		if (this._oWrappedFooter) {
 			this._oWrappedFooter.destroy();
 			this._oWrappedFooter = null;
+		}
+
+		if (this._oTitle) {
+			this._oTitle.destroy();
+			this._oTitle = null;
+		}
+
+		if (this._oNavButton) {
+			this._oNavButton.destroy();
+			this._oNavButton = null;
 		}
 
 		this._oPositionsMap = null;
@@ -227,6 +249,12 @@ function (jQuery, SegmentedContainer, SemanticConfiguration, Button, Title, Acti
 	SemanticPage.prototype.setShowFooter = function (bShowFooter, bSuppressInvalidate) {
 		this._getPage().setShowFooter(bShowFooter, bSuppressInvalidate);
 		this.setProperty("showFooter", bShowFooter, true);
+		return this;
+	};
+
+	SemanticPage.prototype.setFloatingFooter = function (bFloatingFooter, bSuppressInvalidate) {
+		this._getPage().setFloatingFooter(bFloatingFooter, bSuppressInvalidate);
+		this.setProperty("floatingFooter", bFloatingFooter, true);
 		return this;
 	};
 
@@ -458,6 +486,7 @@ function (jQuery, SegmentedContainer, SemanticConfiguration, Button, Title, Acti
 						SemanticConfiguration.getSequenceOrderIndex(sType),
 						bSuppressInvalidate);
 			}
+			return ManagedObject.prototype.setAggregation.call(this, sAggregationName, oObject, true);// no need to invalidate entire page since the change only affects custom footer/header of page
 		}
 
 		return ManagedObject.prototype.setAggregation.call(this, sAggregationName, oObject, bSuppressInvalidate);

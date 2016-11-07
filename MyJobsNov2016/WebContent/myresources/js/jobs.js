@@ -223,13 +223,13 @@ var formLastSync = new sap.m.Dialog("dlgLastSync",{
             ]
  })
 var formMeasPoints = new sap.m.Dialog("dlgMeasPoints",{
-    title:"MeasurementPoints",
+    title:"Measurement Points",
     modal: true,
     contentWidth:"1em",
     buttons: [
    
 				new sap.m.Button( {
-				    text: "Cancel",
+				    text: "Close",
 				    type: 	sap.m.ButtonType.Reject,
 				    tap: [ function(oEvt) {		  
 						 
@@ -377,19 +377,10 @@ new sap.m.Button( {
     			 }else{
     				 CloseError='Asset'
     			 }
-    			 
-    	
-
-    	 	 
-    	 
-    	 	
-    		
-    	 
-    	 
-    	 
+    		 
     			
      	 if (CloseError=='0'){
-    		if(	(sap.ui.getCore().byId("DG51F1C2").getVisible()==true)&&   				 
+    		if(	(sap.ui.getCore().byId("Close_ProblemGroup").getVisible()==true)&&   				 
         			 ((sap.ui.getCore().byId("Close_ProblemGroup").getSelectedItem().getKey()=="NOTSELECTED")||
         					 (sap.ui.getCore().byId("Close_ProblemCode").getSelectedItem().getKey()=="NOTSELECTED")||
         					 (sap.ui.getCore().byId("Close_ActionGroup").getSelectedItem().getKey()=="NOTSELECTED")||
@@ -403,16 +394,19 @@ new sap.m.Button( {
         			 }   	
      	 }
     
-   	 if (CloseError=='0'){
-   		 console.log(sap.ui.getCore().byId("Close_Variance").getSelectedItem().getKey())
-		if(	 (sap.ui.getCore().getElementById("Close_Work").getState()==true)&&
-			 ((sap.ui.getCore().byId("Close_Variance").getSelectedItem().getKey()=="NOTSELECTED") ||
-			 (sap.ui.getCore().byId("Close_Reason").getValue().length < 1))){
-   			CloseError='3'
-		 }else{
-			 CloseError='0'
-		 }  
-   	 }
+     	 if (CloseError=='0'){
+       		 console.log(sap.ui.getCore().byId("Close_Variance").getSelectedItem().getKey())
+    		if(	 (sap.ui.getCore().getElementById("Close_Work").getState()==true)&&
+    			 ((sap.ui.getCore().byId("Close_Variance").getSelectedItem().getKey()=="NOTSELECTED") ||
+    			  (sap.ui.getCore().byId("Close_WD_Group").getSelectedItem().getKey()=="NOTSELECTED") ||
+    			  (sap.ui.getCore().byId("Close_WD_Code").getSelectedItem().getKey()=="NOTSELECTED") ||
+    			  (sap.ui.getCore().byId("Close_Reason").getValue().length < 1))){
+       			CloseError='3'
+    		 }else{
+    			 CloseError='0'
+    		 }  
+       	 }
+
    	 if(CloseError!=0){
    		processClose()
    	 }else{
@@ -420,13 +414,6 @@ new sap.m.Button( {
    	 }
    	 
    	
-
-  
- 	
-
-   
-  
-      
        } ]   
 }),
                                   new sap.m.Button( {
@@ -710,6 +697,20 @@ function processClose(){
 				 sap.ui.getCore().byId("Close_ImpactGroup").getSelectedItem().getKey(),
 				 sap.ui.getCore().byId("Close_ImpactCode").getSelectedItem().getKey(),
 				 followOnWork,followOnVariance,followOnReason ,oSwitchFlooding.getState(),oSwitchPollution.getState(), oSwitchCustFeed.getState(),"CONF" ,"Confirmed")
+				 if (sap.ui.getCore().getElementById("Close_Work").getState()==true){
+						console.log("close work")
+						if(sap.ui.getCore().getElementById("Close_WD_Special").getState()){
+							FO_Special="X"
+							}else{
+							FO_Special=""
+							}
+						createJobAddWork(CurrentOrderNo, CurrentOpNo,FO_Special,
+								 sap.ui.getCore().byId("Close_WD_StartDate").getValue(),
+								 sap.ui.getCore().byId("Close_WD_Assignment").getSelectedItem().getKey(),
+								 sap.ui.getCore().byId("Close_WD_Code").getSelectedItem().getKey(),
+								 sap.ui.getCore().byId("Close_WD_Group").getSelectedItem().getKey(),"","NEW");
+						}
+
 			 }else{
 	             createAWSJobClose(CurrentOrderNo, CurrentOpNo, currentNotifNo,  '',localStorage.getItem("EmployeeID"),CurrentJobWorkCentre,
 	            		 statusUpdateDate,statusUpdateTime,
@@ -719,6 +720,20 @@ function processClose(){
 	        			 convertToMinutes(sap.ui.getCore().byId("Close_OutOfShiftTime").getValue()),
 	        			 '','','','','','',
 						 followOnWork,followOnVariance,followOnReason ,oSwitchFlooding.getState(),oSwitchPollution.getState(), oSwitchCustFeed.getState(),"CONF" ,"Confirmed")			 
+						 if (sap.ui.getCore().getElementById("Close_Work").getState()==true){
+								console.log("close work")
+								if(sap.ui.getCore().getElementById("Close_WD_Special").getState()){
+									FO_Special="X"
+									}else{
+									FO_Special=""
+									}
+								createJobAddWork(CurrentOrderNo, CurrentOpNo,FO_Special,
+										 sap.ui.getCore().byId("Close_WD_StartDate").getValue(),
+										 sap.ui.getCore().byId("Close_WD_Assignment").getSelectedItem().getKey(),
+										 sap.ui.getCore().byId("Close_WD_Code").getSelectedItem().getKey(),
+										 sap.ui.getCore().byId("Close_WD_Group").getSelectedItem().getKey(),"","NEW");
+								}
+
 			 }
 			 
 				UpdateJobDetClose(CurrentOrderNo, CurrentOpNo)
@@ -748,7 +763,7 @@ function processClose(){
 					}else if (CloseError=="2"){
 					DisplayErrorMessage("Close Job Error", "Close Details must be Completed\n-Problem - Action - Impact")
 					}else if (CloseError=="3"){
-					DisplayErrorMessage("Close Job Error", "Close Details must be Completed\n-Follow On Work Variance - Reason")
+					DisplayErrorMessage("Close Job Error", "Close Details must be Completed\n-Follow On Work Work Type Group - Work Type Code\nVariance - Reason")
 					}else if (CloseError=="4"){
 					DisplayErrorMessage("Close Job Error", "DG5 Form must be Completed")
 					}else if (CloseError=="5"){
@@ -857,6 +872,7 @@ function confirmAcceptStatus()
                  	contentHeight: "50%",
               })
        
+
        var formChangeStatusPark = new sap.m.Dialog("dlgStatusPark",{
              title:"Park Job",
              modal: true,
@@ -877,7 +893,12 @@ function confirmAcceptStatus()
 	                                                 changeStatus("PARK")   
 	                                                 prepareChangeStatus()  
 												}else{
-													DisplayErrorMessage("Park Job Error", "Duration must be > 0\n and Reason must be completed")
+													if(sap.ui.getCore().byId("StatusRejectReasonText").getValue().length>40){
+															DisplayErrorMessage("Park Job Error", "Reason must be less than 40 Characters")
+                             						}else{
+                             							DisplayErrorMessage("Park Job Error", "Duration must be > 0\n and Reason must be completed")
+                             						}
+													
 												}
 													
    
@@ -981,7 +1002,12 @@ function confirmAcceptStatus()
                                                      
                                             		 formChangeStatusUpdate.close()  
          												}else{
-         													DisplayErrorMessage("Update Job Error", "Actual Work must be > 0\n Remaining Work must be > 0\n Variance must be seleted\n and Reason must be completed")
+         													if(sap.ui.getCore().byId("StatusRejectReasonText").getValue().length>40){
+     															DisplayErrorMessage("Update Job Error", "Reason must be less than 40 Characters")
+                                     						}else{
+                                     							DisplayErrorMessage("Update Job Error", "Actual Work must be > 0\n Remaining Work must be > 0\n Variance must be seleted\n and Reason must be completed")
+                                     						}
+         													
          												}    
                                                       
                                                        
@@ -1085,7 +1111,14 @@ var formChangeStatusReject = new sap.m.Dialog("dlgStatusReject",{
                                             		 sap.ui.getCore().byId("StatusRejectReasonText").setValue("");
                                             		 
          												}else{
-         													DisplayErrorMessage("Reject Job Error", "Variance and Reason must be completed")
+         													if(sap.ui.getCore().byId("StatusRejectReasonText").getValue().length>40){
+         															DisplayErrorMessage("Reject Job Error", "Reason must be less than 40 Characters")
+                                         						}else{
+                                         							DisplayErrorMessage("Reject Job Error", "Variance and Reason must be completed")	
+                                         						}
+         													
+         													
+         													
          												}        
                                                                                                               
                                                          } ]
@@ -1134,8 +1167,9 @@ var formChangeStatusReject = new sap.m.Dialog("dlgStatusReject",{
                   	contentHeight: "45%",
               })   
               
+              
 
-var delete_formMaterialSearch = new sap.m.Dialog("dlgMaterial",{
+var formMaterialSearch = new sap.m.Dialog("dlgMaterial",{
     title:"Material Search Results",
     modal: true,
     contentWidth:"1em",
@@ -1203,7 +1237,7 @@ var delete_formMaterialSearch = new sap.m.Dialog("dlgMaterial",{
 				})
             ]
  })
-var delete_formReserveMaterial = new sap.m.Dialog("dlgMaterialReserve",{
+var formReserveMaterial = new sap.m.Dialog("dlgMaterialReserve",{
     title:"Reserve Material for Job",
     modal: true,
     contentWidth:"1em",
@@ -1395,29 +1429,29 @@ var formAssetCharacteristic = new sap.m.Dialog("dlgAssetCharacteristic",{
             },
  })
        var formLocHistory = new sap.m.Dialog("dlgLocHistory",{
-    	    title:"Location History",
-    	    modal: true,
-    	    contentWidth:"1em",
-    	    buttons: [
-    	  
-    					
-    					new sap.m.Button( {
-    					    text: "Close",
-    					    type: 	sap.m.ButtonType.Reject,
-    					    tap: [ function(oEvt) {		  
-    							 
-    					    	formLocHistory.close()
-    							  } ]
-    					})
-    					],	
-    		            contentWidth:"70%",
-    		            contentHeight: "50%",
-    	    content:[
-    	 				 			new sap.ui.layout.form.SimpleForm({
-    					minWidth : 1024,
-    					maxContainerCols : 2,
-    					content : [
-    								
+   	    title:"Location History",
+   	    modal: true,
+   	    contentWidth:"1em",
+   	    buttons: [
+   	  
+   					
+   					new sap.m.Button( {
+   					    text: "Close",
+   					    type: 	sap.m.ButtonType.Reject,
+   					    tap: [ function(oEvt) {		  
+   							 
+   					    	formLocHistory.close()
+   							  } ]
+   					})
+   					],	
+   		            contentWidth:"70%",
+   		            contentHeight: "50%",
+   	    content:[
+   	 				 			new sap.ui.layout.form.SimpleForm({
+   					minWidth : 1024,
+   					maxContainerCols : 2,
+   					content : [
+   								
 									new sap.m.Table("LocHistoryTable",{
 										 mode: sap.m.ListMode.SingleSelectMaster,
 											selectionChange: function(evt){
@@ -1432,7 +1466,7 @@ var formAssetCharacteristic = new sap.m.Dialog("dlgAssetCharacteristic",{
 										         new sap.m.Column({header: new sap.m.Label({text:"Notification"}),
 										        	 hAlign: 'Left',width: '15%', minScreenWidth : "" , demandPopin: false}),
 										         new sap.m.Column({header: new sap.m.Label({text:"Type"}),
- 										         	hAlign: 'Left',width: '10%', minScreenWidth : "" , demandPopin: false}),
+										         	hAlign: 'Left',width: '10%', minScreenWidth : "" , demandPopin: false}),
 										         new sap.m.Column({header: new sap.m.Label({text:"Description"}),
 										        	 hAlign: 'Left',width: '35%',minScreenWidth : "" , demandPopin: true}),	    	            										        	 
 										         new sap.m.Column({header: new sap.m.Label({text:"Date"}),
@@ -1443,16 +1477,16 @@ var formAssetCharacteristic = new sap.m.Dialog("dlgAssetCharacteristic",{
 									       	
 								           	     ]
 									})    				                
-    				                 
-    							]
-    	 					}),
+   				                 
+   							]
+   	 					}),
 
-    	            ],
-    	            beforeOpen:function(){
-    	            	buildLocHistory();
+   	            ],
+   	            beforeOpen:function(){
+   	            	buildLocHistory();
 
-    	            },
-    	 })
+   	            },
+   	 })
        var oInp = new sap.m.Input("MPointValue",{
            liveChange : function(oEvent){
               
@@ -1761,7 +1795,7 @@ var formAssetMeasurementPoint = new sap.m.Dialog("dlgAssetMeasurementPoint",{
 
             },
  })
-var delete_formMaterialConsume = new sap.m.Dialog("dlgMaterialConsume",{
+var formMaterialConsume = new sap.m.Dialog("dlgMaterialConsume",{
     title:"Consume Material",
     modal: true,
     contentWidth:"1em",
@@ -1815,7 +1849,7 @@ var delete_formMaterialConsume = new sap.m.Dialog("dlgMaterialConsume",{
             },
  })
 
-var delete_formSignature = new sap.m.Dialog("dlgSignature",{
+var formSignature = new sap.m.Dialog("dlgSignature",{
     title:"Signature",
    
     horizontalScrolling:true,
@@ -1868,7 +1902,7 @@ new sap.m.Button( {
 	  }
 	
 	 })
-var delete_formOrdNotification = new sap.m.Dialog("dlgOrdNotification",{
+var formOrdNotification = new sap.m.Dialog("dlgOrdNotification",{
     title:"Notification", 
     horizontalScrolling:true,
     verticalScrolling:true,
@@ -1910,7 +1944,7 @@ var delete_formOrdNotification = new sap.m.Dialog("dlgOrdNotification",{
 	  }
 	
 	 })
-var delete_formMap = new sap.m.Dialog("dlgMap",{
+var formMap = new sap.m.Dialog("dlgMap",{
     title:"Location",
    
     horizontalScrolling:true,
@@ -1970,7 +2004,7 @@ var delete_formMap = new sap.m.Dialog("dlgMap",{
 	  }
 	
 	 })
-var delete_formRoute = new sap.m.Dialog("dlgRoute",{
+var formRoute = new sap.m.Dialog("dlgRoute",{
     title:"Route",
    
     horizontalScrolling:true,
@@ -2117,7 +2151,7 @@ var formAssetDetails = new sap.m.Dialog("dlgAssetDetails",{
 	  }
 	
 	 }).addStyleClass("sapUiSizeCompact")
-var delete_formQuestions = new sap.m.Dialog("dlgQuestions",{
+var formQuestions = new sap.m.Dialog("dlgQuestions",{
     title:"",
    
     horizontalScrolling:true,
@@ -2436,7 +2470,7 @@ var tconfFooter = new sap.m.Bar({
 					]
 	
 })
-var delete_materialFooter = new sap.m.Bar({
+var materialFooter = new sap.m.Bar({
 	id: 'materialFooter',
 	contentLeft : [
 					new sap.m.Button({
@@ -2966,7 +3000,7 @@ var jacpt=0;
     	   SQLStatement+=" MyJobDets.ordType as type, MyJobDets.startDate as start_date,MyJobDets.startTime as start_time, 'xx' as enddate, MyJobDets.address, " +
 
     	   "'pcode' as postcode, MyJobDets.notificationNo  as notifno, MyJobDets.flcLonLat as gis, "
-    	   SQLStatement+=" MyJobDets.status, MyJobDets.priority, MyJobDets.ohdrShortText as orderdesc , 'order longtext' as orderlongtext,'notif longtext' as notiflongtext, 'notif shorttext' as notifshorttext, "
+    	   SQLStatement+=" MyJobDets.status, MyJobDets.priority, MyJobDets.ohdrShortText as orderdesc , 'order longtext' as orderlongtext,'notif longtext' as notiflongtext, '' as notifshorttext, "
     	   SQLStatement+=" MyJobDets.shortText as operationdesc  , MyJobDets.plant, MyJobDets.reduration , MyJobDets.ordPlant as orderplant,MyJobDets.ordWorkCntr as orderworkcentre,MyJobDets.workCntrUser as eworkcentre, MyJobDets.workCntrOper as oworkcentre, MyJobDets.statusDescS as status_s,"+
     	   "MyJobDets.siteShcode as site, MyJobDets.equipment as equipment_code, MyJobDets.equipmentDesc as equipment_desc,MyJobDets.eqpLonLat as equipment_gis, MyJobDets.funcLoc as funcloc_code, MyJobDets.funcLocDesc as funcloc_desc, MyJobDets.flcLonLat as funcloc_gis, " 
     	   SQLStatement+=" (select count(*) from MyJobsDetsEQ where MyJobsDetsEQ.equnr = MyJobDets.equipment) as eqcnt , "
@@ -3056,11 +3090,11 @@ html5sql.process(SQLStatement,
 						   var iconsToDisplay=''
 						   for (var n=0;n <jobicons.length;n++)
 						   {
-								iconsToDisplay+='<img src="file:///storage/emulated/0/Documents/MyJobs/Global/download/Icons/'+jobicons[n]+'" onclick="showIconMessage(\''+jobtooltip[n]+'\')">'
+								iconsToDisplay+='<img src="'+DeviceStorageDirectory+'MyJobs/Global/download/Icons/'+jobicons[n]+'" onclick="showPopup(\''+jobtooltip[n]+'\')">'
 						   }
-						   if(priorityIcon.length>2){
+						   if(priorityIcon.length>6){
 						   		//priorityiconsToDisplay='<img src="images/'+item.priorityicon_filename+'" onclick="showMessage(\''+item.priorityicon_description+'\')">'
-						   	priorityiconsToDisplay='<img src="file:///storage/emulated/0/Documents/MyJobs/Global/download/Icons/'+item.priorityicon_filename+'" onclick="showIconMessage(\''+item.priorityicon_description+'\')">'
+						   	priorityiconsToDisplay='<img src="'+DeviceStorageDirectory+'MyJobs/Global/download/Icons/'+item.priorityicon_filename+'" onclick="showPopup(\''+item.priorityicon_description+'\')">'
 							   
 						   }else{
 							   priorityiconsToDisplay=""
@@ -3105,14 +3139,8 @@ cnt = 0;
 }
 
 
-
-
-
-
-
-var deviceWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-
 function addNewJobToList(orderno,opno){
+	console.log(orderno+":"+opno)
 	var item;     
 	var lStatus="";
 	var StatusState="";
@@ -3124,41 +3152,41 @@ function addNewJobToList(orderno,opno){
 	var jobtooltip=[]
 	var priorityicons=[]
 	var prioritytooltip=[]
-	countStatus()
-	       SQLStatement="SELECT MyNotifications.pcode, myjobdets.status_s, MyNotifications.type as jobtype, MyOperations.orderno, MyOperationsSplit.assignedto as empid, MyOperations.opno, MyOrders.type, MyOperations.startdate, MyOperations.enddate, MyOrders.address,  MyOrders.postcode,MyOrders.notifno, MyOrders.gis, MyOperations.status, MyOrders.priority, MyOperations.apptstart, MyOperations.apptend, MyOrders.shorttext as orderdesc , MyOrders.longtext as orderlongtext ,MyOperations.shorttext as operationdesc , MyOrders.contact , " 
-	       SQLStatement+="(SELECT GROUP_CONCAT(status ) "
-	       SQLStatement+="FROM myuserstatus  where MyOperations.orderno =myuserstatus.orderno and MyOperations.opno = myuserstatus.opno) as opstat,"
-	       SQLStatement+="(SELECT GROUP_CONCAT(statuscode ) "
-	       SQLStatement+="FROM myuserstatus  where MyOperations.orderno =myuserstatus.orderno and MyOperations.opno = myuserstatus.opno) AS statuscode,"
-	       SQLStatement+="(SELECT GROUP_CONCAT(statusdesc ) "
-	       SQLStatement+="FROM myuserstatus  where MyOperations.orderno =myuserstatus.orderno and MyOperations.opno = myuserstatus.opno) AS statusdesc, "
-	       SQLStatement+="(SELECT GROUP_CONCAT(value1 ) "
-	       SQLStatement+="FROM myoperationinfo  where MyOperations.orderno =myoperationinfo.orderno and MyOperations.opno = myoperationinfo.opno and myoperationinfo.type = 'JOBICON') AS jobicon_filename, "
-	       SQLStatement+="(SELECT GROUP_CONCAT(value2 ) "
-	       SQLStatement+="FROM myoperationinfo  where MyOperations.orderno =myoperationinfo.orderno and MyOperations.opno = myoperationinfo.opno and myoperationinfo.type = 'JOBICON') AS jobicon_description, "
-	       SQLStatement+="(SELECT GROUP_CONCAT(value1 ) "
-	       SQLStatement+="FROM myoperationinfo  where MyOperations.orderno =myoperationinfo.orderno and MyOperations.opno = myoperationinfo.opno and myoperationinfo.type = 'PRIORITYICON') AS priorityicon_filename, "
-	       SQLStatement+="(SELECT GROUP_CONCAT(value2 ) "
-	       SQLStatement+="FROM myoperationinfo  where MyOperations.orderno =myoperationinfo.orderno and MyOperations.opno = myoperationinfo.opno and myoperationinfo.type = 'PRIORITYICON') AS priorityicon_description "
-	      
-	      
-	       
-	       SQLStatement+=" From MyOperations "
+	var jpark=0
+	var jacpt=0;
+	//countStatus()
+    SQLStatement="SELECT  MyJobDets.notificationNo as notifid, MyJobDets.workTypeCdx as jobtype, MyJobDets.notifCatProf as notifprofile,'MyRefOrderTypes.description' as JobDescription, MyJobDets.orderid as orderno, MyJobDets.empNo as empid, MyJobDets.ordnoOp as opno, "
+ 	   SQLStatement+=" MyJobDets.ordType as type, MyJobDets.startDate as start_date,MyJobDets.startTime as start_time, 'xx' as enddate, MyJobDets.address, " +
 
-	       SQLStatement+="left join myoperationssplit on myoperations.orderno = myoperationssplit.orderno "
-	       SQLStatement+="      and myoperations.opno = myoperationssplit.opno "
-	    	   SQLStatement+="left join myjobdets on myoperations.orderno = myjobdets.orderno "
-	    	       SQLStatement+="      and myoperations.opno = myjobdets.opno "
-	                     
-	              SQLStatement+="left join myorders on myoperations.orderno = myorders.orderno "
-	                     SQLStatement+="left join mynotifications on myorders.notifno = mynotifications.notifno "
-	                     SQLStatement+=" where myjobdets.orderno = '"+orderno+"' and myjobdets.opno = '"+opno+"' and myoperationssplit.assignedto = '"+EmployeeID+"' and myjobdets.status not in ('CLOSED','CONF', 'REJ1', 'REJ2') order by  MyOperations.orderno,  MyOperations.opno"
-	html5sql.process(SQLStatement,
+ 	   "'pcode' as postcode, MyJobDets.notificationNo  as notifno, MyJobDets.flcLonLat as gis, "
+ 	   SQLStatement+=" MyJobDets.status, MyJobDets.priority, MyJobDets.ohdrShortText as orderdesc , 'order longtext' as orderlongtext,'notif longtext' as notiflongtext, '' as notifshorttext, "
+ 	   SQLStatement+=" MyJobDets.shortText as operationdesc  , MyJobDets.plant, MyJobDets.reduration , MyJobDets.ordPlant as orderplant,MyJobDets.ordWorkCntr as orderworkcentre,MyJobDets.workCntrUser as eworkcentre, MyJobDets.workCntrOper as oworkcentre, MyJobDets.statusDescS as status_s,"+
+ 	   "MyJobDets.siteShcode as site, MyJobDets.equipment as equipment_code, MyJobDets.equipmentDesc as equipment_desc,MyJobDets.eqpLonLat as equipment_gis, MyJobDets.funcLoc as funcloc_code, MyJobDets.funcLocDesc as funcloc_desc, MyJobDets.flcLonLat as funcloc_gis, " 
+ 	   SQLStatement+=" (select count(*) from MyJobsDetsEQ where MyJobsDetsEQ.equnr = MyJobDets.equipment) as eqcnt , "
+
+ 	   SQLStatement+="(SELECT GROUP_CONCAT(icon_filename ) "
+ 	   SQLStatement+="FROM MyJobDetsIconJob  where MyJobDets.orderid =MyJobDetsIconJob.orderno and MyJobDets.ordnoOp = MyJobDetsIconJob.opno ) AS jobicon_filename, "
+ 	   SQLStatement+="(SELECT GROUP_CONCAT(tooltip_desc ) "
+ 	   SQLStatement+="FROM MyJobDetsIconJob  where MyJobDets.orderid =MyJobDetsIconJob.orderno and MyJobDets.ordnoOp = MyJobDetsIconJob.opno ) AS jobicon_description, "
+ 	   SQLStatement+="(SELECT GROUP_CONCAT(icon_filename ) "
+ 	   SQLStatement+="FROM MyJobDetsIconPriority  where MyJobDets.orderid =MyJobDetsIconPriority.orderno and MyJobDets.ordnoOp = MyJobDetsIconPriority.opno) AS priorityicon_filename, "
+ 	   SQLStatement+="(SELECT GROUP_CONCAT(tooltip_desc ) "
+ 	   SQLStatement+="FROM MyJobDetsIconPriority  where MyJobDets.orderid =MyJobDetsIconPriority.orderno and MyJobDets.ordnoOp = MyJobDetsIconPriority.opno) AS priorityicon_description "
+ 	   SQLStatement+=" From MyJobDets "
+	    	   SQLStatement+=" where myjobdets.status not in ('CLOSED', 'CONF', 'REJ1', 'REJ2') and MyJobDets.orderid ='"+orderno+"' and MyJobDets.ordnoOp = '"+opno+"' order by  myjobdets.orderid,  myjobdets.ordnoOp"
+
+	    	   html5sql.process(SQLStatement,
 	              function(transaction, results, rowsArray){
-		 
+
+		 if(rowsArray.length>0){
+	
 	                     cnt = 0;
-	                  
+	                    
+	                     //oMasterPage.setTitle("Jobs = "+rowsArray.length)
 	                     while (cnt<rowsArray.length){
+	                    	 if (rowsArray[cnt].status=="PARK"){jpark=1}
+	                    	 if (rowsArray[cnt].status=="ACPT"){jacpt=1}
+	                    	 if (rowsArray[cnt].status=="SITE"){jacpt=1}
 	                           item=rowsArray[cnt];
 	                           //item.orderno=(item.orderno).replace(/^[0]+/g,"");
 	                          // item.opno=(item.opno).replace(/^[0]+/g,"");
@@ -3166,29 +3194,19 @@ function addNewJobToList(orderno,opno){
 	                                  firstJob="job:"+item.orderno+':'+item.opno
 	                           }
 	                           
-	                           if(MapJobPar[0]=="job"){
-	                                  if (MapJobPar[1]==item.orderno){
-	                                         if (MapJobPar[2]==item.opno)
-	                                                selectedListItem=cnt;
-	                                                firstJob="job:"+item.orderno+':'+item.opno
-	                                  }
-	                           }
-	                           //alert(item.jobtyp+":"+item.opstat+":"+item.statuscode+":"+item.statusdesc)  
-	                           //res=item.jobtype.split(":");
-	                           //if(res[0]=="FORM"){
-	                           //       jobType=getJobType(res[1])
-	                           //}else{
-	                                  jobType=item.jobtype;
-	                           //}
-	                             
+
+
+	                               jobType=  item.notifprofile.substring(7,9);
+
+	                            
 	                            if(item.status_s=="CONF"){
 	                                  StatusText="Complete"
 	                                  StatusState=sap.ui.core.ValueState.Success
 	                                  StatusIcon="complete"
 	                           }else if(item.status_s=="CLOSED"){
-	                               StatusText="Complete"
-	                                   StatusState=sap.ui.core.ValueState.Success
-	                                   StatusIcon="complete"
+	                                  StatusText="Complete"
+	                                  StatusState=sap.ui.core.ValueState.Success
+	                                  StatusIcon="complete"
 	                            }else if(item.status_s=="SITE"){
 	                                  StatusText="On Site"
 	                                  StatusState=sap.ui.core.ValueState.Success
@@ -3233,14 +3251,16 @@ function addNewJobToList(orderno,opno){
 							   var iconsToDisplay=''
 							   for (var n=0;n <jobicons.length;n++)
 							   {
-									iconsToDisplay+='<img src="file:///storage/emulated/0/Documents/MyJobs/Global/download/Icons/'+jobicons[n]+'" onclick="showIconMessage(\''+jobtooltip[n]+'\')">'
+									iconsToDisplay+='<img src="'+DeviceStorageDirectory+'MyJobs/Global/download/Icons/'+jobicons[n]+'" onclick="showPopup(\''+jobtooltip[n]+'\')">'
 							   }
-							   if(priorityIcon.length>2){
-							   		priorityiconsToDisplay='<img src="file:///storage/emulated/0/Documents/MyJobs/Global/download/Icons/'+item.priorityicon_filename+'" onclick="showIconMessage(\''+item.priorityicon_description+'\')">'
+							   if(priorityIcon.length>6){
+							   		//priorityiconsToDisplay='<img src="images/'+item.priorityicon_filename+'" onclick="showMessage(\''+item.priorityicon_description+'\')">'
+							   	priorityiconsToDisplay='<img src="'+DeviceStorageDirectory+'MyJobs/Global/download/Icons/'+item.priorityicon_filename+'" onclick="showPopup(\''+item.priorityicon_description+'\')">'
+								   
 							   }else{
 								   priorityiconsToDisplay=""
 							   }
-							  
+							 
 	                           standardList.addItem(
 	                           new sap.m.CustomListItem("Job:"+item.orderno+":"+item.opno,{
 								type:sap.m.ListType.Active,
@@ -3248,9 +3268,9 @@ function addNewJobToList(orderno,opno){
 								      content: 
 								    	    [
 	"<TABLE width='100%'><TR><TD width='25%'><TD width='50%'><TD width='25%'></TD></TR><TR><TD  colspan='2' align='left'>"+item.operationdesc+"</TD><TD  align='right'><H4>"+item.type+"</H4></TD></TR>"+
-	"<TR><TD colspan='3'  align='right'><B>"+item.orderno.replace(/^[0]+/g,"")+'-'+item.opno+"</B></TD></TR>"+
-	"<TR><TD align='left'><font size='2'>Start:</TD><TD align='left'><font size='2'>"+formatDateTime1(item.startdate)+"</font></TD><td  align='right'><p id='L"+item.orderno+'-'+item.opno+"'>"+StatusText+"</P></TD></TR>"+
-	"<TR><TD align='left'><font size='2'>End:</TD><TD align='left'><font size='2'>"+formatDateTime1(item.enddate)+"</font></TD><td  align='right'></TD></TR>"+
+	"<TR><TD><B>"+item.site+"</B></TD><TD colspan='2'  align='right'><B>"+item.orderno.replace(/^[0]+/g,"")+'-'+item.opno+"</B></TD></TR>"+
+	"<TR><TD align='left'><font size='2'>Start:</TD><TD align='left'><font size='2'>"+item.start_date+" "+item.start_time+"</font></TD><td  align='right'><p id='L"+item.orderno+'-'+item.opno+"'>"+StatusText+"</P></TD></TR>"+
+
 	"<TR><TD align='left'><font size='2'>Job Type:</font></TD><TD colspan='2' align='left'><font size='2'>"+jobType+"</font></TD></TR>"+
 	"<TR><TD align='left'>"+priorityiconsToDisplay+"</TD><TD colspan='2' align='right'>"+iconsToDisplay+"</TD></TR></TABLE>"
 								  			]
@@ -3258,22 +3278,19 @@ function addNewJobToList(orderno,opno){
 								})
 							]
 							}));
-	                           
 						  cnt++;
 				 }
-
 				
-				
+			
+		 }
+					
 			 },
 			 function(error, statement){
+				 console.log(error.message+":"+statement)
 				 opMessage(error+statement)
 			 }        
 			);	
 	cnt = 0;
-
-
-
-
 	}
 function buildDetails(){
 	var detsHead=new sap.ui.core.HTML('JobHeader',{  
@@ -3293,7 +3310,7 @@ function buildDetails(){
 	return detsHead
 }
 
-function delete_buildDetails1(){
+function buildDetails1(){
 
 		var objectHeader  = new sap.m.ObjectHeader('HEADER',
 {
@@ -3513,7 +3530,7 @@ var NLongtext=''
 		SQLStatement+=" MyJobDets.ordType as type, MyJobDets.startDate as startdate,MyJobDets.startTime as starttime, MyJobDets.startDate as enddate, MyJobDets.address, " +
 
 		"'pcode' as postcode, MyJobDets.notificationNo  as notifno, MyJobDets.flcLonLat as gis, "
-		SQLStatement+=" MyJobDets.status, MyJobDets.priority, MyJobDets.ohdrShortText as orderdesc , 'order longtext' as orderlongtext,'notif longtext' as notiflongtext, 'notif shorttext' as notifshorttext, "
+		SQLStatement+=" MyJobDets.status, MyJobDets.priority, MyJobDets.ohdrShortText as orderdesc , 'order longtext' as orderlongtext,'notif longtext' as notiflongtext, '' as notifshorttext, "
 		SQLStatement+=" MyJobDets.shortText as operationdesc  , MyJobDets.plant, MyJobDets.reduration , MyJobDets.ordPlant as orderplant,MyJobDets.ordWorkCntr as orderworkcentre,MyJobDets.workCntrUser as eworkcentre, MyJobDets.workCntrOper as oworkcentre, MyJobDets.statusDescS as status_s,"+
 		"MyJobDets.siteShcode as site, MyJobDets.equipment as equipment_code, MyJobDets.equipmentDesc as equipment_desc,MyJobDets.eqpLonLat as equipment_gis, MyJobDets.funcLoc as funcloc_code, MyJobDets.funcLocDesc as funcloc_desc, MyJobDets.flcLonLat as funcloc_gis, " 
 		SQLStatement+=" (select count(*) from MyJobsDetsEQ where MyJobsDetsEQ.equnr = MyJobDets.equipment) as eqcnt , "
@@ -3643,19 +3660,18 @@ html5sql.process(SQLStatement,
 						   { //AZURE
 						   ifn=ifn+".png" //AZURE
 						   }
-//Changes for the Icons Start
 						if(jobtooltip[n]=="Measurements"){
 							iconsToDisplay+='<img src="'+DeviceStorageDirectory+'MyJobs/Global/download/Icons/'+ifn+'" onclick="formMeasPoints.open()">'  //AZURE
 						}else if(jobtooltip[n]=="Documents"){
 							  docsVisible=true;
 						}else{
 						
-							iconsToDisplay+='<img src="'+DeviceStorageDirectory+'MyJobs/Global/download/Icons/'+ifn+'" onclick="showIconMessage(\''+jobtooltip[n]+'\')">' //AZURE
+							iconsToDisplay+='<img src="'+DeviceStorageDirectory+'MyJobs/Global/download/Icons/'+ifn+'" onclick="showPopup(\''+jobtooltip[n]+'\')">' //AZURE
 						}
 							
 					   }
-					   if(priorityIcon.length>2){
-					   		priorityiconsToDisplay='<img src="'+DeviceStorageDirectory+'MyJobs/Global/download/Icons/'+item.priorityicon_filename+'" onclick="showIconMessage(\''+item.priorityicon_description+'\')">'
+					   if(priorityIcon.length>6){
+					   		priorityiconsToDisplay='<img src="'+DeviceStorageDirectory+'MyJobs/Global/download/Icons/'+item.priorityicon_filename+'" onclick="showPopup(\''+item.priorityicon_description+'\')">'
 					   }else{
 						   priorityiconsToDisplay=""
 					   }
@@ -3667,7 +3683,8 @@ html5sql.process(SQLStatement,
                     	 
                     	 showAttributes=""
                     	 }else{
-                    	 showAttributes="<img src='"+DeviceStorageDirectory+"MyJobs/Global/download/Icons/EQATRIB.png' alt='History' height='35' width='35' onclick='showEQAttbites(\""+rowsArray[0].equipment_code+"\")'>"	 
+                    	 //showAttributes="<img src='"+DeviceStorageDirectory+"MyJobs/Global/download/Icons/EQATRIB.png' alt='History' height='35' width='35' onclick='showEQAttbites(\""+rowsArray[0].equipment_code+"\")'>"	 
+                    		 showAttributes=""
                     	 }
                      if(history){
                     	 showhistory="<img src='"+DeviceStorageDirectory+"MyJobs/Global/download/Icons/HISTORYICON.png' alt='History' height='42' width='42' onclick='getAssetHistory(\""+rowsArray[0].funcloc_code+"\")'>"
@@ -4194,7 +4211,7 @@ function BuildFormAssets(assetid){
 
 			
 }
-function delete_BuildFormQuestions(x){
+function BuildFormQuestions(x){
 	
 	var ToOutput='';
 	var ToOutput1='';
@@ -4245,7 +4262,7 @@ SQLStatement1+="where surveyquestion.surveyid = '"+surveyID+"' and surveyquestio
 							); 
 			
 }
-function delete_saveFormQuestions(x){
+function saveFormQuestions(x){
 	
 	var ToOutput='';
 	var ToOutput1='';
@@ -4294,7 +4311,7 @@ SQLStatement1+="where surveyquestion.surveyid = '"+surveyID+"' and surveyquestio
 							); 
 			
 }
-function delete_BuildQuestionHeaders(surveyID){
+function BuildQuestionHeaders(surveyID){
 	
 	var ToOutput='';
 	var ToOutput1='';
@@ -4359,7 +4376,7 @@ function delete_BuildQuestionHeaders(surveyID){
 		);
 
 }
-function delete_BuildQuestionField(op,panelid,id,type, defaultvalue, title,  dependsonid, dependsonval){
+function BuildQuestionField(op,panelid,id,type, defaultvalue, title,  dependsonid, dependsonval){
 var mode=false;
 var visible=true
 if(dependsonid>0){
@@ -4472,7 +4489,7 @@ new sap.m.Input(id,{ type: sap.m.InputType.Input})
 		}
 
 }
-function delete_BuildSubQuestionField(panelid,type,id,subtype,title){
+function BuildSubQuestionField(panelid,type,id,subtype,title){
 
 
 	if(type=='S'){
@@ -4557,7 +4574,7 @@ new sap.m.Input(id,{ type: sap.m.InputType.Input})
 		}
 
 }
-function delete_formChanged(oEvt){
+function formChanged(oEvt){
 	x=oEvt.getParameters().id.split(":")
 	//alert(oEvt.getParameters().id)
 	//alert(sap.ui.getCore().getElementById(oEvt.getParameters().id).getText())
@@ -4599,19 +4616,19 @@ function buildDetailsTabs(Jtype,surveyID,docsVisible){
 tabBar=null;
 formtab=null;
 //sap.ui.getCore().getElementById('saveData').setVisible(false)
-//	if(Jtype=="FORM"){
-//		sap.ui.getCore().getElementById('saveData').setVisible(true)
-//		 formtab=new sap.m.IconTabFilter( 'FORM',{
-//	              key:'Form',
-//	              tooltip: 'Form',
-//	              icon: "sap-icon://form",
-//	              content:[
+	if(Jtype=="FORM"){
+		sap.ui.getCore().getElementById('saveData').setVisible(true)
+		 formtab=new sap.m.IconTabFilter( 'FORM',{
+	              key:'Form',
+	              tooltip: 'Form',
+	              icon: "sap-icon://form",
+	              content:[
 
-//	                       ]
-//	           })
+	                       ]
+	           })
 		 
-//		 BuildQuestionHeaders(surveyID)
-//	}
+		 BuildQuestionHeaders(surveyID)
+	}
 	
 	tabBar  = new sap.m.IconTabBar('tabBar',
 			{
@@ -4641,14 +4658,75 @@ formtab=null;
     	                            ]
     	                }),
     	                new sap.m.IconTabFilter( 'OLONGTEXT',{
-       	                	text:'Order',
-    	                   key:'OLongText',
-    	                   tooltip: 'Long Text',
-    	                   icon: "sap-icon://document-text",
-    	                   content:[
-									new sap.m.Text( 'LongText',{})
-    	                            ]
-    	                }),
+        	                   text:'Order',
+     	                   key:'OLongText',
+     	                   tooltip: 'Long Text',
+     	                   icon: "sap-icon://document-text",
+     	                   content:[
+     	                	   
+     	                		new sap.m.IconTabBar(
+     	                				{
+     	                					expanded:'{device>/isNoPhone}',
+     	                					expandable:false,
+     	                					select:[function(oEvt) {	
+     	                						
+     	                						 
+     	                						 
+     	                						  
+     	                						}
+     	                					],
+     	                					
+     	                					items: [
+
+     	                	
+     	                	       	                new sap.m.IconTabFilter( {
+     	                	       	                   text:'Long Text',
+     	                	    	                   tooltip: 'Long Text',
+     	                	    	                   icon: "sap-icon://document-text",
+     	                	    	                   content:[
+     	                	    	                	   new sap.m.Text( 'LongText',{})
+     	                	    	                            ]
+     	                	    	                }),
+     	                	       	                
+     	                	    	                new sap.m.IconTabFilter( {
+     	                	    	                	text:'Operations',
+     	                	    	            	    tooltip: 'Completed Operations',
+     	                	    	            	    icon: "sap-icon://list",
+     	                	    	            	       	                   content:[
+     	                	    	            	       	        	               
+     	                	    	            									new sap.m.Table("CompletedOps",{
+     	                	    	            										
+     	                	    	            										mode: sap.m.ListMode.SingleSelectMaster,
+     	                	    	            										selectionChange: function(evt){
+     	                	    	            									    },
+     	                	    	            										columns:[
+     	                	    	            										         new sap.m.Column({header: new sap.m.Label({text:"Oper"}),
+     	                	    	            										        	 hAlign: 'Left',width: '15%', minScreenWidth : "" , demandPopin: false}),
+     	                	    	            										         new sap.m.Column({header: new sap.m.Label({text:"Completed"}),
+     	                	    	            										        	 hAlign: 'Left',width: '35%',minScreenWidth : "" , demandPopin: true}),
+         	                	    	            										     new sap.m.Column({header: new sap.m.Label({text:"Description"}),
+         	                	    	            										        	 hAlign: 'Left',width: '35%',minScreenWidth : "" , demandPopin: true}),
+     	                	    	            										         new sap.m.Column({header: new sap.m.Label({text:"Status"}),
+     	                	    	            										        	 hAlign: 'Left',width: '15%',minScreenWidth : "" , demandPopin: true })       	                         
+     	                	    	            								           	     ]
+     	                	    	            								           	  
+
+     	                	    	            									})
+     	                	    	            									]
+     	                	    	            						           	  
+     	                	    	            					    })
+ 				            	                
+     	                	       	                ]
+
+
+     	                				})  	                	   
+     	                	   
+     	                	   
+     	                	   
+     	                	   
+ 									
+     	                            ]
+     	                }),
     	                formtab,      	                
     	                new sap.m.IconTabFilter( 'OBJECTS',{
     	                	text:'Assets',
@@ -4688,9 +4766,7 @@ formtab=null;
         	                   key:'Partners',
         	                   tooltip: 'Location',
         	                   icon: "sap-icon://addresses",
-           	                   content:[
-    									
-    									]          	                
+           	                   content:[]          	                
         	                }),
            	                new sap.m.IconTabFilter( 'MATERIALS',{
            	                	visible:false,
@@ -4919,7 +4995,7 @@ function requestLiveLink(fname,nodeid,drawid){
 	SetConfigParam('LASTSYNC_UPLOAD', "20120101010101");
 	syncUpload()
 }
-function delete_buildDetailsP100Tabs(tabsdesc,tabsid){
+function buildDetailsP100Tabs(tabsdesc,tabsid){
 	
 tabitemsdesc=tabsdesc.split(":")
 tabitemsid=tabsid.split(":")
@@ -4983,7 +5059,7 @@ cnt=cnt+1
 	}
 	
 	
-function delete_buildDetailsP100TabContent(orderNo,OpNo,notifno,tabsid){
+function buildDetailsP100TabContent(orderNo,OpNo,notifno,tabsid){
 tabitemsid=tabsid.split(":")
 
 
@@ -5003,7 +5079,7 @@ var cnt=0;
 }
 
 
-function delete_P100TabCont(notifno,tabid){
+function P100TabCont(notifno,tabid){
 var tasktext;	
 var phototab;
 var n = 0;
@@ -5069,7 +5145,7 @@ var tabcontentQ;
 										formPhoto.open()
 										  } ]
 								}));
-							}else if(tasktext[0]=="YN"){buildDEQAttr(eq)
+							}else if(tasktext[0]=="YN"){
 							tabcontentQ.addContent (new sap.m.Switch("T"+tabid+":"+n,{
 								state: false,
 								type: sap.m.SwitchType.AcceptReject
@@ -5099,7 +5175,7 @@ var tabcontentQ;
 			 }        
 			);	
 }
-function delete_saveTheData()
+function saveTheData()
 {
 	x=selectedTab.split(":")
 	//alert("SELECT * FROM mytasks where notifno = '"+currentNotifNo+"' and item_id = '"+x[1]+"';")
@@ -5163,7 +5239,7 @@ function delete_saveTheData()
 			);	
 }
 
-function delete_P100TabContData(notifno,tabid){
+function P100TabContData(notifno,tabid){
 
 	var tasktext;	
 	var phototab;
@@ -5193,7 +5269,7 @@ function delete_P100TabContData(notifno,tabid){
 				 }        
 				);	
 	}
-function delete_setP100FieldVal(type,fldid,user,order,opno,item,task)	{
+function setP100FieldVal(type,fldid,user,order,opno,item,task)	{
 
 	//alert(type+"-"+fldid+"-"+user+"-"+order+"-"+opno+"-"+item+"-"+task)
 	html5sql.process("select * from JobAnswers where orderno = '"+order+
@@ -5362,34 +5438,38 @@ html5sql.process("SELECT * FROM MyTimeConfs where orderno = '"+orderNo+"' and op
 buildJobDocsTable();
  
 buildJobPhotoList();
+buildJobOrderOpsTable();
 
 }
 
-function CreateAddressMatrix(captions,values){
-	console.log(captions.length)
-	   var oMatrix = new sap.ui.commons.layout.MatrixLayout({
-	//id : "matrix1",
-	layoutFixed : false,
-		width : '800px',
-		columns : 2,
-		widths : ['250px', '550px'] });
-	    for(var i = 0; i < 12; i++) {
-	    	console.log("captions:"+captions[i])
-	    	lab = new sap.ui.commons.Label({text : captions[i] }).addStyleClass("Labelstyle");
-			var val = new sap.ui.commons.TextField({
-				editable : false,
-				value: values[i],
-				wrapping:true,
-				width:"400px"}).addStyleClass("LabelText");
-			oMatrix.createRow(lab,val);
-								 
-		}
-		return oMatrix;
+function buildJobOrderOpsTable(){
+	html5sql.process("SELECT * FROM MyJobDetsOrderOps where orderno = '"+CurrentOrderNo+"' ;",
+			 function(transaction, results, rowsArray){
+				var n = 0;
+				var opTable = sap.ui.getCore().getElementById('CompletedOps');
+
+				opTable.destroyItems();
+			
+				while (n < rowsArray.length) {
+					opTable.addItem (new sap.m.ColumnListItem("Doc:"+rowsArray[n].id,{
+						
+						cells : 
+							[
+							new sap.m.Text({text: rowsArray[n].operation}),
+							new sap.m.Text({text: rowsArray[n].comp_date_time}),
+							new sap.m.Text({text: rowsArray[n].description}), 
+							new sap.m.Text({text: rowsArray[n].status})
+					 		],
+
+						}));
+					n++;
+				 }
+	},
+	 function(error, statement){
+		 //outputLogToDB(); 
+	 }        
+	);
 }
-
-
-
-
 function buildJobDocsTable(){
 html5sql.process("SELECT * FROM MyJobDetsDraw where orderno = '"+CurrentOrderNo+"' ;",
 		 function(transaction, results, rowsArray){
@@ -5599,6 +5679,9 @@ function buildLocHistory(){
 			 }        
 			);
 	}
+
+
+
 function buildJobPhotoListOLD(){
 	
 	privatephotos = new Array()
@@ -5902,7 +5985,7 @@ html5sql.process(sqlstatement,
 		 }        
 		);
 }
-function delete_Scan(){
+function Scan(){
 
 	{
 		var scanner = cordova.require("cordova/plugin/BarcodeScanner");
@@ -6054,7 +6137,7 @@ function BuildTCEmployees(){
     function ClearSignature(){
 		$("#signature").jSignature('reset')
 }
-function delete_SaveSignature(){
+function SaveSignature(){
 	var	data = $("#signature").jSignature('getData', 'svgbase64')
 		
 		x=selectedTab.split(":")
@@ -6076,7 +6159,7 @@ function BuildChangeStatusOnSite(){
 				
 					if( rowsArray.length>0) {
 						
-						sap.ui.getCore().getElementById("StatusOnSiteAcceptedTime").setValue(rowsArray[0].acpt_date+" "+rowsArray[0].acpt_time)
+						sap.ui.getCore().getElementById("StatusOnSiteAcceptedTime").setValue(rowsArray[0].acptDate+" "+rowsArray[0].acptTime)
 						travelTime = diffInTime(rowsArray[0].tconf_date,rowsArray[0].tconf_time,getFormattedDate(),getFormattedTime())
 						sap.ui.getCore().getElementById("StatusOnSiteTravelTime").setValue(travelTime)
 						
@@ -6349,7 +6432,7 @@ function BuildCloseScreen(){
 	BuildFormsMandation()
 	var PAIVisible = true;
 	if((CurrentJobProfile==null)||
-			(CurrentJobProfile==null)){
+			(CurrentJobProfile=="")){
 		PAIVisible=false;
 	}
 	initscr=false
@@ -6363,8 +6446,21 @@ function BuildCloseScreen(){
 	
 	sap.ui.getCore().getElementById("DG5tabBar").setSelectedKey("DG51")
 	initCloseButtons();
-	sap.ui.getCore().getElementById("DG51F1C2").setVisible(PAIVisible)
-	sap.ui.getCore().getElementById("FEClose_LongText").setVisible(PAIVisible)
+	//sap.ui.getCore().getElementById("DG51F1C2").setVisible(PAIVisible)
+	sap.ui.getCore().getElementById("Close_ProblemGroup_label").setVisible(PAIVisible);
+	sap.ui.getCore().getElementById("Close_ProblemGroup").setVisible(PAIVisible);
+	sap.ui.getCore().getElementById("Close_ProblemCode_label").setVisible(PAIVisible);
+	sap.ui.getCore().getElementById("Close_ProblemCode").setVisible(PAIVisible);
+	sap.ui.getCore().getElementById("Close_ActionGroup_label").setVisible(PAIVisible);
+	sap.ui.getCore().getElementById("Close_ActionGroup").setVisible(PAIVisible);
+	sap.ui.getCore().getElementById("Close_ActionCode_label").setVisible(PAIVisible);
+	sap.ui.getCore().getElementById("Close_ActionCode").setVisible(PAIVisible);
+	sap.ui.getCore().getElementById("Close_ImpactGroup_label").setVisible(PAIVisible);
+	sap.ui.getCore().getElementById("Close_ImpactGroup").setVisible(PAIVisible);
+	sap.ui.getCore().getElementById("Close_ImpactCode_label").setVisible(PAIVisible);
+	sap.ui.getCore().getElementById("Close_ImpactCode").setVisible(PAIVisible);
+	sap.ui.getCore().getElementById("FEClose_LongText").setVisible(PAIVisible);
+	sap.ui.getCore().getElementById("Close_LongText").setVisible(PAIVisible);
 	if(initscr){ //Reloadingf screen from the Local Storage
 		sap.ui.getCore().getElementById("Close_FunctionalLocation").setValue(scrFlds[0])
 		sap.ui.getCore().getElementById("Close_Equipment").setValue(scrFlds[1])
@@ -6478,8 +6574,8 @@ function BuildCloseScreen(){
 		sap.ui.getCore().getElementById("Close_WD_Assignment").destroyItems();
 		sap.ui.getCore().getElementById("Close_WD_Assignment").addItem(
 				new sap.ui.core.Item({
-					key: "NOTSELECTED",
-					text: 'Please Select'
+					key: "",
+					text: ''
 				}))
 		sap.ui.getCore().getElementById("Close_ImpactGroup").setSelectedKey("NOTSELECTED")
 		sap.ui.getCore().getElementById("Close_ImpactGroup").destroyItems();
@@ -6613,7 +6709,7 @@ function BuildCloseScreen(){
 																							
 																							sap.ui.getCore().getElementById("Close_InshiftCode").setSelectedKey(defaultInVal)
 																							sap.ui.getCore().getElementById("Close_OutshiftCode").setSelectedKey(defaultOutVal)
-																							SQLStatement="select * from refpaicodes where catalogue = 'W' and level='1' and work_cntr='"+CurrentJobWorkCentre+"' and stsma = '"+CurrentJobProfile+"' group by codegrp"
+																							SQLStatement="select * from refpaicodes where catalogue = 'W' and level='1' and work_cntr='"+CurrentJobWorkCentre+"' group by codegrp"
 
 																							html5sql.process(SQLStatement,
 																									 function(transaction, results, rowsArray){
@@ -6754,7 +6850,7 @@ function BuildCloseScreen(){
 		
 		var SQLStatement="";
 		var FirstVal="";
-		SQLStatement="select * from refpaicodes where catalogue = 'W' and level='2' and work_cntr='"+CurrentJobWorkCentre+"' and stsma = '"+CurrentJobProfile+"' and codegrp = '"+grp+"' group  by code"
+		SQLStatement="select * from refpaicodes where catalogue = 'W' and level='2' and work_cntr='"+CurrentJobWorkCentre+"' and codegrp = '"+grp+"' group  by code"
 		
 		var ToOutput="";
 			html5sql.process(SQLStatement,
@@ -6862,13 +6958,12 @@ sap.m.MessageBox.show(
     }
   );   
 }
-function showIconMessage(msg){
+function showPopup(msg){
 	if (msg == "Location History"){
-		console.log("history")
 		formLocHistory.open()
 	}else{
 		sap.m.MessageToast.show(msg, {
-			duration: Number(500),
+			duration: Number(1500),
 			
 			my: "center center",
 			at: "center center",		
@@ -6889,38 +6984,35 @@ function startBGSync()
       }
       // Update timer div with output from Web Worker
       w.onmessage = function (event) {   
-    	  //refreshJobList()
+    	
     	  tim=+getTime()
-/*     	  standardList.addItem(
-                  new sap.m.CustomListItem("J"+tim,{
-					type:sap.m.ListType.Active,
-					  content: [new sap.ui.core.HTML({  
-					      content: 
-					    	    [
-"<H1>customItem"+tim+"</H1>"
-					  			]
-			
-					})]
-                  })) */
+//test if there is a Network
+   	  
+    	  
          if(sap.ui.getCore().getElementById("jobsyncIndicator").getVisible()==false) { 
-        	 syncUpload()
-	         setSyncingIndicator(true)    
-			 //syncReference()
-			 syncTransactional()
-			 localStorage.setItem('SAPCalling','false')
-			 
-			 syncDT=localStorage.getItem('LastSyncedDT')	
-			 x=formatDateTime(localStorage.getItem("LastSyncedDT")).split(" ");
-			 sap.ui.getCore().byId("LastSyncMess").setText(x[1]);
+        	 if (checkConnection()){
+        		 syncUpload()
+    	         setSyncingIndicator(true)    
+    			 syncReference()
+    			 syncTransactional()
+    			 refreshJobList()
+    			 localStorage.setItem('SAPCalling','false')
+    			 
+    			 syncDT=localStorage.getItem('LastSyncedDT')	
+    			 x=formatDateTime(localStorage.getItem("LastSyncedDT")).split(" ");
+    			 sap.ui.getCore().byId("LastSyncMess").setText(x[1]);
+        	 }
+        	 
          }		 
 		
 		 };
    } else {
       // Web workers are not supported by your browser
       
-      showMessage("Sorry, your browser does not support Web Workers ...");
+	   showPopup("Sorry, your browser does not support Web Workers ...");
    }
 }
+
 function refreshJobList(){
 	html5sql.process("Select orderid, ordnoOp from MyJobdets",
 			 function(transaction, results, rowsArray){
@@ -6928,11 +7020,11 @@ function refreshJobList(){
 				    console.log("found "+rowsArray.length+" Jobs")
 					for (var n = 0; n < rowsArray.length; n++) {
 						item = rowsArray[n];
-						x="x"+sap.ui.getCore().byId("Job:"+item.orderno+":"+item.opno)
-						opMessage("listentry "+item.orderno+"-"+item.opno+" item:"+x+" length "+x.length)
+						x="x"+sap.ui.getCore().byId("Job:"+item.orderid+":"+item.ordnoOp)
+						opMessage("listentry "+item.orderid+"-"+item.ordnoOp+" item:"+x+" length "+x.length)
 						if (x.length<30){
-							opMessage("about to add "+item.orderno+"-"+item.opno)
-							addNewJobToList((item.orderno).replace(/^[0]+/g,""),item.opno)
+							opMessage("about to add "+item.orderid+"-"+item.ordnoOp)
+							addNewJobToList(item.orderid,item.ordnoOp)
 						}
 							
 						
@@ -7001,3 +7093,24 @@ function CheckAssetHistory(Job)
 		);
 }
 
+function CreateAddressMatrix(captions,values){
+	console.log(captions.length)
+	   var oMatrix = new sap.ui.commons.layout.MatrixLayout({
+	//id : "matrix1",
+	layoutFixed : false,
+		width : '800px',
+		columns : 2,
+		widths : ['250px', '550px'] });
+	    for(var i = 0; i < 12; i++) {
+	    	console.log("captions:"+captions[i])
+	    	lab = new sap.ui.commons.Label({text : captions[i] }).addStyleClass("Labelstyle");
+			var val = new sap.ui.commons.TextField({
+				editable : false,
+				value: values[i],
+				wrapping:true,
+				width:"400px"}).addStyleClass("LabelText");
+			oMatrix.createRow(lab,val);
+								 
+		}
+		return oMatrix;
+}

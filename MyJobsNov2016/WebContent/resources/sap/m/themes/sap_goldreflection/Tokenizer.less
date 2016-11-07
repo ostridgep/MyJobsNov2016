@@ -49,7 +49,7 @@
 
 .sapMTokenTruncate > .sapMTokenIcon {
 	position: absolute;
-	right: 0rem;
+	right: 0;
 }
 
 .sapMTokenTruncate > .sapMTokenText {
@@ -58,12 +58,12 @@
 	width: calc(~"100% - 2rem");
 }
 
-.sap-phone .sapMTokenizerMultiLine {
+html.sap-phone .sapMTokenizerMultiLine {
 	padding-left: 1rem;
 	padding-right: 1rem;
 }
 
-.sap-phone .sapMTokenizerMultiLine > .sapMTokenizerScrollContainer > .sapMToken {
+html.sap-phone .sapMTokenizerMultiLine > .sapMTokenizerScrollContainer > .sapMToken {
 	display: table;
 }
 
@@ -91,12 +91,8 @@
 	width: calc(~"100% - 1.25rem");
 }
 
-.sapMTokenizer:focus{
-	outline: none;
-	border: 0.0625rem dotted @sapUiFocus;
-}
-
 .sapMTokenizerScrollContainer{
+	width: 100%;
 	display: inline-block;
 	-moz-user-select: none;
 	-webkit-user-select: none;

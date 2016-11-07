@@ -36,6 +36,11 @@
       "theme": "sap_hcb"
     },
     {
+      "name": "ResponsiveSplitter.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
       "name": "SimpleForm.less",
       "designtime": true,
       "theme": "sap_hcb"

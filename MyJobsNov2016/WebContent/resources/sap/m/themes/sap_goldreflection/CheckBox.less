@@ -7,6 +7,10 @@
 	display: inline-block;
 	position: relative;
 	white-space: normal;
+
+	&:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
+		pointer-events: none;
+	}
 }
 
 .sapMCb .sapMLabel {
@@ -31,4 +35,10 @@
 .sapMCbBg > .sapMCbMark,
 .sapMCbBg.sapMCbMark > input{
 	font-size: inherit;
+}
+
+.sapMCbBg.sapMCbMarkChecked:before {
+	content: "\e05b";
+	font-family: "SAP-icons";
+	display: block;
 }

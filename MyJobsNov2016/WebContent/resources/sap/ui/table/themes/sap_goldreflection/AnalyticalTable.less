@@ -2,6 +2,10 @@
 /* CSS for control sap.ui.analytics/AnalyticalTable.control */
 /* ======================================================== */
 
+.sapUiAnalyticalTable .sapUiTableColRsz {
+	z-index: 3;
+}
+
 .sapUiAnalyticalTable tr.sapUiAnalyticalTableDummy td {
 	border-right-width: 0;
 }
@@ -32,8 +36,4 @@
 .sapUiAnalyticalTable .sapUiTableCell > .sapMLabel,
 .sapUiAnalyticalTable .sapUiTableCell > .sapMText {
 	width: 100%;
-}
-
-.sapUiSizeCompact .sapUiAnalyticalTable .sapUiTableGroupIcon::before {
-	line-height: @sapUiTableRowHeight;
 }

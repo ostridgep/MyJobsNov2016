@@ -31,9 +31,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/library', 'sap/ui/core/ElementM
 		 *
 		 * @namespace
 		 * @author SAP SE
-		 * @version 1.36.8
+		 * @version 1.40.10
 		 * @public
 		 * @since 0.8.8
+		 * @deprecated Since version 1.38. Instead, use the <code>sap.m.MessageBox</code> control.
 		 * @alias sap.ui.commons.MessageBox
 		 */
 		var MessageBox = {};
@@ -280,7 +281,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/library', 'sap/ui/core/ElementM
 			oDialog = new Dialog({
 				id: sDialogId,
 				applyContentPadding: false,
-				title: sTitle,
 				accessibleRole: AccessibleRole.AlertDialog,
 				resizable: false,
 				modal: true,
@@ -288,7 +288,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/library', 'sap/ui/core/ElementM
 				content: oContent,
 				defaultButton: oDefaultButton,
 				closed: onclose
-			});
+			}).setTitle(sTitle);
 
 			oDialog.open();
 

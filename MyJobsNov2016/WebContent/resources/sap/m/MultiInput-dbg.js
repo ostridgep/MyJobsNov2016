@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 	 * @extends sap.m.Input
 	 *
 	 * @author SAP SE
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 *
 	 * @constructor
 	 * @public
@@ -51,50 +51,50 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 		aggregations : {
 
 			/**
-			 * the currently displayed tokens
+			 * The currently displayed tokens
 			 */
 			tokens : {type : "sap.m.Token", multiple : true, singularName : "token"},
 
 			/**
-			 * the tokenizer which displays the tokens
+			 * The tokenizer which displays the tokens
 			 */
 			tokenizer : {type : "sap.m.Tokenizer", multiple : false, visibility : "hidden"}
 		},
 		events : {
 
 			/**
-			 * fired when the tokens aggregation changed (add / remove token)
+			 * Fired when the tokens aggregation changed (add / remove token)
 			 */
 			tokenChange : {
 				parameters : {
 
 					/**
-					 * type of tokenChange event.
+					 * Type of tokenChange event.
 					 * There are four TokenChange types: "added", "removed", "removedAll", "tokensChanged".
 					 * Use Tokenizer.TokenChangeType.Added for "added",	Tokenizer.TokenChangeType.Removed for "removed", Tokenizer.TokenChangeType.RemovedAll for "removedAll" and Tokenizer.TokenChangeType.TokensChanged for "tokensChanged".
 					 */
 					type: { type : "string"},
 
 					/**
-					 * the added token or removed token.
+					 * The added token or removed token.
 					 * This parameter is used when tokenChange type is "added" or "removed".
 					 */
 					token: { type: "sap.m.Token"},
 
 					/**
-					 * the array of removed tokens.
+					 * The array of removed tokens.
 					 * This parameter is used when tokenChange type is "removedAll".
 					 */
 					tokens: { type: "sap.m.Token[]"},
 
 					/**
-					 * the array of tokens that are added.
+					 * The array of tokens that are added.
 					 * This parameter is used when tokenChange type is "tokenChanged".
 					 */
 					addedTokens :  { type: "sap.m.Token[]"},
 
 					/**
-					 * the array of tokens that are removed.
+					 * The array of tokens that are removed.
 					 * This parameter is used when tokenChange type is "tokenChanged".
 					 */
 					removedTokens :  { type: "sap.m.Token[]"}
@@ -114,10 +114,14 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 	// * This file defines behavior for the control,
 	// */
 	MultiInput.prototype.init = function() {
-		var that = this;
+		var that = this,
+			oCore = sap.ui.getCore();
+
 		this._oRb = sap.ui.getCore().getLibraryResourceBundle("sap.m");
 
 		Input.prototype.init.call(this);
+
+		oCore.attachThemeChanged(this._handleThemeChanged, this);
 
 		this._bIsValidating = false;
 		this._tokenizer = new sap.m.Tokenizer();
@@ -222,7 +226,6 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 
 
 				that._oPopupInput.focus();
-
 			}
 		});
 
@@ -501,9 +504,11 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 
 		// necessary to display expanded MultiInput which is inside SimpleForm
 		var $Parent;
-		if (this.$().parent('[class*="sapUiRespGridSpan"]')) {
+		if (this.$().closest('.sapUiVlt').length !== 0) {
+			$Parent = this.$().closest('.sapUiVlt');
+		} else if (this.$().parent('[class*="sapUiRespGridSpan"]').length !== 0) {
 			$Parent = this.$().parent('[class*="sapUiRespGridSpan"]');
-		} else if (this.$().parents(".sapUiRFLContainer")) {
+		} else if (this.$().parents(".sapUiRFLContainer").length !== 0) {
 			$Parent = this.$().parents(".sapUiRFLContainer");
 		}
 
@@ -514,7 +519,7 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 	};
 
 	/**
-	 * close multi-line MultiInput in multi-line mode
+	 * Close multi-line MultiInput in multi-line mode
 	 *
 	 * @since 1.28
 	 * @public
@@ -565,6 +570,9 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 			delete this._sResizeHandlerId;
 		}
 
+		var oCore = sap.ui.getCore();
+		oCore.detachThemeChanged(this._handleThemeChanged, this);
+
 		Input.prototype.exit.apply(this, arguments);
 	};
 
@@ -575,60 +583,86 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 	 *
 	 */
 	MultiInput.prototype._setContainerSizes = function() {
+		var thisDomRef = this.getDomRef(),
+			$this = this.$(),
+			$border = this.$().find(".sapMMultiInputBorder"),
+			availableWidth,
+			shadowDiv,
+			$indicator,
+			inputWidthMinimalNeeded,
+			iIndicatorWidth,
+			tokenizerWidth,
+			iconWidth,
+			totalNeededWidth,
+			inputWidth,
+			additionalWidth,
+			tokens = this.getTokens(), i;
 
-		var thisDomRef = this.getDomRef();
 		if (!thisDomRef) {
 			return;
 		}
-		var $this = this.$();
 
 		if (this.getTokens().length > 0) {
-			$this.find(".sapMMultiInputBorder").addClass("sapMMultiInputNarrowBorder");
+			$border.addClass("sapMMultiInputNarrowBorder");
 		} else {
-			$this.find(".sapMMultiInputBorder").removeClass("sapMMultiInputNarrowBorder");
+			$border.removeClass("sapMMultiInputNarrowBorder");
 		}
 
 		this.$("inner").css("width", "");
 
 		// we go to the sapMMultiInputBorder child elements, this makes the computations easier
-		var availableWidth = $this.find(".sapMMultiInputBorder").width();
+		availableWidth = $border.width();
 
 		// calculate minimal needed width for input field
-		var shadowDiv = $this.children(".sapMMultiInputShadowDiv")[0];
-		var $indicator = $this.find(".sapMMultiInputBorder").find(".sapMMultiInputIndicator");
+		shadowDiv = $this.children(".sapMMultiInputShadowDiv")[0];
+		$indicator = $border.find(".sapMMultiInputIndicator");
 
 		jQuery(shadowDiv).text(this.getValue());
 
-		var inputWidthMinimalNeeded = jQuery(shadowDiv).width();
-		var iIndicatorWidth = jQuery($indicator).width();
-
-		var tokenizerWidth = this._tokenizer.getScrollWidth();
-
+		inputWidthMinimalNeeded = jQuery(shadowDiv).width();
+		iIndicatorWidth = $indicator.width();
+		tokenizerWidth = this._tokenizer.getScrollWidth();
 
 		// the icon
-		var iconWidth = $this.find(".sapMInputValHelp").outerWidth(true);
+		iconWidth = $this.find(".sapMInputValHelp").outerWidth(true);
 
 		if (iIndicatorWidth !== null && this._isMultiLineMode && this._bShowIndicator) {
 			inputWidthMinimalNeeded = iIndicatorWidth;
 		}
 
-		var totalNeededWidth = tokenizerWidth + inputWidthMinimalNeeded + iconWidth;
-		var inputWidth;
-		var additionalWidth = 1;
+		totalNeededWidth = tokenizerWidth + inputWidthMinimalNeeded + iconWidth;
+		additionalWidth = 1;
 
-		if (!this._bUseDialog && this._isMultiLineMode && !this._bShowIndicator && this.$().find(".sapMMultiInputBorder").length > 0) {
-
-			var $border = this.$().find(".sapMMultiInputBorder"),
-				iMaxHeight = parseInt(($border.css("max-height") || 0), 10),
+		if (!this._bUseDialog && this._isMultiLineMode && !this._bShowIndicator && $border.length > 0) {
+			var iMaxHeight = parseInt(($border.css("max-height") || 0), 10),
 				iScrollHeight = $border[0].scrollHeight,
 				iTokenizerWidth = availableWidth - iconWidth;
 
 			if (iMaxHeight < iScrollHeight) {
 				//if scroll height exceeds maxHeight, scroll bar also takes width
-				iTokenizerWidth = iTokenizerWidth - 17; // 17px is scroll bar width
+				//iTokenizerWidth = iTokenizerWidth - 17; // 17px is scroll bar width
 			}
 
-			this._tokenizer.setPixelWidth(iTokenizerWidth); // 17px is scroll bar width
+			//this._tokenizer.setPixelWidth(iTokenizerWidth);
+
+			if (tokens.length === 0) {
+				this._tokenizer.$().css("width", 0);
+			} else {
+				this._tokenizer.$().css("width", iTokenizerWidth + "px");
+			}
+
+			if (this._tokenizer._oScroller) {
+				this._tokenizer._oScroller.refresh();
+			}
+
+			for (i = 0; i < tokens.length; i++) {
+				var tokenDomRef = tokens[i].getDomRef();
+				if (tokenDomRef && tokenDomRef.offsetWidth > iTokenizerWidth) {
+					tokenDomRef.style.width = iTokenizerWidth + "px";
+					tokenDomRef.classList.add("sapMTokenTruncate");
+				}
+			}
+
 			this.$("inner").css("width", iTokenizerWidth + "px");
 
 		} else {
@@ -644,7 +678,6 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 				}
 
 			}
-
 
 			jQuery($this.find(".sapMInputBaseInner")[0]).css("width", inputWidth + "px");
 
@@ -696,10 +729,22 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 	 */
 	MultiInput.prototype.onAfterRendering = function() {
 
+		var oCore = sap.ui.getCore();
+
 		Input.prototype.onAfterRendering.apply(this, arguments);
 
-		this._setContainerSizes();
+		if (oCore.isThemeApplied()) {
+			this._setContainerSizes();
+		}
+	};
 
+	/**
+	 * Fired when the theme is changed.
+	 *
+	 * @private
+	 */
+	MultiInput.prototype._handleThemeChanged = function() {
+		this._setContainerSizes();
 	};
 
 	/**
@@ -944,7 +989,10 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 	 *          oEvent
 	 */
 	MultiInput.prototype.onsapenter = function(oEvent) {
-		this._validateCurrentText();
+
+		if (!this._oSuggestionPopup || !this._oSuggestionPopup.isOpen()) {
+			this._validateCurrentText();
+		}
 
 		if (Input.prototype.onsapenter) {
 			Input.prototype.onsapenter.apply(this, arguments);
@@ -1055,62 +1103,62 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 	 * @private
 	 */
 	MultiInput.prototype._processMultiLine = function(oEvent) {
-			if ( this._bUseDialog ) {
+		if ( this._bUseDialog ) {
 
-				if ( oEvent.target === this._$input[0]
-					||  oEvent.target.className.indexOf("sapMToken") > -1 && oEvent.target.className.indexOf("sapMTokenIcon") < 0
-						||  oEvent.target.className.indexOf("sapMTokenText") > -1) {
+			if ( oEvent.target === this._$input[0]
+				||  oEvent.target.className.indexOf("sapMToken") > -1 && oEvent.target.className.indexOf("sapMTokenIcon") < 0
+					||  oEvent.target.className.indexOf("sapMTokenText") > -1) {
 
-					this._removeIndicator();
-					this._oSuggestionPopup.open();
-					this._tokenizerInPopup = this.cloneTokenizer(this._tokenizer);
-					var sValue = this._oPopupInput.getValue();
+				this._removeIndicator();
+				this._oSuggestionPopup.open();
+				this._tokenizerInPopup = this.cloneTokenizer(this._tokenizer);
+				var sValue = this._oPopupInput.getValue();
 
-					// keep input value in input field in popup.
-					// do not show token and suggestion table at same time, which is the same logic as live change.
-					if ( this._oSuggestionPopup && this._oSuggestionPopup.getContent().length > 0 && sValue.length > 0) {
-						this._tokenizerInPopup.setVisible(false);
-					} else {
-						this._tokenizerInPopup.setVisible(true);
-						this._setAllTokenVisible(this._tokenizerInPopup);
-					}
-
-					this._tokenizerInPopup._oScroller.setHorizontal(false);
-					this._tokenizerInPopup.addStyleClass("sapMTokenizerMultiLine");
-
-					//add token when no suggestion item
-					if (this._oSuggestionTable.getItems().length === 0) {
-						var that = this;
-						this._oPopupInput.onsapenter = function(oEvent){
-								that._validateCurrentText();
-								that._setValueInvisible();
-						};
-					}
-
-					this._oSuggestionPopup.insertContent(this._tokenizerInPopup, 0);
+				// keep input value in input field in popup.
+				// do not show token and suggestion table at same time, which is the same logic as live change.
+				if ( this._oSuggestionPopup && this._oSuggestionPopup.getContent().length > 0 && sValue.length > 0) {
+					this._tokenizerInPopup.setVisible(false);
+				} else {
+					this._tokenizerInPopup.setVisible(true);
+					this._setAllTokenVisible(this._tokenizerInPopup);
 				}
 
-			} else {
-					//desktop and click on input field
-					if ( oEvent.target === this._$input[0]
-							||  oEvent.target.className.indexOf("sapMToken") > -1 && oEvent.target.className.indexOf("sapMTokenIcon") < 0
-								||  oEvent.target.className.indexOf("sapMTokenText") > -1){
+				this._tokenizerInPopup._oScroller.setHorizontal(false);
+				this._tokenizerInPopup.addStyleClass("sapMTokenizerMultiLine");
 
-						this.openMultiLine();
-						this._showAllTokens(this._tokenizer);
+				//add token when no suggestion item
+				if (this._oSuggestionTable.getItems().length === 0) {
+					var that = this;
+					this._oPopupInput.onsapenter = function(oEvent){
+							that._validateCurrentText();
+							that._setValueInvisible();
+					};
+				}
 
-						var that = this;
-						setTimeout(function() {
-							that._setContainerSizes();
-							that._tokenizer.scrollToStart();
-						}, 0);
-					}
+				this._oSuggestionPopup.insertContent(this._tokenizerInPopup, 0);
 			}
+
+		} else {
+			//desktop and click on input field
+			if ( oEvent.target === this._$input[0]
+					||  oEvent.target.className.indexOf("sapMToken") > -1 && oEvent.target.className.indexOf("sapMTokenIcon") < 0
+						||  oEvent.target.className.indexOf("sapMTokenText") > -1){
+
+				this.openMultiLine();
+				this._showAllTokens(this._tokenizer);
+
+				var that = this;
+				setTimeout(function() {
+					that._setContainerSizes();
+					that._tokenizer.scrollToStart();
+				}, 0);
+			}
+		}
 	};
 
 
 	/**
-	 * when tap on text field, deselect all tokens
+	 * When tap on text field, deselect all tokens
 	 * @public
 	 * @param {jQuery.Event} oEvent
 	 */
@@ -1125,7 +1173,7 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 
 
 	/**
-	 * focus is on MultiInput
+	 * Focus is on MultiInput
 	 * @public
 	 * @param {jQuery.Event} oEvent
 	 */
@@ -1143,7 +1191,7 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 
 
 	/**
-	 * when press ESC, deselect all tokens and all texts
+	 * When press ESC, deselect all tokens and all texts
 	 * @public
 	 * @param {jQuery.Event} oEvent
 	 */
@@ -1230,7 +1278,7 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 	 * Functions returns the current input field's cursor position
 	 *
 	 * @private
-	 * @return {integer} the cursor position
+	 * @return {int} the cursor position
 	 */
 	MultiInput.prototype.getCursorPosition = function() {
 		return this._$input.cursorPos();
@@ -1407,6 +1455,11 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 		return this._tokenizer.destroyTokens();
 	};
 
+	MultiInput.prototype.updateTokens = function() {
+		this.destroyTokens();
+		return this.updateAggregation("tokens");
+	};
+
 	/**
 	 * Function overwrites clone function to add tokens to MultiInput
 	 *
@@ -1458,13 +1511,29 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 	MultiInput.WaitForAsyncValidation = "sap.m.Tokenizer.WaitForAsyncValidation";
 
 	/**
-	 * get the reference element which the message popup should dock to
+	 * Get the reference element which the message popup should dock to
 	 *
 	 * @return {DOMRef} Dom Element which the message popup should dock to
 	 * @protected
 	 * @function
 	 */
 	MultiInput.prototype.getDomRefForValueStateMessage = MultiInput.prototype.getPopupAnchorDomRef;
+
+
+	/**
+	 * @see {sap.ui.core.Control#getAccessibilityInfo}
+	 * @protected
+	 */
+	MultiInput.prototype.getAccessibilityInfo = function() {
+		var sText = this.getTokens().map(function(oToken) {
+			return oToken.getText();
+		}).join(" ");
+
+		var oInfo = Input.prototype.getAccessibilityInfo.apply(this, arguments);
+		oInfo.type = sap.ui.getCore().getLibraryResourceBundle("sap.m").getText("ACC_CTR_TYPE_MULTIINPUT");
+		oInfo.description = ((oInfo.description || "") + " " + sText).trim();
+		return oInfo;
+	};
 
 
 	return MultiInput;

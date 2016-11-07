@@ -274,15 +274,7 @@
       "theme": "sap_hcb"
     },
     {
-      "name": "img-RTL/accordion/collapsedRTL.gif",
-      "theme": "sap_hcb"
-    },
-    {
       "name": "img-RTL/accordion/expanded.gif",
-      "theme": "sap_hcb"
-    },
-    {
-      "name": "img-RTL/accordion/expandedRTL.gif",
       "theme": "sap_hcb"
     },
     {
@@ -307,18 +299,6 @@
     },
     {
       "name": "img-RTL/formattedTextView/close-hcb.png",
-      "theme": "sap_hcb"
-    },
-    {
-      "name": "img-RTL/layout/separationLarge.gif",
-      "theme": "sap_hcb"
-    },
-    {
-      "name": "img-RTL/layout/separationMedium.gif",
-      "theme": "sap_hcb"
-    },
-    {
-      "name": "img-RTL/layout/separationSmall.gif",
       "theme": "sap_hcb"
     },
     {
@@ -646,15 +626,7 @@
       "theme": "sap_hcb"
     },
     {
-      "name": "img/accordion/collapsedRTL.gif",
-      "theme": "sap_hcb"
-    },
-    {
       "name": "img/accordion/expanded.gif",
-      "theme": "sap_hcb"
-    },
-    {
-      "name": "img/accordion/expandedRTL.gif",
       "theme": "sap_hcb"
     },
     {
@@ -679,18 +651,6 @@
     },
     {
       "name": "img/formattedTextView/close-hcb.png",
-      "theme": "sap_hcb"
-    },
-    {
-      "name": "img/layout/separationLarge.gif",
-      "theme": "sap_hcb"
-    },
-    {
-      "name": "img/layout/separationMedium.gif",
-      "theme": "sap_hcb"
-    },
-    {
-      "name": "img/layout/separationSmall.gif",
       "theme": "sap_hcb"
     },
     {
@@ -1043,6 +1003,11 @@
     },
     {
       "name": "library.source.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "shared.less",
       "designtime": true,
       "theme": "sap_hcb"
     }

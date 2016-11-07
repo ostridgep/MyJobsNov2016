@@ -78,76 +78,75 @@ function buildDEQAttr(eq){
 					);
        
        }
-
-function buildEQMatrix(eq){
-	
-	   var eqMatrix = new sap.ui.commons.layout.MatrixLayout({
-   		
-   		layoutFixed : false,
-   			width : '800px',
-   			columns : 2,
-   			widths : ['250px', '550px'] });
-	   		
-            	  sqlstatement1="select * from MyJobsDetsEQ where equnr= '"+eq+"'"
-            	  sqlstatement2="select distinct charact, charact_desc, value from MyJobsDetsATTR where equnr= '"+eq+"'"
-            	  
-            	  
-            	  html5sql.process(sqlstatement1,
-            			  
-            			  function(transaction, results, rowsArray){
+              function buildEQMatrix(eq){
             		
-				            		  lab = new sap.ui.commons.Label({text : "Make" }).addStyleClass("Labelstyle");
-				      				  var val = new sap.ui.commons.TextField({
-				      					editable : false,
-				      					value: rowsArray[0].manfacture,
-				      					wrapping:true,
-				      					width:"400px"}).addStyleClass("LabelText");
-				      				eqMatrix.createRow(lab,val);
-				      				lab = new sap.ui.commons.Label({text : "Model" }).addStyleClass("Labelstyle");
-				      				  var val = new sap.ui.commons.TextField({
-				      					editable : false,
-				      					value: rowsArray[0].manparno,
-				      					wrapping:true,
-				      					width:"400px"}).addStyleClass("LabelText");
-				      				eqMatrix.createRow(lab,val);
-				      				lab = new sap.ui.commons.Label({text : "Serial No" }).addStyleClass("Labelstyle");
-				      				  var val = new sap.ui.commons.TextField({
-				      					editable : false,
-				      					value: rowsArray[0].manserno,
-				      					wrapping:true,
-				      					width:"400px"}).addStyleClass("LabelText");
-				      				eqMatrix.createRow(lab,val);
-						    	                          
+           	   var eqMatrix = new sap.ui.commons.layout.MatrixLayout({
+              		
+              		layoutFixed : false,
+              			width : '800px',
+              			columns : 2,
+              			widths : ['250px', '550px'] });
+           	   		
+                       	  sqlstatement1="select * from MyJobsDetsEQ where equnr= '"+eq+"'"
+                       	  sqlstatement2="select distinct charact, charact_desc, value from MyJobsDetsATTR where equnr= '"+eq+"'"
+                       	  
+                       	  
+                       	  html5sql.process(sqlstatement1,
+                       			  
+                       			  function(transaction, results, rowsArray){
+                       		
+           				            		  lab = new sap.ui.commons.Label({text : "Make" }).addStyleClass("Labelstyle");
+           				      				  var val = new sap.ui.commons.TextField({
+           				      					editable : false,
+           				      					value: rowsArray[0].manfacture,
+           				      					wrapping:true,
+           				      					width:"400px"}).addStyleClass("LabelText");
+           				      				eqMatrix.createRow(lab,val);
+           				      				lab = new sap.ui.commons.Label({text : "Model" }).addStyleClass("Labelstyle");
+           				      				  var val = new sap.ui.commons.TextField({
+           				      					editable : false,
+           				      					value: rowsArray[0].manparno,
+           				      					wrapping:true,
+           				      					width:"400px"}).addStyleClass("LabelText");
+           				      				eqMatrix.createRow(lab,val);
+           				      				lab = new sap.ui.commons.Label({text : "Serial No" }).addStyleClass("Labelstyle");
+           				      				  var val = new sap.ui.commons.TextField({
+           				      					editable : false,
+           				      					value: rowsArray[0].manserno,
+           				      					wrapping:true,
+           				      					width:"400px"}).addStyleClass("LabelText");
+           				      				eqMatrix.createRow(lab,val);
+           						    	                          
 
-						     html5sql.process(sqlstatement2,
-						    		 function(transaction, results, rowsArray){
-								    	 			
-								    	 for(var cntx=0; cntx < rowsArray.length ; cntx++)
-											{
-								    		 lab = new sap.ui.commons.Label({text : rowsArray[cntx].charact_desc }).addStyleClass("Labelstyle");
-						      				  var val = new sap.ui.commons.TextField({
-						      					editable : false,
-						      					value: rowsArray[cntx].value,
-						      					wrapping:true,
-						      					width:"400px"}).addStyleClass("LabelText");
-						      				eqMatrix.createRow(lab,val);
-						      				
-													
-											}
-								    	 sap.ui.getCore().getElementById('OBJECTS').destroyContent()
-								    	 sap.ui.getCore().getElementById('OBJECTS').addContent(eqMatrix)   
-						    	               
-									 },
-									 function(error, statement){
-										
-										 opMessage("Error: " + error.message + " when processing EQAttributes " + statement);
-									 }        
-					)
-            	  },
-            	  function(error, statement){
-						 opMessage("Error: " + error.message + " when processing " + statement);
-						
-					 }        
-					);
-       
-       }
+           						     html5sql.process(sqlstatement2,
+           						    		 function(transaction, results, rowsArray){
+           								    	 			
+           								    	 for(var cntx=0; cntx < rowsArray.length ; cntx++)
+           											{
+           								    		 lab = new sap.ui.commons.Label({text : rowsArray[cntx].charact_desc }).addStyleClass("Labelstyle");
+           						      				  var val = new sap.ui.commons.TextField({
+           						      					editable : false,
+           						      					value: rowsArray[cntx].value,
+           						      					wrapping:true,
+           						      					width:"400px"}).addStyleClass("LabelText");
+           						      				eqMatrix.createRow(lab,val);
+           						      				
+           													
+           											}
+           								    	 sap.ui.getCore().getElementById('OBJECTS').destroyContent()
+           								    	 sap.ui.getCore().getElementById('OBJECTS').addContent(eqMatrix)   
+           						    	               
+           									 },
+           									 function(error, statement){
+           										
+           										 opMessage("Error: " + error.message + " when processing EQAttributes " + statement);
+           									 }        
+           					)
+                       	  },
+                       	  function(error, statement){
+           						 opMessage("Error: " + error.message + " when processing " + statement);
+           						
+           					 }        
+           					);
+                  
+                  }

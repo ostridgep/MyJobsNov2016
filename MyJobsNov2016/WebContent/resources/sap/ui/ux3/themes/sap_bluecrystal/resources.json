@@ -239,10 +239,6 @@
       "theme": "sap_bluecrystal"
     },
     {
-      "name": "img-RTL/favorite_regular.png",
-      "theme": "sap_bluecrystal"
-    },
-    {
       "name": "img-RTL/feed/Action_Comment_hover.png",
       "theme": "sap_bluecrystal"
     },
@@ -447,10 +443,6 @@
       "theme": "sap_bluecrystal"
     },
     {
-      "name": "img-RTL/open_in_new_window_hover.png",
-      "theme": "sap_bluecrystal"
-    },
-    {
       "name": "img-RTL/shell/Canvas_shadow_left.png",
       "theme": "sap_bluecrystal"
     },
@@ -615,10 +607,6 @@
       "theme": "sap_bluecrystal"
     },
     {
-      "name": "img/favorite_regular.png",
-      "theme": "sap_bluecrystal"
-    },
-    {
       "name": "img/feed/Action_Comment_hover.png",
       "theme": "sap_bluecrystal"
     },
@@ -719,18 +707,6 @@
       "theme": "sap_bluecrystal"
     },
     {
-      "name": "img/flag_regular.png",
-      "theme": "sap_bluecrystal"
-    },
-    {
-      "name": "img/following_regular_bw.png",
-      "theme": "sap_bluecrystal"
-    },
-    {
-      "name": "img/hold_regular_bw.png",
-      "theme": "sap_bluecrystal"
-    },
-    {
       "name": "img/menubutton/Menu_Disabled.png",
       "theme": "sap_bluecrystal"
     },
@@ -820,10 +796,6 @@
     },
     {
       "name": "img/open_in_new_window.png",
-      "theme": "sap_bluecrystal"
-    },
-    {
-      "name": "img/open_in_new_window_hover.png",
       "theme": "sap_bluecrystal"
     },
     {

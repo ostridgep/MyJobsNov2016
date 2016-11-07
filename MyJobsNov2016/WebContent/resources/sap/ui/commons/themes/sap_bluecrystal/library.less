@@ -1682,6 +1682,11 @@ html[data-sap-ui-browser^="ie"] .sapUiMenuButton.sapUiBtnS.sapUiBtnDsbl:active{
 	bottom: 4px;
 	right: 3px;
 	position: absolute;
+	background-image: url("img/menubutton/Menu_Regular.png");
+}
+
+.sapUiBtnDsbl.sapUiMenuButton > .sapUiMenuButtonIco {
+	background-image: url("img/menubutton/Menu_Disabled.png");
 }
 
 .sapUiBtnLite > .sapUiMenuButtonIco{
@@ -1718,6 +1723,7 @@ html[data-sap-ui-browser^="ie"] .sapUiBtnLite > .sapUiMenuButtonIco{
 .sapUiBtnS.sapUiBtnEmph > .sapUiMenuButtonIco{
 	background-image: url("img/menubutton/Menu_Hover.png");
 }
+
 /* END "MenuButton.less" */
 
 /* START "Message.less" */
@@ -1854,6 +1860,24 @@ html[data-sap-ui-browser^="ie"] .sapUiBtnLite > .sapUiMenuButtonIco{
 	background-color: @sapUiFieldSuccessBackground;
 	border-color: @sapUiFieldSuccessColor;
 }
+
+/* Styling of the down-arrow is Type/Priority dependent */
+.sapUiMsgToastArrow {
+	background-image: url("img/messagebar/toastarrow_multi.gif");
+}
+
+.sapUiMsgTError .sapUiMsgToastArrow {
+	background-image: url("img/messagebar/toastarrow_Error.gif");
+}
+
+.sapUiMsgTWarning .sapUiMsgToastArrow {
+	background-image: url("img/messagebar/toastarrow_Warning.gif");
+}
+
+.sapUiMsgTSuccess .sapUiMsgToastArrow {
+	background-image: url("img/messagebar/toastarrow_Success.gif");
+}
+
 /* END "MessageToast.less" */
 
 /* START "Paginator.less" */
@@ -2091,9 +2115,15 @@ html[data-sap-ui-browser*="ie"] .sapUiPanelColl .sapUiPanelCollIco:hover {
 	top: 27px;
 }
 
-html[data-sap-ui-browser*="ie"] .sapUiPanelTitle {
-	height: 26px;
-	line-height: 26px;
+html[data-sap-ui-browser*="ie"] {
+	.sapUiPanelTitle {
+		height: 26px;
+		line-height: 26px;
+	}
+
+	.sapUiPanelHeightSet > .sapUiPanelCont {
+		top: 28px;
+	}
 }
 /* END "Panel.less" */
 
@@ -2256,11 +2286,17 @@ html[data-sap-ui-browser^="ie"] .sapUiRb:focus:after {
 /* END "RadioButtonGroup.less" */
 
 /* START "RatingIndicator.less" */
+// Override image URLs defined in base to point to the theme specific images
+@sapUiRatingSymbolSelected: url("img/rating/star_selected.png");
+@sapUiRatingSymbolUnselected: url("img/rating/star_unselected.png");
+@sapUiRatingSymbolHovered: url("img/rating/star_hover.png");
+
 .sapUiRating {
 	font-family: @sapUiDesktopFontFamily;
 	font-size: @sapUiDesktopFontSize;
 	margin-top: -2px;
 }
+
 /* END "RatingIndicator.less" */
 
 /* START "RichTooltip.less" */
@@ -2546,6 +2582,10 @@ html[data-sap-ui-browser^="ie"] .sapUiRb:focus:after {
 	right: 0;
 }
 
+.sapUiSearchFieldIco {
+	background-image: url("img/search/search.png");
+}
+
 .sapUiSearchFieldIco:hover {
 	background-image: url("img/search/search_hover.png");
 	background-color: @sapUiFieldHoverHelpBackground;
@@ -2609,6 +2649,7 @@ html[data-sap-ui-browser^="ie"] .sapUiRb:focus:after {
 	background-image: url("img/search/search_dsbl.png");
 	background-color: transparent;
 }
+
 /* END "SearchField.less" */
 
 /* START "SegmentedButton.less" */
@@ -2959,12 +3000,14 @@ html[data-sap-ui-browser="ie9"] .sapUiSliHori .sapUiSliText {
 	font-family: @sapUiDesktopFontFamily;
 	font-size: @sapUiDesktopFontSize;
 	background-color: @sapUiExtraLightBG;
+	background-image: url(img/splitter/splitter_vert_grip.gif);
 }
 
 .sapUiHorizontalSplitterBar {
 	font-family: @sapUiDesktopFontFamily;
 	font-size: @sapUiDesktopFontSize;
 	background-color: @sapUiExtraLightBG;
+	background-image: url(img/splitter/splitter_horiz_grip.gif);
 }
 
 .sapUiVSplitterSecondPane:focus,
@@ -2995,6 +3038,7 @@ html[data-sap-ui-browser="ie9"] .sapUiSliHori .sapUiSliText {
 	background-color: @sapUiHighlight;
 	cursor: n-resize;
 }
+
 /* END "Splitter.less" */
 
 /* START "TabStrip.less" */
@@ -3891,16 +3935,24 @@ html[data-sap-ui-browser="ie10"] {
 	top: 28px;
 }
 
-.sapUiTreeNode:hover{
-	background-color: @sapUiListHoverBackground;
+.sapUiTreeNode {
 	background-image: url(img/tree/TreeNode.gif);
+}
+
+/* use the white icon on black background */
+.sapUiInverted-CTX .sapUiTreeNode {
+	background-image: url(img/tree/TreeNode-inverted.gif);
+}
+
+.sapUiTreeNode:hover {
+	background-color: @sapUiListHoverBackground;
 }
 
 .sapUiTreeNode:focus {
 	outline: 1px dashed @sapUiListHighlightColor;
 }
 
-.sapUiTreeNodeSelectedParent:Hover, .sapUiTreeNodeSelected:Hover {
+.sapUiTreeNodeSelectedParent:hover, .sapUiTreeNodeSelected:hover {
 	background-color: @sapUiListSelectionHoverBackground;
 }
 
@@ -3909,38 +3961,22 @@ html[data-sap-ui-browser="ie10"] {
 	background-color: @sapUiListSelectionBackgroundColor;
 }
 
-.sapUiTreeNodeExpanded.sapUiTreeNodeSelectedParent,
-.sapUiTreeNodeExpanded.sapUiTreeNodeSelected {
+.sapUiTreeNodeExpanded {
 	background-image: url(img/tree/TreeNode_Exp.gif);
 }
 
-.sapUiTreeNodeExpanded.sapUiTreeNodeSelectedParent:Hover,
-.sapUiTreeNodeExpanded.sapUiTreeNodeSelected:Hover,
-.sapUiTreeNodeExpanded.sapUiTreeNodeSelected.sapUiTreeNode:Hover {
-	background-color: @sapUiListSelectionHoverBackground;
-	background-image: url(img/tree/TreeNode_Exp.gif);
+/* use the white icon on black background */
+.sapUiInverted-CTX .sapUiTreeNodeExpanded {
+	background-image: url(img/tree/TreeNode_Exp-inverted.gif)
 }
 
-.sapUiTreeNodeExpanded.sapUiTreeNode:Hover{
-	background-color: @sapUiListHoverBackground;
-	background-image: url(img/tree/TreeNode_Exp.gif);
-}
-
-.sapUiTreeNodeCollapsed.sapUiTreeNodeSelectedParent,
-.sapUiTreeNodeCollapsed.sapUiTreeNodeSelected {
+.sapUiTreeNodeCollapsed {
 	background-image: url(img/tree/TreeNode_Coll.gif);
 }
 
-.sapUiTreeNodeCollapsed.sapUiTreeNodeSelectedParent:Hover,
-.sapUiTreeNodeCollapsed.sapUiTreeNodeSelected:Hover,
-.sapUiTreeNodeCollapsed.sapUiTreeNodeSelected.sapUiTreeNode:Hover {
-	background-color: @sapUiListSelectionHoverBackground;
-	background-image: url(img/tree/TreeNode_Coll.gif);
-}
-
-.sapUiTreeNodeCollapsed.sapUiTreeNode:Hover {
-	background-color: @sapUiListHoverBackground;
-	background-image: url(img/tree/TreeNode_Coll.gif);
+/* use the white icon on black background */
+.sapUiInverted-CTX .sapUiTreeNodeCollapsed {
+	background-image: url(img/tree/TreeNode_Coll-inverted.gif)
 }
 
 .sapUiTreeTbCont > .sapUiBtn.sapUiBtnS.sapUiBtnLite{
@@ -3984,6 +4020,7 @@ html[data-sap-ui-browser="ie10"] {
 .sapUiTreeTbCont > .sapUiBtn.sapUiBtnS.sapUiBtnLite:focus > .sapUiBtnIco{
 	display: none;
 }
+
 /* END "Tree.less" */
 
 /* START "TriStateCheckBox.less" */
@@ -4004,10 +4041,6 @@ html[data-sap-ui-browser="ie10"] {
 /* ===================================================== */
 
 /* Blue Crystal */
-
-@sapUiValueHelpIconRegularUrl: ~"/img/valuehelpfield/F4-Help_icon_regular.png";
-@sapUiValueHelpIconHoverUrl: ~"/img/valuehelpfield/F4-Help_icon_hover.png";
-@sapUiValueHelpIconDsblUrl: ~"/img/valuehelpfield/F4-Help_icon_dsbl.png";
 
 .sapUiTfCombo {
 	font-family: @sapUiDesktopFontFamily;
@@ -4046,5 +4079,6 @@ html[data-sap-ui-browser="ie9"] .sapUiGrid td > .sapUiTfBrd > .sapUiTfValueHelpI
 html[data-sap-ui-browser="ie10"] .sapUiGrid td > .sapUiTfBrd > .sapUiTfValueHelpIcon{
 	top: 0; /* because of padding-top the icon must be moved */
 }
+
 /* END "ValueHelpField.less" */
 

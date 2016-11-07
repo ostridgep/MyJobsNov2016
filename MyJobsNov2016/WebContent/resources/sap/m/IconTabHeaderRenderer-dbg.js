@@ -38,6 +38,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 		var aItems = oControl.getItems(),
 			bTextOnly = oControl._checkTextOnly(aItems),
 			bNoText = oControl._checkNoText(aItems),
+			bInLine = oControl._checkInLine(aItems) || oControl.isInlineMode(),
 			oResourceBundle = sap.ui.getCore().getLibraryResourceBundle('sap.m');
 
 		var oIconTabBar = oControl.getParent();
@@ -46,6 +47,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 		// render wrapper div
 		oRM.write("<div role='tablist' ");
 		oRM.addClass("sapMITH");
+		oRM.addClass("sapContrastPlus");
 		if (oControl._scrollable) {
 			oRM.addClass("sapMITBScrollable");
 			if (oControl._bPreviousScrollForward) {
@@ -73,9 +75,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 		oRM.renderControl(oControl._getScrollingArrow("left"));
 
 		// render scroll container on touch devices
-		if (oControl._bDoScroll) {
-			oRM.write("<div id='" + oControl.getId() + "-scrollContainer' class='sapMITBScrollContainer'>");
-		}
+		oRM.write("<div id='" + oControl.getId() + "-scrollContainer' class='sapMITBScrollContainer'>");
 
 		oRM.write("<div id='" + oControl.getId() + "-head'");
 		oRM.addClass("sapMITBHead");
@@ -86,6 +86,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 
 		if (bNoText) {
 			oRM.addClass("sapMITBNoText");
+		}
+
+		if (bInLine) {
+			oRM.addClass("sapMITBInLine");
 		}
 
 		oRM.writeClasses();
@@ -105,7 +109,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 					sTabParams += 'role="separator"';
 				}
 			} else {
-				sTabParams += 'role="tab" aria-controls="' + oControl.getParent().sId + '-content" ';
+				sTabParams += 'role="tab"';
+
+				if (oIconTabBar instanceof sap.m.IconTabBar) {
+					sTabParams += ' aria-controls="' + oIconTabBar.sId + '-content" ';
+				}
 
 				//if there is tab text
 				if (oItem) {
@@ -161,7 +169,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 
 				if (!oItem.getEnabled()) {
 					oRM.addClass("sapMITBDisabled");
+					oRM.writeAttribute("aria-disabled", true);
 				}
+
+				oRM.writeAttribute("aria-selected", false);
 
 				var sTooltip = oItem.getTooltip_AsString();
 				if (sTooltip) {
@@ -170,41 +181,45 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 
 				oRM.writeClasses();
 				oRM.write(">");
-				oRM.write("<div id='" + oItem.getId() + "-tab' class='sapMITBTab'>");
 
-				if (!oItem.getShowAll() || !oItem.getIcon()) {
-					if (bReadIconColor) {
-						oRM.write('<div id="' + oItem.getId() + '-iconColor" style="display: none;">' + oResourceBundle.getText('ICONTABBAR_ICONCOLOR_' + sIconColor.toUpperCase()) + '</div>');
+				if (!bInLine) {
+
+					oRM.write("<div id='" + oItem.getId() + "-tab' class='sapMITBTab'>");
+
+					if (!oItem.getShowAll() || !oItem.getIcon()) {
+						if (bReadIconColor) {
+							oRM.write('<div id="' + oItem.getId() + '-iconColor" style="display: none;">' + oResourceBundle.getText('ICONTABBAR_ICONCOLOR_' + sIconColor.toUpperCase()) + '</div>');
+						}
+
+						oRM.renderControl(oItem._getImageControl(['sapMITBFilterIcon', 'sapMITBFilter' + oItem.getIconColor()], oControl, IconTabHeaderRenderer._aAllIconColors));
 					}
 
-					oRM.renderControl(oItem._getImageControl(['sapMITBFilterIcon', 'sapMITBFilter' + oItem.getIconColor()], oControl, IconTabHeaderRenderer._aAllIconColors));
-				}
+					if (!oItem.getShowAll() && !oItem.getIcon() && !bTextOnly) {
+						oRM.write("<span class='sapMITBFilterNoIcon'> </span>");
+					}
 
-				if (!oItem.getShowAll() && !oItem.getIcon() && !bTextOnly)  {
-					oRM.write("<span class='sapMITBFilterNoIcon'> </span>");
-				}
+					if (oItem.getDesign() === sap.m.IconTabFilterDesign.Horizontal && !oItem.getShowAll()) {
+						oRM.write("</div>");
+						oRM.write("<div class='sapMITBHorizontalWrapper'>");
+					}
 
-				if (oItem.getDesign() === sap.m.IconTabFilterDesign.Horizontal && !oItem.getShowAll()) {
-					oRM.write("</div>");
-					oRM.write("<div class='sapMITBHorizontalWrapper'>");
-				}
+					oRM.write("<span id='" + oItem.getId() + "-count' ");
+					oRM.addClass("sapMITBCount");
+					oRM.writeClasses();
+					oRM.write(">");
 
-				oRM.write("<span id='" + oItem.getId() + "-count' ");
-				oRM.addClass("sapMITBCount");
-				oRM.writeClasses();
-				oRM.write(">");
+					if ((oItem.getCount() === "") && (oItem.getDesign() === sap.m.IconTabFilterDesign.Horizontal)) {
+						//this is needed for the correct placement of the text in the horizontal design
+						oRM.write("&nbsp;");
+					} else {
+						oRM.writeEscaped(oItem.getCount());
+					}
 
-				if ((oItem.getCount() === "") && (oItem.getDesign() === sap.m.IconTabFilterDesign.Horizontal)) {
-					//this is needed for the correct placement of the text in the horizontal design
-					oRM.write("&nbsp;");
-				} else {
-					oRM.writeEscaped(oItem.getCount());
-				}
+					oRM.write("</span>");
 
-				oRM.write("</span>");
-
-				if (oItem.getDesign() === sap.m.IconTabFilterDesign.Vertical) {
-					oRM.write("</div>");
+					if (oItem.getDesign() === sap.m.IconTabFilterDesign.Vertical) {
+						oRM.write("</div>");
+					}
 				}
 
 				if (oItem.getText().length) {
@@ -214,14 +229,21 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 					if (bUpperCase) {
 						oRM.addClass("sapMITBTextUpperCase");
 					}
+
+					if (bInLine) {
+						oRM.writeAttribute("dir", "ltr");
+					}
+
 					oRM.writeClasses();
 					oRM.write(">");
-					oRM.writeEscaped(oItem.getText());
+					oRM.writeEscaped(oControl._getDisplayText(oItem));
 					oRM.write("</div>");
 				}
 
-				if (oItem.getDesign() === sap.m.IconTabFilterDesign.Horizontal) {
-					oRM.write("</div>");
+				if (!bInLine) {
+					if (oItem.getDesign() === sap.m.IconTabFilterDesign.Horizontal) {
+						oRM.write("</div>");
+					}
 				}
 
 				oRM.write("<div class='sapMITBContentArrow'></div>");
@@ -244,9 +266,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 
 		oRM.write("</div>");
 
-		if (oControl._bDoScroll) {
-			oRM.write("</div>"); //scrollContainer
-		}
+		oRM.write("</div>"); //scrollContainer
 
 		// render right scroll arrow
 		oRM.renderControl(oControl._getScrollingArrow("right"));

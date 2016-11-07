@@ -16,7 +16,7 @@ sap.ui.define(['./Model'],
 	 * @extends sap.ui.model.Model
 	 *
 	 * @author SAP SE
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 *
 	 * @constructor
 	 * @public
@@ -66,10 +66,6 @@ sap.ui.define(['./Model'],
 			fnCallBack(oNewContext);
 		}
 		return oNewContext;
-	};
-
-	MetaModel.prototype.destroy = function () {
-		return Model.prototype.destroy.apply(this, arguments);
 	};
 
 	/**

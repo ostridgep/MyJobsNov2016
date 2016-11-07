@@ -4,7 +4,12 @@
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
-sap.ui.define(['jquery.sap.global', './Matcher', './Visible'], function ($, Matcher, Visible) {
+sap.ui.define([
+	'jquery.sap.global',
+	'./Matcher',
+	'./Visible',
+	'sap/ui/test/launchers/iFrameLauncher'
+], function ($, Matcher, Visible, iFrameLauncher) {
 	"use strict";
 	var oVisibleMatcher = new Visible();
 
@@ -12,22 +17,30 @@ sap.ui.define(['jquery.sap.global', './Matcher', './Visible'], function ($, Matc
 	 * @class
 	 * Interactable - check if a control is currently able to take user interactions.
 	 * OPA5 will automatically apply this matcher if you specify actions in {@link sap.ui.test.Opa5#waitFor}.
-	 * This matcher will match if none of the following conditions apply to the control:
+	 * A control will be filtered out by this matcher when:
 	 * <ul>
 	 *     <li>
-	 *         If the control is invisible (using the visible matcher)
+	 *         There are unfinished XMLHttpRequests (globally).
+	 *         That means, the Opa can wait for pending requests to finish that would probably update the UI.
+	 *         Also detects sinon.FakeXMLHttpRequests that are not responded yet.
 	 *     </li>
 	 *     <li>
-	 *         If the control is hidden behind a dialog
+	 *         The control is invisible (using the visible matcher)
 	 *     </li>
 	 *     <li>
-	 *         If the control is in a navigating nav container
+	 *         The control is hidden behind a dialog
 	 *     </li>
 	 *     <li>
-	 *         If the control or its parents are busy
+	 *         The control is in a navigating nav container
 	 *     </li>
 	 *     <li>
-	 *         If the UIArea of the control needs new rendering
+	 *         The control or its parents are busy
+	 *     </li>
+	 *     <li>
+	 *         The control or its parents are not enabled
+	 *     </li>
+	 *     <li>
+	 *         The UIArea of the control needs new rendering
 	 *     </li>
 	 * </ul>
 	 * @public
@@ -38,6 +51,12 @@ sap.ui.define(['jquery.sap.global', './Matcher', './Visible'], function ($, Matc
 	 */
 	return Matcher.extend("sap.ui.test.matchers.Interactable", {
 		isMatching:  function(oControl) {
+			var bHasPendingXhrs = iFrameLauncher._getIXHRCounter().hasPendingRequests();
+			if (bHasPendingXhrs) {
+				// There are open requests - the XHR counter will log if there are open XHRs
+				return false;
+			}
+
 			var bVisible = oVisibleMatcher.isMatching(oControl);
 
 			if (!bVisible) {
@@ -51,11 +70,21 @@ sap.ui.define(['jquery.sap.global', './Matcher', './Visible'], function ($, Matc
 				return false;
 			}
 
+			if (oControl.getEnabled && !oControl.getEnabled()) {
+				$.sap.log.debug("The control '" + oControl + "' is not enabled", this._sLogPrefix);
+				return false;
+			}
+
 			var oParent = oControl.getParent();
 			while (oParent) {
 				// Check busy of parents
 				if (oParent.getBusy && oParent.getBusy()) {
 					$.sap.log.debug("The control " + oControl + " has a parent that is busy " + oParent, this._sLogPrefix);
+					return false;
+				}
+
+				if (oParent.getEnabled && !oParent.getEnabled()) {
+					$.sap.log.debug("The control '" + oControl + "' has a parent '" + oParent + "' that is not enabled", this._sLogPrefix);
 					return false;
 				}
 
@@ -82,14 +111,6 @@ sap.ui.define(['jquery.sap.global', './Matcher', './Visible'], function ($, Matc
 					$.sap.log.debug("The control " + oControl + " is hidden behind a blocking layer of a Popup", this._sLogPrefix);
 					return false;
 				}
-
-				// When a Dialog was opened and is in the closing phase the blocklayer is gone already therefore ask the instance manager
-				var oInstanceManager = $.sap.getObject("sap.m.InstanceManager");
-				if (oInstanceManager && oInstanceManager.getOpenDialogs().length) {
-					$.sap.log.debug("The control " + oControl + " is hidden behind an Open dialog", this._sLogPrefix);
-					return false;
-				}
-
 			}
 
 

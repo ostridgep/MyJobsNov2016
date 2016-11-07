@@ -95,6 +95,16 @@ sap.ui.define(["jquery.sap.global", "sap/ui/core/Control", "./library"], functio
 		}
 	};
 
+	ObjectPageSectionBase.prototype.setCustomAnchorBarButton = function (oButton) {
+		var vResult = this.setAggregation("customAnchorBarButton", oButton, true);
+
+		if (this._getObjectPageLayout()){
+			this._getObjectPageLayout()._updateNavigation();
+		}
+
+		return vResult;
+	};
+
 	/**
 	 * set the internal visibility of the sectionBase. This is set by the ux rules (for example don't display a section that has no subSections)
 	 * @param bValue
@@ -172,16 +182,26 @@ sap.ui.define(["jquery.sap.global", "sap/ui/core/Control", "./library"], functio
 	 * @private
 	 */
 	ObjectPageSectionBase.prototype._notifyObjectPageLayout = function () {
-		if (this.$().length && this._getObjectPageLayout()) {
+		if (this._getObjectPageLayout() && this._getObjectPageLayout().$().length){
 			this._getObjectPageLayout()._adjustLayoutAndUxRules();
 		}
 	};
 
 	// Generate proxies for aggregation mutators
 	["addAggregation", "insertAggregation", "removeAllAggregation", "removeAggregation", "destroyAggregation"].forEach(function (sMethod) {
-		ObjectPageSectionBase.prototype[sMethod] = function () {
+		ObjectPageSectionBase.prototype[sMethod] = function (sAggregationName, oObject, iIndex, bSuppressInvalidate) {
+
+			if (["addAggregation", "removeAggregation"].indexOf(sMethod) > -1) {
+				bSuppressInvalidate = iIndex; //shift argument
+			}
+			if (["removeAllAggregation", "destroyAggregation"].indexOf(sMethod) > -1) {
+				bSuppressInvalidate = oObject; //shift argument
+			}
 			var vResult = Control.prototype[sMethod].apply(this, arguments);
-			this._notifyObjectPageLayout();
+
+			if (bSuppressInvalidate !== true){
+				this._notifyObjectPageLayout();
+			}
 			return vResult;
 		};
 	});

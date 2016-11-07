@@ -483,7 +483,7 @@ function resetSENDINGData(sql){
 
 	}
 function opMessage(msg){
-console.log(msg)
+
 
 
 	opLog(msg);
@@ -1708,7 +1708,9 @@ var syncDetails = false	;
 }
 function syncUpload(){
 	
-
+if (!PostingAzureData){
+	return
+}
 	SQLStatement="select 'VehicleCheck' as type, '' as extra,id as id, recordupdated from MyVehicleCheck where state = 'NEW' "
 		SQLStatement+=" union "
 		SQLStatement+=" select 'NotificationsZ7' as type,   shorttext as extra,id    as id, recordupdated from MyNotifications where notifno = 'NEW' and type = 'Z7' "
@@ -1719,16 +1721,18 @@ function syncUpload(){
 		SQLStatement+=" union "
 		SQLStatement+=" select 'JobClose' as type,  '' as extra, id    as id, recordupdated from MyJobClose where state = 'NEW' "
 		SQLStatement+=" union "
+		SQLStatement+=" select 'JobAddWork' as type,  '' as extra, id    as id, recordupdated from MyJobAddWork where state = 'NEW' "
+		SQLStatement+=" union "	
 		SQLStatement+=" select 'TimeConf' as type,  '' as extra, id    as id, recordupdated from MyTimeConfs where confno = 'NEW' "
 		SQLStatement+=" union "
 		SQLStatement+=" select 'FileRequest' as type,  '' as extra, id    as id, recordupdated from MyJobDetsDraw where zurl = 'RequestLiveLink' "
 		SQLStatement+=" union "
 		SQLStatement+=" select 'FileDownload' as type,  '' as extra, id    as id, recordupdated from MyJobDetsDraw where zurl = 'WaitingLiveLink' "
 		SQLStatement+=" union "
-//delete_		SQLStatement+=" select 'MessageRead' as type,  '' as extra, id    as id, recordupdated from MyMessages where state = 'READ' "
-			//delete_		SQLStatement+=" union "
-			//delete_		SQLStatement+=" select 'MesssageNew' as type,  '' as extra, id    as id, recordupdated from MyMessages where state = 'NEW' "
-			//delete_		SQLStatement+=" union "
+		SQLStatement+=" select 'MessageRead' as type,  '' as extra, id    as id, recordupdated from MyMessages where state = 'READ' "
+		SQLStatement+=" union "
+		SQLStatement+=" select 'MesssageNew' as type,  '' as extra, id    as id, recordupdated from MyMessages where state = 'NEW' "
+		SQLStatement+=" union "
 		SQLStatement+=" select 'MPointDoc' as type,   '' as extra,id    as id, recordupdated from MyMpointDocs where state = 'NEW' "
 		SQLStatement+=" union "
 		SQLStatement+=" select 'Flooding' as type,   '' as extra,id    as id, recordupdated from MyFormsResponses where lastupdated='CLOSED' and formname = 'Flooding' "
@@ -2799,7 +2803,7 @@ function syncReference(){
 	    requestAzureData("ZGW_MAM30_RFV_T3_SRV", "");                 // Variances RFV
 	    requestAzureData("ZGW_MAM30_DG5_PIA_CODES_T3Dg5Code", "");
 	    requestAzureData("ZGW_MAM30_DG5_PIA_CODES_T3Dg5Rel", "");
-	    //getAssets()
+	    getAssets()
 	    //requestAzureData("ZGW_GET_JOB_DETAILS","PSMITH11")
 	//End of Azure
 	     requestAzureData("ZACAT001AssetCaptureCategory", "");
@@ -2815,6 +2819,7 @@ function syncReference(){
 	    requestAzureData("ZGW_MAM30_031_REFDATA_T3_SRVModel", "");
 	    requestAzureData("ZGW_MAM30_031_REFDATA_T3_SRVManufacturer", "");
 	getFormsDL();
+	//getIconsDL();
 	}
 	 
 	},
@@ -4065,7 +4070,7 @@ function createTables(type) {
         'INSERT INTO ParentAssetTableColumns ("ColumnNumber","ColumnName","DisplayName","ColumnWidth") VALUES (12,"ncdesc","Function Type Description","150px"); ' +
 
       'CREATE TABLE IF NOT EXISTS AssetSites     		( id integer primary key autoincrement,site TEXT,desc TEXT,bunit TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));' +
-       'CREATE TABLE IF NOT EXISTS AssetSitesDetails     	( id integer primary key autoincrement,assdesc TEXT, assettag TEXT, asstype TEXT, eqart TEXT, eqktx TEXT, equnr TEXT, herst TEXT, iwerk TEXT, mapar TEXT, ncdesc TEXT, otdesc TEXT, plgrp TEXT, pltxt TEXT, serge TEXT, site TEXT, status TEXT, swerk TEXT, syscode TEXT, sysdesc TEXT, tplnr TEXT, zfl_nc TEXT, zinbdt  TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));' +
+       'CREATE TABLE IF NOT EXISTS AssetSitesDetails     	( id integer primary key autoincrement,assdesc TEXT, assettag TEXT, asstype TEXT, eqart TEXT, eqktx TEXT, equnr TEXT, herst TEXT, iwerk TEXT, mapar TEXT, ncdesc TEXT, otdesc TEXT, plgrp TEXT, pltxt TEXT, serge TEXT, site TEXT, status TEXT, swerk TEXT, syscode TEXT, sysdesc TEXT, tplnr TEXT, zfl_nc TEXT, zinbdt  TEXT,zlastmodify TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));' +
         'CREATE TABLE IF NOT EXISTS MyRefUsers    (  id integer primary key autoincrement, userid TEXT, scenario TEXT, plant TEXT, maintplant TEXT, workcenter TEXT, plannergroup TEXT, plannergroupplant TEXT, storagegroup TEXT, storageplant TEXT, partner TEXT, partnerrole TEXT, funclocint TEXT, funcloc TEXT, compcode TEXT, employeeno TEXT, equipment TEXT, firstname TEXT, lastname TEXT, telno TEXT,maint1 TEXT,maint2 TEXT,maint3 TEXT,maint4 TEXT,maint5 TEXT,maint6 TEXT,maint7 TEXT,maint8 TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 
          'CREATE TABLE IF NOT EXISTS Manufacturer     	( id integer primary key autoincrement,manufacturer TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));' +
@@ -4114,25 +4119,26 @@ function createTables(type) {
         'CREATE TABLE IF NOT EXISTS MyJobDetsOrderOps (  id integer primary key autoincrement, orderno TEXT, operation TEXT, comp_date_time TEXT, description TEXT, status TEXT, name TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
         'CREATE TABLE IF NOT EXISTS MyJobDetsIconPriority (  id integer primary key autoincrement, orderno TEXT, opno TEXT, icon_filename TEXT, tooltip TEXT, tooltip_desc TEXT, command TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
         'CREATE TABLE IF NOT EXISTS MyJobDetsIconJob (  id integer primary key autoincrement, orderno TEXT, opno TEXT, icon_type TEXT, icon_position TEXT, icon_filename TEXT, icon_txt TEXT, tooltip TEXT, tooltip_desc TEXT, command TEXT,grid TEXT, grid_vals TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-//delete_			'CREATE TABLE IF NOT EXISTS MyOrders     			( sysid integer primary key autoincrement,orderno TEXT, changedby TEXT, changeddatetime TEXT, shorttext TEXT, longtext TEXT, startdate TEXT, enddate TEXT, contact TEXT,   telno TEXT,    type TEXT, priority TEXT, address TEXT, workaddress TEXT, house TEXT, houseno TEXT, street TEXT, district TEXT, city TEXT, postcode TEXT,gis TEXT, property TEXT, funcloc TEXT, equipment TEXT, propertygis TEXT, funclocgis TEXT, equipmentgis TEXT, notifno TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-//delete_					 'CREATE TABLE IF NOT EXISTS MyOperations 			( sysid integer primary key autoincrement,orderno TEXT, opno TEXT,      type TEXT,     priority TEXT,  shorttext TEXT, startdate TEXT, enddate TEXT, duration TEXT, status TEXT, assignedto TEXT, apptstart TEXT, apptend TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-      //delete_					 'CREATE TABLE IF NOT EXISTS MyOperationsSplit 		( sysid integer primary key autoincrement,orderno TEXT, opno TEXT,      assignedto TEXT,  duration TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-      //delete_					 'CREATE TABLE IF NOT EXISTS MyPartners   			( sysid integer primary key autoincrement,orderno TEXT, notifno TEXT, id TEXT,        type TEXT,     name TEXT,      address TEXT,   postcode TEXT, telno TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-      //delete_					 'CREATE TABLE IF NOT EXISTS MyAssets     			( sysid integer primary key autoincrement,orderno TEXT, id TEXT,        type TEXT,     name TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-      //delete_					 'CREATE TABLE IF NOT EXISTS MyMaterials     		( sysid integer primary key autoincrement,orderno TEXT, id TEXT, material TEXT, qty TEXT, description TEXT, recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+			'CREATE TABLE IF NOT EXISTS MyOrders     			( sysid integer primary key autoincrement,orderno TEXT, changedby TEXT, changeddatetime TEXT, shorttext TEXT, longtext TEXT, startdate TEXT, enddate TEXT, contact TEXT,   telno TEXT,    type TEXT, priority TEXT, address TEXT, workaddress TEXT, house TEXT, houseno TEXT, street TEXT, district TEXT, city TEXT, postcode TEXT,gis TEXT, property TEXT, funcloc TEXT, equipment TEXT, propertygis TEXT, funclocgis TEXT, equipmentgis TEXT, notifno TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS MyOperations 			( sysid integer primary key autoincrement,orderno TEXT, opno TEXT,      type TEXT,     priority TEXT,  shorttext TEXT, startdate TEXT, enddate TEXT, duration TEXT, status TEXT, assignedto TEXT, apptstart TEXT, apptend TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS MyOperationsSplit 		( sysid integer primary key autoincrement,orderno TEXT, opno TEXT,      assignedto TEXT,  duration TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS MyPartners   			( sysid integer primary key autoincrement,orderno TEXT, notifno TEXT, id TEXT,        type TEXT,     name TEXT,      address TEXT,   postcode TEXT, telno TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS MyAssets     			( sysid integer primary key autoincrement,orderno TEXT, id TEXT,        type TEXT,     name TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS MyMaterials     		( sysid integer primary key autoincrement,orderno TEXT, id TEXT, material TEXT, qty TEXT, description TEXT, recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 					 'CREATE TABLE IF NOT EXISTS MyUserStatus     		( id integer primary key autoincrement, type TEXT, orderno TEXT, opno TEXT, inact TEXT, status TEXT, statuscode TEXT, statusdesc TEXT, recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS MyOperationInfo     	( id integer primary key autoincrement, orderno TEXT, opno TEXT, type TEXT, value1 TEXT, value2 TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-				 'CREATE TABLE IF NOT EXISTS MyNotifications     	( id integer primary key autoincrement, notifno TEXT, changedby TEXT, changeddatetime TEXT, shorttext TEXT, longtext TEXT, cattype TEXT,  pgroup TEXT, pcode TEXT, grouptext TEXT, codetext TEXT, startdate TEXT, starttime TEXT, enddate TEXT, endtime TEXT, type TEXT, priority TEXT, funcloc TEXT,   equipment TEXT, orderno TEXT, reportedon TEXT,   reportedby TEXT, plant TEXT, funclocgis TEXT,   equipmentgis TEXT, assigntome TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS MyItems     			( id integer primary key autoincrement, notifno TEXT, item_id TEXT, descript TEXT, d_cat_typ TEXT, d_codegrp TEXT, d_code TEXT, dl_cat_typ TEXT, dl_codegrp TEXT, dl_code TEXT, long_text TEXT, stxt_grpcd TEXT ,txt_probcd TEXT  ,txt_grpcd TEXT , txt_objptcd TEXT, status TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS MyCauses      			( id integer primary key autoincrement, notifno TEXT, item_id TEXT, cause_id TEXT, cause_text TEXT, cause_cat_typ TEXT, cause_codegrp TEXT, cause_code TEXT, long_text TEXT, txt_causegrp TEXT, txt_causecd TEXT, status TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS MyActivities     		( id integer primary key autoincrement, notifno TEXT, task_id TEXT, item_id TEXT,  act_id TEXT, act_text TEXT, act_cat_typ TEXT, act_codegrp TEXT, act_code TEXT,  start_date TEXT, start_time TEXT ,end_date TEXT  ,end_time TEXT , long_text TEXT, txt_actgrp TEXT, txt_actcd TEXT, status TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS MyTasks      			( id integer primary key autoincrement, notifno TEXT, item_id TEXT, task_text TEXT, task_cat_typ TEXT, task_codegrp TEXT, task_code TEXT, txt_taskgrp TEXT, txt_taskcd TEXT, plnd_start_date TEXT, plnd_start_time TEXT ,plnd_end_date TEXT  ,plnd_end_time TEXT , sla_end_date TEXT  ,sla_end_time TEXT , longtext TEXT, complete TEXT, status TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS MyEffects      		( id integer primary key autoincrement, notifno TEXT, item_id TEXT, task_id TEXT, effect_cat_typ TEXT, effect_codegrp TEXT, effect_code TEXT, txt_effectgrp TEXT, txt_effectcd TEXT, value TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS MyOperationInfo     	( id integer primary key autoincrement, orderno TEXT, opno TEXT, type TEXT, value1 TEXT, value2 TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS MyNotifications     	( id integer primary key autoincrement, notifno TEXT, changedby TEXT, changeddatetime TEXT, shorttext TEXT, longtext TEXT, cattype TEXT,  pgroup TEXT, pcode TEXT, grouptext TEXT, codetext TEXT, startdate TEXT, starttime TEXT, enddate TEXT, endtime TEXT, type TEXT, priority TEXT, funcloc TEXT,   equipment TEXT, orderno TEXT, reportedon TEXT,   reportedby TEXT, plant TEXT, funclocgis TEXT,   equipmentgis TEXT, assigntome TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS MyItems     			( id integer primary key autoincrement, notifno TEXT, item_id TEXT, descript TEXT, d_cat_typ TEXT, d_codegrp TEXT, d_code TEXT, dl_cat_typ TEXT, dl_codegrp TEXT, dl_code TEXT, long_text TEXT, stxt_grpcd TEXT ,txt_probcd TEXT  ,txt_grpcd TEXT , txt_objptcd TEXT, status TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS MyCauses      			( id integer primary key autoincrement, notifno TEXT, item_id TEXT, cause_id TEXT, cause_text TEXT, cause_cat_typ TEXT, cause_codegrp TEXT, cause_code TEXT, long_text TEXT, txt_causegrp TEXT, txt_causecd TEXT, status TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS MyActivities     		( id integer primary key autoincrement, notifno TEXT, task_id TEXT, item_id TEXT,  act_id TEXT, act_text TEXT, act_cat_typ TEXT, act_codegrp TEXT, act_code TEXT,  start_date TEXT, start_time TEXT ,end_date TEXT  ,end_time TEXT , long_text TEXT, txt_actgrp TEXT, txt_actcd TEXT, status TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS MyTasks      			( id integer primary key autoincrement, notifno TEXT, item_id TEXT, task_text TEXT, task_cat_typ TEXT, task_codegrp TEXT, task_code TEXT, txt_taskgrp TEXT, txt_taskcd TEXT, plnd_start_date TEXT, plnd_start_time TEXT ,plnd_end_date TEXT  ,plnd_end_time TEXT , sla_end_date TEXT  ,sla_end_time TEXT , longtext TEXT, complete TEXT, status TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS MyEffects      		( id integer primary key autoincrement, notifno TEXT, item_id TEXT, task_id TEXT, effect_cat_typ TEXT, effect_codegrp TEXT, effect_code TEXT, txt_effectgrp TEXT, txt_effectcd TEXT, value TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 					 'CREATE TABLE IF NOT EXISTS MyStatus     			( id integer primary key autoincrement, orderno TEXT, opno TEXT, stsma TEXT, status TEXT, statusdesc, state TEXT, actdate TEXT, acttime TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 					 'CREATE TABLE IF NOT EXISTS MyTimeConfs     		( id integer primary key autoincrement, orderno TEXT, opno TEXT, confno TEXT, type TEXT, description TEXT, date TEXT, time TEXT, enddate TEXT, endtime TEXT,act_work TEXT, rem_work TEXT, act_type TEXT, work_cntr TEXT, reason TEXT, longtext TEXT, duration TEXT, datestamp TEXT,  user TEXT,  empid TEXT, final TEXT, state TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 					 'CREATE TABLE IF NOT EXISTS MyMPointDocs     		( id integer primary key autoincrement, orderno TEXT, opno TEXT, funcloc TEXT, equipment TEXT, meas_point TEXT, date TEXT, time TEXT, shorttext TEXT, value TEXT, code TEXT, state TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 
 					 'CREATE TABLE IF NOT EXISTS MyJobClose             ( id integer primary key autoincrement, orderno TEXT , opno TEXT, notifno TEXT, details TEXT, empid TEXT, work_cntr TEXT, state TEXT , closedate TEXT, closetime TEXT, funcloc  TEXT, equipment TEXT, inshift  TEXT, outofshift  TEXT, pgrp TEXT, pcode TEXT, agrp TEXT, acode TEXT, igrp TEXT, icode TEXT, followon  TEXT, variance TEXT, reason TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS MyJobAddWork           ( id integer primary key autoincrement, orderno TEXT , opno TEXT, specreqt TEXT, startdate TEXT, assignment TEXT, wktycd TEXT, wktygp TEXT,longtext TEXT, state TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 					 'CREATE TABLE IF NOT EXISTS MyNewJobs     			( id integer primary key autoincrement, type TEXT, defect TEXT, mpoint TEXT, mpval TEXT, shorttext TEXT, longtext TEXT, description TEXT, date TEXT, time TEXT, enddate TEXT, endtime TEXT, funcloc TEXT, equipment TEXT, cattype TEXT, codegroup TEXT, coding TEXT, activitycodegroup TEXT, activitycode TEXT, activitytext TEXT, prioritytype TEXT, priority TEXT, reportedby TEXT, state TEXT, assignment TEXT, spec_reqt TEXT, assig_tome TEXT, userid TEXT, eq_status TEXT, breakdown TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 					 'CREATE TABLE IF NOT EXISTS MyWorkConfig     		( id integer primary key autoincrement, paramname TEXT, paramvalue TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 					 'CREATE TABLE IF NOT EXISTS MyWorkSyncDets    		( id integer primary key autoincrement, lastsync TEXT, comments   TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
@@ -4148,42 +4154,42 @@ function createTables(type) {
 					 'CREATE TABLE IF NOT EXISTS MyFormsResponses  		(  id integer primary key autoincrement, formdesc TEXT, user TEXT, formname TEXT, lastupdated TEXT, wc TEXT, plant TEXT, notifno TEXT, orderno TEXT, opno TEXT, date TEXT, time TEXT, contents TEXT, htmlbody TEXT, htmlreadonly TEXT, state TEXT, status TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 
 					 'CREATE TABLE IF NOT EXISTS MyVehicleCheck     	(  id integer primary key autoincrement, equipment TEXT, reg TEXT,  mileage TEXT,  mpoint TEXT,  desc TEXT,  longtext TEXT,  mdate TEXT, mtime TEXT, mreadby TEXT, user TEXT,  state TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS MyMessages    			(  id integer primary key autoincrement, msgid TEXT, type TEXT,  date TEXT, time TEXT, msgfromid TEXT, msgfromname TEXT, msgtoid TEXT, msgtoname TEXT, msgsubject TEXT, msgtext TEXT,  expirydate TEXT, state TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS Assets     			(  sysid integer primary key autoincrement,type TEXT, id TEXT, eqart TEXT, eqtyp TEXT, shorttext TEXT,  address TEXT, workcenter TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS AssetClassVals     	(  sysid integer primary key autoincrement,type TEXT, id TEXT,  charact TEXT,  valuechar TEXT,  valueto TEXT, valueneutral TEXT, description TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS AssetMeasurementPoints (  sysid integer primary key autoincrement,type TEXT, id TEXT,  mpoint TEXT,  description TEXT,  value TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS AssetInstalledEquip    (  sysid integer primary key autoincrement,type TEXT, id TEXT,  eqno TEXT,  description TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS MyMessages    			(  id integer primary key autoincrement, msgid TEXT, type TEXT,  date TEXT, time TEXT, msgfromid TEXT, msgfromname TEXT, msgtoid TEXT, msgtoname TEXT, msgsubject TEXT, msgtext TEXT,  expirydate TEXT, state TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS Assets     			(  sysid integer primary key autoincrement,type TEXT, id TEXT, eqart TEXT, eqtyp TEXT, shorttext TEXT,  address TEXT, workcenter TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS AssetClassVals     	(  sysid integer primary key autoincrement,type TEXT, id TEXT,  charact TEXT,  valuechar TEXT,  valueto TEXT, valueneutral TEXT, description TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS AssetMeasurementPoints (  sysid integer primary key autoincrement,type TEXT, id TEXT,  mpoint TEXT,  description TEXT,  value TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS AssetInstalledEquip    (  sysid integer primary key autoincrement,type TEXT, id TEXT,  eqno TEXT,  description TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 					 'CREATE TABLE IF NOT EXISTS LogFile    			( id integer primary key autoincrement, datestamp TEXT, type TEXT, message TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_				 'CREATE TABLE IF NOT EXISTS RefNotifprofile  		( id integer primary key autoincrement, scenario TEXT, profile TEXT, notif_type TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS RefNotifprofile  		( id integer primary key autoincrement, scenario TEXT, profile TEXT, notif_type TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 					 'CREATE TABLE IF NOT EXISTS RefCodeGroups  		( id integer primary key autoincrement, scenario TEXT, profile TEXT, catalog_type TEXT, code_cat_group TEXT, codegroup TEXT, codegroup_text TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 					 'CREATE TABLE IF NOT EXISTS RefCodes  				( id integer primary key autoincrement, scenario TEXT, profile TEXT, code_cat_group TEXT, code TEXT, code_text TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS HRAbsence     			( id integer primary key autoincrement, requesteddate TEXT, startdate TEXT, enddate TEXT, type TEXT, days TEXT, status TEXT, comments TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS HRAbsence     			( id integer primary key autoincrement, requesteddate TEXT, startdate TEXT, enddate TEXT, type TEXT, days TEXT, status TEXT, comments TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 					 
-					//delete_					 'CREATE TABLE IF NOT EXISTS HRTravel     			( id integer primary key autoincrement, requesteddate TEXT, startdate TEXT, enddate TEXT, travelfrom TEXT, travelto TEXT, status TEXT, comments TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS HRTravel     			( id integer primary key autoincrement, requesteddate TEXT, startdate TEXT, enddate TEXT, travelfrom TEXT, travelto TEXT, status TEXT, comments TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 					 'CREATE TABLE IF NOT EXISTS AssetDetails     		( id integer primary key autoincrement,PLAN_PLANT TEXT, MTCE_PLANT TEXT, SITE TEXT, FUNC_LOC TEXT, FUNC_LOC_DESC TEXT, EQUIP TEXT, EQUIP_DESC TEXT, PLANT_GROUP TEXT, ASSET_TYPE TEXT, ASSET_DESC TEXT, MAKE TEXT, MODEL TEXT, SERIAL_NO TEXT, OBJ_TYPE TEXT, EQTYPE_DESC TEXT, EFUNC_TYPE TEXT, FTYPE_DESC TEXT, SYS_CODE TEXT, SCODE_DESC TEXT, ASSET_TAG TEXT, START_UP_DATE TEXT, STATUS TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 
-					//delete_					 'CREATE TABLE IF NOT EXISTS JobAnswers     		( id integer primary key autoincrement, orderno TEXT, opno TEXT, user TEXT, updateddate TEXT, item TEXT, task TEXT, value TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS StockSearch     		( id integer primary key autoincrement, materialno TEXT, description TEXT, depot TEXT, available TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS SurveyAnswers     		( id integer primary key autoincrement, orderno TEXT, opno TEXT, user TEXT, updateddate TEXT, surveyid TEXT, groupid TEXT, questionid TEXT, name TEXT, answer TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS Survey     			( id integer primary key autoincrement, surveyid TEXT, name TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS SurveyGroup     		( id integer primary key autoincrement, surveyid TEXT, groupid TEXT, name TEXT, title TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS SurveyQuestion    		( id integer primary key autoincrement, surveyid TEXT, groupid TEXT, questionid TEXT, questiontype TEXT, defaultvalue TEXT, name TEXT, title TEXT, dependsonid TEXT, dependsonval TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS SurveySubQuestion  	( id integer primary key autoincrement, surveyid TEXT, groupid TEXT, questionid TEXT, subquestionid TEXT, subquestiontype TEXT, name TEXT, title TEXT, dependsonid TEXT, dependsonval TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					//delete_					 'CREATE TABLE IF NOT EXISTS SurveyQuestionChildren ( id integer primary key autoincrement, surveyid TEXT, groupid TEXT, questionid TEXT, questionvalue TEXT, childquestions TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS FuncLocs			  	( id integer primary key autoincrement, flid TEXT, description TEXT, swerk TEXT, level TEXT, parentid TEXT, children TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS Equipments			  	( id integer primary key autoincrement, eqid TEXT, description TEXT, flid TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS JobAnswers     		( id integer primary key autoincrement, orderno TEXT, opno TEXT, user TEXT, updateddate TEXT, item TEXT, task TEXT, value TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS StockSearch     		( id integer primary key autoincrement, materialno TEXT, description TEXT, depot TEXT, available TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS SurveyAnswers     		( id integer primary key autoincrement, orderno TEXT, opno TEXT, user TEXT, updateddate TEXT, surveyid TEXT, groupid TEXT, questionid TEXT, name TEXT, answer TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS Survey     			( id integer primary key autoincrement, surveyid TEXT, name TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS SurveyGroup     		( id integer primary key autoincrement, surveyid TEXT, groupid TEXT, name TEXT, title TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS SurveyQuestion    		( id integer primary key autoincrement, surveyid TEXT, groupid TEXT, questionid TEXT, questiontype TEXT, defaultvalue TEXT, name TEXT, title TEXT, dependsonid TEXT, dependsonval TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS SurveySubQuestion  	( id integer primary key autoincrement, surveyid TEXT, groupid TEXT, questionid TEXT, subquestionid TEXT, subquestiontype TEXT, name TEXT, title TEXT, dependsonid TEXT, dependsonval TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS SurveyQuestionChildren ( id integer primary key autoincrement, surveyid TEXT, groupid TEXT, questionid TEXT, questionvalue TEXT, childquestions TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS FuncLocs			  	( id integer primary key autoincrement, flid TEXT, description TEXT, swerk TEXT, level TEXT, parentid TEXT, children TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS Equipments			  	( id integer primary key autoincrement, eqid TEXT, description TEXT, flid TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 					 'CREATE TABLE IF NOT EXISTS MyMenuBar 		        ( id integer primary key autoincrement, scenario TEXT, level TEXT, item TEXT, position TEXT, type TEXT,  subitem TEXT, command TEXT, item2 TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+	
 					 			 
-					//delete_					 'CREATE TABLE IF NOT EXISTS MyAjax		  	 		( id integer primary key autoincrement, adate TEXT,atime TEXT, astate TEXT, acall TEXT,aparams TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+	
-					//delete_					 'CREATE TABLE IF NOT EXISTS TSActivities		    ( id integer primary key autoincrement, code TEXT, skill TEXT,  subskill TEXT, description TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS TSNPJobs			    ( id integer primary key autoincrement, jobno TEXT, subtype TEXT,  description TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS TSData		    		( id integer primary key autoincrement, date TEXT, job TEXT, skill TEXT, activity TEXT, time TEXT, ot15 TEXT, ot20 TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS GASSurveyQ			    ( id integer primary key autoincrement, type TEXT, qno TEXT,  qtype TEXT, description TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS GASSurveyA			    ( id integer primary key autoincrement, type TEXT, qno TEXT,  qkey TEXT, qvalue TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS GASSurveyMake		    ( id integer primary key autoincrement, make TEXT, description TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS GASSurveyModel		    ( id integer primary key autoincrement, make TEXT, model TEXT, description TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS GASSurvey			    ( id integer primary key autoincrement, orderno TEXT, opno TEXT, make TEXT, model TEXT, location TEXT, dv1 TEXT, dv2 TEXT, dv3 TEXT, dv4 TEXT, dv5 TEXT, dv6 TEXT, dv7 TEXT, dv8 TEXT, dv9 TEXT, dv10 TEXT, dv11 TEXT, dv12 TEXT, dv13 TEXT, dv14 TEXT, dv15 TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
-					//delete_					 'CREATE TABLE IF NOT EXISTS GASSurveyHDR		    ( id integer primary key autoincrement, orderno TEXT, opno TEXT, date TEXT, signed TEXT, hv1 TEXT, hv2 TEXT, hv3 TEXT, hv4 TEXT, text1 TEXT, text2 TEXT, text3 TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS MyAjax		  	 		( id integer primary key autoincrement, adate TEXT,atime TEXT, astate TEXT, acall TEXT,aparams TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+	
+					 'CREATE TABLE IF NOT EXISTS TSActivities		    ( id integer primary key autoincrement, code TEXT, skill TEXT,  subskill TEXT, description TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS TSNPJobs			    ( id integer primary key autoincrement, jobno TEXT, subtype TEXT,  description TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS TSData		    		( id integer primary key autoincrement, date TEXT, job TEXT, skill TEXT, activity TEXT, time TEXT, ot15 TEXT, ot20 TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS GASSurveyQ			    ( id integer primary key autoincrement, type TEXT, qno TEXT,  qtype TEXT, description TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS GASSurveyA			    ( id integer primary key autoincrement, type TEXT, qno TEXT,  qkey TEXT, qvalue TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS GASSurveyMake		    ( id integer primary key autoincrement, make TEXT, description TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS GASSurveyModel		    ( id integer primary key autoincrement, make TEXT, model TEXT, description TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS GASSurvey			    ( id integer primary key autoincrement, orderno TEXT, opno TEXT, make TEXT, model TEXT, location TEXT, dv1 TEXT, dv2 TEXT, dv3 TEXT, dv4 TEXT, dv5 TEXT, dv6 TEXT, dv7 TEXT, dv8 TEXT, dv9 TEXT, dv10 TEXT, dv11 TEXT, dv12 TEXT, dv13 TEXT, dv14 TEXT, dv15 TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS GASSurveyHDR		    ( id integer primary key autoincrement, orderno TEXT, opno TEXT, date TEXT, signed TEXT, hv1 TEXT, hv2 TEXT, hv3 TEXT, hv4 TEXT, text1 TEXT, text2 TEXT, text3 TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 					 'CREATE TABLE IF NOT EXISTS REFPAICODES			( id integer primary key autoincrement, scenario TEXT, userid TEXT, level TEXT, stsma TEXT, plant TEXT, work_cntr TEXT, catalogue TEXT, codegrp TEXT, kurztext_group TEXT, code TEXT, kurztext_code TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 					 'CREATE TABLE IF NOT EXISTS REFNOTIFICATIONTYPES	( id integer primary key autoincrement, scenario TEXT, userid TEXT, level_number TEXT, notiftype TEXT, notifdesc TEXT, notifprofile TEXT, priotype TEXT,priority TEXT, prioritydesc TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 					 'CREATE TABLE IF NOT EXISTS REFVARIANCESRFV		( id integer primary key autoincrement, scenario TEXT, userid TEXT, plant TEXT, work_cntr TEXT, job_activity TEXT, dev_reason TEXT, dev_reas_txt TEXT, mandate TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
@@ -4194,17 +4200,16 @@ function createTables(type) {
 					 'CREATE TABLE IF NOT EXISTS MyJobsDocs			    ( id integer primary key autoincrement, orderno TEXT, opno TEXT, url TEXT, name TEXT, type TEXT, size TEXT, lastmod TEXT, status TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 					 'CREATE TABLE IF NOT EXISTS MyJobsPhotos			( id integer primary key autoincrement, orderno TEXT, opno TEXT, url TEXT, name TEXT, desc TEXT, size TEXT, date TEXT, status TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 					
-					 'CREATE TABLE IF NOT EXISTS Properties			    ( id integer primary key autoincrement, funcloc TEXT ,description TEXT ,street TEXT ,district TEXT ,city TEXT,postcode TEXT,easting TEXT,northing TEXT,lat FLOAT,lon FLOAT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'
-		//remove +from end of line above
-					 //delete_					 'CREATE TABLE IF NOT EXISTS AssetDetailsAll		( id integer primary key autoincrement, floc TEXT ,planplant TEXT ,maintplant TEXT ,site TEXT ,flocdesc TEXT,eq TEXT,eqdesc TEXT,plgrpdesc TEXT,asstype TEXT,assdesc TEXT,manufacturer TEXT,partno TEXT,serialno TEXT,eqtype TEXT,eqtypedesc TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS Properties			    ( id integer primary key autoincrement, funcloc TEXT ,description TEXT ,street TEXT ,district TEXT ,city TEXT,postcode TEXT,easting TEXT,northing TEXT,lat FLOAT,lon FLOAT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
+					 'CREATE TABLE IF NOT EXISTS AssetDetailsAll		( id integer primary key autoincrement, floc TEXT ,planplant TEXT ,maintplant TEXT ,site TEXT ,flocdesc TEXT,eq TEXT,eqdesc TEXT,plgrpdesc TEXT,asstype TEXT,assdesc TEXT,manufacturer TEXT,partno TEXT,serialno TEXT,eqtype TEXT,eqtypedesc TEXT,recordupdated TIMESTAMP DATETIME DEFAULT(STRFTIME(\'%Y-%m-%d %H:%M:%f\', \'NOW\')));'+
 						
 						
 
 					 
 					 
-					//delete_'CREATE VIEW viewoperationstatus as SELECT orderno, opno, statusdesc FROM myuserstatus where type = "OV" GROUP BY orderno, opno Order by id desc ;'+
+					 'CREATE VIEW viewoperationstatus as SELECT orderno, opno, statusdesc FROM myuserstatus where type = "OV" GROUP BY orderno, opno Order by id desc ;'+
 
-					//delete_ 'CREATE VIEW viewprioritycodes as select myrefordertypes.scenario, myrefordertypes.type as ordertype, myrefordertypes.priorityprofile, myrefprioritytypes.priority as priority, myrefprioritytypes.description as prioritydesc from myrefordertypes left join myrefprioritytypes on myrefordertypes.priorityprofile = myrefprioritytypes.type where myrefordertypes.scenario = myrefprioritytypes.scenario;';
+					 'CREATE VIEW viewprioritycodes as select myrefordertypes.scenario, myrefordertypes.type as ordertype, myrefordertypes.priorityprofile, myrefprioritytypes.priority as priority, myrefprioritytypes.description as prioritydesc from myrefordertypes left join myrefprioritytypes on myrefordertypes.priorityprofile = myrefprioritytypes.type where myrefordertypes.scenario = myrefprioritytypes.scenario;';
 		html5sql.process(sqlstatement,
 						 function(){
 							
@@ -4304,76 +4309,115 @@ entry.getDirectory("MyJobs/Private/Photos", {create: true, exclusive: false},
 //*************************************************************************************************************************
 function dropTables() { 
 
-
-	sqlstatement=	'DROP TABLE IF EXISTS AssetTableColumns;'+
-	'DROP TABLE IF EXISTS MyJobsParams;'+
-	'DROP TABLE IF EXISTS ParentAssetTableColumns;'+
-	'DROP TABLE IF EXISTS DecommissionStatus;'+
-	'DROP TABLE IF EXISTS AssetSites;'+
-	'DROP TABLE IF EXISTS AssetSitesDetails;'+
-	'DROP TABLE IF EXISTS MyRefUsers;'+
-	'DROP TABLE IF EXISTS Manufacturer;'+
-	'DROP TABLE IF EXISTS Model;'+
-	'DROP TABLE IF EXISTS EGIandNameCodeMapping;'+
-	'DROP TABLE IF EXISTS EquipmentTypeCode;'+
-	'DROP TABLE IF EXISTS AssetTypeCodes;'+
-	'DROP TABLE IF EXISTS FunctionTypeCodes;'+
-	'DROP TABLE IF EXISTS PlantGroupCodes;'+
-	'DROP TABLE IF EXISTS SystemCodes;'+
-	'DROP TABLE IF EXISTS PlantGroupAndProcessGroupCodes;'+
-	'DROP TABLE IF EXISTS AssetCaptureCategory;'+
-	'DROP TABLE IF EXISTS AssetTableColumns;'+
-	'DROP TABLE IF EXISTS AssetUpload;'+
-	'DROP TABLE IF EXISTS MyJobDets;'+
-	'DROP TABLE IF EXISTS MyJobDetsMPcodes;'+
-	'DROP TABLE IF EXISTS MyJobDetsMPoints;'+
-	'DROP TABLE IF EXISTS MyJobDetsLoch;'+
-	'DROP TABLE IF EXISTS MyJobDetsDraw;'+
-	'DROP TABLE IF EXISTS MyJobsDetsEQ;'+
-	'DROP TABLE IF EXISTS MyJobsDetsATTR;'+
-	'DROP TABLE IF EXISTS MyJobDetsMeasCodes;'+
-	'DROP TABLE IF EXISTS MyJobDetsComps;'+
-	'DROP TABLE IF EXISTS MyJobDetsOrderLongText;'+
-	'DROP TABLE IF EXISTS MyJobDetsAddress;'+
-	'DROP TABLE IF EXISTS MyJobDetsNotifLongText;'+
-	'DROP TABLE IF EXISTS MyJobDetsOrderOps;'+
-	'DROP TABLE IF EXISTS MyJobDetsIconPriority;'+
-	'DROP TABLE IF EXISTS MyJobDetsIconJob;'+
-	'DROP TABLE IF EXISTS MyUserStatus;'+
-	'DROP TABLE IF EXISTS MyNotifications;'+
-	'DROP TABLE IF EXISTS MyStatus;'+
-	'DROP TABLE IF EXISTS MyTimeConfs;'+
-	'DROP TABLE IF EXISTS MyMPointDocs;'+
-	'DROP TABLE IF EXISTS MyJobClose;'+
-	'DROP TABLE IF EXISTS MyNewJobs;'+
-	'DROP TABLE IF EXISTS MyWorkConfig;'+
-	'DROP TABLE IF EXISTS MyWorkSyncDets;'+
-	'DROP TABLE IF EXISTS MyUserDets;'+
-	'DROP TABLE IF EXISTS MyRefUsers;'+
-	'DROP TABLE IF EXISTS MyRefOrderTypes;'+
-	'DROP TABLE IF EXISTS MyRefNotifTypes;'+
-	'DROP TABLE IF EXISTS MyRefPriorityTypes;'+
-	'DROP TABLE IF EXISTS MyRefUserStatusProfiles;'+
-	'DROP TABLE IF EXISTS MyVehiclesDefault;'+
-	'DROP TABLE IF EXISTS MyVehicles;'+
-	'DROP TABLE IF EXISTS MyForms;'+
-	'DROP TABLE IF EXISTS MyFormsResponses;'+
-	'DROP TABLE IF EXISTS MyVehicleCheck;'+
-	'DROP TABLE IF EXISTS LogFile;'+
-	'DROP TABLE IF EXISTS RefCodeGroups;'+
-	'DROP TABLE IF EXISTS RefCodes;'+
-	'DROP TABLE IF EXISTS AssetDetails;'+
-	'DROP TABLE IF EXISTS MyMenuBar;'+
-	'DROP TABLE IF EXISTS REFPAICODES;'+
-	'DROP TABLE IF EXISTS REFNOTIFICATIONTYPES;'+
-	'DROP TABLE IF EXISTS REFVARIANCESRFV;'+
-	'DROP TABLE IF EXISTS REFACTIVITY;'+
-	'DROP TABLE IF EXISTS DG5REL;'+
-	'DROP TABLE IF EXISTS DG5CODES;'+
-	'DROP TABLE IF EXISTS CFCODES;'+
-	'DROP TABLE IF EXISTS MyJobsDocs;'+
-	'DROP TABLE IF EXISTS MyJobsPhotos;'+
-	'DROP TABLE IF EXISTS Properties;'
+		sqlstatement=	
+		
+		'DROP TABLE IF EXISTS MyJobsParams;'+
+		'DROP TABLE IF EXISTS DecommissionStatus;'+
+		'DROP TABLE IF EXISTS AssetSites;'+
+		'DROP TABLE IF EXISTS AssetSitesDetails;'+
+		'DROP TABLE IF EXISTS MyRefUsers;'+
+		'DROP TABLE IF EXISTS Manufacturer;'+
+		'DROP TABLE IF EXISTS Model;'+
+		'DROP TABLE IF EXISTS EGIandNameCodeMapping;'+
+		'DROP TABLE IF EXISTS EquipmentTypeCode;'+
+		'DROP TABLE IF EXISTS AssetTypeCodes;'+
+		'DROP TABLE IF EXISTS FunctionTypeCodes;'+
+		'DROP TABLE IF EXISTS PlantGroupCodes;'+
+		'DROP TABLE IF EXISTS SystemCodes;'+
+		'DROP TABLE IF EXISTS PlantGroupAndProcessGroupCodes;'+
+		'DROP TABLE IF EXISTS AssetCaptureCategory;'+
+		'DROP TABLE IF EXISTS AssetUpload;'+
+		'DROP TABLE IF EXISTS MyJobDets;'+
+		'DROP TABLE IF EXISTS MyJobDetsMPcodes;'+
+		'DROP TABLE IF EXISTS MyJobDetsMPoints;'+
+		'DROP TABLE IF EXISTS MyJobDetsLoch;'+
+		'DROP TABLE IF EXISTS MyJobDetsDraw;'+
+		'DROP TABLE IF EXISTS MyJobsDetsEQ;'+
+		'DROP TABLE IF EXISTS MyJobsDetsATTR;'+
+		'DROP TABLE IF EXISTS MyJobDetsMeasCodes;'+
+		'DROP TABLE IF EXISTS MyJobDetsComps;'+
+		'DROP TABLE IF EXISTS MyJobDetsOrderLongText;'+
+		'DROP TABLE IF EXISTS MyJobDetsAddress;'+
+		'DROP TABLE IF EXISTS MyJobDetsNotifLongText;'+
+		'DROP TABLE IF EXISTS MyJobDetsOrderOps;'+
+		'DROP TABLE IF EXISTS MyJobDetsIconPriority;'+
+		'DROP TABLE IF EXISTS MyJobDetsIconJob;'+
+		'DROP TABLE IF EXISTS MyOrders;'+
+		'DROP TABLE IF EXISTS MyOperations;'+
+		'DROP TABLE IF EXISTS MyOperationsSplit;'+
+		'DROP TABLE IF EXISTS MyPartners;'+
+		'DROP TABLE IF EXISTS MyAssets;'+
+		'DROP TABLE IF EXISTS MyMaterials;'+
+		'DROP TABLE IF EXISTS MyUserStatus;'+
+		'DROP TABLE IF EXISTS MyOperationInfo;'+
+		'DROP TABLE IF EXISTS MyNotifications;'+
+		'DROP TABLE IF EXISTS MyItems;'+
+		'DROP TABLE IF EXISTS MyCauses;'+
+		'DROP TABLE IF EXISTS MyActivities;'+
+		'DROP TABLE IF EXISTS MyTasks;'+
+		'DROP TABLE IF EXISTS MyEffects;'+
+		'DROP TABLE IF EXISTS MyStatus;'+
+		'DROP TABLE IF EXISTS MyTimeConfs;'+
+		'DROP TABLE IF EXISTS MyMPointDocs;'+
+		'DROP TABLE IF EXISTS MyJobClose;'+
+		'DROP TABLE IF EXISTS MyNewJobs;'+
+		'DROP TABLE IF EXISTS MyWorkConfig;'+
+		'DROP TABLE IF EXISTS MyWorkSyncDets;'+
+		'DROP TABLE IF EXISTS MyUserDets;'+
+		'DROP TABLE IF EXISTS MyRefOrderTypes;'+
+		'DROP TABLE IF EXISTS MyRefNotifTypes;'+
+		'DROP TABLE IF EXISTS MyRefPriorityTypes;'+
+		'DROP TABLE IF EXISTS MyRefUserStatusProfiles;'+
+		'DROP TABLE IF EXISTS MyVehiclesDefault;'+
+		'DROP TABLE IF EXISTS MyVehicles;'+
+		'DROP TABLE IF EXISTS MyForms;'+
+		'DROP TABLE IF EXISTS MyFormsResponses;'+
+		'DROP TABLE IF EXISTS MyVehicleCheck;'+
+		'DROP TABLE IF EXISTS MyMessages;'+
+		'DROP TABLE IF EXISTS Assets;'+
+		'DROP TABLE IF EXISTS AssetClassVals;'+
+		'DROP TABLE IF EXISTS AssetMeasurementPoints;'+
+		'DROP TABLE IF EXISTS AssetInstalledEquip;'+
+		'DROP TABLE IF EXISTS LogFile;'+
+		'DROP TABLE IF EXISTS RefNotifprofile;'+
+		'DROP TABLE IF EXISTS RefCodeGroups;'+
+		'DROP TABLE IF EXISTS RefCodes;'+
+		'DROP TABLE IF EXISTS HRAbsence;'+
+		'DROP TABLE IF EXISTS HRTravel;'+
+		'DROP TABLE IF EXISTS AssetDetails;'+
+		'DROP TABLE IF EXISTS JobAnswers;'+
+		'DROP TABLE IF EXISTS StockSearch;'+
+		'DROP TABLE IF EXISTS SurveyAnswers;'+
+		'DROP TABLE IF EXISTS Survey;'+
+		'DROP TABLE IF EXISTS SurveyGroup;'+
+		'DROP TABLE IF EXISTS SurveyQuestion;'+
+		'DROP TABLE IF EXISTS SurveySubQuestion;'+
+		'DROP TABLE IF EXISTS SurveyQuestionChildren;'+
+		'DROP TABLE IF EXISTS FuncLocs;'+
+		'DROP TABLE IF EXISTS Equipments;'+
+		'DROP TABLE IF EXISTS MyMenuBar;'+
+		'DROP TABLE IF EXISTS MyAjax;'+
+		'DROP TABLE IF EXISTS TSActivities;'+
+		'DROP TABLE IF EXISTS TSNPJobs;'+
+		'DROP TABLE IF EXISTS TSData;'+
+		'DROP TABLE IF EXISTS GASSurveyQ;'+
+		'DROP TABLE IF EXISTS GASSurveyA;'+
+		'DROP TABLE IF EXISTS GASSurveyMake;'+
+		'DROP TABLE IF EXISTS GASSurveyModel;'+
+		'DROP TABLE IF EXISTS GASSurvey;'+
+		'DROP TABLE IF EXISTS GASSurveyHDR;'+
+		'DROP TABLE IF EXISTS REFPAICODES;'+
+		'DROP TABLE IF EXISTS REFNOTIFICATIONTYPES;'+
+		'DROP TABLE IF EXISTS REFVARIANCESRFV;'+
+		'DROP TABLE IF EXISTS REFACTIVITY;'+
+		'DROP TABLE IF EXISTS DG5REL;'+
+		'DROP TABLE IF EXISTS DG5CODES;'+
+		'DROP TABLE IF EXISTS CFCODES;'+
+		'DROP TABLE IF EXISTS MyJobsDocs;'+
+		'DROP TABLE IF EXISTS MyJobsPhotos;'+
+		'DROP TABLE IF EXISTS Properties;'+
+		'DROP TABLE IF EXISTS MyJobAddWork;'+
+		'DROP TABLE IF EXISTS AssetDetailsAll';
 
 						html5sql.process(sqlstatement,
 						 function(){
@@ -4384,81 +4428,119 @@ function dropTables() {
 						 }        
 				);
 }
+var sqldeletetable=
+
+'DELETE FROM MyJobsParams;'+
+'DELETE FROM DecommissionStatus;'+
+'DELETE FROM AssetSites;'+
+'DELETE FROM AssetSitesDetails;'+
+'DELETE FROM MyRefUsers;'+
+'DELETE FROM Manufacturer;'+
+'DELETE FROM Model;'+
+'DELETE FROM EGIandNameCodeMapping;'+
+'DELETE FROM EquipmentTypeCode;'+
+'DELETE FROM AssetTypeCodes;'+
+'DELETE FROM FunctionTypeCodes;'+
+'DELETE FROM PlantGroupCodes;'+
+'DELETE FROM SystemCodes;'+
+'DELETE FROM PlantGroupAndProcessGroupCodes;'+
+'DELETE FROM AssetCaptureCategory;'+
+'DELETE FROM AssetUpload;'+
+'DELETE FROM MyJobDets;'+
+'DELETE FROM MyJobDetsMPcodes;'+
+'DELETE FROM MyJobDetsMPoints;'+
+'DELETE FROM MyJobDetsLoch;'+
+'DELETE FROM MyJobDetsDraw;'+
+'DELETE FROM MyJobsDetsEQ;'+
+'DELETE FROM MyJobsDetsATTR;'+
+'DELETE FROM MyJobDetsMeasCodes;'+
+'DELETE FROM MyJobDetsComps;'+
+'DELETE FROM MyJobDetsOrderLongText;'+
+'DELETE FROM MyJobDetsAddress;'+
+'DELETE FROM MyJobDetsNotifLongText;'+
+'DELETE FROM MyJobDetsOrderOps;'+
+'DELETE FROM MyJobDetsIconPriority;'+
+'DELETE FROM MyJobDetsIconJob;'+
+'DELETE FROM MyOrders;'+
+'DELETE FROM MyOperations;'+
+'DELETE FROM MyOperationsSplit;'+
+'DELETE FROM MyPartners;'+
+'DELETE FROM MyAssets;'+
+'DELETE FROM MyMaterials;'+
+'DELETE FROM MyUserStatus;'+
+'DELETE FROM MyOperationInfo;'+
+'DELETE FROM MyNotifications;'+
+'DELETE FROM MyItems;'+
+'DELETE FROM MyCauses;'+
+'DELETE FROM MyActivities;'+
+'DELETE FROM MyTasks;'+
+'DELETE FROM MyEffects;'+
+'DELETE FROM MyStatus;'+
+'DELETE FROM MyTimeConfs;'+
+'DELETE FROM MyMPointDocs;'+
+'DELETE FROM MyJobClose;'+
+'DELETE FROM MyNewJobs;'+
+'DELETE FROM MyWorkConfig;'+
+'DELETE FROM MyWorkSyncDets;'+
+'DELETE FROM MyUserDets;'+
+'DELETE FROM MyRefOrderTypes;'+
+'DELETE FROM MyRefNotifTypes;'+
+'DELETE FROM MyRefPriorityTypes;'+
+'DELETE FROM MyRefUserStatusProfiles;'+
+'DELETE FROM MyVehiclesDefault;'+
+'DELETE FROM MyVehicles;'+
+'DELETE FROM MyForms;'+
+'DELETE FROM MyFormsResponses;'+
+'DELETE FROM MyVehicleCheck;'+
+'DELETE FROM MyMessages;'+
+'DELETE FROM Assets;'+
+'DELETE FROM AssetClassVals;'+
+'DELETE FROM AssetMeasurementPoints;'+
+'DELETE FROM AssetInstalledEquip;'+
+'DELETE FROM LogFile;'+
+'DELETE FROM RefNotifprofile;'+
+'DELETE FROM RefCodeGroups;'+
+'DELETE FROM RefCodes;'+
+'DELETE FROM HRAbsence;'+
+'DELETE FROM HRTravel;'+
+'DELETE FROM AssetDetails;'+
+'DELETE FROM JobAnswers;'+
+'DELETE FROM StockSearch;'+
+'DELETE FROM SurveyAnswers;'+
+'DELETE FROM Survey;'+
+'DELETE FROM SurveyGroup;'+
+'DELETE FROM SurveyQuestion;'+
+'DELETE FROM SurveySubQuestion;'+
+'DELETE FROM SurveyQuestionChildren;'+
+'DELETE FROM FuncLocs;'+
+'DELETE FROM Equipments;'+
+'DELETE FROM MyMenuBar;'+
+'DELETE FROM MyAjax;'+
+'DELETE FROM TSActivities;'+
+'DELETE FROM TSNPJobs;'+
+'DELETE FROM TSData;'+
+'DELETE FROM GASSurveyQ;'+
+'DELETE FROM GASSurveyA;'+
+'DELETE FROM GASSurveyMake;'+
+'DELETE FROM GASSurveyModel;'+
+'DELETE FROM GASSurvey;'+
+'DELETE FROM GASSurveyHDR;'+
+'DELETE FROM REFPAICODES;'+
+'DELETE FROM REFNOTIFICATIONTYPES;'+
+'DELETE FROM REFVARIANCESRFV;'+
+'DELETE FROM REFACTIVITY;'+
+'DELETE FROM DG5REL;'+
+'DELETE FROM DG5CODES;'+
+'DELETE FROM CFCODES;'+
+'DELETE FROM MyJobsDocs;'+
+'DELETE FROM MyJobsPhotos;'+
+'DELETE FROM Properties;'+
+'DELETE FROM MyJobAddWork;'+
+'DELETE FROM AssetDetailsAll';
 function emptyTables(type) { 
 	
-	sqlstatement=	'DELETE FROM AssetTableColumns;'+
-	'DELETE FROM MyJobsParams;'+
-	'DELETE FROM ParentAssetTableColumns;'+
-	'DELETE FROM DecommissionStatus;'+
-	'DELETE FROM AssetSites;'+
-	'DELETE FROM AssetSitesDetails;'+
-	'DELETE FROM MyRefUsers;'+
-	'DELETE FROM Manufacturer;'+
-	'DELETE FROM Model;'+
-	'DELETE FROM EGIandNameCodeMapping;'+
-	'DELETE FROM EquipmentTypeCode;'+
-	'DELETE FROM AssetTypeCodes;'+
-	'DELETE FROM FunctionTypeCodes;'+
-	'DELETE FROM PlantGroupCodes;'+
-	'DELETE FROM SystemCodes;'+
-	'DELETE FROM PlantGroupAndProcessGroupCodes;'+
-	'DELETE FROM AssetCaptureCategory;'+
-	'DELETE FROM AssetTableColumns;'+
-	'DELETE FROM AssetUpload;'+
-	'DELETE FROM MyJobDets;'+
-	'DELETE FROM MyJobDetsMPcodes;'+
-	'DELETE FROM MyJobDetsMPoints;'+
-	'DELETE FROM MyJobDetsLoch;'+
-	'DELETE FROM MyJobDetsDraw;'+
-	'DELETE FROM MyJobsDetsEQ;'+
-	'DELETE FROM MyJobsDetsATTR;'+
-	'DELETE FROM MyJobDetsMeasCodes;'+
-	'DELETE FROM MyJobDetsComps;'+
-	'DELETE FROM MyJobDetsOrderLongText;'+
-	'DELETE FROM MyJobDetsAddress;'+
-	'DELETE FROM MyJobDetsNotifLongText;'+
-	'DELETE FROM MyJobDetsOrderOps;'+
-	'DELETE FROM MyJobDetsIconPriority;'+
-	'DELETE FROM MyJobDetsIconJob;'+
-	'DELETE FROM MyUserStatus;'+
-	'DELETE FROM MyNotifications;'+
-	'DELETE FROM MyStatus;'+
-	'DELETE FROM MyTimeConfs;'+
-	'DELETE FROM MyMPointDocs;'+
-	'DELETE FROM MyJobClose;'+
-	'DELETE FROM MyNewJobs;'+
-	'DELETE FROM MyWorkConfig;'+
-	'DELETE FROM MyWorkSyncDets;'+
-	'DELETE FROM MyUserDets;'+
-	'DELETE FROM MyRefUsers;'+
-	'DELETE FROM MyRefOrderTypes;'+
-	'DELETE FROM MyRefNotifTypes;'+
-	'DELETE FROM MyRefPriorityTypes;'+
-	'DELETE FROM MyRefUserStatusProfiles;'+
-	'DELETE FROM MyVehiclesDefault;'+
-	'DELETE FROM MyVehicles;'+
-	'DELETE FROM MyForms;'+
-	'DELETE FROM MyFormsResponses;'+
-	'DELETE FROM MyVehicleCheck;'+
-	'DELETE FROM LogFile;'+
-	'DELETE FROM RefCodeGroups;'+
-	'DELETE FROM RefCodes;'+
-	'DELETE FROM AssetDetails;'+
-	'DELETE FROM MyMenuBar;'+
-	'DELETE FROM REFPAICODES;'+
-	'DELETE FROM REFNOTIFICATIONTYPES;'+
-	'DELETE FROM REFVARIANCESRFV;'+
-	'DELETE FROM REFACTIVITY;'+
-	'DELETE FROM DG5REL;'+
-	'DELETE FROM DG5CODES;'+
-	'DELETE FROM CFCODES;'+
-	'DELETE FROM MyJobsDocs;'+
-	'DELETE FROM MyJobsPhotos;'+
-	'DELETE FROM Properties;'
-						
-						
 
-						html5sql.process(sqlstatement,
+						html5sql.process(sqldeletetable,
 						 function(){
 							
 							demoDataLoaded=type;
@@ -4494,75 +4576,89 @@ function loadDemoData() {
      var page = path.split("/").pop();
      
 	localStorage.setItem("LastSyncedDT",getDate()+getTime())
-	sqlstatement=	'DELETE FROM AssetTableColumns;'+
-	'DELETE FROM MyJobsParams;'+
-	'DELETE FROM ParentAssetTableColumns;'+
-	'DELETE FROM DecommissionStatus;'+
-	'DELETE FROM AssetSites;'+
-	'DELETE FROM AssetSitesDetails;'+
-	'DELETE FROM MyRefUsers;'+
-	'DELETE FROM Manufacturer;'+
-	'DELETE FROM Model;'+
-	'DELETE FROM EGIandNameCodeMapping;'+
-	'DELETE FROM EquipmentTypeCode;'+
-	'DELETE FROM AssetTypeCodes;'+
-	'DELETE FROM FunctionTypeCodes;'+
-	'DELETE FROM PlantGroupCodes;'+
-	'DELETE FROM SystemCodes;'+
-	'DELETE FROM PlantGroupAndProcessGroupCodes;'+
-	'DELETE FROM AssetCaptureCategory;'+
-	'DELETE FROM AssetTableColumns;'+
-	'DELETE FROM AssetUpload;'+
-	'DELETE FROM MyJobDets;'+
-	'DELETE FROM MyJobDetsMPcodes;'+
-	'DELETE FROM MyJobDetsMPoints;'+
-	'DELETE FROM MyJobDetsLoch;'+
-	'DELETE FROM MyJobDetsDraw;'+
-	'DELETE FROM MyJobsDetsEQ;'+
-	'DELETE FROM MyJobsDetsATTR;'+
-	'DELETE FROM MyJobDetsMeasCodes;'+
-	'DELETE FROM MyJobDetsComps;'+
-	'DELETE FROM MyJobDetsOrderLongText;'+
-	'DELETE FROM MyJobDetsAddress;'+
-	'DELETE FROM MyJobDetsNotifLongText;'+
-	'DELETE FROM MyJobDetsOrderOps;'+
-	'DELETE FROM MyJobDetsIconPriority;'+
-	'DELETE FROM MyJobDetsIconJob;'+
-	'DELETE FROM MyUserStatus;'+
-	'DELETE FROM MyNotifications;'+
-	'DELETE FROM MyStatus;'+
-	'DELETE FROM MyTimeConfs;'+
-	'DELETE FROM MyMPointDocs;'+
-	'DELETE FROM MyJobClose;'+
-	'DELETE FROM MyNewJobs;'+
-	'DELETE FROM MyWorkConfig;'+
-	'DELETE FROM MyWorkSyncDets;'+
-	'DELETE FROM MyUserDets;'+
-	'DELETE FROM MyRefUsers;'+
-	'DELETE FROM MyRefOrderTypes;'+
-	'DELETE FROM MyRefNotifTypes;'+
-	'DELETE FROM MyRefPriorityTypes;'+
-	'DELETE FROM MyRefUserStatusProfiles;'+
-	'DELETE FROM MyVehiclesDefault;'+
-	'DELETE FROM MyVehicles;'+
-	'DELETE FROM MyForms;'+
-	'DELETE FROM MyFormsResponses;'+
-	'DELETE FROM MyVehicleCheck;'+
-	'DELETE FROM LogFile;'+
-	'DELETE FROM RefCodeGroups;'+
-	'DELETE FROM RefCodes;'+
-	'DELETE FROM AssetDetails;'+
-	'DELETE FROM MyMenuBar;'+
-	'DELETE FROM REFPAICODES;'+
-	'DELETE FROM REFNOTIFICATIONTYPES;'+
-	'DELETE FROM REFVARIANCESRFV;'+
-	'DELETE FROM REFACTIVITY;'+
-	'DELETE FROM DG5REL;'+
-	'DELETE FROM DG5CODES;'+
-	'DELETE FROM CFCODES;'+
-	'DELETE FROM MyJobsDocs;'+
-	'DELETE FROM MyJobsPhotos;'+
-	'DELETE FROM Properties;'
+	sqlstatement=	'DELETE FROM  MyOrders;'+
+					'DELETE FROM  MyAjax;'+
+					'DELETE FROM  MyOperations;'+
+					'DELETE FROM  MyOperationsSplit;'+
+					'DELETE FROM  MyPartners;'+
+					'DELETE FROM  MyMaterials;'+
+					'DELETE FROM  MyAssets;'+
+					'DELETE FROM  AssetDetails;'+
+					'DELETE FROM  MyUserStatus;'+
+					'DELETE FROM  MyOperationInfo;'+
+					'DELETE FROM  MyNotifications;'+
+					'DELETE FROM  MyItems;'+
+					'DELETE FROM  MyCauses;'+
+					'DELETE FROM  MyActivities;'+
+					'DELETE FROM  MyTasks;'+
+					'DELETE FROM  MyEffects;'+
+					'DELETE FROM  MyStatus;'+
+					'DELETE FROM  MyTimeConfs;'+
+					'DELETE FROM  MyMPointDocs;'+
+					'DELETE FROM  MyJobClose;'+
+					'DELETE FROM  MyNewJobs;'+
+					'DELETE FROM  MyWorkConfig;'+
+					'DELETE FROM  MyRefUsers;'+
+					'DELETE FROM  MyRefOrderTypes;'+
+					'DELETE FROM  MyRefNotifTypes;'+
+					'DELETE FROM  MyRefPriorityTypes;'+
+					'DELETE FROM  MyRefUserStatusProfiles;'+
+					'DELETE FROM  MyWorkSyncDets;'+
+					//'DELETE FROM  MyUserDets;'+
+					'DELETE FROM  MyVehicles;'+
+					'DELETE FROM  MyVehiclesDefault;'+
+					'DELETE FROM  MyVehicleCheck;'+
+					'DELETE FROM  MyMessages;'+
+					'DELETE FROM  Assets;'+
+					'DELETE FROM  LogFile;'+
+					'DELETE FROM  AssetClassVals;'+
+					'DELETE FROM  AssetInstalledEquip;'+
+					'DELETE FROM  AssetMeasurementPoints;'+
+					'DELETE FROM  RefNotifprofile;'+
+					'DELETE FROM  RefCodeGroups;'+
+					'DELETE FROM  RefCodes;'+ 
+					'DELETE FROM  HRAbsence;'+	
+					'DELETE FROM  HRTravel;'+	
+					'DELETE FROM  SurveyAnswers;'+	
+					'DELETE FROM  Survey;'+	
+					'DELETE FROM  SurveyGroup;'+
+					'DELETE FROM  SurveyQuestion;'+
+					'DELETE FROM  SurveySubQuestion;'+
+					'DELETE FROM  SurveyQuestionChildren;'+
+					'DELETE FROM  FuncLocs;'+
+					'DELETE FROM  Equipments;'+
+					'DELETE FROM  TSActivities;'+	
+					'DELETE FROM  TSNPJobs;'+
+					'DELETE FROM  TSData;'+
+					'DELETE FROM  JobAnswers;'+	
+					'DELETE FROM  GASSurveyQ;'+	
+					'DELETE FROM  GASSurveyA;'+
+					'DELETE FROM  GASSurveyMake;'+
+					'DELETE FROM  GASSurveyModel;'+
+					'DELETE FROM  GASSurvey;'+
+					'DELETE FROM  StockSearch;'+
+					'DELETE FROM MyMenuBar;'+
+					'DELETE FROM MyJobDets;'+
+									'DELETE FROM  REFPAICODES;'+
+				'DELETE FROM  REFNOTIFICATIONTYPES;'+
+				'DELETE FROM  REFVARIANCESRFV;'+
+				'DELETE FROM  REFACTIVITY;'+
+				'DELETE FROM  MyForms;'+
+				'DELETE FROM  MyFormsResponses;'+
+				'DELETE FROM  DG5REL;'+
+				'DELETE FROM  DG5CODES;'+
+				'DELETE FROM  CFCODES;'+
+				'DELETE FROM  MyJobsDocs;'+
+				'DELETE FROM  MyJobsPhotos;'+
+				'DELETE FROM MyJobsDetsEQ;'+
+				'DELETE FROM MyJobsDetsATTR;'+
+				'DELETE FROM Properties;'+
+				'DELETE FROM AssetDetailsAll;'+
+				'DELETE FROM  MyJobDetsMPoints;'+
+				'DELETE FROM  MyJobDetsLoch;'+
+				'DELETE FROM  MyJobDetsMPCodes;'+
+				'DELETE FROM  MyJobDetsDraw;'+
+					'DELETE FROM  GASSurveyHDR;';
 
 					html5sql.process(sqlstatement,
 					 function(){
@@ -4608,7 +4704,7 @@ function loadDemoData() {
 						requestDEMOData('MyJobsVehiclesDefault.json');
 						requestDEMOData('MyJobsDG5Codes.json');
 						//requestDEMOData('AssetSitesDetails.json');
-						//getAssets();
+						getAssets();
 						requestDEMOData('MyJobsParams.json');
 						
 						//requestDEMOData('GASSurvey.json');
@@ -4634,81 +4730,8 @@ function loadDemoData() {
 			);
 }
 function resetTables() { 
-	var sqlstatement="";
-
-	sqlstatement=	'DELETE FROM AssetTableColumns;'+
-	'DELETE FROM MyJobsParams;'+
-	'DELETE FROM ParentAssetTableColumns;'+
-	'DELETE FROM DecommissionStatus;'+
-	'DELETE FROM AssetSites;'+
-	'DELETE FROM AssetSitesDetails;'+
-	'DELETE FROM MyRefUsers;'+
-	'DELETE FROM Manufacturer;'+
-	'DELETE FROM Model;'+
-	'DELETE FROM EGIandNameCodeMapping;'+
-	'DELETE FROM EquipmentTypeCode;'+
-	'DELETE FROM AssetTypeCodes;'+
-	'DELETE FROM FunctionTypeCodes;'+
-	'DELETE FROM PlantGroupCodes;'+
-	'DELETE FROM SystemCodes;'+
-	'DELETE FROM PlantGroupAndProcessGroupCodes;'+
-	'DELETE FROM AssetCaptureCategory;'+
-	'DELETE FROM AssetTableColumns;'+
-	'DELETE FROM AssetUpload;'+
-	'DELETE FROM MyJobDets;'+
-	'DELETE FROM MyJobDetsMPcodes;'+
-	'DELETE FROM MyJobDetsMPoints;'+
-	'DELETE FROM MyJobDetsLoch;'+
-	'DELETE FROM MyJobDetsDraw;'+
-	'DELETE FROM MyJobsDetsEQ;'+
-	'DELETE FROM MyJobsDetsATTR;'+
-	'DELETE FROM MyJobDetsMeasCodes;'+
-	'DELETE FROM MyJobDetsComps;'+
-	'DELETE FROM MyJobDetsOrderLongText;'+
-	'DELETE FROM MyJobDetsAddress;'+
-	'DELETE FROM MyJobDetsNotifLongText;'+
-	'DELETE FROM MyJobDetsOrderOps;'+
-	'DELETE FROM MyJobDetsIconPriority;'+
-	'DELETE FROM MyJobDetsIconJob;'+
-	'DELETE FROM MyUserStatus;'+
-	'DELETE FROM MyNotifications;'+
-	'DELETE FROM MyStatus;'+
-	'DELETE FROM MyTimeConfs;'+
-	'DELETE FROM MyMPointDocs;'+
-	'DELETE FROM MyJobClose;'+
-	'DELETE FROM MyNewJobs;'+
-	'DELETE FROM MyWorkConfig;'+
-	'DELETE FROM MyWorkSyncDets;'+
-	'DELETE FROM MyUserDets;'+
-	'DELETE FROM MyRefUsers;'+
-	'DELETE FROM MyRefOrderTypes;'+
-	'DELETE FROM MyRefNotifTypes;'+
-	'DELETE FROM MyRefPriorityTypes;'+
-	'DELETE FROM MyRefUserStatusProfiles;'+
-	'DELETE FROM MyVehiclesDefault;'+
-	'DELETE FROM MyVehicles;'+
-	'DELETE FROM MyForms;'+
-	'DELETE FROM MyFormsResponses;'+
-	'DELETE FROM MyVehicleCheck;'+
-	'DELETE FROM LogFile;'+
-	'DELETE FROM RefCodeGroups;'+
-	'DELETE FROM RefCodes;'+
-	'DELETE FROM AssetDetails;'+
-	'DELETE FROM MyMenuBar;'+
-	'DELETE FROM REFPAICODES;'+
-	'DELETE FROM REFNOTIFICATIONTYPES;'+
-	'DELETE FROM REFVARIANCESRFV;'+
-	'DELETE FROM REFACTIVITY;'+
-	'DELETE FROM DG5REL;'+
-	'DELETE FROM DG5CODES;'+
-	'DELETE FROM CFCODES;'+
-	'DELETE FROM MyJobsDocs;'+
-	'DELETE FROM MyJobsPhotos;'+
-	'DELETE FROM Properties;'
-					
-					
-
-					html5sql.process(sqlstatement,
+	
+					html5sql.process(sqldeletetable,
 					 function(){
 						
 						
@@ -8282,10 +8305,22 @@ function getFunctionalLocationString() {
     var theProcessGroup = currentAssetRecord.processGroupZPRG;
     var theZplgrp = currentAssetRecord.plantGroupCodeZplgrp;
     var theZsyscode = currentAssetRecord.SystemCodeZSYSCODE;
-    var theSystemCodeId = currentAssetRecord.SystemCodeNumber;
+    var theZzfl_nc;
+    //var theSystemCodeId = currentAssetRecord.SystemCodeNumber;
     //var theZzfl_nc = currentAssetRecord.funcLocSub19_22zzfl_nc;
-    var theZzfl_nc = currentAssetRecord.zzfl_nc;
-    var theFunctionTypeItemId = currentAssetRecord.funcLocSub22_3FunctionTypeItemNumber;
+    var theSystemCodeId = null;
+    var theFunctionTypeItemId = null;
+    if(currentAssetRecord.zzfl_nc){
+    if(currentAssetRecord.zzfl_nc.length==3){
+    	 theZzfl_nc = currentAssetRecord.zzfl_nc;
+   
+    }
+    else{
+    	theZzfl_nc = currentAssetRecord.zzfl_nc;
+    	theZzfl_nc=theZzfl_nc.substring(2)
+    }
+    }
+    //var theFunctionTypeItemId = currentAssetRecord.funcLocSub22_3FunctionTypeItemNumber;
 
     if (theSite == null) {
         theSite = "XXXXXX";
@@ -8311,7 +8346,7 @@ function getFunctionalLocationString() {
 
     currentAssetRecord.funcLocStringZINSTLOCN = theSite + "-" + theProcessGroup + "-" + theZplgrp + "-"
   + theZsyscode + theSystemCodeId + "-"
-  + theZzfl_nc.substring(2) + theFunctionTypeItemId;
+  + theZzfl_nc + theFunctionTypeItemId;
 
     return currentAssetRecord.funcLocStringZINSTLOCN
 }
@@ -9092,3 +9127,21 @@ function uploadAllRecords() {
                 }
             }
     )}
+
+function createJobAddWork(orderno , opno , specreqt, startdate, assignment, wktycd, wktygp, longtext, state)
+{
+	console.log("createJobAddWork");
+
+html5sql.process("INSERT INTO  MyJobAddWork (orderno , opno , specreqt, startdate, assignment, wktycd, wktygp, longtext, state) VALUES ("+
+			 "'"+orderno+"','"+opno+"','"+specreqt+ "','"+startdate+"','"+assignment+"','"+wktycd+"','"+wktygp+"','"+longtext+"','"+state+"');",
+	 function(){
+		
+		
+	console.log("createJobAddWork DONE");
+	 },
+	 function(error, statement){
+			console.log("Error: " + error.message + " when CreateAddWork processing " + statement);
+		opMessage("Error: " + error.message + " when CreateAddWork processing " + statement);
+	 }        
+	);
+}

@@ -1,8 +1,9 @@
 //Azure Callback Handlers
 //Added 10-09-2016
- 
+var localJobDets="" 
+var localJobDetsOrders=""  
 function postAzureData(page, postData, timedOutSQL,recno) {
- 
+Postingazureata=true 
 var myurl = SAPServerPrefix + page + "?" +  localStorage.getItem('MobileUser');
    // var myurl = "https://AMPService.azurewebsites.net/api/" + page + "?" +  localStorage.getItem('MobileUser');
   // var myurl = "http://10.193.123.32/AMPServiceService/api/" + page + "?" + localStorage.getItem('MobileUser'); //"SMUNJEWAR2";
@@ -18,22 +19,49 @@ console.log(page+":"+postData)
        },
        timeout: 3000000
    }).done(function (data) {
-       opMessage("call success" + page);
+       opMessage("Azure call success" + page);
        postAzureCB(data.d, page,recno);
    }).fail(function (data, xhr, status) {
-       opMessage(page + status + data);
-       if (status != "parsererror") {
-           if (status == "timeout") {
-          
-TimedOut=true;
-resetSENDINGData(timedOutSQL);
- 
-           }
-       }
-   }).always(function () {
+       opMessage("Azure Call Failed:"+page + xhdr + " "+status);        
+       resetSENDINGData(timedOutSQL);        
+   }).always(function () {	   
        opMessage("Complete" + page);
+       PostingAzureData=false 
    });
 }
+function postAzureDoc(page, postData, parameters,timedOutSQL,recno) {
+	 
+	var myurl =  SAPServerPrefix + page + "?" +parameters;
+	   // var myurl = "https://AMPService.azurewebsites.net/api/" + page + "?" +  localStorage.getItem('MobileUser');
+	  // var myurl = "http://10.193.123.32/AMPServiceService/api/" + page + "?" + localStorage.getItem('MobileUser'); //"SMUNJEWAR2";
+	console.log(page+":"+postData)
+	 
+	   $.ajax({
+	       type: "POST",
+	       contentType: "application/json; charset=UTF-8",
+	       url: myurl,
+	       data: JSON.stringify(postData),
+	       headers: {
+	           "ZUMO-API-VERSION": "2.0.0"
+	       },
+	       timeout: 3000000
+	   }).done(function (data) {
+	       opMessage("call success" + page);
+	       postAzureCB(data.d, page,recno);
+	   }).fail(function (data, xhr, status) {
+	       opMessage(page + status + data);
+	       if (status != "parsererror") {
+	           if (status == "timeout") {
+	          
+	TimedOut=true;
+	resetSENDINGData(timedOutSQL);
+	 
+	           }
+	       }
+	   }).always(function () {
+	       opMessage("Complete" + page);
+	   });
+	}
 function postAzureDataOriginal(page, postData) {
  
  
@@ -199,7 +227,7 @@ case "ZGW_MAM_ASSETDATA_T3":
 ZGW_MAM_ASSETDATA_T3CB(mydata);
 break;
 case "ZGW_GET_JOB_DETAILS":
-ZGW_GET_JOB_DETAILSCB(mydata);
+	getLocalJobs(mydata);
 break;
 case "ZGW_MAM_MAINT_PARAM":
 ZGW_MAM_MAINT_PARAMCB(mydata);
@@ -267,6 +295,7 @@ html5sql.process(
 sqlstatement
 ,
 function(){
+	createAssetDetailsFilter(localStorage.getItem('MobileUser'));
 },
 function(error, statement){
 opMessage("Error: " + error.message + " when updateing EmployeeID " + statement);
@@ -777,92 +806,148 @@ opMessage("Deleting Existing DG5REL");
 /* Get Asset Data           
             */
 /************************************************/
-        function getAssets() {//The server keeps deleted records for MaxDaysSinceLastDownload  days (currently 90 days).
-            //If the client hasn't synced Assets for more than 90 days
-            //then we must empty the local asset table and download it all again.
-            var lastSyncReference = localStorage.getItem('LastSyncReference');
- 
-            var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-            var firstDate = new Date();//today
-            var secondDate = new Date(lastSyncReference.substring(0, 4), lastSyncReference.substring(4, 6) - 1, lastSyncReference.substring(6, 8));
- 
-            var daysSinceLastDownload = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay)));
- 
-            var MaxDaysSinceLastDownload = 90;
- 
-            html5sql.process(
-       
-["select count(*) AS REC from AssetSitesDetails"],
-        function (transaction, results, rowsArray) {
-            if (daysSinceLastDownload > MaxDaysSinceLastDownload || rowsArray[0].REC == 0) {
-                //get all records
-                var recordsRetrieved = -1;
-                var currentEquipNum = 0;
-                var numRecordsToGet = 10000;
- 
-                getAssetsRecursive("ZGW_MAM_EXTRACT_ASSET_DATA", currentEquipNum + numRecordsToGet)
-            }
-            else {
-                //get deltas
-                var datestring = getDate();
- 
-                getAssetRecords("ZGW_MAM_EXTRACT_ASSET_DATA", "?" + datestring, function (data) {
-                    recordsRetrieved = data.length;
- 
-                    if (recordsRetrieved > 0) {
-                        addRecordstoDb(data, function () {
-                            //Get last equipment number
-                            getBiggestZequnr(function (BiggestZequnr) {
-                                console.log("BiggestZequnr=" + BiggestZequnr);
-                                
-                                	getAssetsRecursive(BiggestZequnr, numRecordsToGet);
-                            })
-                        })
+        /************************************************/
+        /* Get Asset Data           
+                    */
+        /************************************************/
+
+                function getAssets() {//The server keeps deleted records for MaxDaysSinceLastDownload  days (currently 90 days).
+                    //If the client hasn't synced Assets for more than 90 days
+                    //then we must empty the local asset table and download it all again.
+                    var numRecordsToGet = 10000;
+                    var lastSyncReference = localStorage.getItem('LastSyncReference');
+                    var syncStart = localStorage.getItem('SyncStart');
+                    if (syncStart == null) {
+                        syncStart = new Date("january 01, 1900");
                     }
                     else {
-                        console.log("No Records found");
+                        syncStart = new Date(syncStart);
                     }
- 
-                });
-            }
-        },
-         function (error, statement) {
-             window.console && console.log("Error: " + error.message + " when processing " + statement);
-         }
-        );
- 
- 
- 
-        }
-        function getAssetsRecursive(currentEquipNum, numRecordsToGet) {
-            getAssetRecords("ZGW_MAM_EXTRACT_ASSET_DATA", "?" + currentEquipNum + "?" + numRecordsToGet, function (data) {
-                recordsRetrieved = data.length;
- 
-                if (recordsRetrieved > 0) {
-                    addRecordstoDb(data, function () {
-                        //Get last equipment number
-                        getBiggestZequnr(function (BiggestZequnr) {
-                            console.log("BiggestZequnr=" + BiggestZequnr);
-                            if(getBiggestZequnr == "999999999999999999")
-                        	{console.log("done");}
-                        else{
+
+                    var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+                    var firstDate = new Date();//today
+                    var secondDate = new Date(lastSyncReference.substring(0, 4), lastSyncReference.substring(4, 6) - 1, lastSyncReference.substring(6, 8));
+
+                    var daysSinceLastDownload = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay)));
+                    var daysSinceSyncStart = Math.round(Math.abs((firstDate.getTime() - syncStart.getTime()) / (oneDay)));
+
+                    var MaxDaysSinceLastDownload = 90;
+
+                    getBiggestZequnr(function (BiggestZequnr) {
+                        console.log("BiggestZequnr=" + BiggestZequnr);
+                        if ((BiggestZequnr != "999999999999999999" && daysSinceSyncStart != 0) || daysSinceLastDownload > 90) {
+                            localStorage.setItem('SyncStart', new Date());
+                            //empty the table then get all the records
+                            emptyAssetSitesDetails(function () {
+                                getAssetsRecursive(0, numRecordsToGet);
+                            })
+                        }
+                        else if (BiggestZequnr != "999999999999999999" && daysSinceSyncStart == 0) {
+                            //don't empty the table - get the rest of the records - presumably the download fell over part way through
                             getAssetsRecursive(BiggestZequnr, numRecordsToGet);
                         }
-                        })
+                        else {
+                            //get deltas
+                            var datestring;
+                            getMostRecentModify(function (datestring) {
+                                getAssetRecords("ZGW_MAM_EXTRACT_ASSET_DATA", "?" + datestring, function (data) {
+                                    recordsRetrieved = data.length;
+
+                                    if (recordsRetrieved > 0) {
+                                        addRecordstoDb(data, false, function () {
+                                            //Get last equipment number
+                                            getBiggestZequnr(function (BiggestZequnr) {
+                                                console.log("BiggestZequnr=" + BiggestZequnr);
+                                                checkAssetCount();
+                                            })
+                                        })
+                                    }
+                                    else {
+                                        console.log("No Records found");
+                                        checkAssetCount();
+                                    }
+                                });
+                            })
+                        }
                     })
- 
- 
- 
                 }
-                else {
-                    alert("done");
+
+
+                function emptyAssetSitesDetails(callback) {
+                    html5sql.process(
+
+                  "delete from AssetSitesDetails",
+                  function () {
+                      callback();
+                  },
+                   function (error, statement) {
+                       window.console && console.log("Error: " + error.message + " when processing " + statement);
+                       callback();
+                   }
+                  );
                 }
- 
-            });
-        }
+                function getAssetsRecursive(currentEquipNum, numRecordsToGet) {
+                    getAssetRecords("ZGW_MAM_EXTRACT_ASSET_DATA", "?" + currentEquipNum + "?" + numRecordsToGet, function (data) {
+                        recordsRetrieved = data.length;
+
+                        if (recordsRetrieved > 0) {
+                            addRecordstoDb(data,true, function () {
+                                //Get last equipment number
+                                getBiggestZequnr(function (BiggestZequnr) {
+                                    console.log("BiggestZequnr=" + BiggestZequnr);
+                                    if (BiggestZequnr == "999999999999999999") {
+                                        console.log("Finished getAssets ");
+                                        checkAssetCount();
+                                    }
+                                    else {
+                                        getAssetsRecursive(BiggestZequnr, numRecordsToGet);
+                                    }
+
+                                })
+                            })
+
+
+
+                        }
+                        else {
+                            checkAssetCount();
+                        }
+
+
+                    });
+                }
+
+                function checkAssetCount() {
+                    var assetSitesDetailsCount=0;
+                    var azureCount=0;
+
+                    html5sql.process("select count (*) as recordCount from AssetSitesDetails",
+                   function (transaction, results, rowsArray) {
+                       if (rowsArray.length>0){
+                           assetSitesDetailsCount=rowsArray[0].recordCount;
+                       }
+                      html5sql.process("select assdesc from AssetSitesDetails WHERE equnr = '999999999999999999'",
+                 function (transaction, results, rowsArray) {
+                     if (rowsArray.length>0){
+                         azureCount=rowsArray[0].assdesc;
+                     }
+                     opMessage("AssetSitesDetails " + assetSitesDetailsCount + " Azure " + azureCount);
+
+                 },
+                  function (error, statement) {
+                      window.console && console.log("Error: " + error.message + " when processing " + statement);
+                  }
+                 );
+                  },
+                   function (error, statement) {
+                       window.console && console.log("Error: " + error.message + " when processing " + statement);
+                   }
+                  );
+                }
+
  
         function getAssetRecords(page, params, callback) {
-            var myurl = SAPServerPrefix + page + params;//"real" azure
+            var myurl = SAPServerPrefix + page + params+"?"+localStorage.getItem("ASSETWHERE");//"real" azure
             // var myurl = "http://10.193.123.32/AMPServiceService/api/" + page + params;//My local version
  
             $.ajax({
@@ -886,371 +971,505 @@ opMessage("Deleting Existing DG5REL");
             });
         }
  
-        function addRecordstoDb(data, callback) {
- 
+        function addRecordstoDb(data,initialLoad, callback) {
+
             var sqlstatement = "";
- 
+
             // var myarray = [{ 'sql': 'DELETE FROM MODEL', 'data': [] }];
             var myarray = [];
- 
+            var myDeleteSql = "select equnr from assetsitesdetails  limit 0;";
+
             for (var cntx = 0; cntx < data.length ; cntx++) {
-                myarray.push({
-                    'sql': 'INSERT INTO AssetSitesDetails ( assdesc ,assettag ,asstype ,eqart ,eqktx ,equnr ,herst ,iwerk ,mapar ,ncdesc ,otdesc ,plgrp ,pltxt ,serge ,site ,status ,swerk ,syscode ,sysdesc ,tplnr ,zfl_nc ,zinbdt ) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', 'data': [
-                    data[cntx].zassdesc,
-               data[cntx].zassettag,
-               data[cntx].zasstype,
-               data[cntx].zeqart,
-               data[cntx].zeqktx,
-               data[cntx].zequnr,
-               data[cntx].zherst,
-               data[cntx].ziwerk,
-               data[cntx].zmapar,
-               data[cntx].zncdesc,
-               data[cntx].zotdesc,
-               data[cntx].zplgrp,
-               data[cntx].zpltxt,
-               data[cntx].zserge,
-               data[cntx].zsite,
-               data[cntx].zstatus,
-               data[cntx].zswerk,
-               data[cntx].zsyscode,
-               data[cntx].zsysdesc,
-               data[cntx].ztplnr,
-               data[cntx].zzflnc,
-                data[cntx].zinbdt]
-                })
+                if (initialLoad != true)
+                {
+                    myDeleteSql += "DELETE FROM AssetSitesDetails WHERE equnr = '" + data[cntx].zequnr + "';";
+                }
+               
+                if (cntx.zdelflag != "X") {
+                    myarray.push({
+                        'sql': 'INSERT INTO AssetSitesDetails ( assdesc ,assettag ,asstype ,eqart ,eqktx ,equnr ,herst ,iwerk ,mapar ,ncdesc ,otdesc ,plgrp ,pltxt ,serge ,site ,status ,swerk ,syscode ,sysdesc ,tplnr ,zfl_nc ,zinbdt,zlastmodify ) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', 'data': [
+                        data[cntx].zassdesc,
+                   data[cntx].zassettag,
+                   data[cntx].zasstype,
+                   data[cntx].zeqart,
+                   data[cntx].zeqktx,
+                   data[cntx].zequnr,
+                   data[cntx].zherst,
+                   data[cntx].ziwerk,
+                   data[cntx].zmapar,
+                   data[cntx].zncdesc,
+                   data[cntx].zotdesc,
+                   data[cntx].zplgrp,
+                   data[cntx].zpltxt,
+                   data[cntx].zserge,
+                   data[cntx].zsite,
+                   data[cntx].zstatus,
+                   data[cntx].zswerk,
+                   data[cntx].zsyscode,
+                   data[cntx].zsysdesc,
+                   data[cntx].ztplnr,
+                   data[cntx].zzflNc,
+                    data[cntx].zinbdt,
+                     data[cntx].zlastmodify]
+                    })
+                }
             }
             console.log(myarray[0]);
             opMessage("Success - Built asset array - " + myarray.length + " rows");
-            html5sql.process(
-                  myarray
-                ,
-                 function () {
-                     opMessage("Success - Finished Loading Model");
-                     console.log("Added record to db");
-                     callback();
-                 },
-                 function (error, statement) {
-                     opMessage("Error: " + error.message + " when processing " + statement);
-                 }
-            );
+
+            html5sql.process(myDeleteSql,
+                                function (transaction, results, rowsArray) {
+                                    html5sql.process(myarray, function () {
+                                        opMessage("Added records to db");
+                                        console.log("Added records to db");
+                                        callback();
+                                    },
+                                    function (error, statement) {
+                                        opMessage("Error: " + error.message + " when processing " + statement);
+                                    });
+                                },
+                                function (error, statement) {
+                                    opMessage("Error: " + error.message + " when processing " + statement);
+                                    showErrorMessage("Delete", error.message)
+                                }
+                   );
+
         }
- 
- 
         function getBiggestZequnr(callback) {
-            var sqlstatement = 'SELECT  equnr as numRecords  FROM ASSETSITESDETAILS ORDER BY equnr desc limit 1';
- 
- 
+            var sqlstatement = 'SELECT  equnr as biggestZequnr  FROM ASSETSITESDETAILS ORDER BY equnr desc limit 1';
+
+
             html5sql.process(sqlstatement,
                                  function (transaction, results, rowsArray) {
-                                     callback(rowsArray[0].numRecords)
+                                     if (rowsArray.length > 0) {
+                                         callback(rowsArray[0].biggestZequnr)
+                                     }
+                                     else {
+                                         callback(0);
+                                     }
+                                    
                                  },
                              function (error, statement) {
                                  opMessage("Error: " + error.message + " when processing " + statement);
                                  showErrorMessage("Delete", error.message)
                              }
                     );
-        }        
+        }
+        function getMostRecentModify(callback) {
+            var sqlstatement = 'SELECT  zlastmodify as lastmodify  FROM ASSETSITESDETAILS ORDER BY zlastmodify desc limit 1';
+            html5sql.process(sqlstatement,
+                                 function (transaction, results, rowsArray) {
+                                     if (rowsArray.length > 0) {
+                                         callback(rowsArray[0].lastmodify)
+                                     }
+                                     else {
+                                         callback(0);
+                                     }
+                                 },
+                             function (error, statement) {
+                                 opMessage("Error: " + error.message + " when processing " + statement);
+                                 showErrorMessage("Delete", error.message)
+                             }
+                    );
+        }
+     
         
 /************************************************/
 /* Orders Data Call back              */
 /************************************************/
-function ZGW_GET_JOB_DETAILSCB(data) {
- 
-opMessage("Loading"+data.tojobdet.results.length+" JobDets");
-if(data.tojobdet.results.length>0){
-if(syncReferenceDetsUpdated){
-localStorage.setItem('LastSyncTransactionalDetails',localStorage.getItem('LastSyncTransactionalDetails')+', JobDets:'+String(data.tojobdet.results.length));
-}else{
-localStorage.setItem('LastSyncTransactionalDetails',localStorage.getItem('LastSyncTransactionalDetails')+'Jobdets:'+String(data.tojobdet.results.length));
-}
- 
- 
-var tcdates=[];
- 
-var myarray = [{ 'sql': 'DELETE FROM MyJobDetsAddress', 'data': [] }];
-myarray.push({ 'sql': 'DELETE FROM MyJobDets', 'data': [] })
-  myarray.push({ 'sql': 'DELETE FROM MyJobDetsNotifLongText', 'data': [] })
-  myarray.push({ 'sql': 'DELETE FROM MyJobDetsOrderOps', 'data': [] })
-  myarray.push({ 'sql': 'DELETE FROM MyJobDetsIconPriority', 'data': [] })
-  myarray.push({ 'sql': 'DELETE FROM MyJobDetsIconJob', 'data': [] })
-  myarray.push({ 'sql': 'DELETE FROM MyJobDetsMPcodes', 'data': [] })
-  myarray.push({ 'sql': 'DELETE FROM MyJobDetsMPoints', 'data': [] })
-  myarray.push({ 'sql': 'DELETE FROM MyJobDetsLoch', 'data': [] })
-  myarray.push({ 'sql': 'DELETE FROM MyJobDetsDraw', 'data': [] })
-  myarray.push({ 'sql': 'DELETE FROM MyJobsDetsEQ', 'data': [] })
-  myarray.push({ 'sql': 'DELETE FROM MyJobsDetsATTR', 'data': [] })
-  myarray.push({ 'sql': 'DELETE FROM MyJobDetsMeasCodes', 'data': [] })
-  myarray.push({ 'sql': 'DELETE FROM MyJobDetsComps', 'data': [] })
-  myarray.push({ 'sql': 'DELETE FROM MyJobDetsOrderLongText', 'data': [] })
-  opMessage("jobdets:"+data.tojobdet.results.length)
-for(var cntx=0; cntx < data.tojobdet.results.length ; cntx++)
-{
-tcdates=[];
-if (data.tojobdet.results[cntx].acptDate.length>6){
- 
-tcdates.push(data.tojobdet.results[cntx].acptDate+"|"+data.tojobdet.results[cntx].acptTime);
-}
-if (data.tojobdet.results[cntx].onsiteDate.length>6){
- 
-tcdates.push(data.tojobdet.results[cntx].onsiteDate+"|"+data.tojobdet.results[cntx].onsiteTime);
-}
-if (data.tojobdet.results[cntx].parkDate.length>6){
- 
-tcdates.push(data.tojobdet.results[cntx].parkDate+"|"+data.tojobdet.results[cntx].parkTime);
-}
- 
-tcdates.sort()
- 
-if(tcdates.length>0){
-x=tcdates[tcdates.length-1].split("|");
-tconfd=x[0]
-tconft=x[1]
-}else{
-tconfd=""
-tconft=""
-}
-myarray.push({
-'sql': 'INSERT INTO MyJobDets ('+
- 
-"orderid,ordnoOp,watercare,textMess,reduration, startTime,startDate,pmacttypeText, pmacttype, "+
-" workTypeCdx,workTypeCd,workTypeCgpx,workTypeCgp,ordType,shortText,priorityx,priority, " +
-" statusCrtim,statusCrdat,statusDescL,statusDescS ,status,plant,myalmScenario,workCntrOper, "+
-" workCntrUser,empName,empNo,user,custAppt,jobPartRef,locHistRef,address, "+
-" custFeed,equipment,equipmentDesc,funcLoc,funcLocDesc,flcLonLat,siteShcode,acptDate,acptTime, " +
-" onsiteDate,onsiteTime,tconf_date,tconf_time,assocOpRef,opActtype,opActtypex,name1,telNumber,eqpLonLat,notificationNo, "+
-" notifCatProf,enddateLconf,endtimeLconf,custNo,parkDate,parkTime,custCmmt,form1,form2,mandForm, "+
-" documents,tma,contractAssist,specialEq,materials,measurements,callAppt,acNo,acStatus,retention, " +
-" ntTelNo,skillType,assettag,ordWorkCntr,ordPlant,userMobile,notifCrdat,notifCrtim,ohdrShortText, " +
-" zzretc,zzretn,zzrettn,zzemai,zzgisx,zzgisy,zzmogisx,zzmogisy) values ("+
-" ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," +
-" ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," +
-" ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," +
-" ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," +
-" ?,?,?,?,?,?,?,?,?,?)", 'data': 
- 
- 
-[data.tojobdet.results[cntx].orderid,data.tojobdet.results[cntx].ordnoOp,data.tojobdet.results[cntx].watercare,
-data.tojobdet.results[cntx].textMess,data.tojobdet.results[cntx].reduration,data.tojobdet.results[cntx].startTime,
-data.tojobdet.results[cntx].startDate,data.tojobdet.results[cntx].pmacttypeText,data.tojobdet.results[cntx].pmacttype,
-data.tojobdet.results[cntx].workTypeCdx,data.tojobdet.results[cntx].workTypeCd,data.tojobdet.results[cntx].workTypeCgpx,
-data.tojobdet.results[cntx].workTypeCgp,data.tojobdet.results[cntx].ordType,data.tojobdet.results[cntx].shortText,
-data.tojobdet.results[cntx].priorityx,data.tojobdet.results[cntx].priority,data.tojobdet.results[cntx].statusCrtim,
-data.tojobdet.results[cntx].statusCrdat,data.tojobdet.results[cntx].statusDescL,data.tojobdet.results[cntx].statusDescS ,
-data.tojobdet.results[cntx].status,data.tojobdet.results[cntx].plant,data.tojobdet.results[cntx].myalmScenario,
-data.tojobdet.results[cntx].workCntrOper,data.tojobdet.results[cntx].workCntrUser,data.tojobdet.results[cntx].empName,
-data.tojobdet.results[cntx].empNo,data.tojobdet.results[cntx].user,data.tojobdet.results[cntx].custAppt,
-data.tojobdet.results[cntx].jobPartRef,data.tojobdet.results[cntx].locHistRef,data.tojobdet.results[cntx].address,
-data.tojobdet.results[cntx].custFeed,data.tojobdet.results[cntx].equipment,data.tojobdet.results[cntx].equipmentDesc,
-data.tojobdet.results[cntx].funcLoc,data.tojobdet.results[cntx].funcLocDesc,data.tojobdet.results[cntx].flcLonLat,
-data.tojobdet.results[cntx].siteShcode,data.tojobdet.results[cntx].acptDate,data.tojobdet.results[cntx].acptTime,
- 
-data.tojobdet.results[cntx].onsiteDate,data.tojobdet.results[cntx].onsiteTime,tconfd,tconft,data.tojobdet.results[cntx].assocOpRef,
-data.tojobdet.results[cntx].opActtype,data.tojobdet.results[cntx].opActtypex,data.tojobdet.results[cntx].name1,
-data.tojobdet.results[cntx].telNumber,data.tojobdet.results[cntx].eqpLonLat,data.tojobdet.results[cntx].notificationNo,
-data.tojobdet.results[cntx].notifCatProf,data.tojobdet.results[cntx].enddateLconf,data.tojobdet.results[cntx].endtimeLconf,
-data.tojobdet.results[cntx].custNo,data.tojobdet.results[cntx].parkDate,data.tojobdet.results[cntx].parkTime,data.tojobdet.results[cntx].custCmmt,
-data.tojobdet.results[cntx].form1,data.tojobdet.results[cntx].form2,data.tojobdet.results[cntx].mandForm,
-data.tojobdet.results[cntx].documents,data.tojobdet.results[cntx].tma,data.tojobdet.results[cntx].contractAssist,
-data.tojobdet.results[cntx].specialEq,data.tojobdet.results[cntx].materials,data.tojobdet.results[cntx].measurements,
-data.tojobdet.results[cntx].callAppt,data.tojobdet.results[cntx].acNo,data.tojobdet.results[cntx].acStatus,data.tojobdet.results[cntx].retention,
-data.tojobdet.results[cntx].ntTelNo,data.tojobdet.results[cntx].skillType,data.tojobdet.results[cntx].assettag,data.tojobdet.results[cntx].ordWorkCntr,
-data.tojobdet.results[cntx].ordPlant,data.tojobdet.results[cntx].userMobile,data.tojobdet.results[cntx].notifCrdat,data.tojobdet.results[cntx].notifCrtim,
-data.tojobdet.results[cntx].ohdrShortText,data.tojobdet.results[cntx].zzretc,data.tojobdet.results[cntx].zzretn,data.tojobdet.results[cntx].zzrettn,
-data.tojobdet.results[cntx].zzemai,data.tojobdet.results[cntx].zzgisx,data.tojobdet.results[cntx].zzgisy,data.tojobdet.results[cntx].zzmogisx,data.tojobdet.results[cntx].zzmogisy]
- 
-})
- 
- 
-}
-  opMessage("tomeascodes:"+data.tomeascodes.results.length)
-  for(var cntx=0; cntx < data.tomeascodes.results.length ; cntx++)
-{
- 
-myarray.push({
-'sql': 'INSERT INTO MyJobDetsMPcodes (  code_gp , code , code_text ) VALUES  (?,?,?)', 'data':
-[data.tomeascodes.results[cntx].codeGp , data.tomeascodes.results[cntx].code , data.tomeascodes.results[cntx].codeText]
-})
-}
-  opMessage("tomeaspoints:"+data.tomeaspoints.results.length)
-  for(var cntx=0; cntx < data.tomeaspoints.results.length ; cntx++)
-{
- 
-myarray.push({
-'sql': 'INSERT INTO MyJobDetsMPoints (  meas_point , object_id ,object_desc , psort ,pttxt , format ,no_char , no_deci ,code_gp , code , unit_meas ,read_from ) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?)', 'data':
-[data.tomeaspoints.results[cntx].measPoint , data.tomeaspoints.results[cntx].objectId ,data.tomeaspoints.results[cntx].objectDesc , data.tomeaspoints.results[cntx].psort ,
-data.tomeaspoints.results[cntx].pttxt , data.tomeaspoints.results[cntx].format ,data.tomeaspoints.results[cntx].noChar , data.tomeaspoints.results[cntx].noDeci ,
-data.tomeaspoints.results[cntx].codeGp , data.tomeaspoints.results[cntx].code , data.tomeaspoints.results[cntx].unitMeas ,data.tomeaspoints.results[cntx].readFrom ]
-})
-}
-  opMessage("tojobloch:"+data.tojobloch.results.length)
-  for(var cntx=0; cntx < data.tojobloch.results.length ; cntx++)
-{
- 
-myarray.push({
-'sql': 'INSERT INTO MyJobDetsLoch ( orderno,notification_no,not_type,not_date,not_time,not_shtxt,not_order,meter_no,meter_rdg,work_type,order_type,op_txt, order_date,order_status ) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?,?,?)', 'data':
-[ data.tojobloch.results[cntx].order,data.tojobloch.results[cntx].notificationNo,data.tojobloch.results[cntx].notType,data.tojobloch.results[cntx].notDate,
-  data.tojobloch.results[cntx].notTime,data.tojobloch.results[cntx].notShtxt,data.tojobloch.results[cntx].notOrder,data.tojobloch.results[cntx].meterNo,
-  data.tojobloch.results[cntx].meterRdg,data.tojobloch.results[cntx].workType,data.tojobloch.results[cntx].orderType,data.tojobloch.results[cntx].opTxt, 
-  data.tojobloch.results[cntx].orderDate,data.tojobloch.results[cntx].orderStatus  ]
-})
-}
-  opMessage("todraw_operation:"+data.todraw_operation.results.length)
-  for(var cntx=0; cntx < data.todraw_operation.results.length ; cntx++)
-{
- 
-myarray.push({
-'sql': 'INSERT INTO MyJobDetsDraw (orderno,zact,zite,zmandatoryfield,zurl,nodeid,fname,mime  ) VALUES  (?,?,?,?,?,?,?,?)', 'data':
-[data.todraw_operation.results[cntx].Orderid,data.todraw_operation.results[cntx].Zactivity,data.todraw_operation.results[cntx].Zitem,
-data.todraw_operation.results[cntx].Zmandatoryfield,data.todraw_operation.results[cntx].Zurl,data.todraw_operation.results[cntx].Nodeid,
-data.todraw_operation.results[cntx].Fname,data.todraw_operation.results[cntx].Mime ]
-})
-}
-  opMessage("toequipment:"+data.toequipment.results.length)
-  for(var cntx=0; cntx < data.toequipment.results.length ; cntx++)
-{
- 
-myarray.push({
-'sql': 'INSERT INTO MyJobsDetsEQ ( equnr,obj_type,obj_type_desc,start_date,manfacture,manparno,manserno,user_status_code,swerk,swerk_desc,profile,device,device_info,install_date, install_loc_desc ) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', 'data':
-[ data.toequipment.results[cntx].equnr,data.toequipment.results[cntx].objType,data.toequipment.results[cntx].objTypeDesc,data.toequipment.results[cntx].startDate,
-  data.toequipment.results[cntx].manfacture,data.toequipment.results[cntx].manparno,data.toequipment.results[cntx].manserno,data.toequipment.results[cntx].userStatusCode,
-  data.toequipment.results[cntx].swerk,data.toequipment.results[cntx].swerkDesc,data.toequipment.results[cntx].profile,data.toequipment.results[cntx].device,
-  data.toequipment.results[cntx].deviceInfo,data.toequipment.results[cntx].installDate,data.toequipment.results[cntx].installLocDesc]
-})
-}
-  opMessage("toattributes:"+data.toattributes.results.length)
-  for(var cntx=0; cntx < data.toattributes.results.length ; cntx++)
-{
- 
-myarray.push({
-'sql': 'INSERT INTO MyJobsDetsATTR (  equnr,classnum,klassentext,charact,charact_desc,value ) VALUES  (?,?,?,?,?,?)', 'data':
-[ data.toattributes.results[cntx].equnr,data.toattributes.results[cntx].classnum,data.toattributes.results[cntx].klassentext,
-  data.toattributes.results[cntx].charact,data.toattributes.results[cntx].charactDescr,data.toattributes.results[cntx].value ]
-})
-}
-  opMessage("tomeascodes:"+data.tomeascodes.results.length)
-  for(var cntx=0; cntx < data.tomeascodes.results.length ; cntx++)
-{
- 
-myarray.push({
-'sql': 'INSERT INTO MyJobDetsMeasCodes ( code_gp,code,code_text ) VALUES  (?,?,?)', 'data':
-[ data.tomeascodes.results[cntx].codeGp,data.tomeascodes.results[cntx].code,data.tomeascodes.results[cntx].codeText]
-})
-}
-  opMessage("tocomps:"+data.tocomps.results.length)
-  for(var cntx=0; cntx < data.tocomps.results.length ; cntx++)
-{
- 
-myarray.push({
-'sql': 'INSERT INTO MyJobDetsComps ( orderno,opno,material,description,ent_qty,com_qty,with_qty,upm,plant, stloc, batch_no,req_date, res_item ) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?,?)', 'data':
-[data.tocomps.results[cntx].orderno,data.tocomps.results[cntx].opno,data.tocomps.results[cntx].material,data.tocomps.results[cntx].description,
-data.tocomps.results[cntx].entQty,data.tocomps.results[cntx].comQty,data.tocomps.results[cntx].withQty,data.tocomps.results[cntx].upm,
-data.tocomps.results[cntx].plant,data.tocomps.results[cntx]. stloc,data.tocomps.results[cntx]. batchNo,data.tocomps.results[cntx].reqDate,data.tocomps.results[cntx].resItem ]
-})
-}
-  opMessage("toorder_long_text:"+data.toorder_long_text.results.length)
-  for(var cntx=0; cntx < data.toorder_long_text.results.length ; cntx++)
-{
- 
-myarray.push({
-'sql': 'INSERT INTO MyJobDetsOrderLongText (objtype,objkey,orderno,line_number,format_col,text_line   ) VALUES  (?,?,?,?,?,?)', 'data':
-[ data.toorder_long_text.results[cntx].objtype,data.toorder_long_text.results[cntx].objkey,data.toorder_long_text.results[cntx].order,
-  data.toorder_long_text.results[cntx].lineNumber,data.toorder_long_text.results[cntx].formatCol,data.toorder_long_text.results[cntx].textLine]
- 
-})
-}
-  opMessage("toaddress:"+data.toaddress.results.length)
-  for(var cntx=0; cntx < data.toaddress.results.length ; cntx++)
-{
- 
-myarray.push({
-'sql': 'INSERT INTO MyJobDetsAddress (   orderno,opno,address01,address02,address03,address04,address05,address06,address07,address08,address09,address10,address11,address12,caption01,caption02,caption03,caption04,caption05,caption06,caption07,caption08,caption09,caption10,caption11,caption12) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', 'data':
-[ data.toaddress.results[cntx].orderid,data.toaddress.results[cntx].opno,data.toaddress.results[cntx].address01,data.toaddress.results[cntx].address02,
-  data.toaddress.results[cntx].address03,data.toaddress.results[cntx].address04,data.toaddress.results[cntx].address05,data.toaddress.results[cntx].address06,
-  data.toaddress.results[cntx].address07,data.toaddress.results[cntx].address08,data.toaddress.results[cntx].address09,data.toaddress.results[cntx].address10,
-  data.toaddress.results[cntx].address11,data.toaddress.results[cntx].address12,data.toaddress.results[cntx].caption01,data.toaddress.results[cntx].caption02,
-  data.toaddress.results[cntx].caption03,data.toaddress.results[cntx].caption04,data.toaddress.results[cntx].caption05,data.toaddress.results[cntx].caption06,
-  data.toaddress.results[cntx].caption07,data.toaddress.results[cntx].caption08,data.toaddress.results[cntx].caption09,data.toaddress.results[cntx].caption10,
-  data.toaddress.results[cntx].caption11,data.toaddress.results[cntx].caption12 ]
-})
-}
-  opMessage("tonotification:"+data.tonotification.results.length)
-  for(var cntx=0; cntx < data.tonotification.results.length ; cntx++)
-{
- 
-myarray.push({
-'sql': 'INSERT INTO MyJobDetsNotifLongText ( objtype,objkey,orderno,line_number,format_col,text_line ) VALUES  (?,?,?,?,?,?)', 'data':
-[data.tonotification.results[cntx].objtype,data.tonotification.results[cntx].objkey,data.tonotification.results[cntx].order,
-data.tonotification.results[cntx].lineNumber,data.tonotification.results[cntx].formatCol,data.tonotification.results[cntx].textLine ]
-})
-}
-  opMessage("tojob_order_ops:"+data.tojob_order_ops.results.length)
-  for(var cntx=0; cntx < data.tojob_order_ops.results.length ; cntx++)
-{
- 
-myarray.push({
-'sql': 'INSERT INTO MyJobDetsOrderOps (orderno,operation,comp_date_time,description,status,name   ) VALUES  (?,?,?,?,?,?)', 'data':
-[ data.tojob_order_ops.results[cntx].orderno,data.tojob_order_ops.results[cntx].operation,data.tojob_order_ops.results[cntx].compDateTime,
-  data.tojob_order_ops.results[cntx].description,data.tojob_order_ops.results[cntx].status,data.tojob_order_ops.results[cntx].name ]
-})
-}
-  opMessage("toicon_priority:"+data.toicon_priority.results.length)
-  for(var cntx=0; cntx < data.toicon_priority.results.length ; cntx++)
-{
- 
-myarray.push({
-'sql': 'INSERT INTO MyJobDetsIconPriority ( orderno,opno,icon_filename,tooltip,tooltip_desc,command ) VALUES  (?,?,?,?,?,?)', 'data':
-[data.toicon_priority.results[cntx].orderid,data.toicon_priority.results[cntx].opno,data.toicon_priority.results[cntx].iconFilename,
-data.toicon_priority.results[cntx].tooltip,data.toicon_priority.results[cntx].tooltipDesc,data.toicon_priority.results[cntx].command ]
-})
-}
-  opMessage("toicon_job:"+data.toicon_job.results.length)
-  for(var cntx=0; cntx < data.toicon_job.results.length ; cntx++)
-{
- 
-myarray.push({
-'sql': 'INSERT INTO MyJobDetsIconJob ( orderno,opno,icon_type,icon_position,icon_filename,icon_txt,tooltip,tooltip_desc,command,grid,grid_vals ) VALUES  (?,?,?,?,?,?,?,?,?,?,?)', 'data':
-[data.toicon_job.results[cntx].orderid,data.toicon_job.results[cntx].opno,data.toicon_job.results[cntx].iconType,data.toicon_job.results[cntx].iconPosition,
-data.toicon_job.results[cntx].iconFilename,data.toicon_job.results[cntx].iconTxt,data.toicon_job.results[cntx].tooltip,
-data.toicon_job.results[cntx].tooltipDesc,data.toicon_job.results[cntx].command,data.toicon_job.results[cntx].grid,data.toicon_job.results[cntx].gridVals ]
-})
-}
-  opMessage("toordtimeconf:"+data.toordtimeconf.results.length)
-  for(var cntx=0; cntx < data.toordtimeconf.results.length ; cntx++)
-{
- 
-myarray.push({
-'sql': 'INSERT INTO MyTimeConfs (orderno , opno,type, confno , description , date , time , enddate, endtime, duration, empid, final,user) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?,?)', 'data':
-[data.toordtimeconf.results[cntx].orderNo,  data.toordtimeconf.results[cntx].activity,
-data.toordtimeconf.results[cntx].actType,  data.toordtimeconf.results[cntx].confNo,
-data.toordtimeconf.results[cntx].confText, data.toordtimeconf.results[cntx].startDate,
-data.toordtimeconf.results[cntx].startTime,data.toordtimeconf.results[cntx].endDate,
-data.toordtimeconf.results[cntx].endTime,  data.toordtimeconf.results[cntx].actualDur,
-data.toordtimeconf.results[cntx].persNo,   data.toordtimeconf.results[cntx].complete,
-data.toordtimeconf.results[cntx].user]
-})
-}
- 
- 
- 
- 
-html5sql.process(
-myarray
-,
-function(){
-opMessage("Jobdetails dobne")
-},
-function(error, statement){
-opMessage("Error: " + error.message + " when inserting MyJobDetails" + statement);
-}        
-);
- 
- 
- 
- 
-}
-}
- 
+        function ZGW_GET_JOB_DETAILSCB(data) {
+        	var orderlist="";
+        	var orderoplist="";
+        	opMessage("Loading"+data.tojobdet.results.length+" JobDets");
+
+        	if(data.tojobdet.results.length>0){
+        	if(syncReferenceDetsUpdated){
+        	localStorage.setItem('LastSyncTransactionalDetails',localStorage.getItem('LastSyncTransactionalDetails')+', JobDets:'+String(data.tojobdet.results.length));
+        	}else{
+        	localStorage.setItem('LastSyncTransactionalDetails',localStorage.getItem('LastSyncTransactionalDetails')+'Jobdets:'+String(data.tojobdet.results.length));
+        	}
+        	 
+        	 
+        	var tcdates=[];
+        	/*var myarray = [{ 'sql': 'DELETE FROM MyJobDetsAddress', 'data': [] }];
+        	myarray.push({ 'sql': 'DELETE FROM MyJobDets', 'data': [] })
+        	myarray.push({ 'sql': 'DELETE FROM MyJobDetsNotifLongText', 'data': [] })
+        	myarray.push({ 'sql': 'DELETE FROM MyJobDetsOrderOps', 'data': [] })
+        	myarray.push({ 'sql': 'DELETE FROM MyJobDetsIconPriority', 'data': [] })
+        	myarray.push({ 'sql': 'DELETE FROM MyJobDetsIconJob', 'data': [] })
+        	myarray.push({ 'sql': 'DELETE FROM MyJobDetsMPcodes', 'data': [] })-------
+        	myarray.push({ 'sql': 'DELETE FROM MyJobDetsMPoints', 'data': [] })-------
+        	myarray.push({ 'sql': 'DELETE FROM MyJobDetsLoch', 'data': [] })
+        	myarray.push({ 'sql': 'DELETE FROM MyJobDetsDraw', 'data': [] })
+        	myarray.push({ 'sql': 'DELETE FROM MyJobsDetsEQ', 'data': [] })-----
+        	myarray.push({ 'sql': 'DELETE FROM MyJobsDetsATTR', 'data': [] })-----
+        	myarray.push({ 'sql': 'DELETE FROM MyJobDetsMeasCodes', 'data': [] })-----
+        	myarray.push({ 'sql': 'DELETE FROM MyJobDetsComps', 'data': [] })
+        	myarray.push({ 'sql': 'DELETE FROM MyJobDetsOrderLongText', 'data': [] }) */
+        	//Think we delete Time confs where copnfno not = 0
+
+
+        	var myarray = [{ 'sql': 'DELETE FROM MyJobDetsMPcodes', 'data': [] }]
+        	  myarray.push({ 'sql': 'DELETE FROM MyJobDetsMPoints', 'data': [] })
+        	  myarray.push({ 'sql': 'DELETE FROM MyJobsDetsEQ', 'data': [] })
+        	  myarray.push({ 'sql': 'DELETE FROM MyJobsDetsATTR', 'data': [] })
+        	  myarray.push({ 'sql': 'DELETE FROM MyJobDetsMeasCodes', 'data': [] })
+        	  myarray.push({ 'sql': 'DELETE FROM MyJobDetsLoch', 'data': [] })
+        	  myarray.push({ 'sql': 'DELETE FROM MyJobDetsComps', 'data': [] })
+        	  myarray.push({ 'sql': 'DELETE FROM MyJobDetsOrderLongText', 'data': [] })
+        	  myarray.push({ 'sql': 'DELETE FROM MyJobDetsAddress', 'data': [] })
+        	  myarray.push({ 'sql': 'DELETE FROM MyJobDetsNotifLongText', 'data': [] }) 
+        	  myarray.push({ 'sql': 'DELETE FROM MyJobDetsOrderOps', 'data': [] })
+        	  myarray.push({ 'sql': 'DELETE FROM MyJobDetsIconPriority', 'data': [] })
+        	  myarray.push({ 'sql': 'DELETE FROM MyJobDetsIconJob', 'data': [] })
+        	  
+        	  opMessage("jobdets:"+data.tojobdet.results.length)
+        	for(var cntx=0; cntx < data.tojobdet.results.length ; cntx++)
+        	{
+        		if(cntx>0){
+        			orderlist+=","
+        			orderoplist+=","
+        		}
+        		orderlist+="'"+data.tojobdet.results[cntx].orderid+"'"
+        		orderoplist+="'"+data.tojobdet.results[cntx].orderid+data.tojobdet.results[cntx].ordnoOp+"'"
+        	tcdates=[];
+        	if (data.tojobdet.results[cntx].acptDate.length>6){
+        	 
+        	tcdates.push(data.tojobdet.results[cntx].acptDate+"|"+data.tojobdet.results[cntx].acptTime);
+        	}
+        	if (data.tojobdet.results[cntx].onsiteDate.length>6){
+        	 
+        	tcdates.push(data.tojobdet.results[cntx].onsiteDate+"|"+data.tojobdet.results[cntx].onsiteTime);
+        	}
+        	if (data.tojobdet.results[cntx].parkDate.length>6){
+        	 
+        	tcdates.push(data.tojobdet.results[cntx].parkDate+"|"+data.tojobdet.results[cntx].parkTime);
+        	}
+        	 
+        	tcdates.sort()
+        	 
+        	if(tcdates.length>0){
+        	x=tcdates[tcdates.length-1].split("|");
+        	tconfd=x[0]
+        	tconft=x[1]
+        	}else{
+        	tconfd=""
+        	tconft=""
+        	}
+        	if(localJobDets.indexOf(data.tojobdet.results[cntx].orderid+data.tojobdet.results[cntx].ordnoOp)<0){
+        	myarray.push({
+        	'sql': 'INSERT INTO MyJobDets ('+
+        	 
+        	"orderid,ordnoOp,watercare,textMess,reduration, startTime,startDate,pmacttypeText, pmacttype, "+
+        	" workTypeCdx,workTypeCd,workTypeCgpx,workTypeCgp,ordType,shortText,priorityx,priority, " +
+        	" statusCrtim,statusCrdat,statusDescL,statusDescS ,status,plant,myalmScenario,workCntrOper, "+
+        	" workCntrUser,empName,empNo,user,custAppt,jobPartRef,locHistRef,address, "+
+        	" custFeed,equipment,equipmentDesc,funcLoc,funcLocDesc,flcLonLat,siteShcode,acptDate,acptTime, " +
+        	" onsiteDate,onsiteTime,tconf_date,tconf_time,assocOpRef,opActtype,opActtypex,name1,telNumber,eqpLonLat,notificationNo, "+
+        	" notifCatProf,enddateLconf,endtimeLconf,custNo,parkDate,parkTime,custCmmt,form1,form2,mandForm, "+
+        	" documents,tma,contractAssist,specialEq,materials,measurements,callAppt,acNo,acStatus,retention, " +
+        	" ntTelNo,skillType,assettag,ordWorkCntr,ordPlant,userMobile,notifCrdat,notifCrtim,ohdrShortText, " +
+        	" zzretc,zzretn,zzrettn,zzemai,zzgisx,zzgisy,zzmogisx,zzmogisy) values ("+
+        	" ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," +
+        	" ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," +
+        	" ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," +
+        	" ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," +
+        	" ?,?,?,?,?,?,?,?,?,?)", 'data': 
+        	 
+        	 
+        	[data.tojobdet.results[cntx].orderid,data.tojobdet.results[cntx].ordnoOp,data.tojobdet.results[cntx].watercare,
+        	data.tojobdet.results[cntx].textMess,data.tojobdet.results[cntx].reduration,data.tojobdet.results[cntx].startTime,
+        	data.tojobdet.results[cntx].startDate,data.tojobdet.results[cntx].pmacttypeText,data.tojobdet.results[cntx].pmacttype,
+        	data.tojobdet.results[cntx].workTypeCdx,data.tojobdet.results[cntx].workTypeCd,data.tojobdet.results[cntx].workTypeCgpx,
+        	data.tojobdet.results[cntx].workTypeCgp,data.tojobdet.results[cntx].ordType,data.tojobdet.results[cntx].shortText,
+        	data.tojobdet.results[cntx].priorityx,data.tojobdet.results[cntx].priority,data.tojobdet.results[cntx].statusCrtim,
+        	data.tojobdet.results[cntx].statusCrdat,data.tojobdet.results[cntx].statusDescL,data.tojobdet.results[cntx].statusDescS ,
+        	data.tojobdet.results[cntx].status,data.tojobdet.results[cntx].plant,data.tojobdet.results[cntx].myalmScenario,
+        	data.tojobdet.results[cntx].workCntrOper,data.tojobdet.results[cntx].workCntrUser,data.tojobdet.results[cntx].empName,
+        	data.tojobdet.results[cntx].empNo,data.tojobdet.results[cntx].user,data.tojobdet.results[cntx].custAppt,
+        	data.tojobdet.results[cntx].jobPartRef,data.tojobdet.results[cntx].locHistRef,data.tojobdet.results[cntx].address,
+        	data.tojobdet.results[cntx].custFeed,data.tojobdet.results[cntx].equipment,data.tojobdet.results[cntx].equipmentDesc,
+        	data.tojobdet.results[cntx].funcLoc,data.tojobdet.results[cntx].funcLocDesc,data.tojobdet.results[cntx].flcLonLat,
+        	data.tojobdet.results[cntx].siteShcode,data.tojobdet.results[cntx].acptDate,data.tojobdet.results[cntx].acptTime,
+        	 
+        	data.tojobdet.results[cntx].onsiteDate,data.tojobdet.results[cntx].onsiteTime,tconfd,tconft,data.tojobdet.results[cntx].assocOpRef,
+        	data.tojobdet.results[cntx].opActtype,data.tojobdet.results[cntx].opActtypex,data.tojobdet.results[cntx].name1,
+        	data.tojobdet.results[cntx].telNumber,data.tojobdet.results[cntx].eqpLonLat,data.tojobdet.results[cntx].notificationNo,
+        	data.tojobdet.results[cntx].notifCatProf,data.tojobdet.results[cntx].enddateLconf,data.tojobdet.results[cntx].endtimeLconf,
+        	data.tojobdet.results[cntx].custNo,data.tojobdet.results[cntx].parkDate,data.tojobdet.results[cntx].parkTime,data.tojobdet.results[cntx].custCmmt,
+        	data.tojobdet.results[cntx].form1,data.tojobdet.results[cntx].form2,data.tojobdet.results[cntx].mandForm,
+        	data.tojobdet.results[cntx].documents,data.tojobdet.results[cntx].tma,data.tojobdet.results[cntx].contractAssist,
+        	data.tojobdet.results[cntx].specialEq,data.tojobdet.results[cntx].materials,data.tojobdet.results[cntx].measurements,
+        	data.tojobdet.results[cntx].callAppt,data.tojobdet.results[cntx].acNo,data.tojobdet.results[cntx].acStatus,data.tojobdet.results[cntx].retention,
+        	data.tojobdet.results[cntx].ntTelNo,data.tojobdet.results[cntx].skillType,data.tojobdet.results[cntx].assettag,data.tojobdet.results[cntx].ordWorkCntr,
+        	data.tojobdet.results[cntx].ordPlant,data.tojobdet.results[cntx].userMobile,data.tojobdet.results[cntx].notifCrdat,data.tojobdet.results[cntx].notifCrtim,
+        	data.tojobdet.results[cntx].ohdrShortText,data.tojobdet.results[cntx].zzretc,data.tojobdet.results[cntx].zzretn,data.tojobdet.results[cntx].zzrettn,
+        	data.tojobdet.results[cntx].zzemai,data.tojobdet.results[cntx].zzgisx,data.tojobdet.results[cntx].zzgisy,data.tojobdet.results[cntx].zzmogisx,data.tojobdet.results[cntx].zzmogisy]
+        	 
+        	})
+        	} 
+        	 
+        	}
+        	  opMessage("tomeascodes:"+data.tomeascodes.results.length)
+        	  for(var cntx=0; cntx < data.tomeascodes.results.length ; cntx++)
+        	{
+        	 
+        	myarray.push({
+        	'sql': 'INSERT INTO MyJobDetsMPcodes (  code_gp , code , code_text ) VALUES  (?,?,?)', 'data':
+        	[data.tomeascodes.results[cntx].codeGp , data.tomeascodes.results[cntx].code , data.tomeascodes.results[cntx].codeText]
+        	})
+        	}
+        	  opMessage("tomeaspoints:"+data.tomeaspoints.results.length)
+        	  for(var cntx=0; cntx < data.tomeaspoints.results.length ; cntx++)
+        	{
+        	 
+        	myarray.push({
+        	'sql': 'INSERT INTO MyJobDetsMPoints (  meas_point , object_id ,object_desc , psort ,pttxt , format ,no_char , no_deci ,code_gp , code , unit_meas ,read_from ) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?)', 'data':
+        	[data.tomeaspoints.results[cntx].measPoint , data.tomeaspoints.results[cntx].objectId ,data.tomeaspoints.results[cntx].objectDesc , data.tomeaspoints.results[cntx].psort ,
+        	data.tomeaspoints.results[cntx].pttxt , data.tomeaspoints.results[cntx].format ,data.tomeaspoints.results[cntx].noChar , data.tomeaspoints.results[cntx].noDeci ,
+        	data.tomeaspoints.results[cntx].codeGp , data.tomeaspoints.results[cntx].code , data.tomeaspoints.results[cntx].unitMeas ,data.tomeaspoints.results[cntx].readFrom ]
+        	})
+        	}
+        	  opMessage("tojobloch:"+data.tojobloch.results.length)
+        	  for(var cntx=0; cntx < data.tojobloch.results.length ; cntx++)
+        	{
+        		
+        	myarray.push({
+        	'sql': 'INSERT INTO MyJobDetsLoch ( orderno,notification_no,not_type,not_date,not_time,not_shtxt,not_order,meter_no,meter_rdg,work_type,order_type,op_txt, order_date,order_status ) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?,?,?)', 'data':
+        	[ data.tojobloch.results[cntx].order,data.tojobloch.results[cntx].notificationNo,data.tojobloch.results[cntx].notType,data.tojobloch.results[cntx].notDate,
+        	  data.tojobloch.results[cntx].notTime,data.tojobloch.results[cntx].notShtxt,data.tojobloch.results[cntx].notOrder,data.tojobloch.results[cntx].meterNo,
+        	  data.tojobloch.results[cntx].meterRdg,data.tojobloch.results[cntx].workType,data.tojobloch.results[cntx].orderType,data.tojobloch.results[cntx].opTxt, 
+        	  data.tojobloch.results[cntx].orderDate,data.tojobloch.results[cntx].orderStatus  ]
+        	})
+        	}
+
+        	  opMessage("todraw_operation:"+data.todraw_operation.results.length)
+        	  for(var cntx=0; cntx < data.todraw_operation.results.length ; cntx++)
+        	{
+        		  if(localJobDetsOrders.indexOf(data.todraw_operation.results[cntx].Orderid)<0){  
+        	myarray.push({
+        	'sql': 'INSERT INTO MyJobDetsDraw (orderno,zact,zite,zmandatoryfield,zurl,nodeid,fname,mime  ) VALUES  (?,?,?,?,?,?,?,?)', 'data':
+        	[data.todraw_operation.results[cntx].Orderid,data.todraw_operation.results[cntx].Zactivity,data.todraw_operation.results[cntx].Zitem,
+        	data.todraw_operation.results[cntx].Zmandatoryfield,data.todraw_operation.results[cntx].Zurl,data.todraw_operation.results[cntx].Nodeid,
+        	data.todraw_operation.results[cntx].Fname,data.todraw_operation.results[cntx].Mime ]
+        	})
+        		  }
+        	}
+        	  opMessage("toequipment:"+data.toequipment.results.length)
+        	  for(var cntx=0; cntx < data.toequipment.results.length ; cntx++)
+        	{
+        	 
+        	myarray.push({
+        	'sql': 'INSERT INTO MyJobsDetsEQ ( equnr,obj_type,obj_type_desc,start_date,manfacture,manparno,manserno,user_status_code,swerk,swerk_desc,profile,device,device_info,install_date, install_loc_desc ) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', 'data':
+        	[ data.toequipment.results[cntx].equnr,data.toequipment.results[cntx].objType,data.toequipment.results[cntx].objTypeDesc,data.toequipment.results[cntx].startDate,
+        	  data.toequipment.results[cntx].manfacture,data.toequipment.results[cntx].manparno,data.toequipment.results[cntx].manserno,data.toequipment.results[cntx].userStatusCode,
+        	  data.toequipment.results[cntx].swerk,data.toequipment.results[cntx].swerkDesc,data.toequipment.results[cntx].profile,data.toequipment.results[cntx].device,
+        	  data.toequipment.results[cntx].deviceInfo,data.toequipment.results[cntx].installDate,data.toequipment.results[cntx].installLocDesc]
+        	})
+        	}
+        	  opMessage("toattributes:"+data.toattributes.results.length)
+        	  for(var cntx=0; cntx < data.toattributes.results.length ; cntx++)
+        	{
+        	 
+        	myarray.push({
+        	'sql': 'INSERT INTO MyJobsDetsATTR (  equnr,classnum,klassentext,charact,charact_desc,value ) VALUES  (?,?,?,?,?,?)', 'data':
+        	[ data.toattributes.results[cntx].equnr,data.toattributes.results[cntx].classnum,data.toattributes.results[cntx].klassentext,
+        	  data.toattributes.results[cntx].charact,data.toattributes.results[cntx].charactDescr,data.toattributes.results[cntx].value ]
+        	})
+        	}
+        	  opMessage("tomeascodes:"+data.tomeascodes.results.length)
+        	  for(var cntx=0; cntx < data.tomeascodes.results.length ; cntx++)
+        	{
+        	 
+        	myarray.push({
+        	'sql': 'INSERT INTO MyJobDetsMeasCodes ( code_gp,code,code_text ) VALUES  (?,?,?)', 'data':
+        	[ data.tomeascodes.results[cntx].codeGp,data.tomeascodes.results[cntx].code,data.tomeascodes.results[cntx].codeText]
+        	})
+        	}
+        	  opMessage("tocomps:"+data.tocomps.results.length)
+        	  for(var cntx=0; cntx < data.tocomps.results.length ; cntx++)
+        	{
+        		  
+        	myarray.push({
+        	'sql': 'INSERT INTO MyJobDetsComps ( orderno,opno,material,description,ent_qty,com_qty,with_qty,upm,plant, stloc, batch_no,req_date, res_item ) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?,?)', 'data':
+        	[data.tocomps.results[cntx].orderno,data.tocomps.results[cntx].opno,data.tocomps.results[cntx].material,data.tocomps.results[cntx].description,
+        	data.tocomps.results[cntx].entQty,data.tocomps.results[cntx].comQty,data.tocomps.results[cntx].withQty,data.tocomps.results[cntx].upm,
+        	data.tocomps.results[cntx].plant,data.tocomps.results[cntx]. stloc,data.tocomps.results[cntx]. batchNo,data.tocomps.results[cntx].reqDate,data.tocomps.results[cntx].resItem ]
+        	})
+        		  
+        	}
+        	  opMessage("toorder_long_text:"+data.toorder_long_text.results.length)
+
+        		   for(var cntx=0; cntx < data.toorder_long_text.results.length ; cntx++)
+        			   {
+        	myarray.push({
+        	'sql': 'INSERT INTO MyJobDetsOrderLongText (objtype,objkey,orderno,line_number,format_col,text_line   ) VALUES  (?,?,?,?,?,?)', 'data':
+        	[ data.toorder_long_text.results[cntx].objtype,data.toorder_long_text.results[cntx].objkey,data.toorder_long_text.results[cntx].order,
+        	  data.toorder_long_text.results[cntx].lineNumber,data.toorder_long_text.results[cntx].formatCol,data.toorder_long_text.results[cntx].textLine]
+        	 
+        	})
+        		  
+        	}
+        	  opMessage("toaddress:"+data.toaddress.results.length)
+        	  for(var cntx=0; cntx < data.toaddress.results.length ; cntx++)
+        	{
+
+        	myarray.push({
+        	'sql': 'INSERT INTO MyJobDetsAddress (   orderno,opno,address01,address02,address03,address04,address05,address06,address07,address08,address09,address10,address11,address12,caption01,caption02,caption03,caption04,caption05,caption06,caption07,caption08,caption09,caption10,caption11,caption12) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', 'data':
+        	[ data.toaddress.results[cntx].orderid,data.toaddress.results[cntx].opno,data.toaddress.results[cntx].address01,data.toaddress.results[cntx].address02,
+        	  data.toaddress.results[cntx].address03,data.toaddress.results[cntx].address04,data.toaddress.results[cntx].address05,data.toaddress.results[cntx].address06,
+        	  data.toaddress.results[cntx].address07,data.toaddress.results[cntx].address08,data.toaddress.results[cntx].address09,data.toaddress.results[cntx].address10,
+        	  data.toaddress.results[cntx].address11,data.toaddress.results[cntx].address12,data.toaddress.results[cntx].caption01,data.toaddress.results[cntx].caption02,
+        	  data.toaddress.results[cntx].caption03,data.toaddress.results[cntx].caption04,data.toaddress.results[cntx].caption05,data.toaddress.results[cntx].caption06,
+        	  data.toaddress.results[cntx].caption07,data.toaddress.results[cntx].caption08,data.toaddress.results[cntx].caption09,data.toaddress.results[cntx].caption10,
+        	  data.toaddress.results[cntx].caption11,data.toaddress.results[cntx].caption12 ]
+        	})
+        		  
+        	}
+        	  opMessage("tonotification:"+data.tonotification.results.length)
+        	  for(var cntx=0; cntx < data.tonotification.results.length ; cntx++)
+        	{
+        		   
+        	myarray.push({
+        	'sql': 'INSERT INTO MyJobDetsNotifLongText ( objtype,objkey,orderno,line_number,format_col,text_line ) VALUES  (?,?,?,?,?,?)', 'data':
+        	[data.tonotification.results[cntx].objtype,data.tonotification.results[cntx].objkey,data.tonotification.results[cntx].order,
+        	data.tonotification.results[cntx].lineNumber,data.tonotification.results[cntx].formatCol,data.tonotification.results[cntx].textLine ]
+        	})
+        		  
+        	}
+        	  opMessage("tojob_order_ops:"+data.tojob_order_ops.results.length)
+        	  for(var cntx=0; cntx < data.tojob_order_ops.results.length ; cntx++)
+        	{
+
+        	myarray.push({
+        	'sql': 'INSERT INTO MyJobDetsOrderOps (orderno,operation,comp_date_time,description,status,name   ) VALUES  (?,?,?,?,?,?)', 'data':
+        	[ data.tojob_order_ops.results[cntx].Order,data.tojob_order_ops.results[cntx].Operation,data.tojob_order_ops.results[cntx].CompDateTime,
+        	  data.tojob_order_ops.results[cntx].Description,data.tojob_order_ops.results[cntx].Status,data.tojob_order_ops.results[cntx].Name ]
+        	})
+        		  
+        	}
+        	  opMessage("toicon_priority:"+data.toicon_priority.results.length)
+        	  for(var cntx=0; cntx < data.toicon_priority.results.length ; cntx++)
+        	{
+        		 
+        	myarray.push({
+        	'sql': 'INSERT INTO MyJobDetsIconPriority ( orderno,opno,icon_filename,tooltip,tooltip_desc,command ) VALUES  (?,?,?,?,?,?)', 'data':
+        	[data.toicon_priority.results[cntx].orderid,data.toicon_priority.results[cntx].opno,data.toicon_priority.results[cntx].iconFilename,
+        	data.toicon_priority.results[cntx].tooltip,data.toicon_priority.results[cntx].tooltipDesc,data.toicon_priority.results[cntx].command ]
+        	})
+        		  
+        	}
+        	  opMessage("toicon_job:"+data.toicon_job.results.length)
+        	  for(var cntx=0; cntx < data.toicon_job.results.length ; cntx++)
+        	{
+        		  
+        	myarray.push({
+        	'sql': 'INSERT INTO MyJobDetsIconJob ( orderno,opno,icon_type,icon_position,icon_filename,icon_txt,tooltip,tooltip_desc,command,grid,grid_vals ) VALUES  (?,?,?,?,?,?,?,?,?,?,?)', 'data':
+        	[data.toicon_job.results[cntx].orderid,data.toicon_job.results[cntx].opno,data.toicon_job.results[cntx].iconType,data.toicon_job.results[cntx].iconPosition,
+        	data.toicon_job.results[cntx].iconFilename,data.toicon_job.results[cntx].iconTxt,data.toicon_job.results[cntx].tooltip,
+        	data.toicon_job.results[cntx].tooltipDesc,data.toicon_job.results[cntx].command,data.toicon_job.results[cntx].grid,data.toicon_job.results[cntx].gridVals ]
+        	})
+        		  
+        	}
+        	  
+
+        	  
+
+        	  //think about new and sending
+        	  
+        	  
+        	  opMessage("toordtimeconf:"+data.toordtimeconf.results.length)
+        	  for(var cntx=0; cntx < data.toordtimeconf.results.length ; cntx++)
+        	{
+        		  if(localJobDets.indexOf(data.toordtimeconf.results[cntx].orderNo+data.toordtimeconf.results[cntx].activity)<0){   
+        	myarray.push({
+        	'sql': 'INSERT INTO MyTimeConfs (orderno , opno,type, confno , description , date , time , enddate, endtime, duration, empid, final,user) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?,?)', 'data':
+        	[data.toordtimeconf.results[cntx].orderNo,  data.toordtimeconf.results[cntx].activity,
+        	data.toordtimeconf.results[cntx].actType,  data.toordtimeconf.results[cntx].confNo,
+        	data.toordtimeconf.results[cntx].confText, data.toordtimeconf.results[cntx].startDate,
+        	data.toordtimeconf.results[cntx].startTime,data.toordtimeconf.results[cntx].endDate,
+        	data.toordtimeconf.results[cntx].endTime,  data.toordtimeconf.results[cntx].actualDur,
+        	data.toordtimeconf.results[cntx].persNo,   data.toordtimeconf.results[cntx].complete,
+        	data.toordtimeconf.results[cntx].user]
+        	})
+        		  }
+        	}
+        	 
+        	 
+        	 
+        	 
+        	html5sql.process(
+        	myarray
+        	,
+        	function(){
+        	opMessage("Jobdetails done")
+        	removeOldJobDets(orderlist,orderoplist)
+
+        	},
+        	function(error, statement){
+        	opMessage("Error: " + error.message + " when inserting MyJobDetails" + statement);
+        	}        
+        	);
+        	 
+        	}
+        	}
+        	function removeOldJobDets(orderList,orderopList){
+
+        	sqldeleteorders="delete from MyJobDets WHERE orderid||ordnoOp NOT IN ("+orderopList+"); "
+        	sqldeleteorders+="delete from MyJobDetsComps WHERE orderno||opno NOT IN ("+orderopList+"); "
+        	sqldeleteorders+="delete from MyJobDetsAddress WHERE orderno||opno NOT IN ("+orderopList+"); "
+        	sqldeleteorders+="delete from MyJobDetsOrderOps WHERE orderno||operation NOT IN ("+orderopList+"); "
+        	sqldeleteorders+="delete from MyJobDetsIconPriority WHERE orderno||opno NOT IN ("+orderopList+"); "
+        	sqldeleteorders+="delete from MyJobDetsIconJob WHERE orderno||opno NOT IN ("+orderopList+"); "
+
+        	sqldeleteorders+="delete from MyJobDetsLoch WHERE orderno NOT IN ("+orderList+"); "
+        	sqldeleteorders+="delete from MyJobDetsDraw WHERE orderno NOT IN ("+orderList+"); "
+        	sqldeleteorders+="delete from MyJobDetsNotifLongText WHERE orderno NOT IN ("+orderList+"); "
+        	sqldeleteorders+="delete from MyJobDetsOrderLongText WHERE orderno NOT IN ("+orderList+"); "
+
+
+        	sqldeleteorders+="delete from MyTimeConfs WHERE orderno NOT IN ("+orderList+") and confno NOT IN ('NEW','SENDING'); "
+        	sqldeleteorders+="delete from MyNotifications WHERE orderno = '' and notifno not in ('NEW','SENDING'); "
+        	sqldeleteorders+="delete from MyJobAddWork WHERE orderno||opno NOT IN ("+orderopList+") and state NOT IN ('NEW','SENDING'); "
+        	sqldeleteorders+="delete from MyStatus WHERE orderno||opno NOT IN ("+orderopList+") and state NOT IN ('NEW','SENDING'); "
+        	sqldeleteorders+="delete from MyJobClose WHERE orderno||opno NOT IN ("+orderopList+") and state NOT IN ('NEW','SENDING'); "	
+        	sqldeleteorders+="delete from MyFormsResponses WHERE orderno||opno NOT IN ("+orderopList+") and lastupdated ='SENT'; "	
+        	sqldeleteorders+="delete from MyMpointDocs WHERE orderno||opno NOT IN ("+orderopList+") and state NOT IN  ('NEW',''); "	
+
+
+
+
+
+
+        		     html5sql.process(sqldeleteorders,
+        					 function(){
+        		    	 if(document.getElementById("JobsCnt")==null){
+        		    			
+        		    			console.log("on the Jobs Page")
+        		    			refreshJobList()
+        		    		}else{
+        		    			console.log("on the Home Page")
+        		    			setOrderCounts();
+        		    		} 	
+        					 },
+        					 function(error, statement){
+        						
+        						 opMessage("Error: " + error.message + " when processing " + statement);
+        						 if(document.getElementById("JobsCnt")==null){
+        				    			
+        				    			console.log("on the Jobs Page")
+        				    			refreshJobList()
+        				    		}else{
+        				    			console.log("on the Home Page")
+        				    			setOrderCounts();
+        				    		} 	
+        					 }        
+        			)
+        			
+
+
+
+        	}       
  
 function syncUploadAzure(id,type){
 // ToDo FileRequest,FileDownload,EOD,JobClose
@@ -1706,7 +1925,7 @@ function(error, statement){
 opMessage("Error: " + error.message + " when processing " + statement);
 });
 }
-if(type=="FileRequest")// Process Status Updates  
+if(type=="FileRequest")// Process Status Updates 
 {
  
 html5sql.process("SELECT * from MyJobDetsDraw where id = '"+id+"'",
@@ -1740,12 +1959,12 @@ html5sql.process("UPDATE MyJobDetsDraw SET zurl = 'WaitingLiveLink' where id='"+
 function(){
  
 buildJobDocsTable();
-requestAzureData("DocumentService", myjson,'FileRequest.php'+params,"UPDATE MyJobDetsDraw SET zurl = 'RequestLiveLink' where id='"+item['id']+"'",item['id'])
+postAzureDoc("DocumentService",[],'MYJOBSFileRequest.php'+params,"UPDATE MyJobDetsDraw SET zurl = 'RequestLiveLink' where id='"+item['id']+"'",item['id'])
 },
 function(error, statement){
  
 opMessage("Error: " + error.message + " when processing " + statement);
-}        
+}       
 );
 }
  
@@ -2014,6 +2233,62 @@ function(error, statement){
 opMessage("Error: " + error.message + " when processing " + statement);
 });
 }
+if(type=="JobAddWork")// Process New Add Work
+{					
+			
+		html5sql.process("SELECT * from MyJobAddWork where id = '"+id+"'",
+			function(transaction, results, rowsArray){
+				if( rowsArray.length > 0) {
+					if (syncDetails){
+						localStorage.setItem('LastSyncUploadDetails',localStorage.getItem('LastSyncUploadDetails')+", EOD:"+String(rowsArray.length));
+					}else{
+						syncDetails=true;
+						localStorage.setItem('LastSyncUploadDetails',"EOD:"+String(rowsArray.length));
+					}
+					if(!syncDetsSet){
+						syncDetsSet=true;
+						SetLastSyncDetails("LASTSYNC_UPLOAD");
+						
+						}
+					
+					
+						item = rowsArray[0];
+						newDets='&order='+item['orderno']+'&opno='+item['opno']+'&specreqt='+item['specreqt']+'&startdate='+item['startdate']+'&assignment='+item['assignment']+
+						'&wktycd='+item['wktycd']+'&wktygp='+item['wktygp']+'&longtext='+item['longtext']+'&state='+item['state']+'&ID='+item['id'];;
+						opMessage("New Additional Work Notifications Details="+newDets);
+					    var myjson = {};
+					    myjson["Message"] = "";
+					    myjson["MessageType"] = "";
+					    myjson["LongText"] = "";
+					    myjson["UserId"] = localStorage.getItem('MobileUser');
+					    myjson["SpecReqt"] = item['specreqt'];
+					    myjson["StartDate"] = item['startdate'];
+					    myjson["Assignment"] = item['assignment'];
+					    myjson["Wktycd"] = item['wktycd'];
+					    myjson["Wktygp"] = item['wktygp'];
+					    myjson["Orderno"] = item['orderno'];
+					   
+					    
+						sapCalls+=1;
+						n=rowsArray.length
+						html5sql.process("UPDATE MyJobAddWork SET state = 'SENDING' WHERE id='"+item['id']+"'",
+								 function(){
+									postAzureData("ZGW_MAM30_CREATE_ADD_WRK", myjson,"UPDATE MyJobAddWork SET state = 'NEW' WHERE id='"+item['id']+"'",item['id']);
+									
+								 },
+								 function(error, statement){
+									 
+									 opMessage("Error: " + error.message + " when processing " + statement);
+								 }        
+						);
+					
+					}
+				},
+				 function(error, statement){
+					 
+					 opMessage("Error: " + error.message + " when processing " + statement);
+				 });
+		}
 if(type=="Flooding")// Flooding Form
 {
  
@@ -2947,6 +3222,16 @@ sqlstatement+="UPDATE MyFormsResponses SET LastUpdated = 'SAPRECEIVED' WHERE id=
  
  
 }
+if (pageName=="ZGW_MAM30_CREATE_ADD_WRK"){
+	
+	opMessage("-->Type= Create Addional Work:"+recno+" MessageType:"+data.MessageType);
+
+
+		sqlstatement+="UPDATE MyJobAddWork SET state = 'SENT"+recno+"' WHERE id='"+ recno+"';";
+
+
+}
+
 //Handle NewJob Create PIA
 if (pageName=="createpia"){
 //alert(type+":"+recno+":"+sapmessage+":"+message+":"+notifno)
@@ -3012,8 +3297,8 @@ if (pageName=="ZGW_MAM30_NOTIFICATION_NotifHeaderUpdate"){
 opMessage("-->Type= Close Uppdate");
 opMessage("-->row= "+recno);
  
-opMessage("-->Message= "+message);
-opMessage("-->NotifNo= "+notifno);
+opMessage("-->Message= "+data.Message);
+opMessage("-->NotifNo= "+data.NotifNo);
 sqlstatement+="UPDATE MyJobClose SET state = 'SENT"+recno+"' WHERE id='"+ recno+"';";
  
  
@@ -3045,7 +3330,7 @@ if(data.ConfirmNo!="0000000000"){
  
  
  
-sqlstatement+="UPDATE MyTimeConfs SET confno = '"+confno+"' WHERE id='"+recno+"';";
+sqlstatement+="UPDATE MyTimeConfs SET confno = '"+data.ConfirmNo+"' WHERE id='"+recno+"';";
  
  
 }else{
@@ -3337,4 +3622,69 @@ function ZGW_MAM30_031_REFDATA_T3_SRVModelCB(data) {
     },
          function (error, statement) { opMessage("Error: " + error.message + " when processing " + statement); }
          );
+}
+
+function createAssetDetailsFilter(user){
+    SQLStatement="SELECT *  from MyRefUsers " 
+    SQLStatement+=" where userid = '"+user+"'"
+    html5sql.process(SQLStatement,
+    		 function(transaction, results, rowsArray){
+    				if( rowsArray.length > 0) {
+    					mplants="";
+    					if(rowsArray[0].maint1.length>0){
+    						mplants+="'"+rowsArray[0].maint1+"',"
+    					}
+    					if(rowsArray[0].maint2.length>0){
+    						mplants+="'"+rowsArray[0].maint2+"',"
+    					}
+    					if(rowsArray[0].maint3.length>0){
+    						mplants+="'"+rowsArray[0].maint3+"',"
+    					}
+    					if(rowsArray[0].maint4.length>0){
+    						mplants+="'"+rowsArray[0].maint4+"',"
+    					}
+    					if(rowsArray[0].maint5.length>0){
+    						mplants+="'"+rowsArray[0].maint5+"',"
+    					}
+    					if(rowsArray[0].maint6.length>0){
+    						mplants+="'"+rowsArray[0].maint6+"',"
+    					}
+    					if(rowsArray[0].maint7.length>0){
+    						mplants+="'"+rowsArray[0].maint7+"',"
+    					}
+    					if(rowsArray[0].maint8.length>0){
+    						mplants+="'"+rowsArray[0].maint8+"',"
+    					}
+					if(mplants.length>0){
+						assetWhere="WHERE zswerk in ("+mplants.substring(0,mplants.length-1)+")"
+						}else{
+						assetWhere="WHERE ziwerk = '"+rowsArray[0].plant+"'"
+						}
+					localStorage.setItem("ASSETWHERE",assetWhere)
+    				}
+    			
+    		 },
+    		 function(error, statement){
+    				
+    		 }        
+    		);	
+	
+}
+function getLocalJobs(mydata){
+	
+	 localJobDets=[]; 
+	 localJobDetsOrders=[];
+   html5sql.process("select orderid, ordnoOp from MyJobDets",
+			function(transaction, results, rowsArray){
+   	for (var cnt = 0; cnt < rowsArray.length ; cnt++) {
+   		
+   		localJobDets.push(rowsArray[cnt].orderid+rowsArray[cnt].ordnoOp)
+   		localJobDetsOrders.push(rowsArray[cnt].orderid)
+
+   	}
+    	ZGW_GET_JOB_DETAILSCB(mydata);
+   },
+        function (error, statement) { opMessage("Error: " + error.message + " when processing " + statement); }
+        );
+	
 }

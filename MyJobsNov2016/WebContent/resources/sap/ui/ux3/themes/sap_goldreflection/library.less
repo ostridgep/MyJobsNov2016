@@ -256,6 +256,14 @@ html[data-sap-ui-browser="ie10"] .sapUiUx3ExactLstLb > ul > .sapUiLbxISel {
 	top: 5px;
 }
 
+.sapUiUx3ExactLstHeadTopIco {
+	background-image: url("img/exact/tophead_regular.png");
+}
+
+.sapUiUx3ExactLstTopActive.sapUiUx3ExactLstTop > .sapUiUx3ExactLstHead:hover > .sapUiUx3ExactLstHeadTopTxt > .sapUiUx3ExactLstHeadTopIco {
+	background-image: url("img/exact/tophead_hover.png");
+}
+
 .sapUiUx3ExactLstCollapsed > .sapUiUx3ExactLstHead > .sapUiUx3ExactLstHeadAct {
 	left: 4px;
 }
@@ -323,6 +331,7 @@ html[data-sap-ui-browser="ie10"] .sapUiUx3ExactLstLb > ul > .sapUiLbxISel {
 	background-position: center;
 	background-repeat: no-repeat;
 }
+
 /* END "ExactList.less" */
 
 /* START "Feed.less" */
@@ -331,8 +340,8 @@ html[data-sap-ui-browser="ie10"] .sapUiUx3ExactLstLb > ul > .sapUiLbxISel {
 /* Goldreflection                                */
 /* ============================================= */
 
-@sapUiFeedToolsIconUrl: ~"/img/feed/Action_Menu_regular.png";
-@sapUiFeedToolsIconHoverUrl: ~"/img/feed/Action_Menu_hover.png";
+@sapUiFeedToolsIconUrl: url("img/feed/Action_Menu_regular.png");
+@sapUiFeedToolsIconHoverUrl: url("img/feed/Action_Menu_hover.png");
 
 .sapUiFeed > header {
 	margin-top: 20px;
@@ -365,6 +374,7 @@ html[data-sap-ui-browser="ie10"] .sapUiUx3ExactLstLb > ul > .sapUiLbxISel {
 .sapUiFeed > section {
 	margin-top: 2px;
 }
+
 /* END "Feed.less" */
 
 /* START "FeedChunk.less" */
@@ -895,6 +905,12 @@ html[data-sap-ui-browser="ie9"] {
 	background-color: @sapUiDeepBG;
 	opacity: .72;
 }
+
+.sapUiUx3OverlayCloseButton:hover,
+.sapUiUx3OverlayCloseButton:focus {
+	background: url("img/close_hover.png");
+}
+
 /* END "Overlay.less" */
 
 /* START "QuickView.less" */
@@ -1209,6 +1225,7 @@ html[data-sap-ui-browser="ie9"] .sapUiUx3ShellBgImg {
 .sapUiUx3ShellPaneEntrySelected,
 .sapUiUx3ShellPaneEntrySelected:hover {
 	background-position: center 34px;
+	background-image: url(img/shell/paneBar_arrow_selected.png);
 }
 
 .sapUiUx3ShellPaneBarRight:hover .sapUiUx3ShellPaneEntry:hover {
@@ -1552,6 +1569,7 @@ html[data-sap-ui-browser="ie9"] .sapUiUx3ShellDesignCrystal > .sapUiUx3ShellHead
 	background-color: @sapUiHighlight;
 	color: @sapUiTextInverted;
 }
+
 /* END "Shell.less" */
 
 /* START "ThingInspector.less" */
@@ -1939,5 +1957,39 @@ html[data-sap-ui-browser="ie9"] .sapUiUx3ShellDesignCrystal > .sapUiUx3ShellHead
 .sapUiUx3TP > hr {
 	border: 1px solid @sapUiMediumBorder;
 }
+
+.sapUiUx3TPArrowLeft {
+	background-image: url(img/toolpopup/arrow_left.png);
+}
+
+.sapUiUx3TPArrow.sapUiTPInverted,
+.sapUiUx3TPArrowLeft.sapUiTPInverted {
+	background-image: url(img/toolpopup/arrow_left_inverted.png);
+}
+
+.sapUiUx3TPArrowRight {
+	background-image: url(img/toolpopup/arrow_right.png);
+}
+
+.sapUiUx3TPArrowRight.sapUiTPInverted {
+	background-image: url(img/toolpopup/arrow_right_inverted.png);
+}
+
+.sapUiUx3TPArrowUp {
+	background-image: url(img/toolpopup/arrow_up.png);
+}
+
+.sapUiUx3TPArrowUp.sapUiTPInverted {
+	background-image: url(img/toolpopup/arrow_up_inverted.png);
+}
+
+.sapUiUx3TPArrowDown {
+	background-image: url(img/toolpopup/arrow_down.png);
+}
+
+.sapUiUx3TPArrowDown.sapUiTPInverted {
+	background-image: url(img/toolpopup/arrow_down_inverted.png);
+}
+
 /* END "ToolPopup.less" */
 

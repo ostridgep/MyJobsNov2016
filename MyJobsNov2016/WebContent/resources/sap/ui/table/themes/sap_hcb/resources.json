@@ -11,6 +11,11 @@
       "theme": "sap_hcb"
     },
     {
+      "name": "Grouping.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
       "name": "Table.less",
       "designtime": true,
       "theme": "sap_hcb"

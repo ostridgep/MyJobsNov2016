@@ -425,6 +425,10 @@
       ]
     },
     {
+      "name": "ColorPickerMode.type",
+      "designtime": true
+    },
+    {
       "name": "ColorPickerRenderer-dbg.js",
       "module": "sap/ui/commons/ColorPickerRenderer.js",
       "isDebug": true,
@@ -1804,7 +1808,7 @@
       "required": [
         "jquery.sap.global.js",
         "sap/ui/commons/library.js",
-        "sap/ui/core/Control.js"
+        "sap/ui/core/Element.js"
       ]
     },
     {
@@ -1817,7 +1821,7 @@
       "required": [
         "jquery.sap.global.js",
         "sap/ui/commons/library.js",
-        "sap/ui/core/Control.js"
+        "sap/ui/core/Element.js"
       ]
     },
     {
@@ -3063,6 +3067,9 @@
       "name": "img/1x1.gif"
     },
     {
+      "name": "img/ColorPicker/Alphaslider_BG.png"
+    },
+    {
       "name": "layout/AbsoluteLayout-dbg.js",
       "module": "sap/ui/commons/layout/AbsoluteLayout.js",
       "isDebug": true,
@@ -3478,6 +3485,13 @@
       ]
     },
     {
+      "name": "library-preload.js",
+      "merged": true
+    },
+    {
+      "name": "library-preload.js.map"
+    },
+    {
       "name": "library-preload.json",
       "merged": true
     },
@@ -3652,6 +3666,12 @@
       "name": "messagebundle_lv.properties",
       "module": "sap/ui/commons/messagebundle_lv.properties",
       "locale": "lv",
+      "raw": "messagebundle.properties"
+    },
+    {
+      "name": "messagebundle_ms.properties",
+      "module": "sap/ui/commons/messagebundle_ms.properties",
+      "locale": "ms",
       "raw": "messagebundle.properties"
     },
     {
@@ -4961,15 +4981,7 @@
       "theme": "sap_hcb"
     },
     {
-      "name": "themes/sap_hcb/img-RTL/accordion/collapsedRTL.gif",
-      "theme": "sap_hcb"
-    },
-    {
       "name": "themes/sap_hcb/img-RTL/accordion/expanded.gif",
-      "theme": "sap_hcb"
-    },
-    {
-      "name": "themes/sap_hcb/img-RTL/accordion/expandedRTL.gif",
       "theme": "sap_hcb"
     },
     {
@@ -4994,18 +5006,6 @@
     },
     {
       "name": "themes/sap_hcb/img-RTL/formattedTextView/close-hcb.png",
-      "theme": "sap_hcb"
-    },
-    {
-      "name": "themes/sap_hcb/img-RTL/layout/separationLarge.gif",
-      "theme": "sap_hcb"
-    },
-    {
-      "name": "themes/sap_hcb/img-RTL/layout/separationMedium.gif",
-      "theme": "sap_hcb"
-    },
-    {
-      "name": "themes/sap_hcb/img-RTL/layout/separationSmall.gif",
       "theme": "sap_hcb"
     },
     {
@@ -5333,15 +5333,7 @@
       "theme": "sap_hcb"
     },
     {
-      "name": "themes/sap_hcb/img/accordion/collapsedRTL.gif",
-      "theme": "sap_hcb"
-    },
-    {
       "name": "themes/sap_hcb/img/accordion/expanded.gif",
-      "theme": "sap_hcb"
-    },
-    {
-      "name": "themes/sap_hcb/img/accordion/expandedRTL.gif",
       "theme": "sap_hcb"
     },
     {
@@ -5366,18 +5358,6 @@
     },
     {
       "name": "themes/sap_hcb/img/formattedTextView/close-hcb.png",
-      "theme": "sap_hcb"
-    },
-    {
-      "name": "themes/sap_hcb/img/layout/separationLarge.gif",
-      "theme": "sap_hcb"
-    },
-    {
-      "name": "themes/sap_hcb/img/layout/separationMedium.gif",
-      "theme": "sap_hcb"
-    },
-    {
-      "name": "themes/sap_hcb/img/layout/separationSmall.gif",
       "theme": "sap_hcb"
     },
     {
@@ -5730,6 +5710,11 @@
     },
     {
       "name": "themes/sap_hcb/library.source.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "themes/sap_hcb/shared.less",
       "designtime": true,
       "theme": "sap_hcb"
     }

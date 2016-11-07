@@ -18,7 +18,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control','sap/m/Te
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 * @since 1.34
 	 *
 	 * @public
@@ -68,6 +68,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control','sap/m/Te
 
 				/**
 				 * Updates the size of the chart. If not set then the default size is applied based on the device tile.
+				 * @deprecated Since version 1.38.0. The NumericContent control has now a fixed size, depending on the used media (desktop, tablet or phone).
 				 */
 				"size" : {type : "sap.m.Size", group : "Misc", defaultValue : sap.m.Size.Auto},
 
@@ -120,15 +121,39 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control','sap/m/Te
 		this.setTooltip("{AltText}"); // TODO Nov. 2015: needs to be checked with ACC. Issue will be addresses via BLI.
 	};
 
+	NumericContent.prototype.onBeforeRendering = function() {
+		this.$().unbind("mouseenter", this._addTooltip);
+		this.$().unbind("mouseleave", this._removeTooltip);
+	};
+
 	/**
 	 * Handler for after rendering
 	 */
 	NumericContent.prototype.onAfterRendering = function() {
+		this.$().bind("mouseenter", this._addTooltip.bind(this));
+		this.$().bind("mouseleave", this._removeTooltip.bind(this));
+
 		if (sap.m.LoadState.Loaded == this.getState() || this.getAnimateTextChange()) {
 			jQuery.sap.byId(this.getId()).animate({
 				opacity : "1"
 			}, 1000);
 		}
+	};
+
+	/**
+	 * Sets the control's title attribute in order to show the tooltip.
+	 * @private
+	 */
+	NumericContent.prototype._addTooltip = function() {
+		this.$().attr("title", this.getTooltip_AsString());
+	};
+
+	/**
+	 * Removes the control's tooltip in order to prevent screen readers from reading it.
+	 * @private
+	 */
+	NumericContent.prototype._removeTooltip = function() {
+		this.$().attr("title", null);
 	};
 
 	/**
@@ -303,9 +328,13 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control','sap/m/Te
 	 * @param {Object} With scale and value
 	 */
 	NumericContent.prototype._parseFormattedValue = function(sValue) {
+
+		// remove the invisible unicode character LTR and RTL mark before processing the regular expression.
+		var sTrimmedValue = sValue.replace(String.fromCharCode(8206), "").replace(String.fromCharCode(8207), "");
+
 		return {
-			scale: sValue.replace(/^[+-., \d]*(.*)$/g, "$1").trim().replace(/\.$/, ""),
-			value: sValue.replace(/^([+-., \d]*).*$/g, "$1").trim()
+			scale: sTrimmedValue.replace(/[+-., \d]*(.*)$/g, "$1").trim().replace(/\.$/, ""),
+			value: sTrimmedValue.replace(/([+-., \d]*).*$/g, "$1").trim()
 		};
 	};
 

@@ -53,14 +53,15 @@ var appDirectory=""
 	</script>
 <script src="resources/sap-ui-core.js" type="text/javascript"
 	id="sap-ui-bootstrap" data-sap-ui-libs="sap.m,sap.ui.commons,sap.ui.table"
-	data-sap-ui-theme="sap_bluecrystal">
+	
+data-sap-ui-theme="sap_bluecrystal">
 	
 </script>
 <script type="text/javascript" src="cordova.js"></script>
 <script src="myresources/js/jscoord-1.1.1.js"></script> 
 <script src="myresources/js/html5sql.js"></script>  
 <script src="myresources/js/assetRecord.js"></script> 
- <script src="myresources/js/AssetList.js"></script>
+ <!-- <script src="myresources/js/AssetList.js"></script> -->
 <script src="myresources/js/aes.js"></script>  
   
 <script src="myresources/js/bgsync.js"></script>
@@ -96,12 +97,19 @@ var appDirectory=""
 <script src="myresources/js/CreateAssetStep4.js"></script>
 <script src="myresources/js/DecomAsset.js"></script>
 <script src="myresources/js/EgiCodeSelection.js"></script>
+<script src="myresources/js/EquipTypeFuncSelection.js"></script>
+<script src="myresources/js/CreateAssetStep2GenericSite.js"></script> 
+<script src="myresources/js/CreateAssetStep2Parent.js"></script>
+<script src="myresources/js/CreateAssetStep2Unknown.js"></script>
+<script src="myresources/js/CreateAssetStep2Support.js"></script>
+<script src="myresources/js/AssetListParent.js"></script>
 <link rel="stylesheet" href="myresources/TL/css/style.css"> <!-- Resource style -->
 <style>
 
- .sapUiTheme-sap_bluecrystal {
+
+  .sapUiTheme-sap_bluecrystal {
 font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif !important; 
-   font-size:0.95rem !important; 
+   font-size:0.90 em !important; 
 }
 span.tool {
     position: relative;
@@ -181,6 +189,7 @@ font-size: 1rem;
 </style>
 
 <script type="text/javascript">
+sap.ui.getCore().getConfiguration().setLanguage("uk");
 jQuery.sap.require("sap.m.MessageBox");
 html5sql.openDatabase("com.aws.myjobs","myjobs", 10*1024*1024);	
 
@@ -258,38 +267,85 @@ function addLogToDisplay(type, dt, message) {
 function loadPinCodeValues(){
 	sap.ui.getCore().getElementById('PinCode').setValue(localStorage.getItem('PinCode'))	
 }
+var formAsset = new sap.m.Dialog("dlgAsset",{
+    title:"Assets",
+    modal: true,
+    contentWidth:"1em",
+    buttons: [
+  
+				new sap.m.Button({
+				    text: "Cancel",
+				    type: 	sap.m.ButtonType.Reject,
+				    tap: [ function(oEvt) {		  
+						 
+				    	formAsset.close()
+						  } ]
+				})
+				],					
+    content:[
+
+        
+            new sap.m.Button('EditUpdateTile',
+				{
+				    text: "Edit/Update",
+				    icon: "sap-icon://repost",
+				    press: [function () {
+				       
+				        formEditOrDecom.open()
+				    }]
+				}),
+		new sap.m.Button('CreateAssetTile',
+				{
+				    text: "Create Asset",
+				    icon: "sap-icon://crm-service-manager",
+				    press: [function () {
+				        action = recordAction.CREATE;
+				        labelSite.setVisible(true);
+				        InputCreateAssetSite.setVisible(true);
+				        formCreateAsset.open()
+				    }]
+
+				}),
+ 	
+],
+            beforeOpen:function(){
+            	
+				},
+contentWidth:"50%",
+contentHeight: "50%",
+ })
 var formEndOfDay = new sap.m.Dialog("dlgEndOfDay",{
     title:"Day End Travel",
     modal: true,
     contentWidth:"1em",
     buttons: [
-                                new sap.m.Button( {
-                                    text: "Save",
-                                    type: 	sap.m.ButtonType.Accept,
-                                    tap: [ function(oEvt) { 
-                                    	console.log(diffInMins(sap.ui.getCore().getElementById('EndOfDayWorkTime').getValue(),sap.ui.getCore().getElementById('EndOfDayHomeTime').getValue()))
-                                    	if(diffInMins(sap.ui.getCore().getElementById('EndOfDayWorkTime').getValue(),sap.ui.getCore().getElementById('EndOfDayHomeTime').getValue())<0){
-                                           
-                                    		DisplayErrorMessage("Day End Travel Error", "Home Arrival cannot be less than Work Completion")
-                                    	}else if(diffInMins(sap.ui.getCore().getElementById('EndOfDayWorkTime').getValue(),sap.ui.getCore().getElementById('EndOfDayHomeTime').getValue())>360){
-                                           
-                                    		DisplayErrorMessage("Day End Travel Error", "Home Arrival cannot be > 6hrs after Work Completion")
-                                    	}else{
-                                    		createAWSEODNotif(sap.ui.getCore().getElementById('EndOfDayWorkTime').getValue(),
-                                        			sap.ui.getCore().getElementById('EndOfDayHomeTime').getValue(),
-                                        			localStorage.getItem("EmployeeID"))
-    										
-                                           	
-                                           	
-                                           	
-                                        	formEndOfDay.close()
-                                    	}
-                                    
-                                    	
-                                              
-                                                } ]
-                                   
-                                }),   
+new sap.m.Button( {
+    text: "Save",
+    type: 	sap.m.ButtonType.Accept,
+    tap: [ function(oEvt) { 
+    	console.log(diffInMins(sap.ui.getCore().getElementById('EndOfDayWorkTime').getValue(),sap.ui.getCore().getElementById('EndOfDayHomeTime').getValue()))
+    	if(diffInMins(sap.ui.getCore().getElementById('EndOfDayWorkTime').getValue(),sap.ui.getCore().getElementById('EndOfDayHomeTime').getValue())<0){
+           
+    		DisplayErrorMessage("Day End Travel Error", "Home Arrival cannot be less than Work Completion")
+    	}else if(diffInMins(sap.ui.getCore().getElementById('EndOfDayWorkTime').getValue(),sap.ui.getCore().getElementById('EndOfDayHomeTime').getValue())>360){
+           
+    		DisplayErrorMessage("Day End Travel Error", "Home Arrival cannot be > 6hrs after Work Completion")
+    	}else{
+    		createAWSEODNotif(sap.ui.getCore().getElementById('EndOfDayWorkTime').getValue(),
+        			sap.ui.getCore().getElementById('EndOfDayHomeTime').getValue(),
+        			localStorage.getItem("EmployeeID"))
+			
+           	
+           	
+           	
+        	formEndOfDay.close()
+    	}
+    
+    	
+              
+                } ]
+   
+}),     
                                 new sap.m.Button( {
                                     text: "Cancel",
                                     type: 	sap.m.ButtonType.Reject,
@@ -930,7 +986,18 @@ var formConfig = new sap.m.Dialog("dlgConfig",{
 							    tap: [ function(oEvt) {		  
 									DeleteLog()
 									  } ]
-							})
+							}),
+							new sap.ui.commons.Label({
+					         	text : "In Shift Time" ,TextDirection:"LTR"}),
+					         
+					      new sap.m.TimePicker({
+									placeholder : "Time Picker",
+										type : "Time",
+										valueFormat : "HH:mm",
+										value : "0:0",
+										displayFormat : "HH:mm",
+										
+									})
 
 									 
 					
@@ -1106,7 +1173,7 @@ content:[
          ]
  })
 localStorage.setItem("DeviceType","xx")
- DeviceStorageDirectory=""
+DeviceStorageDirectory=""
 document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
 	try{
@@ -1386,7 +1453,7 @@ function showSystemMessage(){
 			 }        
 			);	
 }
-function showMessage(msg){
+ function showMessage(msg){
 	sap.m.MessageToast.show(msg, {
 		type: Error,
 		duration: Number(10000),
@@ -1397,7 +1464,7 @@ function showMessage(msg){
 
 	});
 
-}
+} 
 
 function showMessageMiddle(msg){
 	x=msg.split(":")
@@ -1555,7 +1622,7 @@ function MenuPressed(id){
 						else if (rowsArray[0].command=='DayEndTravelViewModel'){
 							formEndOfDay.open()
 						}
-						else if (rowsArray[0].item=='Assets'){
+						else if (rowsArray[0].command=="AssetViewModel"){
 							formAsset.open()
 						}
 						else{
@@ -1878,53 +1945,7 @@ function loadScript(src) {
 		]
 		
 }); */
-var formAsset = new sap.m.Dialog("dlgAsset",{
-    title:"Assets",
-    modal: true,
-    contentWidth:"1em",
-    buttons: [
-  
-				new sap.m.Button({
-				    text: "Cancel",
-				    type: 	sap.m.ButtonType.Reject,
-				    tap: [ function(oEvt) {		  
-						 
-				    	formAsset.close()
-						  } ]
-				})
-				],					
-    content:[
 
-        
-            new sap.m.Button('EditUpdateTile',
-				{
-				    text: "Edit/Update",
-				    icon: "sap-icon://repost",
-				    press: [function () {
-				       
-				        formEditOrDecom.open()
-				    }]
-				}),
-		new sap.m.Button('CreateAssetTile',
-				{
-				    text: "Create Asset",
-				    icon: "sap-icon://crm-service-manager",
-				    press: [function () {
-				        action = recordAction.CREATE;
-				        labelSite.setVisible(true);
-				        InputCreateAssetSite.setVisible(true);
-				        formCreateAsset.open()
-				    }]
-
-				}),
- 	
-],
-            beforeOpen:function(){
-            	
-				},
-contentWidth:"50%",
-contentHeight: "50%",
- })
 
 </script>
 

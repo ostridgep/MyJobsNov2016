@@ -70,6 +70,10 @@
       ]
     },
     {
+      "name": "CalendarAppointmentVisualization.type",
+      "designtime": true
+    },
+    {
       "name": "CalendarDateInterval-dbg.js",
       "module": "sap/ui/unified/CalendarDateInterval.js",
       "isDebug": true,
@@ -526,7 +530,8 @@
       "required": [
         "jquery.sap.global.js",
         "sap/ui/core/Control.js",
-        "sap/ui/unified/library.js"
+        "sap/ui/unified/library.js",
+        "sap/ui/core/LabelEnablement.js"
       ]
     },
     {
@@ -539,7 +544,8 @@
       "required": [
         "jquery.sap.global.js",
         "sap/ui/core/Control.js",
-        "sap/ui/unified/library.js"
+        "sap/ui/unified/library.js",
+        "sap/ui/core/LabelEnablement.js"
       ]
     },
     {
@@ -587,6 +593,7 @@
       "required": [
         "jquery.sap.global.js",
         "sap/ui/core/Control.js",
+        "sap/ui/Device.js",
         "sap/ui/core/Popup.js",
         "sap/ui/unified/MenuItemBase.js",
         "sap/ui/unified/library.js",
@@ -603,6 +610,7 @@
       "required": [
         "jquery.sap.global.js",
         "sap/ui/core/Control.js",
+        "sap/ui/Device.js",
         "sap/ui/core/Popup.js",
         "sap/ui/unified/MenuItemBase.js",
         "sap/ui/unified/library.js",
@@ -1330,6 +1338,13 @@
       ]
     },
     {
+      "name": "library-preload.js",
+      "merged": true
+    },
+    {
+      "name": "library-preload.js.map"
+    },
+    {
       "name": "library-preload.json",
       "merged": true
     },
@@ -1502,6 +1517,12 @@
       "name": "messagebundle_lv.properties",
       "module": "sap/ui/unified/messagebundle_lv.properties",
       "locale": "lv",
+      "raw": "messagebundle.properties"
+    },
+    {
+      "name": "messagebundle_ms.properties",
+      "module": "sap/ui/unified/messagebundle_ms.properties",
+      "locale": "ms",
       "raw": "messagebundle.properties"
     },
     {

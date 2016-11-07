@@ -39,8 +39,7 @@
 }
 
 .sapUiTable > .sapUiTableFtr {
-	height: 28px;
-	line-height: 28px;
+	min-height: 27px;
 	background-color: @sapUiListHeaderBackground;
 	padding-top: 4px;
 }
@@ -211,13 +210,24 @@
 	border: none;
 }
 
-.sapUiTableTreeIcon {
-	padding-top: 3px;
+.sapUiTableRSel {
+	.sapUiTableCtrlScr,
+	.sapUiTableCtrlScrFixed {
+		margin-left: 22px;
+	}
 }
 
-.sapUiTableCtrl tr.sapUiTableGroupHeader,
-.sapUiTableRowHdr.sapUiTableGroupHeader {
-	background-color: @sapUiListHeaderBackground;
+/* Column Row Header shows no bottom border */
+.sapUiTableColRowHdr {
+	margin-top: -1px;
 }
 /* END "Table.less" */
+
+/* START "Grouping.less" */
+@_sapUiTableGroupIconHeightDefault: 28px;
+@_sapUiTableGroupIconHeightCondensed: 28px;
+@_sapUiTableGroupIconHeightCozy: 28px;
+@_sapUiTableGroupHeaderBackground: @sapUiListHeaderBackground;
+@_sapUiTableGroupIconFontSize: 12px;
+/* END "Grouping.less" */
 

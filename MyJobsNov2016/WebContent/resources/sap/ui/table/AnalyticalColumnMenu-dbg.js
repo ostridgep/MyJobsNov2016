@@ -9,7 +9,8 @@ sap.ui.define(['jquery.sap.global', './ColumnMenu', './library'],
 	function(jQuery, ColumnMenu, library) {
 	"use strict";
 
-
+	// shortcut
+	var GroupEventType = library.GroupEventType;
 
 	/**
 	 * Constructor for a new AnalyticalColumnMenu.
@@ -22,7 +23,7 @@ sap.ui.define(['jquery.sap.global', './ColumnMenu', './library'],
 	 * @extends sap.ui.table.ColumnMenu
 	 *
 	 * @author SAP SE
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 *
 	 * @constructor
 	 * @public
@@ -70,8 +71,9 @@ sap.ui.define(['jquery.sap.global', './ColumnMenu', './library'],
 						bGrouped = oColumn.getGrouped();
 
 					oColumn.setGrouped(!bGrouped);
-					oTable.fireGroup({column: oColumn, groupedColumns: oTable._aGroupedColumns, type: sap.ui.table.GroupEventType.group});
+					oTable.fireGroup({column: oColumn, groupedColumns: oTable._aGroupedColumns, type: GroupEventType.group});
 					oMenuItem.setIcon(!bGrouped ? "sap-icon://accept" : null);
+					oTable._getRowContexts();
 				}, this)
 			);
 			this.addItem(this._oGroupIcon);
@@ -99,6 +101,7 @@ sap.ui.define(['jquery.sap.global', './ColumnMenu', './library'],
 
 					oColumn.setSummed(!bSummed);
 					oMenuItem.setIcon(!bSummed ? "sap-icon://accept" : null);
+					oTable._getRowContexts();
 				}, this)
 			);
 			this.addItem(this._oSumItem);
@@ -116,4 +119,4 @@ sap.ui.define(['jquery.sap.global', './ColumnMenu', './library'],
 
 	return AnalyticalColumnMenu;
 
-}, /* bExport= */ true);
+});

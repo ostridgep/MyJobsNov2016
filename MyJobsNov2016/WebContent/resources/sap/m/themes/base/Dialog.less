@@ -46,7 +46,10 @@ html[data-sap-ui-browser^="ie9"] .sapMDialog {
 //the rtl will change the transform-translate from (-50% -50%) to (50% -50%)
 [dir="rtl"] .sapMDialog {
 	left: 50%; //this will be changed 'right: 50%' from the rtl mode
-	right: auto !important; //this will be reverted 'left: auto' by the rtl mode
+}
+
+[dir="rtl"] .sapMDialog.sapMDialogTouched {
+	left: auto;
 }
 
 // set max height and max width ========================================================================================
@@ -131,7 +134,7 @@ html[data-sap-ui-browser^="ie9"] .sapMDialog {
 	min-height: 0 !important; //this is for preventing the dialog to hold it's width in small screens
 }
 
-.sap-phone .sapMDialog {
+html.sap-phone .sapMDialog {
 	min-width: 18rem;
 	overflow: hidden;
 
@@ -158,8 +161,8 @@ html[data-sap-ui-browser^="ie9"] .sapMDialog {
 	}
 }
 
-.sap-tablet .sapMDialog,
-.sap-desktop .sapMDialog {
+html.sap-tablet .sapMDialog,
+html.sap-desktop .sapMDialog {
 	min-width: 25rem;
 }
 
@@ -175,7 +178,7 @@ html[data-sap-ui-browser^="ie9"] .sapMDialog {
 
 .sapMDialogScroll {
 	display: inline-block; /*this is for horizontal scrolling enablement */
-	height: 100%;
+	height: auto;
 	width: 100%;
 	vertical-align: middle;
 }
@@ -222,6 +225,14 @@ html[data-sap-ui-browser^="ie9"] .sapMDialog {
 	padding: @SapDialogPadding;
 }
 
+.sapUiPopupWithPadding .sapMDialogScrollCont.sapMDialogStretchContent {
+  	height: calc(~"100% - 2 * " @SapDialogPadding);
+}
+
+.sapMDialogScrollCont.sapMDialogStretchContent {
+  	height: 100%;
+}
+
 /* messagedialog always has content padding */
 .sapMMessageDialog .sapMDialogScrollCont {
 	box-sizing: border-box;
@@ -234,6 +245,9 @@ html[data-sap-ui-browser^="ie9"] .sapMDialog {
       http://stackoverflow.com/questions/8468066/child-inside-parent-with-min-height-100-not-inheriting-height
   */
 	position: relative;
+}
+.sapUiPopupWithPadding.sapMDialogWithScrollCont .sapMDialogScrollCont {
+  	height: 100%;
 }
 
 .sapMDialogWithScrollCont .sapMDialogScrollCont {
@@ -419,18 +433,16 @@ html[data-sap-ui-browser^="ie9"] .sapMDialog {
 }
 
 .sapMDialogResizeHandler {
-	bottom: 0;
+	bottom: 0.5rem;
 	cursor: se-resize;
 	height: .5rem;
 	position: absolute;
 	right: 0rem;
 	width: .5rem;
 	z-index: 2;
+  	line-height: 1rem;
 
 	&:before {
-		border-style: solid;
-		border-width: 0 0 0.5rem 0.5rem;
-		content: "";
 		left: 0;
 		position: absolute;
 		top: 0;

@@ -1,0 +1,42 @@
+Azure
+
+line 3
+var localJobDets="" 
+
+Line 233
+case "ZGW_GET_JOB_DETAILS":
+getLocalJobs(mydata)
+
+line 3464
+function getLocalJobs(){ and rest of function
+
+
+996
+ ZGW_GET_JOB_DETAILSCB(data)
+ 
+ 
+ 
+ 
+ order/op
+ 
+  MyJobDets
+  MyJobDetsComps
+  MyJobDetsAddress
+  MyJobDetsOrderOps
+  MyJobDetsIconPriority
+  MyJobDetsIconJob
+  MyTimeConfs
+  
+  
+  
+  oerder
+  
+  MyJobDetsLoch
+  MyJobDetsDraw
+  localJobDetsOrder
+  MyJobDetsNotifLongText
+  
+  
+  
+  
+  1521395x

@@ -92,7 +92,7 @@
         "sap/ui/core/Control.js",
         "sap/ui/core/ResizeHandler.js",
         "sap/ui/core/Icon.js",
-        "sap/tnt/NavigationList.js"
+        "sap/ui/core/delegate/ScrollEnablement.js"
       ]
     },
     {
@@ -108,7 +108,7 @@
         "sap/ui/core/Control.js",
         "sap/ui/core/ResizeHandler.js",
         "sap/ui/core/Icon.js",
-        "sap/tnt/NavigationList.js"
+        "sap/ui/core/delegate/ScrollEnablement.js"
       ]
     },
     {
@@ -241,6 +241,13 @@
         "sap/ui/core/library.js",
         "sap/m/library.js"
       ]
+    },
+    {
+      "name": "library-preload.js",
+      "merged": true
+    },
+    {
+      "name": "library-preload.js.map"
     },
     {
       "name": "library-preload.json",

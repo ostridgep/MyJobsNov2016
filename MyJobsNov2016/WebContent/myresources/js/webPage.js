@@ -57,7 +57,7 @@ function getFormsDL()
 
 			
 	
-    $.getJSON(localStorage.getItem("DOCSERVER")+'ListDirjson1.php?directory=MyJobs/Global/Forms', function (data) {
+    $.getJSON(localStorage.getItem("DOCSERVER")+'MYJOBSListDir.php?directory=MyJobs/Global/Forms', function (data) {
     	
     	filesToDownload=data;
         var cnt = 0;
@@ -67,6 +67,44 @@ function getFormsDL()
     		
     	
     		deleteFormsAndDownload()
+    		
+    		
+    		
+    		}
+       
+        
+    }).success(function() { 
+    	
+    	})
+    .error(function() { 
+
+    })
+    .complete(function() { 
+    	
+    	
+
+    	
+    	
+    	});
+    
+  
+	
+}
+function getIconsDL()
+{
+
+			
+	
+    $.getJSON(localStorage.getItem("DOCSERVER")+'MYJOBSListDir.php?directory=MyJobs/Global/Download/Icons', function (data) {
+    	
+    	filesToDownload=data;
+        var cnt = 0;
+        
+    	if(filesToDownload.FILES.length>0){
+    		fileDownloadCnt=0;
+    		
+    	
+    		downloadIcons()
     		
     		
     		
@@ -439,14 +477,21 @@ var MyIFrame = document.getElementById("formIframe");
 							
 		formHTML=HTMLFormStart+xx.outerHTML+HTMLFormEnd
 		disableFields(xx)	
-		formHTMLreadonly=HTMLFormStart+xx.outerHTML+HTMLFormEnd			
-		createFormsResponse(fname,selectedJobArray["orderworkcentre"],selectedJobArray["orderplant"],currentNotifNo,CurrentOrderNo,CurrentOpNo,localStorage.getItem("MobileUser"),formJSON,formHTML,formHTMLreadonly,formMode,type)
-		
-		
+		formHTMLreadonly=HTMLFormStart+xx.outerHTML+HTMLFormEnd
+		/*if(currentPage.indexOf("Home")<1) {*/
+			//Job Related
+			
+			createFormsResponse(fname,selectedJobArray["orderworkcentre"],selectedJobArray["orderplant"],currentNotifNo,CurrentOrderNo,CurrentOpNo,localStorage.getItem("MobileUser"),formJSON,formHTML,formHTMLreadonly,formMode,type)
+		/*}else{
+			//Non Job Form
+			
+			createFormsResponse(fname,"","","","", "",localStorage.getItem("MobileUser"),formJSON,formHTML,formHTMLreadonly,formMode,type)
+		}
+		*/
 		
 	}
 	catch(err) {
-		
+		alert(err)
 		formForms.close()
 	}
 	
@@ -524,6 +569,7 @@ function disableFields(formDoc){
 		
 		}
 }
+
 function updateMergeField(fld){
 	
 	

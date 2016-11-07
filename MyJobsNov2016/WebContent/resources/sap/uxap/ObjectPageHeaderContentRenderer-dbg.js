@@ -4,7 +4,10 @@
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
-sap.ui.define(["./ObjectPageHeaderRenderer", "./ObjectPageLayout"], function (ObjectPageHeaderRenderer, ObjectPageLayout) {
+sap.ui.define([
+	"./ObjectPageHeaderRenderer",
+	"./ObjectPageLayout",
+	"sap/ui/core/Icon"], function (ObjectPageHeaderRenderer, ObjectPageLayout, Icon) {
 	"use strict";
 
 	/**
@@ -23,6 +26,7 @@ sap.ui.define(["./ObjectPageHeaderRenderer", "./ObjectPageLayout"], function (Ob
 
 		if (bRenderEditBtn) {
 			oRm.write("<div ");
+			oRm.writeControlData(oControl);
 			oRm.addClass("sapUxAPObjectPageHeaderContentFlexBox");
 			oRm.addClass("sapUxAPObjectPageHeaderContentDesign-" + oControl.getContentDesign());
 			if (oHeader) {
@@ -32,10 +36,10 @@ sap.ui.define(["./ObjectPageHeaderRenderer", "./ObjectPageLayout"], function (Ob
 			oRm.write(">");
 		}
 		oRm.write("<div ");
-		oRm.writeControlData(oControl);
 		if (bRenderEditBtn) {
 			oRm.addClass("sapUxAPObjectPageHeaderContentCellLeft");
 		} else {
+			oRm.writeControlData(oControl);
 			oRm.addClass("sapUxAPObjectPageHeaderContentDesign-" + oControl.getContentDesign());
 			if (oHeader) {
 				oRm.addClass('sapUxAPObjectPageContentObjectImage-' + oHeader.getObjectImageShape());
@@ -158,6 +162,7 @@ sap.ui.define(["./ObjectPageHeaderRenderer", "./ObjectPageLayout"], function (Ob
 	 * @param {sap.ui.core.Control} oHeader an object representation of the titleHeader that should be rendered
 	 */
 	ObjectPageHeaderContentRenderer._renderTitleImage = function (oRm, oHeader) {
+		var oObjectImage = oHeader._getInternalAggregation("_objectImage");
 
 		if (oHeader.getObjectImageURI() || oHeader.getShowPlaceholder()) {
 			oRm.write("<span");
@@ -166,15 +171,10 @@ sap.ui.define(["./ObjectPageHeaderRenderer", "./ObjectPageLayout"], function (Ob
 			oRm.writeClasses();
 			oRm.write(">");
 
-			if (oHeader.getObjectImageURI()) {
-				oRm.renderControl(oHeader._getInternalAggregation("_objectImage"));
-				if (oHeader.getShowPlaceholder()) {
-					ObjectPageHeaderRenderer._renderPlaceholder(oRm, oHeader, false);
-				}
-			} else {
-				ObjectPageHeaderRenderer._renderPlaceholder(oRm, oHeader, true);
-			}
-
+			ObjectPageHeaderRenderer._renderInProperContainer(function (){
+				oRm.renderControl(oObjectImage);
+				ObjectPageHeaderRenderer._renderPlaceholder(oRm, oHeader, !(oHeader.getObjectImageShape() || oHeader.getShowPlaceholder()));
+			}, oObjectImage, oRm);
 			oRm.write("</span>");
 		}
 	};

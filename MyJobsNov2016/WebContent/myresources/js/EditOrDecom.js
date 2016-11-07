@@ -1,3 +1,4 @@
+var flag="";
 var formSearchAssetEditUpdate = new sap.m.Dialog("dlgSearchAssetEditUpdate", {
     title: "Search Assets",
     modal: true,
@@ -9,13 +10,49 @@ var formSearchAssetEditUpdate = new sap.m.Dialog("dlgSearchAssetEditUpdate", {
                   text: "Select",
                   type: sap.m.ButtonType.Accept,
                   tap: [function (oEvt) {
-                      inputChooseAssetEditOrDecom.setValue(currentAssetRecord.plantGroupDescriptionZPLGDESC);
-                      labelFuncLocStringEditOrDecom.setText(currentAssetRecord.funcLocStringZINSTLOCN);
-                      formEditOrDecom.open();
-                      ValidateControlsEditOrDecom();
+                      
                       formSearchAssetEditUpdate.close();
+                      //x=selectedAssetSearch.split(":")
+                      
+                      if(SearchMode=="NOTIF"){
+                      	sap.ui.getCore().byId('NewFuncLoc').setValue(currentAssetRecord.funcLocStringZINSTLOCN);
+                      	sap.ui.getCore().byId('NewEquipment').setValue(currentAssetRecord.EQUNR);
+                      }
+                      if(SearchMode=="CLOSE"){
+                    	
+                      	sap.ui.getCore().byId('Close_FunctionalLocation').setValue(currentAssetRecord.funcLocStringZINSTLOCN);
+                      	sap.ui.getCore().byId('Close_Equipment').setValue(currentAssetRecord.EQUNR);
+                      	}
+                      if(flag=="Edit"){
+                    	  inputChooseAssetEditOrDecom.setValue(currentAssetRecord.plantGroupDescriptionZPLGDESC);
+                          labelFuncLocStringEditOrDecom.setText(currentAssetRecord.funcLocStringZINSTLOCN);
+                          formEditOrDecom.open();
+                          ValidateControlsEditOrDecom();
+                          flag="";
+                      }
+                      
                   }]
               }),
+              new sap.m.Button( "BookToAsset",{
+            		visible:false,
+            	    text: "Book To Asset",
+            	    press:function(){
+            	    	/*x=selectedAssetSearch.split(":");
+            	    	 y=x[1].split("-");
+            	   	  x[1]=y[0]+"-"+y[1]+"-"+y[2]
+            	   	  x[2]=""*/
+            	   		if(SearchMode=="NOTIF"){
+            	          	sap.ui.getCore().byId('NewFuncLoc').setValue(currentAssetRecord.funcLocStringZINSTLOCN);
+            	          	sap.ui.getCore().byId('NewEquipment').setValue("");
+            	          }
+            	          if(SearchMode=="CLOSE"){
+            	        	
+            	          	sap.ui.getCore().byId('Close_FunctionalLocation').setValue(currentAssetRecord.funcLocStringZINSTLOCN);
+            	          	sap.ui.getCore().byId('Close_Equipment').setValue("");
+            	          	}
+            	          formSearchAssetEditUpdate.close()
+            	    }
+            	}),
                                   new sap.m.Button( {
                                       
                                       text: "Search",
@@ -43,6 +80,26 @@ var formSearchAssetEditUpdate = new sap.m.Dialog("dlgSearchAssetEditUpdate", {
        
 
         populateHelpModelAssetListEditUpdate();
+        var SQLStatement="";
+		SQLStatement="select * from MyJobsParams where name = 'BTP' and key2 = '"+localStorage.getItem('EmployeeScenario')+"'"
+		html5sql.process(SQLStatement,
+				 function(transaction, results, rowsArray){
+			if(rowsArray.length>0){
+				item = rowsArray[0];
+				if(item.value == "YES"){
+					sap.ui.getCore().getElementById("BookToAsset").setVisible(true); 
+	     	 	   
+				}
+				else{
+					sap.ui.getCore().getElementById("BookToAsset").setVisible(false);
+				}
+			}			
+				 },
+				 function(error, statement){
+					
+				 }        
+				);
+		
     },
     contentWidth: "85%",
     contentHeight: "85%",
@@ -80,7 +137,8 @@ var buttonChooseAssetEditOrDecom = new sap.m.Button(
 		    enabled: true,
 		    type: sap.m.ButtonType.Accept,
 		    tap: [function (oEvt) {
-		        formSearchAssetEditUpdate.open()
+		        formSearchAssetEditUpdate.open();
+		        flag="Edit";
 		    }]
 		})
 
@@ -138,7 +196,7 @@ var formEditOrDecom = new sap.m.Dialog("form_EditOrDecom", {
                 type: sap.m.ButtonType.Accept,
                 tap: [function (oEvt) {
                     action = recordAction.EDIT;
-                        labelSite.setVisible(false);
+                        sap.ui.getCore().byId("labelSite").setVisible(false);
                         InputCreateAssetSite.setVisible(false);
                     formCreateAsset.open();
                 }]

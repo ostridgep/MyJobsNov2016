@@ -96,12 +96,32 @@
       "theme": "sap_hcb"
     },
     {
+      "name": "DateTimePicker.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
       "name": "Dialog.less",
       "designtime": true,
       "theme": "sap_hcb"
     },
     {
       "name": "DisplayListItem.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "DynamicPage.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "DynamicPageHeader.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "DynamicPageTitle.less",
       "designtime": true,
       "theme": "sap_hcb"
     },
@@ -141,6 +161,16 @@
       "theme": "sap_hcb"
     },
     {
+      "name": "FlexibleColumnLayout.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "FormattedText.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
       "name": "GenericTile.less",
       "designtime": true,
       "theme": "sap_hcb"
@@ -157,6 +187,11 @@
     },
     {
       "name": "IconTabBar.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "ImageContent.less",
       "designtime": true,
       "theme": "sap_hcb"
     },
@@ -202,6 +237,16 @@
     },
     {
       "name": "MaskInput.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "MenuButton.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "MenuListItem.less",
       "designtime": true,
       "theme": "sap_hcb"
     },
@@ -276,6 +321,11 @@
       "theme": "sap_hcb"
     },
     {
+      "name": "ObjectMarker.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
       "name": "ObjectNumber.less",
       "designtime": true,
       "theme": "sap_hcb"
@@ -326,6 +376,11 @@
       "theme": "sap_hcb"
     },
     {
+      "name": "RangeSlider.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
       "name": "RatingIndicator.less",
       "designtime": true,
       "theme": "sap_hcb"
@@ -367,6 +422,11 @@
     },
     {
       "name": "Slider.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "SplitButton.less",
       "designtime": true,
       "theme": "sap_hcb"
     },
@@ -461,6 +521,11 @@
       "theme": "sap_hcb"
     },
     {
+      "name": "Tokenizer.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
       "name": "Toolbar.less",
       "designtime": true,
       "theme": "sap_hcb"
@@ -476,7 +541,17 @@
       "theme": "sap_hcb"
     },
     {
+      "name": "ValueStateMessage.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
       "name": "ViewSettingsDialog.less",
+      "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "ViewSettingsPopover.less",
       "designtime": true,
       "theme": "sap_hcb"
     },
@@ -505,6 +580,24 @@
       "theme": "sap_hcb"
     },
     {
+      "name": "library-RTL_ie9-dbg.css",
+      "isDebug": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "library-RTL_ie9.css",
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "library-RTL_ie9_1-dbg.css",
+      "isDebug": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "library-RTL_ie9_1.css",
+      "theme": "sap_hcb"
+    },
+    {
       "name": "library-dbg.css",
       "isDebug": true,
       "theme": "sap_hcb"
@@ -525,6 +618,24 @@
     {
       "name": "library.source.less",
       "designtime": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "library_ie9-dbg.css",
+      "isDebug": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "library_ie9.css",
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "library_ie9_1-dbg.css",
+      "isDebug": true,
+      "theme": "sap_hcb"
+    },
+    {
+      "name": "library_ie9_1.css",
       "theme": "sap_hcb"
     },
     {

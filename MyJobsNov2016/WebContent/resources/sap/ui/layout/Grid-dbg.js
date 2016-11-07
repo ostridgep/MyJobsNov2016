@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 *
 	 * @constructor
 	 * @public
@@ -279,6 +279,24 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 
 			return null;
 
+		};
+
+		/**
+		 * @see {sap.ui.core.Control#getAccessibilityInfo}
+		 * @protected
+		 */
+		Grid.prototype.getAccessibilityInfo = function() {
+			var aContent = this.getContent();
+			var aChildren = [];
+			for (var i = 0; i < aContent.length; i++) {
+				if (aContent[i].getAccessibilityInfo) {
+					var oInfo = aContent[i].getAccessibilityInfo();
+					if (oInfo) {
+						aChildren.push(oInfo);
+					}
+				}
+			}
+			return {children: aChildren};
 		};
 
 	}());

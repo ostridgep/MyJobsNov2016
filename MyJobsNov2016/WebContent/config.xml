@@ -4,11 +4,11 @@
     <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.aws.myjobs2016"
-        version   = "DEV 1.191016.0000">
+        version   = "DEV 1.021116.0000">
 
     <name>MyJobs</name>
     <description>
-        MyJobs (Nov 2106)
+        MyJobs (Forms AND Push 2016)
     </description>
 
     <author href="#" email="Paul@ostridge.com">

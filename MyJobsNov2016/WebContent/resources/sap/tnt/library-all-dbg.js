@@ -39,7 +39,7 @@ sap.ui.define("sap/tnt/NavigationListRenderer",['jquery.sap.global', 'sap/ui/cor
 			rm.writeControlData(control);
 
 			var width = control.getWidth();
-			if (width) {
+			if (width && expanded) {
 				rm.addStyle("width", width);
 			}
 			rm.writeStyles();
@@ -129,9 +129,11 @@ sap.ui.define("sap/tnt/SideNavigationRenderer",[],
             rm.writeAttribute("role", 'navigation');
 
             rm.addClass('sapTntSideNavigation');
+            rm.addClass("sapContrast sapContrastPlus");
 
             if (!isExpanded) {
                 rm.addClass('sapTntSideNavigationNotExpanded');
+                rm.addClass('sapTntSideNavigationNotExpandedWidth');
             }
 
             if (!isExpanded && itemAggregation) {
@@ -298,12 +300,12 @@ sap.ui.define("sap/tnt/ToolPageRenderer",[],
 		};
 
 		ToolPageRenderer.renderContentWrapper = function (rm, control) {
-			var isScreenSizeForTablet = sap.ui.Device.system.tablet;
-			var isScreenSizeForPhone = sap.ui.Device.system.phone;
+			var isTablet = sap.ui.Device.system.tablet;
+			var isPhone = sap.ui.Device.system.phone;
 
 			rm.write('<div class="sapTntToolPageContentWrapper');
 
-			if (isScreenSizeForPhone || isScreenSizeForTablet || !control.getSideExpanded()) {
+			if (isPhone || isTablet || !control.getSideExpanded()) {
 				rm.write(' sapTntToolPageAsideCollapsed');
 			}
 
@@ -314,8 +316,7 @@ sap.ui.define("sap/tnt/ToolPageRenderer",[],
 		};
 
 		ToolPageRenderer.renderAsideContent = function (rm, control) {
-			var isScreenSizeForTablet = sap.ui.Device.system.tablet;
-			var isScreenSizeForPhone = sap.ui.Device.system.phone;
+			var isDesktop = sap.ui.Device.system.desktop;
 			var sideContentAggregation = control.getAggregation('sideContent');
 			var isSideExpanded = control.getSideExpanded();
 
@@ -327,7 +328,7 @@ sap.ui.define("sap/tnt/ToolPageRenderer",[],
 				sideContentAggregation.setExpanded(isSideExpanded);
 			}
 
-			if (isScreenSizeForTablet || isScreenSizeForPhone) {
+			if (!isDesktop) {
 				control.setSideExpanded(false);
 			}
 
@@ -388,14 +389,14 @@ sap.ui.define("sap/tnt/library",['jquery.sap.global',
 	 * @namespace
 	 * @name sap.tnt
 	 * @author SAP SE
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 * @public
 	 */
 
 	// delegate further initialization of this library to the Core
 	sap.ui.getCore().initLibrary({
 		name : 'sap.tnt',
-		version: '1.36.8',
+		version: '1.40.10',
 		dependencies : ['sap.ui.core','sap.m'],
 		types: [],
 		interfaces: [],
@@ -445,7 +446,7 @@ sap.ui.define("sap/tnt/NavigationList",['jquery.sap.global', './library', 'sap/u
 		 * @extends sap.ui.core.Control
 		 *
 		 * @author SAP SE
-		 * @version 1.36.8
+		 * @version 1.40.10
 		 *
 		 * @constructor
 		 * @public
@@ -650,22 +651,32 @@ sap.ui.define("sap/tnt/NavigationList",['jquery.sap.global', './library', 'sap/u
 		 */
 		NavigationList.prototype._openPopover = function (source, list) {
 
+			var that = this;
 			var selectedItem = list.getSelectedItem();
 			if (selectedItem && list.isGroupSelected) {
 				selectedItem = null;
 			}
 
-			var popover = new Popover({
+			var popover = this._popover = new Popover({
 				showHeader: false,
 				horizontalScrolling: false,
 				verticalScrolling: true,
 				initialFocus: selectedItem,
+				afterClose: function () {
+					that._popover = null;
+				},
 				content: list
-			});
+			}).addStyleClass('sapContrast sapContrastPlus');
 
 			popover._adaptPositionParams = this._adaptPopoverPositionParams;
 
 			popover.openBy(source);
+		};
+
+		NavigationList.prototype._closePopover = function () {
+			if (this._popover) {
+				this._popover.close();
+			}
 		};
 
 		return NavigationList;
@@ -699,7 +710,7 @@ sap.ui.define("sap/tnt/NavigationListItem",["jquery.sap.global", "./library", "s
 		 * @extends sap.ui.core.Item
 		 *
 		 * @author SAP SE
-		 * @version 1.36.8
+		 * @version 1.40.10
 		 *
 		 * @constructor
 		 * @public
@@ -1032,7 +1043,7 @@ sap.ui.define("sap/tnt/NavigationListItem",["jquery.sap.global", "./library", "s
 			}
 
 			// first navigation level
-			if (navList.getExpanded()) {
+			if (navList.getExpanded() || this.getItems().length == 0) {
 
 				if (!source || source.getMetadata().getName() != 'sap.ui.core.Icon' || !source.$().hasClass('sapTntNavLIExpandIcon')) {
 					this._selectItem(event);
@@ -1109,6 +1120,8 @@ sap.ui.define("sap/tnt/NavigationListItem",["jquery.sap.global", "./library", "s
 
 			rm.write(">");
 
+			this._renderIcon(rm);
+
 			if (control.getExpanded()) {
 
 				var expandIconControl = this._getExpandIconControl();
@@ -1116,11 +1129,8 @@ sap.ui.define("sap/tnt/NavigationListItem",["jquery.sap.global", "./library", "s
 				expandIconControl.setSrc(this.getExpanded() ? NavigationListItem.collapseIcon : NavigationListItem.expandIcon);
 				expandIconControl.setTooltip(this._getExpandIconTooltip(!this.getExpanded()));
 
-				this._renderIcon(rm);
 				this._renderText(rm);
 				rm.renderControl(expandIconControl);
-			} else {
-				this._renderIcon(rm);
 			}
 
 			rm.write("</div>");
@@ -1240,29 +1250,35 @@ sap.ui.define("sap/tnt/NavigationListItem",["jquery.sap.global", "./library", "s
 		 * @private
 		 */
 		NavigationListItem.prototype._renderIcon =  function(rm) {
-			rm.write('<span');
+			var icon = this.getIcon(),
+				iconInfo = IconPool.getIconInfo(icon);
 
-			rm.addClass("sapUiIcon");
-			rm.addClass("sapTntNavLIGroupIcon");
+			if (icon) {
+				// Manually rendering the icon instead of using RenderManager's writeIcon. In this way title
+				// attribute is not rendered and the tooltip of the icon does not override item's tooltip
+				rm.write('<span');
 
-			rm.writeAttribute("aria-hidden", true);
+				rm.addClass("sapUiIcon");
+				rm.addClass("sapTntNavLIGroupIcon");
 
-			var icon = this.getIcon();
-			var iconInfo = IconPool.getIconInfo(icon);
+				rm.writeAttribute("aria-hidden", true);
 
-			if (iconInfo && !iconInfo.suppressMirroring) {
-				rm.addClass("sapUiIconMirrorInRTL");
+				if (iconInfo && !iconInfo.suppressMirroring) {
+					rm.addClass("sapUiIconMirrorInRTL");
+				}
+
+				if (iconInfo) {
+					rm.writeAttribute("data-sap-ui-icon-content", iconInfo.content);
+					rm.addStyle("font-family", "'" + iconInfo.fontFamily + "'");
+				}
+
+				rm.writeClasses();
+				rm.writeStyles();
+
+				rm.write("></span>");
+			} else {
+				rm.write('<span class="sapUiIcon sapTntNavLIGroupIcon" aria-hidden="true"></span>');
 			}
-
-			if (iconInfo) {
-				rm.writeAttribute("data-sap-ui-icon-content", iconInfo.content);
-				rm.addStyle("font-family", "'" + iconInfo.fontFamily + "'");
-			}
-
-			rm.writeClasses();
-			rm.writeStyles();
-
-			rm.write("></span>");
 
 		};
 
@@ -1346,6 +1362,8 @@ sap.ui.define("sap/tnt/NavigationListItem",["jquery.sap.global", "./library", "s
 				$this.attr('aria-selected', true);
 			} else {
 				$this.attr('aria-pressed', true);
+
+				navList._closePopover();
 			}
 		};
 
@@ -1403,8 +1421,11 @@ jQuery.sap.require('jquery.sap.global'); // unlisted dependency retained
 jQuery.sap.require('sap.ui.core.Control'); // unlisted dependency retained
 jQuery.sap.require('sap.ui.core.ResizeHandler'); // unlisted dependency retained
 jQuery.sap.require('sap.ui.core.Icon'); // unlisted dependency retained
-sap.ui.define("sap/tnt/SideNavigation",['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/core/ResizeHandler', 'sap/ui/core/Icon', './NavigationList'],
-    function (jQuery, library, Control, ResizeHandler, Icon) {
+jQuery.sap.require('sap.ui.core.delegate.ScrollEnablement'); // unlisted dependency retained
+sap.ui.define("sap/tnt/SideNavigation",['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/core/ResizeHandler',
+        'sap/ui/core/Icon', 'sap/ui/core/delegate/ScrollEnablement'],
+    function (jQuery, library, Control, ResizeHandler,
+              Icon, ScrollEnablement) {
         'use strict';
 
         /**
@@ -1422,7 +1443,7 @@ sap.ui.define("sap/tnt/SideNavigation",['jquery.sap.global', './library', 'sap/u
          * @extends sap.ui.core.Control
          *
          * @author SAP SE
-         * @version 1.36.8
+         * @version 1.40.10
          *
          * @constructor
          * @public
@@ -1479,6 +1500,12 @@ sap.ui.define("sap/tnt/SideNavigation",['jquery.sap.global', './library', 'sap/u
         });
 
         SideNavigation.prototype.init = function () {
+
+            this._scroller = new ScrollEnablement(this, this.getId() + "-Flexible-Content", {
+                horizontal: false,
+                vertical: true
+            });
+
             // Define group for F6 handling
             this.data('sap-ui-fastnavgroup', 'true', true);
         };
@@ -1491,29 +1518,92 @@ sap.ui.define("sap/tnt/SideNavigation",['jquery.sap.global', './library', 'sap/u
             return sap.ui.base.ManagedObject.prototype.setAggregation.apply(this, arguments);
         };
 
+        /**
+         * Sets if the control is in expanded or collapsed mode.
+         */
         SideNavigation.prototype.setExpanded = function (isExpanded) {
 
             if (this.getExpanded() === isExpanded) {
                 return this;
             }
 
-            if (this.getAggregation('item')) {
-                this.getAggregation('item').setExpanded(isExpanded);
-            }
-
-            if (this.getAggregation('fixedItem')) {
-                this.getAggregation('fixedItem').setExpanded(isExpanded);
-            }
-
-            if (this.getDomRef()) {
-                this.getDomRef().classList.toggle('sapTntSideNavigationNotExpanded');
-            }
-
             this.setProperty('expanded', isExpanded, true);
 
-            this._toggleArrows();
+            if (!this.getDomRef()) {
+                return this;
+            }
+
+            var that = this,
+                $this = this.$(),
+                width;
+
+            if (that._hasActiveAnimation) {
+                that._finishAnimation(!isExpanded);
+                $this.stop();
+            }
+
+            if (isExpanded) {
+                that.$().toggleClass('sapTntSideNavigationNotExpanded', !isExpanded);
+
+                if (that.getAggregation('item')) {
+                    that.getAggregation('item').setExpanded(isExpanded);
+                }
+
+                if (that.getAggregation('fixedItem')) {
+                    that.getAggregation('fixedItem').setExpanded(isExpanded);
+                }
+            }
+
+            that._hasActiveAnimation = true;
+
+            var isCompact = $this.parents('.sapUiSizeCompact').length > 0;
+
+            if (isCompact) {
+                width = isExpanded ? '15rem' : '2rem';
+            } else {
+                width = isExpanded ? '15rem' : '3rem';
+            }
+
+            $this.animate({
+                    width: width
+                },
+                {
+                    duration: 300,
+                    complete: function () {
+                        var isExpanded = that.getExpanded();
+                        that._finishAnimation(isExpanded);
+                    }
+                });
 
             return this;
+        };
+
+        /**
+         * @private
+         */
+        SideNavigation.prototype._finishAnimation = function (isExpanded) {
+            if (!this._hasActiveAnimation || !this.getDomRef()) {
+                return;
+            }
+
+            this.$().toggleClass('sapTntSideNavigationNotExpandedWidth', !isExpanded);
+
+            if (!isExpanded) {
+                this.$().toggleClass('sapTntSideNavigationNotExpanded', !isExpanded);
+
+                if (this.getAggregation('item')) {
+                    this.getAggregation('item').setExpanded(isExpanded);
+                }
+
+                if (this.getAggregation('fixedItem')) {
+                    this.getAggregation('fixedItem').setExpanded(isExpanded);
+                }
+            }
+
+            this.$().css('width', '');
+            this._hasActiveAnimation = false;
+
+            this._toggleArrows();
         };
 
         /**
@@ -1535,6 +1625,12 @@ sap.ui.define("sap/tnt/SideNavigation",['jquery.sap.global', './library', 'sap/u
          * @private
          */
         SideNavigation.prototype.exit = function () {
+
+            if (this._scroller) {
+                this._scroller.destroy();
+                this._scroller = null;
+            }
+
             this._deregisterControl();
         };
 
@@ -1569,15 +1665,6 @@ sap.ui.define("sap/tnt/SideNavigation",['jquery.sap.global', './library', 'sap/u
                 ResizeHandler.deregister(this._ResizeHandler);
                 this._ResizeHandler = null;
             }
-        };
-
-        /**
-         * @private
-         * @param {Object} event
-         */
-        SideNavigation.prototype.ontouchmove = function (event) {
-            // mark the event for components that needs to know if the event was handled
-            event.setMarked();
         };
 
         /**
@@ -1637,6 +1724,12 @@ sap.ui.define("sap/tnt/SideNavigation",['jquery.sap.global', './library', 'sap/u
             var scrollContainerWrapper = this.$('Flexible')[0];
             var scrollContainerContent = this.$('Flexible-Content')[0];
             var isAsideExpanded = this.getExpanded();
+
+            if (this._hasActiveAnimation) {
+                domRef.querySelector('.sapTntSideNavigationScrollIconUp').style.display = 'none';
+                domRef.querySelector('.sapTntSideNavigationScrollIconDown').style.display = 'none';
+                return;
+            }
 
             if ((scrollContainerContent.offsetHeight > scrollContainerWrapper.offsetHeight) && !isAsideExpanded) {
                 domRef.querySelector('.sapTntSideNavigationScrollIconUp').style.display = 'block';
@@ -1703,7 +1796,7 @@ sap.ui.define("sap/tnt/ToolHeader",['jquery.sap.global', './library', 'sap/ui/co
 		 * @extends sap.m.OverflowToolbar
 		 *
 		 * @author SAP SE
-		 * @version 1.36.8
+		 * @version 1.40.10
 		 *
 		 * @constructor
 		 * @public
@@ -1731,7 +1824,9 @@ sap.ui.define("sap/tnt/ToolHeader",['jquery.sap.global', './library', 'sap/ui/co
 
 			OverflowToolbar.prototype.init.apply(this, arguments);
 
-			this.addStyleClass('sapTntToolHeader');
+			this.addStyleClass('sapTntToolHeader sapContrast sapContrastPlus');
+
+			this.setHTMLTag(sap.m.IBarHTMLTag.Header);
 		};
 
 		/**
@@ -1751,7 +1846,7 @@ sap.ui.define("sap/tnt/ToolHeader",['jquery.sap.global', './library', 'sap/ui/co
 					modal: false,
 					horizontalScrolling: sap.ui.Device.system.phone ? false : true,
 					contentWidth: sap.ui.Device.system.phone ? "100%" : "auto"
-				}).addStyleClass('sapTntToolHeaderPopover');
+				}).addStyleClass('sapTntToolHeaderPopover sapContrast sapContrastPlus');
 
 				popover.oControlsManager._preProcessSapMButton = this._preProcessPopoverControlsSapMButton.bind(popover.oControlsManager);
 
@@ -1834,7 +1929,7 @@ sap.ui.define("sap/tnt/ToolHeaderUtilitySeparator",['jquery.sap.global', './libr
 		 * @extends sap.ui.core.Control
 		 *
 		 * @author SAP SE
-		 * @version 1.36.8
+		 * @version 1.40.10
 		 *
 		 * @constructor
 		 * @public
@@ -1887,7 +1982,7 @@ sap.ui.define("sap/tnt/ToolPage",['./library', 'sap/ui/core/Control', 'sap/ui/De
 		 * @extends sap.ui.core.Control
 		 *
 		 * @author SAP SE
-		 * @version 1.36.8
+		 * @version 1.40.10
 		 *
 		 * @constructor
 		 * @public
@@ -1939,13 +2034,13 @@ sap.ui.define("sap/tnt/ToolPage",['./library', 'sap/ui/core/Control', 'sap/ui/De
 		 */
 		ToolPage.prototype.setSideExpanded = function(isSideExpanded) {
 			var sideContentAggregation = this.getAggregation('sideContent');
-			var isMediaQueryForPhone = Device.system.phone;
 			var domRef = this.getDomRef();
 
 			this.setProperty('sideExpanded', isSideExpanded, true);
 
-			if (sideContentAggregation && !isMediaQueryForPhone) {
-				sideContentAggregation.setExpanded(isSideExpanded);
+			if (sideContentAggregation) {
+				var newState = Device.system.phone ? true :  isSideExpanded;
+				sideContentAggregation.setExpanded(newState);
 			}
 
 			if (!domRef) {

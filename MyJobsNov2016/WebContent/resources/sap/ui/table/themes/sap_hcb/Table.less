@@ -21,17 +21,8 @@
 .sapUiTableColHdrCnt{
 	background-color: @sapHCStandardBG;
 	color: @sapHCStandardFG;
-	border-bottom: 0.188rem solid @sapHCStandardFG;
+	border-bottom: 3px solid @sapHCStandardFG;
 }
-
-.sapUiTableColHdrCnt > .sapUiTableSelAllEnabled,
-.sapUiTableCell > .sapUiTv,
-.sapUiTableCell .sapUiTfComboIcon,
-.sapUiTableCell > .sapUiTfStd,
-.sapUiTableTr .sapUiTableCell {
-	outline-width: 0px;
-}
-
 
 /*******************************************************************************
  * TABLE CONTROL
@@ -54,18 +45,9 @@
 	border-right: 0.0625rem solid @sapHCStandardFG;
 }
 
-.sapUiTableRowHdr.sapUiTableGroupHeader,
-.sapUiTableCtrl tr.sapUiTableGroupHeader > td {
-	border-right: none;
-}
-
 .sapUiTableTr > td,
 .sapUiTableRowHdr {
 	border-bottom: 0.0625rem solid @sapHCReducedAltFG;
-}
-
-.sapUiTableRowHdrScr > .sapUiTableRowHdr {
-	outline-width: 0px;
 }
 
 .sapUiTableColRowHdr:hover,
@@ -84,8 +66,8 @@
 	background-color:@sapHCHighlightBG;
 }
 
-.sapUiTable > .sapUiTableFtr:last-child {
-	border-top: 0.185rem solid @sapHCStandardFG;
+.sapUiTableCCnt {
+	border-bottom: 0.185rem solid @sapHCStandardFG;
 }
 
 .sapUiTable > .sapUiTableFtr > .sapUiTv{
@@ -156,6 +138,7 @@
 .sapUiSizeCompact .sapUiTable > .sapUiTableTbr.sapUiTableMTbr {
 	height: 2rem;
 }
+
 .sapUiTable > .sapUiTableExt {
 	border: none;
 	border-bottom: 0.0625rem solid @sapHCStandardFG;
@@ -172,16 +155,6 @@
 .sapUiTableCol {
 	padding-top: 7px;
 	padding-bottom: 5px;
-}
-
-.sapUiTableColIcons {
-	padding-top: 6px;
-}
-
-.sapUiTableRowHdr,
-.sapUiTableTr > td {
-	padding-top: 2px;
-	padding-bottom: 1px;
 }
 
 .sapUiTableRowHdr {
@@ -299,7 +272,6 @@
 	border: none;
 }
 
-
 /* Table Column */
 .sapUiTableCol {
 	padding-top: 7px;
@@ -353,29 +325,46 @@ tr.sapUiTableRowHvr .sapUiLnk:hover,
 	color: @sapHCStandardFG;
 }
 
-.sapUiTableTr > td:focus, .sapUiTableRowHdrScr > .sapUiTableRowHdr:focus, .sapUiTableColHdr *:focus, .sapUiTableColRowHdr:focus {
-	outline: 0.125rem dotted @sapHCStandardFG;
-	outline-offset: -0.125rem;
+/*
+ * Focus Outline for Table Cells
+ *
+ * IE, Edge : use native outline rendering. It has correct contrast and offset.
+ * Any attempt to specify another outline in CSS breaks it.
+ *
+ * Other browsers see below:
+ */
+
+/* WebKit */
+.sapUiTableTr > td:focus:not(*:root),
+.sapUiTableCol:focus:not(*:root),
+.sapUiTableRowHdr:focus:not(*:root),
+.sapUiTableColRowHdr:focus:not(*:root) {
+	outline-offset: -3px;
+	outline: 2px dotted @sapHCStandardFG;
 }
 
-.sapUiTableRSel .sapUiTableColHdrScr,
-.sapUiTableRSel .sapUiTableColHdrFixed,
+/* Firefox */
+@supports (-moz-appearance:meterbar) {
+.sapUiTableTr > td:focus,
+.sapUiTableCol:focus,
+.sapUiTableRowHdr:focus,
+.sapUiTableColRowHdr:focus {
+	outline-offset: -3px;
+	outline: 2px dotted @sapHCStandardFG;
+}}
+
 .sapUiTableRSel .sapUiTableCtrlScr,
 .sapUiTableRSel .sapUiTableCtrlScrFixed {
 	margin-left: @sapUiTableRowHdrWidth;
 }
 
 .sapUiSizeCozy .sapUiTableRSel {
-	.sapUiTableColHdrScr,
-	.sapUiTableColHdrFixed,
 	.sapUiTableCtrlScr,
 	.sapUiTableCtrlScrFixed {
 		margin-left: @sapUiTableCozyRowHdrWidth;
 	}
 }
 
-.sapUiSizeCompact .sapUiTableRSel .sapUiTableColHdrScr,
-.sapUiSizeCompact .sapUiTableRSel .sapUiTableColHdrFixed,
 .sapUiSizeCompact .sapUiTableRSel .sapUiTableCtrlScr,
 .sapUiSizeCompact .sapUiTableRSel .sapUiTableCtrlScrFixed {
 	margin-left: @sapUiTableCompactRowHdrWidth;
@@ -408,11 +397,6 @@ tr.sapUiTableRowHvr .sapUiLnk:hover,
 	}
 }
 
-/* Table Column Resizer */
-.sapUiTableColRsz:hover {
-	background-color: @sapHCHighlightBG;
-}
-
 /* Table Row Tree Node */
 .sapUiTableTr {
 	color: @sapUiText;
@@ -427,31 +411,22 @@ tr.sapUiTableRowHvr .sapUiLnk:hover,
 	height: @sapUiTableCondensedRowHeight;
 }
 
-.sapUiTableTreeIcon {
-	margin-right: 6px;
-}
-
-.sapUiTableTreeIconLeaf {
-	background-image: none;
-}
-
-.sapUiSizeCompact .sapUiTableGroupIcon {
-	font-size: 0.875rem;
-}
-
 .sapUiTableHSb,
 .sapUiTableCCnt,
 .sapUiTableCtrlEmpty {
 	background-color: @sapHCStandardBG;
 }
 
-.sapUiSizeCompact .sapUiTableTreeIcon:focus {
-	outline: 0.125rem dotted @sapHCStandardFG;
+.sapUiTableOverlayArea:focus,
+.sapUiTableCtrlEmpty:focus {
+	outline-width: 2px;
 }
 
-.sapUiSizeCompact .sapUiTableGroupIcon::before,
-.sapUiSizeCompact .sapUiTableTreeIcon::before {
-	color: @sapHCStandardFG;
+html[data-sap-ui-browser^="ie"] .sapUiTableOverlayArea:focus,
+html[data-sap-ui-browser^="ed"] .sapUiTableOverlayArea:focus,
+html[data-sap-ui-browser^="ie"] .sapUiTableCtrlEmpty:focus:before,
+html[data-sap-ui-browser^="ed"] .sapUiTableCtrlEmpty:focus:before {
+	border-width: 2px;
 }
 
 /* Condensed mode */
@@ -461,12 +436,6 @@ tr.sapUiTableRowHvr .sapUiLnk:hover,
 
 .sapUiTableCtrlEmptyMsg {
 	font-size: @sapUiFontSize;
-}
-
-/* Rewriting input styles to fit the HCB theme */
-.sapUiTableCell > .sapMInputBase > .sapMInputBaseInner {
-	background-color: transparent;
-	border: none;
 }
 
 /* Rewriting combobox styles in order to fit the HCB theme */
@@ -509,13 +478,45 @@ tr.sapUiTableRowHvr .sapUiLnk:hover,
 	border-bottom: none;
 }
 
-.sapUiTableTouch .sapUiScrollBar {
-	::-webkit-scrollbar-thumb {
-		background-color: @sapHCStandardFG;
+html.sap-tablet:not(.sap-desktop), html.sap-phone {
 
-	}
+	.sapUiTableVSb,
+	.sapUiTableHSb {
 
-	::-webkit-scrollbar {
-		background-color: @sapHCStandardBG;
+		::-webkit-scrollbar-thumb {
+			background-color: @sapHCStandardFG;
+		}
+
+		::-webkit-scrollbar {
+			background-color: @sapHCStandardBG;
+		}
+
 	}
 }
+
+// Scrollbar adjustments
+
+html.sap-desktop .sapUiTableVSb::-webkit-scrollbar-thumb {
+	border-right: 4px solid @sapHCStandardBG;
+	border-top: 2px solid @sapHCStandardBG;
+	border-bottom: 2px solid @sapHCStandardBG;
+	box-shadow: none;
+}
+
+html.sap-desktop .sapUiTableHSb::-webkit-scrollbar-thumb {
+	border-bottom: 4px solid @sapHCStandardBG;
+	box-shadow: none;
+}
+
+html.sap-desktop .sapUiTableHSb::-webkit-scrollbar,
+html.sap-desktop .sapUiTableHSb::-webkit-scrollbar-thumb,
+html.sap-desktop .sapUiTableVSb::-webkit-scrollbar,
+html.sap-desktop .sapUiTableVSb::-webkit-scrollbar-thumb {
+	border-left: none;
+}
+
+.sapUiTableVSbContent {
+	background: @sapHCStandardFG;
+}
+
+// --------

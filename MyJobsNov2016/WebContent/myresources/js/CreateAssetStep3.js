@@ -56,7 +56,7 @@ var oCell = new sap.ui.commons.layout.MatrixLayoutCell({
 });
 
 var textCommentCreateAssetStep3 = new sap.m.TextArea("text_Comment",{ rows: 8,width : "270px", liveChange: [function (event) {
-    calculateRemainingCharacterCountCreateAssetStep2Parent();
+    calculateRemainingCharacterCountCreateAssetStep3();
 }]})
 oCell.addContent(textCommentCreateAssetStep3);
 oRow.addCell(oCell);
@@ -83,7 +83,7 @@ oRow.addCell(oCell);
 var oRow = new sap.ui.commons.layout.MatrixLayoutRow();
 oCreateAssetStep3Matrix.addRow(oRow);
 var oCell = new sap.ui.commons.layout.MatrixLayoutCell({});
-oCell.addContent(new sap.m.Label({text : "Asset Tag"}));
+oCell.addContent(new sap.m.Label({visible:false ,text : "Asset Tag"}));
 oRow.addCell(new sap.ui.commons.layout.MatrixLayoutCell());
 oRow.addCell(oCell);
 
@@ -92,7 +92,8 @@ var inputAssetTag = new sap.m.Input("input_AssetTag",
 		    maxLength: 40,
 			width : "270px",
 			type : sap.m.InputType.Input,
-			enabled : true
+			enabled : true,
+			visible : false
 		});
 
 var oCell = new sap.ui.commons.layout.MatrixLayoutCell({});
@@ -100,7 +101,8 @@ oCell.addContent(inputAssetTag);
 oRow.addCell(oCell);
 
 var gpsCoordsButtonCreateAssetStep3 = new sap.m.Button({
-    text: "GPS Co-ords",
+    visible : false,
+	text: "GPS Co-ords",
     type: sap.m.ButtonType.Default,
     tap: [function (oEvt) {
         navigator.geolocation.getCurrentPosition(onGetCurrentPositionSuccessCreateAssetStep3, onGetCurrentPositionErrorCreateAssetStep3);
@@ -112,7 +114,8 @@ var inputGpsCreateAssetStep3 = new sap.m.Input("input_GpsCreateAssetStep3",
 		    maxLength: 80,
 			width : "570px",
 			type : sap.m.InputType.Input,
-			enabled : true
+			enabled : true,
+			visible : false,
 		});
 
 var oRow = new sap.ui.commons.layout.MatrixLayoutRow();
@@ -164,9 +167,9 @@ new sap.m.Button("formCreateAssetStep3_Back" ,{
 					    tap: [ function(oEvt) {	
 					        if (sap.ui.getCore().getElementById('formCreateAssetStep3_Next').getVisible()) {
 					            var msgCancel = "You have chosen to cancel part way through the creation process. ";
-					            msgCancel += "Clicking OK will confirm you wish to cancel and return to the asset list. ";
-					            msgCancel += "Clicking Abort will take you to the previous screen.";
-					    	    CreateAssetStep3ConfirmCancel("Close Forms", msgCancel)
+					            msgCancel += "Clicking YES will confirm you wish to cancel and return to the Home screen. ";
+					            msgCancel += "Clicking NO will take you to the previous screen.";
+					    	    CreateAssetStep3ConfirmCancel("", msgCancel)
 					    	}
 
 					   
@@ -285,7 +288,7 @@ function CreateAssetStep3ConfirmCancel(title, msg) {
                 formCreateAssetStep3.close();
                
                 formCreateAssetStep4.close();
-                formCreateAssetStep4NA.close();
+                //formCreateAssetStep4NA.close();
                // formCreateAssetReview.close();
                
                
@@ -351,7 +354,7 @@ function CreateAssetStep3SetDefaultValues() {
                       text: currentAssetRecord.SystemCodeNumber
                   }))
 
-        generateNextPlantSystemItemNumber(function (newSystemCodeNumber ) {
+        //generateNextPlantSystemItemNumber(function (newSystemCodeNumber ) {
             sap.ui.getCore().getElementById("SystemIDSelect").addItem(
                 new sap.ui.core.Item({
                     key: newSystemCodeNumber,
@@ -364,7 +367,7 @@ function CreateAssetStep3SetDefaultValues() {
 
             sap.ui.getCore().getElementById("SystemIDSelect").setVisible(true);
             sap.ui.getCore().getElementById("systemIDTextCreateAssetStep3").setVisible(true);
-        });
+        //});
     }
     else
     {
@@ -392,7 +395,7 @@ function onGetCurrentPositionErrorCreateAssetStep3(error)
     inputGpsCreateAssetStep3.setValue(error.message);
 }
 
-function calculateRemainingCharacterCountCreateAssetStep2Parent() {
+function calculateRemainingCharacterCountCreateAssetStep3() {
     var a = inputCreateAssetStep2ParentFuncLocPart1.getValue().length + 1;
     var b = inputCreateAssetStep2ParentFuncLocPart2.getValue().length + 1;
     var c = inputCreateAssetStep2ParentFuncLocPart3.getValue().length;

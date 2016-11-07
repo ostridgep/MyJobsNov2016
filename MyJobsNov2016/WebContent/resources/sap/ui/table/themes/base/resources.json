@@ -16,6 +16,11 @@
       "theme": "base"
     },
     {
+      "name": "Grouping.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
       "name": "Table.less",
       "designtime": true,
       "theme": "base"

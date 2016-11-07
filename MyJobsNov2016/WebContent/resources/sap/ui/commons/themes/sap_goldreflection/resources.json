@@ -518,10 +518,6 @@
       "theme": "sap_goldreflection"
     },
     {
-      "name": "img-RTL/toolbar/overflow.png",
-      "theme": "sap_goldreflection"
-    },
-    {
       "name": "img-RTL/tree/CollapseAll.png",
       "theme": "sap_goldreflection"
     },
@@ -599,10 +595,6 @@
     },
     {
       "name": "img/Edit_hover.png",
-      "theme": "sap_goldreflection"
-    },
-    {
-      "name": "img/TriStateCheckBox.png",
       "theme": "sap_goldreflection"
     },
     {
@@ -875,10 +867,6 @@
     },
     {
       "name": "img/tab-close.png",
-      "theme": "sap_goldreflection"
-    },
-    {
-      "name": "img/toolbar/overflow.png",
       "theme": "sap_goldreflection"
     },
     {

@@ -6,6 +6,11 @@
       "theme": "sap_goldreflection"
     },
     {
+      "name": "Grouping.less",
+      "designtime": true,
+      "theme": "sap_goldreflection"
+    },
+    {
       "name": "Table.less",
       "designtime": true,
       "theme": "sap_goldreflection"

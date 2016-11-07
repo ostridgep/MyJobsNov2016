@@ -28,7 +28,7 @@ sap.ui.define([
 	 * @extends sap.m.QuickViewBase
 	 *
 	 * @author SAP SE
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 *
 	 * @constructor
 	 * @public
@@ -152,13 +152,6 @@ sap.ui.define([
 		};
 
 		this._oNavContainer = new NavContainer(oNavConfig);
-
-		this._oNavContainer.invalidate = function (oSource) {
-			// suppress invalidation of the navContainer
-			if (!oSource) {
-				this.forceInvalidation();
-			}
-		};
 
 		var that = this;
 

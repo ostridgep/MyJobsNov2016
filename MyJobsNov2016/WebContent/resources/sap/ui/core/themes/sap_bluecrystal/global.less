@@ -55,6 +55,18 @@
 // [Tags "Content", "Color"]
 @sapUiGlobalBackgroundGradientEndColor: extract(@sapUiHighlight @sapContent_BackgroundGradientEndColor, @sapUiGlobalBackgroundVariant);
 
+@sapUiContentMarkerIconColor: @sapContent_MarkerIconColor;
+
+// [Label "Image Placeholder Background Color"]
+// [Description "The background color of Image Placeholders."]
+// [Tags "Base", "Content", "Color"]
+@sapUiContentImagePlaceholderBackground: @sapUiExtraLightBG;
+
+// [Label "Image Placeholder Foreground Color"]
+// [Description "The foreground color of Image Placeholders."]
+// [Tags "Base", "Content", "Color"]
+@sapUiContentImagePlaceholderForegroundColor: darken(@sapUiExtraLightBG ,20);
+
 @sapUiContentLabelColor: @sapContent_LabelColor;
 @sapUiContentDisabledTextColor: @sapContent_DisabledTextColor;
 @sapUiContentDisabledOpacity: @sapContent_DisabledOpacity;
@@ -67,6 +79,7 @@
 @sapUiShellBackground: @sapShell_Background;
 @sapUiShellBorderColor: @sapShell_BorderColor;
 @sapUiShellTextColor: @sapShell_TextColor;
+@sapUiShellFavicon: @sapShell_Favicon;
 
 @sapUiButtonBackground: @sapButton_Background;
 @sapUiButtonBorderColor: @sapButton_BorderColor;
@@ -146,6 +159,7 @@
 @sapUiTileBackground: @sapTile_Background;
 @sapUiTileBorderColor: @sapTile_BorderColor;
 @sapUiTileTextColor: @sapTile_TextColor;
+@sapUiTileIconColor: @sapTile_IconColor;
 
 @sapUiChart1: @sapChart_OrderedColor_1;
 @sapUiChart2: @sapChart_OrderedColor_2;
@@ -174,7 +188,7 @@
 /* FOCUS COLORS              */
 /* ========================= */
 
-@sapUiFocus: darken(@sapUiHighlight, 12%);              // #005483, rgb(0, 84, 131)
+@sapUiFocus: #000;
 
 @sapUiInvertedFocus: @sapUiLightestBorder;           // #fff
 
@@ -307,6 +321,7 @@
 @sapUiNegativeText: @sapNegativeTextColor; // #cc1919, rgb(204, 25, 25)
 @sapUiCriticalText: @sapCriticalTextColor; // #d14900, rgb(209, 73, 0)
 @sapUiPositiveText: @sapPositiveTextColor; // #007833, rgb(0, 120, 51)
+@sapUiNeutralText: @sapNeutralTextColor;    // #007cc0 rgb(0, 124, 192)
 
 
 /* ======================================================= */
@@ -660,7 +675,7 @@
 /* ToolPopup */
 @sapUiUx3ToolPopupInverted: ~"false"; /* Telling the ToolPopup if it's inverted per default */
 @sapUiUx3ToolPopupArrowRightMarginCorrection: -1px;
-@sapUiUx3ToolPopupShadow: 0 0 30px fade(@sapUiDarkShadowTint, 20);
+@sapUiUx3ToolPopupShadow: 0 0 30px fade(@sapUiShadowTint, 20%);
 
 /* Callout */
 @sapUiCalloutShadow: 0 0 30px fade(@sapUiDarkShadowTint, 20);
@@ -1109,7 +1124,6 @@
 @sapUiSwitchAcceptRejectBG: @sapUiLightestBG;
 
 /* RatingIndicator                 */
-@sapUiRIIconPadding: 0.25rem;
 @sapUiRIIconColor: @sapUiAccent1;
 
 /* Toolbar 				*/

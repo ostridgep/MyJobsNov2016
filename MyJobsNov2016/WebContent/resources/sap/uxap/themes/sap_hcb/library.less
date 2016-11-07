@@ -108,6 +108,16 @@ html[data-sap-ui-browser^="ed"] {
 		overflow: visible;
 	}
 }
+
+// Scroll buttons
+.sapUiSizeCompact .sapUxAPAnchorBar.sapUxAPAnchorBarScrollLeft .anchorBarArrow .sapMBtn,
+.sapUiSizeCompact .sapUxAPAnchorBar.sapUxAPAnchorBarScrollRight .anchorBarArrow .sapMBtn {
+	top: 0;
+}
+
+.sapUiSizeCompact .sapUxAPAnchorBar .sapUxAPAnchorBarButton .sapMBtnText>.sapMBtnIcon {
+	top:0;
+}
 /* END "AnchorBar.less" */
 
 /* START "BreadCrumbs.less" */
@@ -216,6 +226,10 @@ html[data-sap-ui-browser^="ed"] {
 	text-indent: 1rem;
 }
 
+.sapUiSizeCompact .sapUxAPHierarchicalSelect .sapMSltIcon {
+	top: 0;
+}
+
 /* END "HierarchicalSelect.less" */
 
 /* START "IconTabBar.less" */
@@ -273,6 +287,10 @@ html[data-sap-ui-browser^="ed"] {
 .sapUiSizeCompact.sapUxAPObjectPageHeaderChangesBtn .sapMBtn {
 	margin-top: -0.125rem;
 }
+
+.sapUxAPObjectPageHeaderSeparator {
+	background-color: @sapHCStandardFG;
+}
 /* END "ObjectPageHeader.less" */
 
 /* START "ObjectPageHeaderContent.less" */
@@ -295,8 +313,16 @@ html[data-sap-ui-browser^="ed"] {
 	height: 3rem;
 }
 
+.sapUiSizeCompact .sapUxAPObjectPageNavigation .sapUxAPObjectChildPage {
+	height: 2rem;
+}
+
 .sapUxAPObjectPageNavigation .sapUxAPITBar.sapUxAPObjectChildPage {
 	height: 3.125rem;
+}
+
+.sapUiSizeCompact .sapUxAPObjectPageNavigation .sapUxAPITBar.sapUxAPObjectChildPage {
+	height: 2.125rem;
 }
 
 /* Overriding the width inherited from BrowserScrollbar.less */
@@ -322,6 +348,13 @@ html[data-sap-ui-browser^="ed"] {
 	border-radius: 0;
 }
 
+.sapUxAPObjectPageSectionTitle {
+	line-height: 2.9rem;
+}
+
+.sapUiSizeCompact .sapUxAPObjectPageSectionTitle {
+	line-height: 2.4rem;
+}
 /* END "ObjectPageSection.less" */
 
 /* START "ObjectPageSubSection.less" */

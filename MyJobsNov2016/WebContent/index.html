@@ -51,14 +51,14 @@ if(n==1){
     sap.ui.getCore().getElementById("NewPassword3").getValue()+
     sap.ui.getCore().getElementById("NewPassword4").getValue()*/
     pin=sap.ui.getCore().getElementById("Pin").getValue()
-    SQLStatement="SELECT mobileuser, employeeid, vehiclereg, pincode, maptype, docserver, fullname  from MyUserDets " 
+    SQLStatement="SELECT * from MyUserDets " 
 
     SQLStatement+=" where MyUserDets.PinCode = '"+pin+"'"
 	//SQLStatement="SELECT * from MyUserDets where pincode = '"+pin+"'"
 }else{
 	user=sap.ui.getCore().getElementById("User").getValue()
 	pw=sap.ui.getCore().getElementById("Password").getValue()
-	SQLStatement="SELECT mobileuser, employeeid, vehiclereg, pincode, maptype, docserver, fullname  from MyUserDets " 
+	SQLStatement="SELECT * from MyUserDets " 
     SQLStatement+=" where MyUserDets.user = '"+user+"' and MyUserDets.password =  '"+pw+"'"
 	//SQLStatement="SELECT * from MyUserDets where user = '"+user+"' and password =  '"+pw+"'"
 }
@@ -75,6 +75,7 @@ if(n==1){
 				localStorage.setItem("MAPTYPE",rowsArray[0].maptype)
 				localStorage.setItem("DOCSERVER",rowsArray[0].docserver)
 				localStorage.setItem("MobileFullname",rowsArray[0].fullname)
+				//createAssetDetailsFilter(rowsArray[0].mobileuser)
 				SetLocalStorageChangePage('Home.html')
 					
 
@@ -392,6 +393,7 @@ var formCreateDB = new sap.m.Dialog("dlgCreateDB",{
 
 		
  }
+
 var formLogin = new sap.m.Dialog("dlgLogin",{
     title:"Login",
     modal: true,

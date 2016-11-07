@@ -522,6 +522,7 @@
 	visible: true, // boolean
 	fieldGroupIds: [], // string[], since 1.31
 	colorString: undefined, // string
+	mode: sap.ui.commons.ColorPickerMode.HSV, // sap.ui.commons.ColorPickerMode, since 1.38.1
 	tooltip: undefined, // sap.ui.core.TooltipBase
 	customData: [], // sap.ui.core.CustomData
 	dependents: [], // sap.ui.core.Control, since 1.19
@@ -543,6 +544,7 @@
 	visible="true"
 	fieldGroupIds=""
 	colorString=""
+	mode="HSV"
 	validateFieldGroup=""
 	change=""
 	liveChange="">
@@ -2162,33 +2164,21 @@
 <Template name="sap.ui.commons.ResponsiveContainerRange" alias="ResponsiveContainerRange,Range">
 	<jsTemplate><![CDATA[new sap.ui.commons.ResponsiveContainerRange({
 	id: "${id}", // sap.ui.core.ID
-	busy: false, // boolean
-	busyIndicatorDelay: 1000, // int
-	visible: true, // boolean
-	fieldGroupIds: [], // string[], since 1.31
 	width: "", // sap.ui.core.CSSSize
 	height: "", // sap.ui.core.CSSSize
 	key: "", // string
 	tooltip: undefined, // sap.ui.core.TooltipBase
 	customData: [], // sap.ui.core.CustomData
 	dependents: [], // sap.ui.core.Control, since 1.19
-	content: undefined, // sap.ui.core.Control
-	validateFieldGroup: [function (oEvent) {
-		var ${control} = oEvent.getSource();
-	}, this]
+	content: undefined // sap.ui.core.Control
 })
 ]]></jsTemplate>
 	<xmlTemplate><![CDATA[<ResponsiveContainerRange xmlns="sap.ui.commons"
 	id="${id}"
-	busy="false"
-	busyIndicatorDelay="1000"
-	visible="true"
-	fieldGroupIds=""
 	width=""
 	height=""
 	key=""
-	content=""
-	validateFieldGroup="">
+	content="">
 		<tooltip></tooltip> <!-- sap.ui.core.TooltipBase -->
 		<dependents></dependents> <!-- sap.ui.core.Control, since 1.19 -->
 </ResponsiveContainerRange>

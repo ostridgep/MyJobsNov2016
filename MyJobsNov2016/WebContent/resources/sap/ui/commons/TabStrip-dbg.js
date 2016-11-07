@@ -28,10 +28,11 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control',
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.36.8
+	 * @version 1.40.10
 	 *
 	 * @constructor
 	 * @public
+	 * @deprecated Since version 1.38. Instead, use the <code>sap.m.TabContainer</code> control.
 	 * @alias sap.ui.commons.TabStrip
 	 * @ui5-metamodel This control/element also will be described in the UI5 (legacy) designtime metamodel
 	 */
@@ -111,6 +112,8 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control',
 	TabStrip.SCROLL_ANIMATION_DURATION = sap.ui.getCore().getConfiguration().getAnimation() ? 500 : 0;
 
 	TabStrip.prototype.init = function() {
+
+		this._bInitialized = true;
 
 		this._bRtl = sap.ui.getCore().getConfiguration().getRTL();
 		this._iCurrentScrollLeft = 0;
@@ -273,6 +276,8 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control',
 	 * @private
 	 */
 	TabStrip.prototype.exit = function () {
+
+		this._bInitialized = false;
 
 		this._iCurrentScrollLeft = null;
 		this._iMaxOffsetLeft = null;
@@ -547,6 +552,10 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control',
 		// ensure that events from the controls in the panel are fired
 		jQuery.sap.delayedCall(0, this, function () {
 
+			if (!this._bInitialized) {
+				return;
+			}
+
 			var $panel = this.$().find('.sapUiTabPanel');
 
 			if (oTab) {
@@ -591,39 +600,48 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control',
 	 */
 	TabStrip.prototype.toggleTabClasses = function(iOldIndex, iNewIndex) {
 
+		var aTabs = this.getTabs();
+
 		// change visualization of selected tab and old tab
-		this.getTabs()[iOldIndex].$().toggleClass("sapUiTabSel sapUiTab").attr("aria-selected",false);
+		var oTab = aTabs[iOldIndex];
+		if (oTab) {
+			oTab.$().toggleClass("sapUiTabSel sapUiTab").attr("aria-selected", false);
+		}
 		var iBeforeIndex = iOldIndex - 1;
-		while (iBeforeIndex >= 0 && !this.getTabs()[iBeforeIndex].getVisible()) {
+		while (iBeforeIndex >= 0 && !aTabs[iBeforeIndex].getVisible()) {
 			iBeforeIndex--;
 		}
 		if (iBeforeIndex >= 0) {
-			this.getTabs()[iBeforeIndex].$().removeClass("sapUiTabBeforeSel");
+			aTabs[iBeforeIndex].$().removeClass("sapUiTabBeforeSel");
 		}
 
 		var iAfterIndex = iOldIndex + 1;
-		while (iAfterIndex < this.getTabs().length && !this.getTabs()[iAfterIndex].getVisible()) {
+		while (iAfterIndex < aTabs.length && !aTabs[iAfterIndex].getVisible()) {
 			iAfterIndex++;
 		}
-		if (iAfterIndex < this.getTabs().length) {
-			this.getTabs()[iAfterIndex].$().removeClass("sapUiTabAfterSel");
+		if (iAfterIndex < aTabs.length) {
+			aTabs[iAfterIndex].$().removeClass("sapUiTabAfterSel");
 		}
 
-		this.getTabs()[iNewIndex].$().toggleClass("sapUiTabSel sapUiTab").attr("aria-selected",true);
+		oTab = aTabs[iNewIndex];
+		if (oTab) {
+			oTab.$().toggleClass("sapUiTabSel sapUiTab").attr("aria-selected", true);
+		}
+
 		iBeforeIndex = iNewIndex - 1;
-		while (iBeforeIndex >= 0 && !this.getTabs()[iBeforeIndex].getVisible()) {
+		while (iBeforeIndex >= 0 && !aTabs[iBeforeIndex].getVisible()) {
 			iBeforeIndex--;
 		}
 		if (iBeforeIndex >= 0) {
-			this.getTabs()[iBeforeIndex].$().addClass("sapUiTabBeforeSel");
+			aTabs[iBeforeIndex].$().addClass("sapUiTabBeforeSel");
 		}
 
 		iAfterIndex = iNewIndex + 1;
-		while (iAfterIndex < this.getTabs().length && !this.getTabs()[iAfterIndex].getVisible()) {
+		while (iAfterIndex < aTabs.length && !aTabs[iAfterIndex].getVisible()) {
 			iAfterIndex++;
 		}
-		if (iAfterIndex < this.getTabs().length) {
-			this.getTabs()[iAfterIndex].$().addClass("sapUiTabAfterSel");
+		if (iAfterIndex < aTabs.length) {
+			aTabs[iAfterIndex].$().addClass("sapUiTabAfterSel");
 		}
 	};
 
